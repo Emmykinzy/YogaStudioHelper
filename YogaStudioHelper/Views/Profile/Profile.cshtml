@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Profile";
+}
+
+
+<div class="sidebar">
+  @Html.ActionLink("Profile", "Profile", "Profile")
+  @Html.ActionLink("Settings", "Settings", "Profile")
+  @if ((int)Session["Auth"] == 2)
+  {
+    @Html.ActionLink("Availabilities", "Availabilities", "Profile")
+  }   
+</div>
+
+<div class="fixed">
+    <div class="main">
+        <div class="cont">
+            <h3>Profile</h3>
+            <p>This side navigation is of full height (100%) and always shown.</p>
+            <p>Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+            <p>Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "FindPromotion";
+}
+
+<div class="centerDiv">
+
+    @using (Html.BeginForm())
+    {
+    <table class="inputTable">
+        <tr>
+            <td></td>
+            <td style="text-align:center"><h2>Find Promotion</h2></td>
+        </tr>
+        <tr>
+            <th>Promotion Name:</th>
+            <td>@Html.TextBox("PromotionName", null, new { @class = "inputs" })</td>
+        </tr>
+        <tr>
+            <th>Discount %:</th>
+            <td>@Html.TextBox("Discount", null, new { @class = "inputs", @input="number" })</td>
+        </tr>
+        <tr>
+            <th>Extra Passes:</th>
+            <td>@Html.TextBox("ExtraPasses", null, new { @class = "inputs", @input="number" })</td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td></td>
+            <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Search</button></td>
+        </tr>
+    </table>
+    }
+</div>
+

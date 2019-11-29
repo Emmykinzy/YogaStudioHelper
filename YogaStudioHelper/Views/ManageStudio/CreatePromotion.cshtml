@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "CreatePromotion";
+}
+
+<div class="centerDiv">
+    @using (Html.BeginForm())
+    {
+<table class="inputTable">
+    <tr>
+        <td></td>
+        <td style="text-align:center;"><h2>Create Promo</h2></td>
+    </tr>
+    <tr>
+        <th>Promotion Name:</th>
+        <td>@Html.TextBox("PromotionName", null, new { @class = "inputs" })</td>
+    </tr>
+    <tr>
+        <th>Discount %:</th>
+        <td>@Html.TextBox("ClassDesc", null, new { @class = "inputs", @input = "number" })</td>
+    </tr>
+    <tr><th>OR</th></tr>
+    <tr>
+        <th>Extra Passes:</th>
+        <td>@Html.TextBox("LastName", null, new { @class = "inputs", @input = "number" })</td>
+    </tr>
+    <tr>
+        <th>Promo-ed Pass:</th>
+        <td class="select">
+            <select id="classPass">
+                <option>Select Pass</option>
+                <option>5 Pass Packet</option>
+                <option>10 Pass Packet</option>
+                <option>20 Pass Packet</option>
+                <option>30 Pass Packet</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>Promotion End:</th>
+        <td>@Html.TextBox("LastName", null, new { @class = "inputs", @input = "date" })</td>
+    </tr>
+    <tr></tr>
+    <tr>
+        <td></td>
+        <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Create</button></td>
+    </tr>
+</table>
+    }
+</div>
+

@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+</head>
+<body>
+    <div>
+     <div class="nav-container">
+        <div class="center clearfix nav">
+            <img class="floatLeft" style="margin-right:10px;" src="~/Content/Images/Test_Logo4.png" width="100" height="125" alt="Yoga Logo">
+            <ul class="vCenter" style="padding-left:10px;">
+                <li>@Html.ActionLink("Home", "Homepage", "Home")</li>
+                @if (Session["Auth"] == null)
+                {
+                    <li>@Html.ActionLink("Schedule", "Schedule", "Schedule")</li>
+                    <li>@Html.ActionLink("Online Store", "OnlineStore", "Passes")</li>
+                }
+                else if ((int)Session["Auth"] == 1)
+                {
+
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Schedule", "Schedule", "Schedule")</li>
+                    <li>@Html.ActionLink("Online Store", "OnlineStore", "Passes")</li>
+                }
+                
+                @if (Session["Auth"] == null)
+                { }
+                else if ((int)Session["Auth"] == 1)
+                {
+                    <li>
+                        @Html.ActionLink("Manage Users", "UserList", "ManageUsers")
+                    <ul>
+                        <li>@Html.ActionLink("Find User", "FindUser", "ManageUsers")</li>
+                        <li>@Html.ActionLink("Create User", "CreateUser", "ManageUsers")</li>
+                    </ul>
+                </li>
+                <li>
+                    @Html.ActionLink("Manage Studio", "ManageStudio", "ManageStudio")
+                <ul>
+                    <li>@Html.ActionLink("Schedule", "Schedule", "ManageStudio")</li>
+                    <li>@Html.ActionLink("Rooms", "Room", "ManageStudio")</li>
+                    <li>@Html.ActionLink("Classes", "Class", "ManageStudio")</li>
+                    <li>@Html.ActionLink("Class Passes", "ClassPass", "ManageStudio")</li>
+                    <li>@Html.ActionLink("Promotions", "Promotion", "ManageStudio")</li>
+                </ul>
+            </li>
+            <li>@Html.ActionLink("Reports", "OnlineStore", "Report")
+                <ul>
+                    <li>@Html.ActionLink("Hours Worked", "HoursWorked", "Report")</li>
+                    <li>@Html.ActionLink("Sales", "Sales", "Report")</li>
+                    <li>@Html.ActionLink("Attendance", "Attendance", "Report")</li>
+                </ul>
+             </li>
+        }
+                @if (Session["Auth"] == null)
+                {
+                    <li class="floatRight">@Html.ActionLink("Login", "LogInSignUp", "LoginSignUp")</li>
+                }
+                else
+                {
+                    <li class="floatRight">
+                        @Html.ActionLink("Profile", "Profile", "Profile")
+                        <ul>
+                            @if ((int)Session["Auth"] == 4)
+                            {
+                                <li>@Html.ActionLink("Classes", "Classes", "Profile")</li>
+                                <li>@Html.ActionLink("Passes", "Passes", "Profile")</li>
+                            }
+                            <li>@Html.ActionLink("Settings", "Settings", "Profile")</li>
+                            @if ((int)Session["Auth"] == 2)
+                            {
+                                <li>@Html.ActionLink("Availabilities", "Availabilities", "Profile")</li>
+                            }
+                            <li>@Html.ActionLink("Log Out", "LogOut", "Profile")</li>
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </div>
+        </div>
+
+
+
+        <div class="container body-content">
+            @RenderBody()
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

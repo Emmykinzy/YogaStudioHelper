@@ -1,0 +1,326 @@
+﻿
+
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom:15px;
+}
+
+.vCenter {
+    padding-top:70px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #edeff7;
+}
+
+.clearfix {
+    overflow: auto;
+}
+
+li {
+    float: left;
+    background-color: white;
+}
+
+li a {
+    display: block;
+    color: #5ab9ea;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+}
+
+li a:hover {
+    background-color: #edf9ff;
+    text-decoration: none;
+}
+
+.nav {
+    width: 90%;
+    padding-top: 10px;
+
+}
+
+.center {
+    margin: auto; 
+}
+.floatRight{
+    float:right;
+}
+.floatLeft{
+    float:left;
+}
+
+
+ul li {display: inline-block; width: 175px; font: 20px 'Yu Gothic';}
+ul li:hover {background: #edf9ff;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);}
+ul li:hover ul {display: block;}
+ul li ul {
+  position: absolute;
+  width: 175px;
+  display: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+ul li ul li { 
+  background: #fafdff; 
+  display: block; 
+  border-bottom: 1px solid #ddd;
+}
+ul li ul li a {display:block !important;} 
+ul li ul li:hover {background: #edf9ff;}
+
+.schedule th{
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: start;
+    empty-cells: show;
+    width: 125px;
+}
+
+.schedule td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    width: 150px;
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    padding-top: 150px;
+    left: 0;
+    top: 0;
+    margin:auto;
+    width: 50%; 
+    height: 100%; 
+    overflow: auto; 
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+.schedule tr td a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.schedule tr td a:hover {
+    text-decoration:underline;
+    cursor: pointer;
+}
+
+.schedule tr td a:nth-child(even) {
+    color: #654f8d;
+}
+
+.schedule tr td a:nth-child(odd) {
+    color: #557ee6;
+}
+
+
+.nav-container {
+    border-bottom: 1px solid #ddd;
+    height: 143px;
+    background-color: #edeff7;
+}
+.textRight{
+    text-align:right;
+}
+.light-pad{
+    padding:10px;
+}
+
+.passStore {
+    width: 75%;
+    height: 100px;
+    font: 18px 'BIZ UDPMincho';
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    background-color: #f7fdff
+}
+
+
+.passContent {
+    padding-top:30px;
+    padding-left:25px;
+}
+
+.passTitle {
+   width:50%
+    
+}
+
+.passPurchase {
+    width: 50%
+}
+
+.passDiscount{
+    color:red;
+    padding-right:15px;
+}
+
+select {
+    border-color: #ccc;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 6px;
+}
+
+.select select {
+    width: 200px;
+}
+
+.classes {
+    border: 1px solid #ddd;
+}
+.classes th {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+}
+
+.classes td {
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+   
+}
+
+.classes tr:nth-child(even) {
+   background-color:#f2f2f2;
+}
+
+.inputs {
+    width: 200px;
+    height:30px;
+    border-color: #ccc;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 6px;
+}
+
+.inputsArea {
+    width: 200px;
+    height: 75px;
+    border-color: #ccc;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 6px;
+}
+
+
+.avail th {
+    padding-right: 10px;
+    text-align: center;
+}
+
+.avail td {
+    padding: 10px;
+    text-align: center;
+}
+
+.loginTable td {
+    text-align: right;
+    padding:15px;
+}
+
+.inputTable td, .inputTable th {
+    text-align: right;
+    padding: 15px;
+    width:250px;
+}
+
+.centerDiv {
+    margin:auto;
+    width:auto;
+}
+
+a.disabledA {
+    pointer-events: none;
+    cursor: default;
+}
+
+
+.sidebar {
+    text-align: center;
+    height: 50%;
+    width: 197px;
+    float: left;
+    position: absolute;
+    left: 0;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.sidebar a {
+    display: block;
+    color: #5ab9ea;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border-bottom: 1px solid #ddd;
+    font: 20px 'Yu Gothic';
+}
+
+.sidebar a:hover {
+   color: #111;
+   text-decoration: none;
+   background: #edf9ff;
+}
+
+.main {
+    padding: 10px;
+}
+.cont {
+    margin-left: 25px;
+}
+
+
+
+
+       
+
+

@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "CreateRoom";
+}
+
+<div class="centerDiv">
+    @using (Html.BeginForm())
+    {
+        <table class="inputTable">
+            <tr>
+                <td></td>
+                <td style="text-align:center;"><h2>Create Room</h2></td>
+            </tr>
+            <tr>
+                <th>Room Name:</th>
+                <td>@Html.TextBox("roomName", null, new { @class = "inputs" })</td>
+            </tr>
+            <tr>
+                <th>Capasity:</th>
+                <td>@Html.TextBox("capacity", null, new { @class = "inputs", @type ="number"})</td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td></td>
+                <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Create</button></td>
+            </tr>
+        </table>
+    }
+</div>
+
