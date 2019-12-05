@@ -9,7 +9,7 @@
 }
 
 .vCenter {
-    padding-top:70px;
+    padding-top:10px;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -24,7 +24,6 @@ ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #edeff7;
 }
 
 .clearfix {
@@ -33,23 +32,30 @@ ul {
 
 li {
     float: left;
-    background-color: white;
+    /*background-color: white;*/
 }
 
 li a {
     display: block;
     color: #5ab9ea;
     text-align: center;
-    padding: 14px 16px;
+    padding-left:14px;
+    padding-right: 14px;
+    padding-top:14px;
+     padding-bottom:14px;
     text-decoration: none;
-    border-right: 1px solid #ddd;
+    /*border-right: 1px solid #ddd;
     border-left: 1px solid #ddd;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #ddd;*/
 }
 
 li a:hover {
-    background-color: #edf9ff;
+    /*background-color: #edf9ff;*/
     text-decoration: none;
+}
+
+.logMarg{
+    margin-right: -45px;
 }
 
 .nav {
@@ -69,22 +75,41 @@ li a:hover {
 }
 
 
-ul li {display: inline-block; width: 175px; font: 20px 'Yu Gothic';}
-ul li:hover {background: #edf9ff;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);}
-ul li:hover ul {display: block;}
+ul li {
+    display: inline-block;
+    width: 175px; font: 20px 'Yu Gothic';
+
+}
+ul li:hover {
+    /*background: #edf9ff; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
+
+}
+ul li:hover ul {
+    display: block;
+
+}
 ul li ul {
   position: absolute;
   width: 175px;
   display: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius:15px;
 }
 ul li ul li { 
-  background: #fafdff; 
+  /*
+  border-bottom: 1px solid #ddd;*/
   display: block; 
-  border-bottom: 1px solid #ddd;
+  background: white; 
 }
-ul li ul li a {display:block !important;} 
-ul li ul li:hover {background: #edf9ff;}
+ul li ul li a {
+    display:block !important;
+
+}
+    ul li ul li:hover {
+        /*background: #edf9ff;*/
+        text-decoration: underline;
+    }
 
 .schedule th{
     border: 1px solid #ddd;
@@ -160,8 +185,9 @@ ul li ul li:hover {background: #edf9ff;}
 
 .nav-container {
     border-bottom: 1px solid #ddd;
-    height: 143px;
-    background-color: #edeff7;
+    height: 125px;
+    /*background-color: #edeff7;*/
+    background-color: white;
 }
 .textRight{
     text-align:right;
@@ -318,9 +344,38 @@ a.disabledA {
     margin-left: 25px;
 }
 
+.actionButton{
+    text-decoration: none;
+    color: black;
+}
 
+.actionButton:hover {
+    text-decoration: none;
+    color: black;
+}
 
+.buddha {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    border-radius: 15px;
+}
+.buddhaDiv{
+    padding-top:45px;
+    margin:auto;
+    height: 2000px;
+}
 
-       
+     
+/*.buddhaDiv::after {
+    display: block;
+    position: relative;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0, #fff 100%);
+    margin-top: -100px;
+    height: 100px;
+    width: 100%;
+    content: '';
+}*/
 
 

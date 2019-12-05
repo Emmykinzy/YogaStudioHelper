@@ -34,5 +34,10 @@ namespace YogaStudioHelper.Controllers
             return View();
         }
 
+        public ActionResult EditUser()
+        {
+            return View();
+        }
+
     }
 }

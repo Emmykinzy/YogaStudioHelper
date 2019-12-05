@@ -2,26 +2,33 @@
 @{
     ViewBag.Title = "ClassList";
 }
-<br /><h2>Class List</h2><br />
-    <table class="classes">
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Length</th>
-            <th></th>
-        </tr>
-        <tr>
-            <td>Hot Yoga</td>
-            <td style="text-align:left;">Our hot flow is a Vinyasa-style class created to heal, detoxify and exhilarate the body and mind by linking the breath with movement.</td>
-            <td>1h15</td>
-            <td>
-                <button class="btn btn-default">Edit</button>
-            </td>
-        </tr>
-        <tr>
-            <td>Baby Yoga</td>
-            <td style="text-align:left;">An inclusive set of practices to enhance playful interaction and communication between parent and baby and to promote their healthy development.</td>
-            <td>1h00</td>
-            <td><button class="btn btn-default">Edit</button></td>
-        </tr>
-    </table>
+<br />
+<h2>Class List</h2>
+<br />
+<table class="classes">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Length</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>Hot Yoga</td>
+        <td style="text-align:left;">Our hot flow is a Vinyasa-style class created to heal, detoxify and exhilarate the body and mind by linking the breath with movement.</td>
+        <td>1h15</td>
+        <td>
+            <button onclick="window.location.href ='/ManageStudio/EditClass'" class="btn btn-default">Edit</button>
+        </td>
+    </tr>
+    <tr>
+        <td>Baby Yoga</td>
+        <td style="text-align:left;">An inclusive set of practices to enhance playful interaction and communication between parent and baby and to promote their healthy development.</td>
+        <td>1h00</td>
+        <td>
+            <button onclick="window.location.href ='/ManageStudio/EditClass'" class="btn btn-default">Edit</button>
+        </td>
+    </tr>
+</table>
+
+<br />
+<button onclick="goBack()">Go Back</button>

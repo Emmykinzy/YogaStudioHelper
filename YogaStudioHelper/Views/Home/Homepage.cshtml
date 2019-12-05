@@ -2,22 +2,7 @@
 @{
     ViewBag.Title = "Homepage";
 }
-
-<h2>Homepage</h2>
-<h4>Authorization</h4>
-@using (Html.BeginForm())
-{
-    
-    @Html.RadioButton("Access", "Admin")
-    <span>Admin</span><br />
-    @Html.RadioButton("Access", "Receptionist")
-    <span>Receptionist</span><br />
-    @Html.RadioButton("Access", "Teacher")
-    <span>Teacher</span><br />   
-    @Html.RadioButton("Access", "Student")
-    <span>Student</span><br />
-    @Html.RadioButton("Access", "None")
-    <span>None</span><br /><br />
-
-    <input type="submit" value="Submit" class="btn btn-default">
-}
+    <div class="buddhaDiv">
+        <img class="buddha" style="margin-right:10px; margin-left:25px;" src="~/Content/Images/Buddha3.jpg" width="1000" alt="Buddha">
+    </div>
+        

@@ -1,46 +1,49 @@
 ﻿
 @{
-    ViewBag.Title = "CreateUser";
+    ViewBag.Title = "EditUser";
 }
 
 <br />
 <div class="centerDiv">
-    
+
     @using (Html.BeginForm())
     {
     <table class="inputTable">
         <tr>
             <td></td>
-            <td style="text-align:center;"><h2>Create User</h2></td>
+            <td style="text-align:center;"><h2>Edit User</h2></td>
         </tr>
         <tr>
             <th>Role:</th>
             <td class="select">
                 <select id="role">
-                    <option>Select Role</option>
+                    <option>Student</option>
                     <option>Administrator</option>
                     <option>Receptionist</option>
                     <option>Teacher</option>
-                    <option>Student</option>
                 </select>
             </td>
         </tr>
         <tr>
             <th>Email:</th>
-            <td>@Html.TextBox("Email", null, new { @class = "inputs" })</td>
+            <td>@Html.TextBox("Email", "ekjohnson99@gmail.com", new { @class = "inputs" })</td>
         </tr>
         <tr>
             <th>First Name:</th>
-            <td>@Html.TextBox("FirstName", null, new { @class = "inputs" })</td>
+            <td>@Html.TextBox("FirstName", "Emma", new { @class = "inputs" })</td>
         </tr>
         <tr>
             <th>Last Name</th>
-            <td>@Html.TextBox("LastName", null, new { @class = "inputs" })</td>
+            <td>@Html.TextBox("LastName", "Johnson", new { @class = "inputs" })</td>
+        </tr>
+        <tr>
+            <th>Active:</th>
+            <td style="text-align:center">@Html.CheckBox("isActive", true)</td>
         </tr>
         <tr></tr>
         <tr>
             <td></td>
-            <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Create</button></td>
+            <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Edit</button></td>
         </tr>
         <tr><td></td></tr>
         <tr>

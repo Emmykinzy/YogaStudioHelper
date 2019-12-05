@@ -7,21 +7,25 @@
 
         @using (Html.BeginForm())
         {
-            <table class="inputTable">
-                <tr>
-                    <td></td>
-                    <td style="text-align:center"><h2>Find Class</h2></td>
-                </tr>
-                <tr>
-                    <th>Class Name:</th>
-                    <td>@Html.TextBox("ClassName", null, new { @class = "inputs" })</td>
-                </tr>
-                <tr></tr>
-                <tr>
-                    <td></td>
-                    <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Search</button></td>
-                </tr>
-            </table>
+        <table class="inputTable">
+            <tr>
+                <td></td>
+                <td style="text-align:center"><h2>Find Class</h2></td>
+            </tr>
+            <tr>
+                <th>Class Name:</th>
+                <td>@Html.TextBox("ClassName", null, new { @class = "inputs" })</td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td></td>
+                <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Search</button></td>
+            </tr>
+            <tr><td></td></tr>
+            <tr>
+                <td><button onclick="goBack()">Go Back</button></td>
+            </tr>
+        </table>
         }
     </div>
 

@@ -3,15 +3,17 @@
     ViewBag.Title = "LogInSignUp";
 }
 
-    <br /><br /><br />
-    <div class="centerDiv">
-        <table class="loginTable">
-            @using (Html.BeginForm())
-            {
-             <tr>
+<br />
+<br />
+<br />
+<div class="centerDiv">
+    <table class="loginTable">
+        @using (Html.BeginForm())
+        {
+            <tr>
                 <td></td>
-                 <td style="text-align:center;"><h2>Log in</h2></td>
-             </tr>
+                <td style="text-align:center;"><h2>Log in</h2></td>
+            </tr>
             <tr>
                 <td>Email:</td>
                 <td>@Html.TextBox("Email", null, new { @class = "inputs" })</td>
@@ -28,6 +30,29 @@
                 <td></td>
                 <td style="text-align:center">New? <a>Sign up here</a></td>
             </tr>
-            }
-        </table>
-    </div>
+        }
+    </table>
+</div>
+@using (Html.BeginForm())
+{
+
+    @Html.RadioButton("Access", "Admin")
+    <span>Admin</span>
+    <br />
+    @Html.RadioButton("Access", "Receptionist")
+    <span>Receptionist</span>
+    <br />
+    @Html.RadioButton("Access", "Teacher")
+    <span>Teacher</span>
+    <br />
+
+    @Html.RadioButton("Access", "Student")
+    <span>Student</span>
+    <br />
+    @Html.RadioButton("Access", "None")
+    <span>None</span>
+    <br />
+    <br />
+
+    <input type="submit" value="Submit" class="btn btn-default">
+}

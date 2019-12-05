@@ -3,5 +3,44 @@
     ViewBag.Title = "EditClass";
 }
 
-<h2>EditClass</h2>
+    <div class="centerDiv">
+        @using (Html.BeginForm())
+        {
+        <table class="inputTable">
+            <tr>
+                <td></td>
+                <td style="text-align:center;"><h2>Edit Class</h2></td>
+            </tr>
+            <tr>
+                <th>Class Name:</th>
+                <td>@Html.TextBox("ClassName", "Hot Yoga", new { @class = "inputs" })</td>
+            </tr>
+            <tr>
+                <th style="vertical-align:top;">Class Description:</th>
+                <td>
+                    @Html.TextArea("ClassDesc", "Our hot flow is a Vinyasa-style class created to heal, " +
+                                        "detoxify and exhilarate the body and mind by linking the" +
+                                        " breath with movement.", new { @class = "inputsArea" })
+            </td>
+        </tr>
+        <tr>
+            <th>Class Length (Minutes):</th>
+            <td>@Html.TextBox("LastName", 75, new { @class = "inputs", @input = "number" })</td>
+        </tr>
+        <tr>
+            <th>Active:</th>
+            <td style="text-align:center">@Html.CheckBox("isActive", true)</td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td></td>
+            <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Edit</button></td>
+        </tr>
+        <tr><td></td></tr>
+        <tr>
+            <td><button onclick="goBack()">Go Back</button></td>
+        </tr>
+        </table>
+        }
+    </div>
 

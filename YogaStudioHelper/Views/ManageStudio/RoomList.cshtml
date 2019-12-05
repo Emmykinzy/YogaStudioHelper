@@ -3,7 +3,9 @@
     ViewBag.Title = "RoomList";
 }
 
-<br /><h2>Room List</h2><br />
+<br />
+<h2>Room List</h2>
+<br />
 <table class="classes">
     <tr>
         <th>Room Name</th>
@@ -14,18 +16,19 @@
         <td>F-248</td>
         <td>45</td>
         <td>
-            <button class="btn btn-default">Edit</button>
-            <button class="btn btn-default">Delete</button>
+            <button onclick="window.location.href ='/ManageStudio/EditRoom'" class="btn btn-default">Edit</button>
         </td>
     </tr>
     <tr>
         <td>F-235</td>
         <td>30</td>
         <td>
-            <button class="btn btn-default">Edit</button>
-            <button class="btn btn-default">Delete</button>
-        </td>        
+            <button onclick="window.location.href ='/ManageStudio/EditRoom'" class="btn btn-default">Edit</button>
+        </td>
     </tr>
 </table>
+
+<br />
+<button onclick="goBack()">Go Back</button>
 
 

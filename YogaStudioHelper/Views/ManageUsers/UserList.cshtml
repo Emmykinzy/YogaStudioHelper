@@ -2,7 +2,8 @@
 @{
     ViewBag.Title = "UserList";
 }
-<br /><br />
+<br />
+<br />
 <table class="classes">
     <tr>
         <th>Last Name</th>
@@ -21,7 +22,7 @@
         <td>23/04/1999</td>
         <td>Student</td>
         <td>
-          <button class="btn btn-default">Edit</button>
+            <button onclick="window.location.href ='/ManageUsers/EditUser'" class="btn btn-default">Edit</button>
         </td>
     </tr>
     <tr>
@@ -31,7 +32,12 @@
         <td>(514)-773-0313</td>
         <td>18/12/1998</td>
         <td>Teacher</td>
-        <td><button class="btn btn-default">Edit</button></td>
+        <td>
+            <button onclick="window.location.href ='/ManageUsers/EditUser'" class="btn btn-default">Edit</button>
+        </td>
     </tr>
 </table>
+
+<br />
+<button onclick="goBack()">Go Back</button>
 

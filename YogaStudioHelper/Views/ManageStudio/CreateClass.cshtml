@@ -6,29 +6,38 @@
     <div class="centerDiv">
         @using (Html.BeginForm())
         {
-    <table class="inputTable">
-        <tr>
-            <td></td>
-            <td style="text-align:center;"><h2>Create Class</h2></td>
-        </tr>
-        <tr>
-            <th>Class Name:</th>
-            <td>@Html.TextBox("ClassName", null, new { @class = "inputs" })</td>
-        </tr>
-        <tr>
-            <th style="vertical-align:top;">Class Description:</th>
-            <td>@Html.TextArea("ClassDesc", null, new { @class = "inputsArea" })</td>
-        </tr>
-        <tr>
-            <th>Class Length (Minutes):</th>
-            <td>@Html.TextBox("LastName", null, new { @class = "inputs", @input = "number" })</td>
-        </tr>
-        <tr></tr>
-        <tr>
-            <td></td>
-            <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Create</button></td>
-        </tr>
-    </table>
+            <table class="inputTable">
+                <tr>
+                    <td></td>
+                    <td style="text-align:center;"><h2>Create Class</h2></td>
+                </tr>
+                <tr>
+                    <th>Class Name:</th>
+                    <td>@Html.TextBox("ClassName", null, new { @class = "inputs" })</td>
+                </tr>
+                <tr>
+                    <th style="vertical-align:top;">Class Description:</th>
+                    <td>@Html.TextArea("ClassDesc", null, new { @class = "inputsArea" })</td>
+                </tr>
+                <tr>
+                    <th>Class Length (Minutes):</th>
+                    <td>@Html.TextBox("LastName", null, new { @class = "inputs", @input = "number" })</td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td></td>
+                    <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Create</button></td>
+                </tr>
+                <tr><td></td></tr>
+                <tr>
+                    <td><button onclick="goBack()">Go Back</button></td>
+                </tr>
+            </table>
         }
+        
+        
     </div>
+
+
+
 
