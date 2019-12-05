@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Sales";
+}
+
+@using (Html.BeginForm())
+{
+    <table class="inputTable">
+        <tr>
+            <td></td>
+            <td style="text-align:center"><h2>Sales Report</h2></td>
+        </tr>
+        <tr>
+            <th>Date:</th>
+            <td style="text-align:center">
+                <select class="report" id="month">
+                    <option>Select</option>
+                    <option>November 2019</option>
+                    <option>October 2019</option>
+                    <option>September 2019</option>
+                </select>
+            </td>
+        </tr>
+        <tr></tr>
+        <tr>
+            <td></td>
+            <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Search</button></td>
+        </tr>
+    </table>
+
+}

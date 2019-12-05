@@ -49,5 +49,10 @@ namespace YogaStudioHelper.Controllers
 
             return RedirectToAction("Homepage", "Home");
         }
+
+        public ActionResult SignUp()
+        {
+            return View();
+        }
     }
 }

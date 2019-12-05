@@ -58,7 +58,6 @@ li a {
     padding-left:14px;
     padding-right: 14px;
     padding-top:14px;
-     padding-bottom:14px;
     text-decoration: none;
     /*border-right: 1px solid #ddd;
     border-left: 1px solid #ddd;
@@ -103,7 +102,6 @@ ul li:hover {
 }
 ul li:hover ul {
     display: block;
-
 }
 ul li ul {
   position: absolute;
@@ -258,6 +256,12 @@ select {
     background-color: #fff;
     border-radius: 5px;
     padding: 6px;
+}
+
+.report select {
+    border-color: #ccc;
+    background-color: #fff;
+    border-radius: 5px;
 }
 
 .select select {

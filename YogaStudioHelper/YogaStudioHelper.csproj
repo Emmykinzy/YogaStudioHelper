@@ -121,6 +121,7 @@
     <Compile Include="Controllers\ManageUsersController.cs" />
     <Compile Include="Controllers\PassesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -177,6 +178,10 @@
     <Content Include="Views\ManageStudio\EditClassPass.cshtml" />
     <Content Include="Views\ManageStudio\EditPromotion.cshtml" />
     <Content Include="Views\ManageUsers\EditUser.cshtml" />
+    <Content Include="Views\Report\HoursWorked.cshtml" />
+    <Content Include="Views\Report\Attendence.cshtml" />
+    <Content Include="Views\Report\Sales.cshtml" />
+    <Content Include="Views\LoginSignUp\SignUp.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
