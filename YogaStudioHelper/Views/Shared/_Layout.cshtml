@@ -10,7 +10,7 @@
 </head>
 <body>
     <div>
-        <div class="nav-container">
+        <div class="nav-container" id="navbar">
             <div class="center clearfix nav">
                 <img class="floatLeft" style="margin-right:10px; margin-left:25px;" src="~/Content/Images/Test_Logo4.png" width="75" height="90" alt="Yoga Logo">
                 <h3>Saṃsāra Yoga</h3>
@@ -54,14 +54,14 @@
                         </li>
                         <li>
                             @Html.ActionLink("Reports", "OnlineStore", "Report")
-                        <ul>
-                            <li>@Html.ActionLink("Hours Worked", "HoursWorked", "Report")</li>
-                            <li>@Html.ActionLink("Sales", "Sales", "Report")</li>
-                            <li>@Html.ActionLink("Attendance", "Attendance", "Report")</li>
-                        </ul>
-                    </li>
-                }
-                    
+                            <ul>
+                                <li>@Html.ActionLink("Hours Worked", "HoursWorked", "Report")</li>
+                                <li>@Html.ActionLink("Sales", "Sales", "Report")</li>
+                                <li>@Html.ActionLink("Attendance", "Attendance", "Report")</li>
+                            </ul>
+                        </li>
+                    }
+
                     @if (Session["Auth"] == null)
                     {
                         <li class="floatRight logMarg">@Html.ActionLink("Login", "LogInSignUp", "LoginSignUp")</li>
@@ -95,6 +95,20 @@
             @RenderBody()
         </div>
     </div>
+    <script>
+        window.onscroll = function () { myFunction() };
+
+        var navbar = document.getElementById("navbar");
+        var sticky = navbar.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("sticky")
+            } else {
+                navbar.classList.remove("sticky");
+            }
+        }
+    </script>
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
 </body>

@@ -95,6 +95,10 @@
     <Content Include="Content\Images\Buddha.jpg" />
     <Content Include="Content\Images\Buddha2.jpg" />
     <Content Include="Content\Images\Buddha3.jpg" />
+    <Content Include="Content\Images\Facebook.PNG" />
+    <Content Include="Content\Images\GooglePlus.PNG" />
+    <Content Include="Content\Images\Instagram.PNG" />
+    <Content Include="Content\Images\Twitter.PNG" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Images\Test_Logo4.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
