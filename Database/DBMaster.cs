@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Database
 {
    
@@ -11,6 +12,7 @@ namespace Database
     class DBMaster
     {
          yogadbEntities myDb = new yogadbEntities();
+        
 
         // User Get Methods 
         public IEnumerable<Yoga_User> getUsers()
@@ -53,28 +55,38 @@ namespace Database
             return myDb.Yoga_User.Where(x => x.Roles_Id == role);
         }
 
-        // User Get Methods 
-        public void CreateUser()
+        // User Create/Update Methods 
+        public void CreateUser(Yoga_User y)
         {
-            YogaUser m = new YogaUser(); 
-            Yoga_User y = new Yoga_User(YogaUser);
-
-            y.Roles_Id = role;
-            y.U_First_Name = fn;
-            y.U_Last_Name = ln;
-            y.U_Email = email;
-            y.U_Password = password;
-            y.U_Phone = phone;
-            y.Availability = availability;
-            y.U_Birthday = birthday;
-
             myDb.Yoga_User.Add(y);
         }
 
         public void UpdateUser(int id)
         {
-           var u = myDb.Yoga_User.Where(x => x.U_Id == id).Single();
-          
+           var o = myDb.Yoga_User.Where(x => x.U_Id == id).Single();
+
+            Yoga_User n = new Yoga_User();
+
+            n.Roles_Id = o.Roles_Id;
+            n.U_First_Name = o.U_First_Name;
+            n.U_Last_Name = o.U_Last_Name;
+            n.U_Email = o.U_Email;
+            n.U_Password = o.U_Password;
+            n.U_Phone = o.U_Phone;
+            n.Availability = o.Availability;
+            n.U_Birthday = o.U_Birthday;
+            n.Active = o.Active;
+
+            myDb.SaveChanges();
+        }
+
+        public void ArchiveUser(int id)
+        {
+            var y = myDb.Yoga_User.Where(x => x.U_Id == id).Single();
+
+            y.Active = false;
+
+            myDb.SaveChanges();
         }
     }
 }
