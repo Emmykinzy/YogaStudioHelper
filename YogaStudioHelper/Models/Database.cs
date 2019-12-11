@@ -11,12 +11,15 @@ namespace YogaStudioHelper.Models
         
         // User Methods 
 
+            /*
+           
         public List<YogaUser> GetYogaUsers()
         {
            IEnumerable<YogaUser> userList = myDb.Yoga_User.ToList<YogaUser>();
 
             
         }
+        */
 
     }
 }
