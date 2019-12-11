@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="c19a8251ff6f435299b9e29d8d44acb9" Name="Diagram1">
-        <EntityTypeShape EntityType="yogadbModel.Class" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="yogadbModel.Class" Width="1.5" PointX="2.875" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="yogadbModel.Class_Log" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="yogadbModel.Class_Passes" Width="1.5" PointX="6" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="yogadbModel.Pass_Log" Width="1.5" PointX="8.25" PointY="5.25" IsExpanded="true" />
