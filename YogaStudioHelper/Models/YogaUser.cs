@@ -28,5 +28,25 @@ namespace YogaStudioHelper.Models
         public DateTime u_birthday { get; set; } 
         public bool active { get; set; }
 
+        public string u_password { get; set; }
+
+
     }
+
+    /*
+     * 
+     *     
+        public int U_Id { get; set; }
+        public int Roles_Id { get; set; }
+        public string U_First_Name { get; set; }
+        public string U_Last_Name { get; set; }
+        public string U_Email { get; set; }
+        public string U_Password { get; set; }
+        public string U_Phone { get; set; }
+        public string Availability { get; set; }
+        public Nullable<System.DateTime> U_Birthday { get; set; }
+        public Nullable<bool> Active { get; set; }
+
+    */
 }
+ 
