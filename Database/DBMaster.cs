@@ -88,5 +88,68 @@ namespace Database
 
             myDb.SaveChanges();
         }
+
+        // Room Get Methods
+        public IEnumerable<Room> getRooms()
+        {
+            return myDb.Rooms.ToList();
+        }
+
+        public IEnumerable<Room> getRoomsByName(string name)
+        {
+            return myDb.Rooms.Where(x => x.Room_Name.Contains(name));
+        }
+
+        // Room Create/Update Methods 
+
+        public void CreateRoom(Room r)
+        {
+            myDb.Rooms.Add(r);
+        }
+
+        public void UpdateRoom(int id)
+        {
+            var or = myDb.Rooms.Where(x => x.Room_Id == id).Single();
+
+            Room nr = new Room();
+
+            nr.Room_Name = or.Room_Name;
+            nr.Room_Capacity = or.Room_Capacity;
+
+            myDb.SaveChanges();
+        }
+
+        // Class Get Methods 
+        public IEnumerable<Class> getClasses()
+        {
+            return myDb.Classes.ToList();
+        }
+
+        public IEnumerable<Class> getClassesByName(string name)
+        {
+            return myDb.Classes.Where(x => x.Class_Name.Contains(name));
+        }
+
+        // Room Create/Update Methods 
+
+        public void CreateClass(Class c)
+        {
+            myDb.Classes.Add(c);
+        }
+
+        public void UpdateClass(int id)
+        {
+            var oc = myDb.Classes.Where(x => x.Class_Id == id).Single();
+
+            Class nc = new Class();
+
+            oc.Class_Name = nc.Class_Name;
+            oc.Class_Desc = nc.Class_Desc;
+            oc.Class_Length = nc.Class_Length;
+            oc.Active = nc.Active;
+
+            myDb.SaveChanges();
+        }
+
     }
 }
