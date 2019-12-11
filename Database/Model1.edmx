@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="yogadbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="yogadbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Class">
           <Key>
             <PropertyRef Name="Class_Id" />
@@ -95,13 +95,13 @@
           <Property Name="U_First_Name" Type="varchar" MaxLength="50" />
           <Property Name="U_Last_Name" Type="varchar" MaxLength="50" />
           <Property Name="U_Email" Type="varchar" MaxLength="50" />
-          <Property Name="U_Password" Type="varchar" MaxLength="50" />
+          <Property Name="U_Password" Type="varchar" MaxLength="200" />
           <Property Name="U_Phone" Type="varchar" MaxLength="10" />
           <Property Name="Availability" Type="xml" />
           <Property Name="U_Birthday" Type="date" />
           <Property Name="Active" Type="bit" />
         </EntityType>
-        <Association Name="FK_Class_Log_Schedule_Id">
+        <Association Name="FK_CLASS_LOG_SCHEDULE_ID">
           <End Role="Schedule" Type="Self.Schedule" Multiplicity="1" />
           <End Role="Class_Log" Type="Self.Class_Log" Multiplicity="*" />
           <ReferentialConstraint>
@@ -113,7 +113,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Class_Log_User_Id">
+        <Association Name="FK_CLASS_LOG_USER_ID">
           <End Role="Yoga_User" Type="Self.Yoga_User" Multiplicity="1" />
           <End Role="Class_Log" Type="Self.Class_Log" Multiplicity="*" />
           <ReferentialConstraint>
@@ -125,7 +125,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Pass_Log_Pass_Id">
+        <Association Name="FK_PASS_LOG_PASS_ID">
           <End Role="Class_Passes" Type="Self.Class_Passes" Multiplicity="1" />
           <End Role="Pass_Log" Type="Self.Pass_Log" Multiplicity="*" />
           <ReferentialConstraint>
@@ -137,7 +137,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Pass_Log_U_Id">
+        <Association Name="FK_PASS_LOG_U_ID">
           <End Role="Yoga_User" Type="Self.Yoga_User" Multiplicity="1" />
           <End Role="Pass_Log" Type="Self.Pass_Log" Multiplicity="*" />
           <ReferentialConstraint>
@@ -149,7 +149,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Promotion_Pass_Id">
+        <Association Name="FK_PROMOTION_PASS_ID">
           <End Role="Class_Passes" Type="Self.Class_Passes" Multiplicity="1" />
           <End Role="Promotion" Type="Self.Promotion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -161,7 +161,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Schedule_Class_Id">
+        <Association Name="FK_SCHEDULE_CLASS_ID">
           <End Role="Class" Type="Self.Class" Multiplicity="1" />
           <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
           <ReferentialConstraint>
@@ -173,7 +173,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Schedule_Room_Id">
+        <Association Name="FK_SCHEDULE_ROOM_ID">
           <End Role="Room" Type="Self.Room" Multiplicity="1" />
           <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
           <ReferentialConstraint>
@@ -185,7 +185,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Schedule_Teacher_Id">
+        <Association Name="FK_SCHEDULE_TEACHER_ID">
           <End Role="Yoga_User" Type="Self.Yoga_User" Multiplicity="1" />
           <End Role="Schedule" Type="Self.Schedule" Multiplicity="*" />
           <ReferentialConstraint>
@@ -197,7 +197,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Yoga_User_Roles_Id">
+        <Association Name="FK_YOGA_USER_ROLES_ID">
           <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
           <End Role="Yoga_User" Type="Self.Yoga_User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -219,45 +219,44 @@
           <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Yoga_User" EntityType="Self.Yoga_User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Class_Log_Schedule_Id" Association="Self.FK_Class_Log_Schedule_Id">
+          <AssociationSet Name="FK_CLASS_LOG_SCHEDULE_ID" Association="Self.FK_CLASS_LOG_SCHEDULE_ID">
             <End Role="Schedule" EntitySet="Schedule" />
             <End Role="Class_Log" EntitySet="Class_Log" />
           </AssociationSet>
-          <AssociationSet Name="FK_Class_Log_User_Id" Association="Self.FK_Class_Log_User_Id">
+          <AssociationSet Name="FK_CLASS_LOG_USER_ID" Association="Self.FK_CLASS_LOG_USER_ID">
             <End Role="Yoga_User" EntitySet="Yoga_User" />
             <End Role="Class_Log" EntitySet="Class_Log" />
           </AssociationSet>
-          <AssociationSet Name="FK_Pass_Log_Pass_Id" Association="Self.FK_Pass_Log_Pass_Id">
+          <AssociationSet Name="FK_PASS_LOG_PASS_ID" Association="Self.FK_PASS_LOG_PASS_ID">
             <End Role="Class_Passes" EntitySet="Class_Passes" />
             <End Role="Pass_Log" EntitySet="Pass_Log" />
           </AssociationSet>
-          <AssociationSet Name="FK_Pass_Log_U_Id" Association="Self.FK_Pass_Log_U_Id">
+          <AssociationSet Name="FK_PASS_LOG_U_ID" Association="Self.FK_PASS_LOG_U_ID">
             <End Role="Yoga_User" EntitySet="Yoga_User" />
             <End Role="Pass_Log" EntitySet="Pass_Log" />
           </AssociationSet>
-          <AssociationSet Name="FK_Promotion_Pass_Id" Association="Self.FK_Promotion_Pass_Id">
+          <AssociationSet Name="FK_PROMOTION_PASS_ID" Association="Self.FK_PROMOTION_PASS_ID">
             <End Role="Class_Passes" EntitySet="Class_Passes" />
             <End Role="Promotion" EntitySet="Promotion" />
           </AssociationSet>
-          <AssociationSet Name="FK_Schedule_Class_Id" Association="Self.FK_Schedule_Class_Id">
+          <AssociationSet Name="FK_SCHEDULE_CLASS_ID" Association="Self.FK_SCHEDULE_CLASS_ID">
             <End Role="Class" EntitySet="Class" />
             <End Role="Schedule" EntitySet="Schedule" />
           </AssociationSet>
-          <AssociationSet Name="FK_Schedule_Room_Id" Association="Self.FK_Schedule_Room_Id">
+          <AssociationSet Name="FK_SCHEDULE_ROOM_ID" Association="Self.FK_SCHEDULE_ROOM_ID">
             <End Role="Room" EntitySet="Room" />
             <End Role="Schedule" EntitySet="Schedule" />
           </AssociationSet>
-          <AssociationSet Name="FK_Schedule_Teacher_Id" Association="Self.FK_Schedule_Teacher_Id">
+          <AssociationSet Name="FK_SCHEDULE_TEACHER_ID" Association="Self.FK_SCHEDULE_TEACHER_ID">
             <End Role="Yoga_User" EntitySet="Yoga_User" />
             <End Role="Schedule" EntitySet="Schedule" />
           </AssociationSet>
-          <AssociationSet Name="FK_Yoga_User_Roles_Id" Association="Self.FK_Yoga_User_Roles_Id">
+          <AssociationSet Name="FK_YOGA_USER_ROLES_ID" Association="Self.FK_YOGA_USER_ROLES_ID">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Yoga_User" EntitySet="Yoga_User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="yogadbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -365,7 +364,7 @@
           <Property Name="U_First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="U_Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="U_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="U_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="U_Password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="U_Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Availability" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="U_Birthday" Type="DateTime" Precision="0" />
