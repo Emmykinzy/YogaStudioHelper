@@ -40,6 +40,17 @@ namespace Database
             }
             
         }
+        public bool ValidateUserExist(string email)
+        {
+            try
+            {
+                var u = myDb.Yoga_User.Where(x => x.U_Email == email).Single();
+                return true;
+            }catch
+            {
+                return false;
+            }
+        }
 
         public IEnumerable<Yoga_User> getUserByEmail(string email)
         {

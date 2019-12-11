@@ -1,4 +1,5 @@
 ﻿using Database;
+using Scrypt;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,9 @@ namespace YogaStudioHelper.Controllers
     public class LoginSignUpController : Controller
     {
         DBMaster db = new DBMaster();
+
+        ScryptEncoder encoder = new ScryptEncoder();
+
         [HttpGet]
         public ActionResult LogInSignUp()
         {
@@ -78,8 +82,50 @@ namespace YogaStudioHelper.Controllers
         }
 
         [HttpPost]
-        public ActionResult SignUp(LoginVM loginVM)
+        public ActionResult SignUp(FormCollection collection)
         {
+            string email = collection["Email"];
+           
+            String password1 = collection["password1"].ToString();
+
+            String password2 = collection["password2"].ToString();
+
+
+            String firstName = collection["FirstName"].ToString();
+
+            String lastName = collection["LastName"].ToString();
+
+            // check if user exist 
+
+            bool validUserExist = db.ValidateUserExist(email);
+
+            if (validUserExist)
+            {
+                ViewBag.messageSignUp = "This email user is already register";
+                return View();
+
+            }
+
+            // add user if not already existing 
+
+            Yoga_User newUser = new Yoga_User();
+
+            newUser.U_Email = email;
+            newUser.U_First_Name = firstName;
+            newUser.U_Last_Name = lastName;
+            newUser.Roles_Id = 4;
+
+            // todo validate 2 password equals 
+            // encode hash the password
+            //newUser.U_Password = encoder.Encode(password2);
+
+            newUser.U_Password = password2;
+
+
+            db.CreateUser(newUser);
+            //CreateUser
+
+
             return View();
         }
     }
