@@ -27,15 +27,18 @@ namespace Database
 
         public bool ValidateUser(string email, string pass)
         {
-           var u = myDb.Yoga_User.Where(x => x.U_Email == email && x.U_Password == pass).Single();
-            if(u == null)
+            try
+            {
+                var u = myDb.Yoga_User.Where(x => x.U_Email == email && x.U_Password == pass).Single();
+
+                return true;
+                
+            }
+            catch
             {
                 return false;
             }
-            else
-            {
-                return true;
-            }
+            
         }
 
         public IEnumerable<Yoga_User> getUserByEmail(string email)
