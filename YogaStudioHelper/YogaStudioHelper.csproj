@@ -181,11 +181,9 @@
     <Content Include="Views\ManageUsers\CreateUser.cshtml" />
     <Content Include="Views\ManageUsers\FindUserAdvanced.cshtml" />
     <Content Include="Views\ManageUsers\UserList.cshtml" />
-    <Content Include="Views\ManageStudio\RoomList.cshtml" />
     <Content Include="Views\ManageStudio\CreateRoom.cshtml" />
     <Content Include="Views\ManageStudio\Room.cshtml" />
     <Content Include="Views\ManageStudio\Class.cshtml" />
-    <Content Include="Views\ManageStudio\ClassList.cshtml" />
     <Content Include="Views\ManageStudio\CreateClass.cshtml" />
     <Content Include="Views\ManageStudio\FindClass.cshtml" />
     <Content Include="Views\ManageStudio\ClassPass.cshtml" />
@@ -205,6 +203,10 @@
     <Content Include="Views\Report\Attendence.cshtml" />
     <Content Include="Views\Report\Sales.cshtml" />
     <Content Include="Views\LoginSignUp\SignUp.cshtml" />
+    <Content Include="Views\ManageStudio\ClassList.cshtml" />
+    <Content Include="Views\ManageStudio\RoomList.cshtml" />
+    <Content Include="Views\ManageStudio\FindClassList.cshtml" />
+    <Content Include="Views\ManageUsers\FindUserList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

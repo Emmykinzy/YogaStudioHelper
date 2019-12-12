@@ -37,28 +37,30 @@ namespace YogaStudioHelper.Controllers
                 IEnumerable<Yoga_User> list = db.getUserByEmail(email);
                 int id = list.First().Roles_Id;
                 string roleName = db.getRoleName(id);
-                if (roleName.Equals("ADMINISTRATOR"))
-                {
-                    Session["Auth"] = 1;
-                }
-                else if (roleName.Equals("TEACHER"))
-                {
-                    Session["Auth"] = 2;
-                }
-                else if (roleName.Equals("RECEPTIONIST"))
-                {
-                    Session["Auth"] = 3;
-                }
-                else if (roleName.Equals("STUDENT"))
-                {
-                    Session["Auth"] = 4;
-                }
-                else 
-                {
-                    Session["Auth"] = null;
-                }
 
-                ViewBag.message = "Valid, Login";
+                Session["Auth"] = 1;
+                //if (roleName.Equals("ADMINISTRATOR"))
+                //{
+                //    Session["Auth"] = 1;
+                //}
+                //else if (roleName.Equals("TEACHER"))
+                //{
+                //    Session["Auth"] = 2;
+                //}
+                //else if (roleName.Equals("RECEPTIONIST"))
+                //{
+                //    Session["Auth"] = 3;
+                //}
+                //else if (roleName.Equals("STUDENT"))
+                //{
+                //    Session["Auth"] = 4;
+                //}
+                //else 
+                //{
+                //    Session["Auth"] = null;
+                //}
+
+                //ViewBag.message = "Valid, Login";
 
 
                 return RedirectToAction("Homepage", "Home");
@@ -122,6 +124,7 @@ namespace YogaStudioHelper.Controllers
 
             Yoga_User newUser = new Yoga_User();
 
+            newUser.Active = true;
             newUser.U_Email = email;
             newUser.U_First_Name = firstName;
             newUser.U_Last_Name = lastName;

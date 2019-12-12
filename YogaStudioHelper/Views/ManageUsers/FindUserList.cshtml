@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Database.Yoga_User>
+@using Database
+@{
+    DBMaster db = new DBMaster();
+    ViewBag.Title = "FindUserList";
+    TempData["List"] = Model;
+}
+
+<h2>FindUserList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateUser")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Role
+        </th>
+        <th>
+            First Name
+        </th>
+        <th>
+            Last Name
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Active
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @db.getRoleName(item.Roles_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.U_First_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.U_Last_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.U_Email)
+            </td>
+            <td>
+                @item.Active
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Archive", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+<br />
+@Html.ActionLink("Back", "FindUser")
+

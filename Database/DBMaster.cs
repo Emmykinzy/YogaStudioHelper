@@ -89,9 +89,16 @@ namespace Database
             return myDb.Yoga_User.Where(x => x.U_Phone.Contains(phone));
         }
 
-        public IEnumerable<Yoga_User> getUserByRole(int role)
+        public IEnumerable<Yoga_User> getUserByRoleId(int role)
         {
+
             return myDb.Yoga_User.Where(x => x.Roles_Id == role);
+        }
+
+        public IEnumerable<Yoga_User> getUserByRoleName(string role)
+        {
+            int r = getRoleId(role);
+            return myDb.Yoga_User.Where(x => x.Roles_Id == r);
         }
 
         // User Create/Update Methods 
@@ -138,6 +145,12 @@ namespace Database
             return r.Roles_Name;
         }
 
+        public int getRoleId(string name)
+        {
+            var r = myDb.Roles.Where(x => x.Roles_Name == name).Single();
+            return r.Roles_Id;
+        }
+
         // Room Get Methods
         public IEnumerable<Room> getRooms()
         {
@@ -154,6 +167,7 @@ namespace Database
         public void CreateRoom(Room r)
         {
             myDb.Rooms.Add(r);
+            myDb.SaveChanges();
         }
 
         public void UpdateRoom(int id)
@@ -179,7 +193,9 @@ namespace Database
 
         public IEnumerable<Class> getClassesByName(string name)
         {
-            return myDb.Classes.Where(x => x.Class_Name.Contains(name));
+
+            return myDb.Classes.Where(x => x.Class_Name.Contains(name));  
+            
         }
 
         // Room Create/Update Methods 
@@ -187,6 +203,7 @@ namespace Database
         public void CreateClass(Class c)
         {
             myDb.Classes.Add(c);
+            myDb.SaveChanges();
         }
 
         public void UpdateClass(int id)
@@ -214,12 +231,12 @@ namespace Database
             return myDb.Promotions.ToList();
         }
 
-        public IEnumerable<Promotion> getClassesByDiscount(int dis)
+        public IEnumerable<Promotion> getPromotionByDiscount(int dis)
         {
             return myDb.Promotions.Where(x => x.Discount == dis);
         }
 
-        public IEnumerable<Promotion> getClassesByExtraPasses(int extra)
+        public IEnumerable<Promotion> getPromotionByExtraPasses(int extra)
         {
             return myDb.Promotions.Where(x => x.Num_Classes == extra);
         }
@@ -229,6 +246,7 @@ namespace Database
         public void CreatePromotion(Promotion p)
         {
             myDb.Promotions.Add(p);
+            myDb.SaveChanges();
         }
 
         public void UpdatePromotion(int id)
@@ -275,6 +293,7 @@ namespace Database
         public void CreateClassPass(Class_Passes cp)
         {
             myDb.Class_Passes.Add(cp);
+            myDb.SaveChanges();
         }
 
         public void UpdateClassPass(int id)
@@ -314,6 +333,7 @@ namespace Database
         public void CreateClass_Log(Class_Log cl)
         {
             myDb.Class_Log.Add(cl);
+            myDb.SaveChanges();
         }
 
 
@@ -346,6 +366,7 @@ namespace Database
         public void CreatePass_Log(Pass_Log pl)
         {
             myDb.Pass_Log.Add(pl);
+            myDb.SaveChanges();
         }
 
 

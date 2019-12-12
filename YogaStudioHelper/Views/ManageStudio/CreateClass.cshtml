@@ -21,7 +21,7 @@
                 </tr>
                 <tr>
                     <th>Class Length (Minutes):</th>
-                    <td>@Html.TextBox("LastName", null, new { @class = "inputs", @input = "number" })</td>
+                    <td>@Html.TextBox("ClassLength", null, new { @class = "inputs", @input = "number" })</td>
                 </tr>
                 <tr></tr>
                 <tr>
@@ -34,8 +34,11 @@
                 </tr>
             </table>
         }
-        
-        
+
+        <br />
+        <br />
+        <br />
+        @Html.ActionLink("Back", "Class")
     </div>
 
 

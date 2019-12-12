@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Class List";
+    TempData["List"] = Model;
 }
 
 <br />
@@ -46,4 +47,4 @@
 <br />
 <br />
 <br />
-@Html.ActionLink("Back", "Class")
+@Html.ActionLink("Back", "FindClass")

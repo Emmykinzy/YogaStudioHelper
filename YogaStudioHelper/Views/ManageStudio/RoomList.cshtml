@@ -1,34 +1,42 @@
-﻿
-@{
-    ViewBag.Title = "RoomList";
-}
+﻿@model IEnumerable<Database.Room>
 
+@{
+    ViewBag.Title = "Room List";
+}
 <br />
 <h2>Room List</h2>
 <br />
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 <table class="classes">
     <tr>
-        <th>Room Name</th>
-        <th>Capacity</th>
+        <th>
+            Room Name
+        </th>
+        <th>
+            Capacity
+        </th>
         <th></th>
     </tr>
+
+@foreach (var item in Model) {
     <tr>
-        <td>F-248</td>
-        <td>45</td>
         <td>
-            <button onclick="window.location.href ='/ManageStudio/EditRoom'" class="btn btn-default">Edit</button>
+            @Html.DisplayFor(modelItem => item.Room_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Room_Capacity)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditRoom", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Archive", "DeleteRoom", new { /* id=item.PrimaryKey */ })
         </td>
     </tr>
-    <tr>
-        <td>F-235</td>
-        <td>30</td>
-        <td>
-            <button onclick="window.location.href ='/ManageStudio/EditRoom'" class="btn btn-default">Edit</button>
-        </td>
-    </tr>
+}
+
 </table>
-
 <br />
-<button onclick="goBack()">Go Back</button>
-
-
+<br />
+<br />
+ @Html.ActionLink("Back", "Room")
