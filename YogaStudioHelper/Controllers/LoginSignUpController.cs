@@ -66,6 +66,7 @@ namespace YogaStudioHelper.Controllers
             else
             {
                 ViewBag.message = "Invalid Login Credentials";
+                ViewBag.StickyEmail = email; 
                 return View();
             }
            
@@ -99,27 +100,6 @@ namespace YogaStudioHelper.Controllers
 
             String lastName = collection["LastName"].ToString();
 
-            // check if user exist 
-
-            bool validUserExist = db.ValidateUserExist(email);
-
-            if (validUserExist)
-            {
-                ViewBag.messageSignUp = "This user email is already register";
-                return View();
-
-            }
-
-            // Check both password 
-            if(!string.Equals(password1, password2))
-            {
-                ViewBag.messageSignUp = "Please make sure the two passwords are the same";
-                return View();
-            }
-
-
-            // add user if not already existing 
-
             Yoga_User newUser = new Yoga_User();
 
             newUser.U_Email = email;
@@ -127,15 +107,43 @@ namespace YogaStudioHelper.Controllers
             newUser.U_Last_Name = lastName;
             newUser.Roles_Id = 4;
 
-            // todo validate 2 password equals 
+
+            // check if user exist 
+
+            bool validUserExist = db.ValidateUserExist(email);
+
+            if (validUserExist)
+            {
+                ViewBag.messageSignUp = "This user email is already register";
+
+                ViewBag.StickyUser = newUser;
+                
+                //ViewBag.set
+
+                return View();
+
+            }
+
+            // Check if both password equals
+            if(!string.Equals(password1, password2))
+            {
+                ViewBag.messageSignUp = "Please make sure the two passwords are the same";
+
+                ViewBag.StickyUser = newUser;
+
+                return View();
+            }
+
+
+         
             // encode hash the password
             newUser.U_Password = encoder.Encode(password2);
-
-            //newUser.U_Password = password2;
+             //newUser.U_Password = password2;
 
             ViewBag.messageSignUp = "Account created successfully";
 
 
+            // add user if not already existing 
             try
             {
                 //myDB.SaveChanges();
@@ -154,9 +162,6 @@ namespace YogaStudioHelper.Controllers
                 }
             }
 
-
-            
-            //CreateUser
 
 
             return View();
