@@ -2,6 +2,7 @@
 using Scrypt;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -57,6 +58,9 @@ namespace YogaStudioHelper.Controllers
                     Session["Auth"] = null;
                 }
 
+                ViewBag.message = "Valid, Login";
+
+
                 return RedirectToAction("Homepage", "Home");
             }
             else
@@ -101,10 +105,18 @@ namespace YogaStudioHelper.Controllers
 
             if (validUserExist)
             {
-                ViewBag.messageSignUp = "This email user is already register";
+                ViewBag.messageSignUp = "This user email is already register";
                 return View();
 
             }
+
+            // Check both password 
+            if(!string.Equals(password1, password2))
+            {
+                ViewBag.messageSignUp = "Please make sure the two passwords are the same";
+                return View();
+            }
+
 
             // add user if not already existing 
 
@@ -117,12 +129,33 @@ namespace YogaStudioHelper.Controllers
 
             // todo validate 2 password equals 
             // encode hash the password
-            //newUser.U_Password = encoder.Encode(password2);
+            newUser.U_Password = encoder.Encode(password2);
 
-            newUser.U_Password = password2;
+            //newUser.U_Password = password2;
+
+            ViewBag.messageSignUp = "Account created successfully";
 
 
-            db.CreateUser(newUser);
+            try
+            {
+                //myDB.SaveChanges();
+                db.CreateUser(newUser);
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in entityValidationErrors.ValidationErrors)
+                    {
+                        Response.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+
+                        Console.WriteLine("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                    }
+                }
+            }
+
+
+            
             //CreateUser
 
 
