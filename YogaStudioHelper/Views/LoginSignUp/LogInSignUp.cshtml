@@ -1,7 +1,24 @@
 ﻿
+
+@using Database
 @{
+
+
     ViewBag.Title = "LogInSignUp";
     string message = ViewBag.message;
+
+    String stickyEmail;
+    if (ViewBag.StickyEmail != null)
+    {
+        stickyEmail = ViewBag.StickyEmail;
+
+
+        //Yoga_User = ViewBag.StickyUser; 
+    }
+    else
+    {
+        stickyEmail = "";
+    }
 }
 
 <br />
@@ -17,7 +34,9 @@
             </tr>
             <tr>
                 <td>Email:</td>
-                <td>@Html.TextBox("Email", null, new { @class = "inputs",  required="required" })</td>
+                <td>
+                <input id="Email" name="Email" class="inputs" required="required" value=" @stickyEmail " />
+                </td>
             </tr>
             <tr>
                 <td>Password:</td>

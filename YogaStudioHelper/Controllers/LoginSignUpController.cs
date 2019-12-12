@@ -37,30 +37,28 @@ namespace YogaStudioHelper.Controllers
                 IEnumerable<Yoga_User> list = db.getUserByEmail(email);
                 int id = list.First().Roles_Id;
                 string roleName = db.getRoleName(id);
+                if (roleName.Equals("ADMINISTRATOR"))
+                {
+                    Session["Auth"] = 1;
+                }
+                else if (roleName.Equals("TEACHER"))
+                {
+                    Session["Auth"] = 2;
+                }
+                else if (roleName.Equals("RECEPTIONIST"))
+                {
+                    Session["Auth"] = 3;
+                }
+                else if (roleName.Equals("STUDENT"))
+                {
+                    Session["Auth"] = 4;
+                }
+                else 
+                {
+                    Session["Auth"] = null;
+                }
 
-                Session["Auth"] = 1;
-                //if (roleName.Equals("ADMINISTRATOR"))
-                //{
-                //    Session["Auth"] = 1;
-                //}
-                //else if (roleName.Equals("TEACHER"))
-                //{
-                //    Session["Auth"] = 2;
-                //}
-                //else if (roleName.Equals("RECEPTIONIST"))
-                //{
-                //    Session["Auth"] = 3;
-                //}
-                //else if (roleName.Equals("STUDENT"))
-                //{
-                //    Session["Auth"] = 4;
-                //}
-                //else 
-                //{
-                //    Session["Auth"] = null;
-                //}
-
-                //ViewBag.message = "Valid, Login";
+                ViewBag.message = "Valid, Login";
 
 
                 return RedirectToAction("Homepage", "Home");
@@ -68,6 +66,7 @@ namespace YogaStudioHelper.Controllers
             else
             {
                 ViewBag.message = "Invalid Login Credentials";
+                ViewBag.StickyEmail = email; 
                 return View();
             }
            
@@ -101,6 +100,14 @@ namespace YogaStudioHelper.Controllers
 
             String lastName = collection["LastName"].ToString();
 
+            Yoga_User newUser = new Yoga_User();
+
+            newUser.U_Email = email;
+            newUser.U_First_Name = firstName;
+            newUser.U_Last_Name = lastName;
+            newUser.Roles_Id = 4;
+
+
             // check if user exist 
 
             bool validUserExist = db.ValidateUserExist(email);
@@ -108,37 +115,35 @@ namespace YogaStudioHelper.Controllers
             if (validUserExist)
             {
                 ViewBag.messageSignUp = "This user email is already register";
+
+                ViewBag.StickyUser = newUser;
+                
+                //ViewBag.set
+
                 return View();
 
             }
 
-            // Check both password 
+            // Check if both password equals
             if(!string.Equals(password1, password2))
             {
                 ViewBag.messageSignUp = "Please make sure the two passwords are the same";
+
+                ViewBag.StickyUser = newUser;
+
                 return View();
             }
 
 
-            // add user if not already existing 
-
-            Yoga_User newUser = new Yoga_User();
-
-            newUser.Active = true;
-            newUser.U_Email = email;
-            newUser.U_First_Name = firstName;
-            newUser.U_Last_Name = lastName;
-            newUser.Roles_Id = 4;
-
-            // todo validate 2 password equals 
+         
             // encode hash the password
             newUser.U_Password = encoder.Encode(password2);
-
-            //newUser.U_Password = password2;
+             //newUser.U_Password = password2;
 
             ViewBag.messageSignUp = "Account created successfully";
 
 
+            // add user if not already existing 
             try
             {
                 //myDB.SaveChanges();
@@ -157,9 +162,6 @@ namespace YogaStudioHelper.Controllers
                 }
             }
 
-
-            
-            //CreateUser
 
 
             return View();
