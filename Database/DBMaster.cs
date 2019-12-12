@@ -105,35 +105,38 @@ namespace Database
         {
             IEnumerable<Yoga_User> userList = new List<Yoga_User>();
 
-            if (role != null)
+            if (role != "")
             {
                 IEnumerable<Yoga_User> list = getUserByRoleName(role);
                 userList = userList.Concat(list);
             }
 
-            if (email != null)
+            if (email != "")
             {
                 IEnumerable<Yoga_User> list = getUserByEmail(email);
+                //list.Where(x => x.Availability)
                 userList.Concat(list);
             }
 
-            if (fname != null)
+            if (fname != "")
             {
                 IEnumerable<Yoga_User> list = getUserByFirstName(fname);
                 userList.Concat(list);
             }
 
-            if (lname != null)
+            if (lname != "")
             {
                 IEnumerable<Yoga_User> list = getUserByLastName(lname);
                 userList.Concat(list);
             }
 
-            if (phone != null)
+            if (phone != "")
             {
                 IEnumerable<Yoga_User> list = getUserByPhone(phone);
                 userList.Concat(list);
             }
+
+
 
             return userList;
         }
