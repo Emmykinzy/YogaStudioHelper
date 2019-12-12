@@ -207,6 +207,7 @@
     <Content Include="Views\ManageStudio\RoomList.cshtml" />
     <Content Include="Views\ManageStudio\FindClassList.cshtml" />
     <Content Include="Views\ManageUsers\FindUserList.cshtml" />
+    <Content Include="Views\ManageUsers\FindUserListAdvanced.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

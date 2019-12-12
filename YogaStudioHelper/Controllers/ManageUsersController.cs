@@ -30,7 +30,7 @@ namespace YogaStudioHelper.Controllers
             
             if (userList.Count() == 0)
             {
-                ViewBag.FindClassMessage = "No user with an email containing " + email + " was found";
+                ViewBag.FindClassMessage = "No users with an email containing " + email + " was found";
                 return View();
             }
             else
@@ -72,32 +72,34 @@ namespace YogaStudioHelper.Controllers
             string lname = collection["LastName"];
             string phone = collection["Phone"];
 
-            IEnumerable<Yoga_User> userList  = Enumerable.Empty<Yoga_User>();
+            IEnumerable<Yoga_User> list = db.getUserAdvancedSearch(role, fname, lname, email, phone);
 
-            IEnumerable<Yoga_User> roleList  = Enumerable.Empty<Yoga_User>();
-            IEnumerable<Yoga_User> emailList  = Enumerable.Empty<Yoga_User>();
-            IEnumerable<Yoga_User> fnameList  = Enumerable.Empty<Yoga_User>();
-            IEnumerable<Yoga_User> lnameList  = Enumerable.Empty<Yoga_User>();
-
-            if (role != null)
+            if (list.Count() == 0)
             {
-                roleList = db.getUserByRoleName(role);
-                userList.Concat(userList);
+                ViewBag.FindClassMessage = "No users were found";
+                return View();
             }
-
-            if (email != null)
+            else
             {
-                emailList = db.getUserByEmail(email);
-                userList.Concat(userList);
+                TempData["userList"] = list;
+                return RedirectToAction("FindUserListAdvanced");
             }
+            
+        }
 
-            if (fname != null)
+        public ActionResult FindUserListAdvanced()
+        {
+            if (TempData["userList"] != null)
             {
-                fnameList = db.getUserByFirstName(fname);
-                userList.Concat(userList);
+                IEnumerable<Yoga_User> c = TempData["userList"] as IEnumerable<Yoga_User>;
+                return View(c);
             }
+            else
+            {
+                IEnumerable<Yoga_User> c = TempData["List"] as IEnumerable<Yoga_User>;
 
-            return View();
+                return View(c);
+            }
         }
 
         public ActionResult CreateUser()

@@ -101,6 +101,43 @@ namespace Database
             return myDb.Yoga_User.Where(x => x.Roles_Id == r);
         }
 
+        public IEnumerable<Yoga_User> getUserAdvancedSearch(string role, string fname, string lname, string email, string phone)
+        {
+            IEnumerable<Yoga_User> userList = new List<Yoga_User>();
+
+            if (role != null)
+            {
+                IEnumerable<Yoga_User> list = getUserByRoleName(role);
+                userList = userList.Concat(list);
+            }
+
+            if (email != null)
+            {
+                IEnumerable<Yoga_User> list = getUserByEmail(email);
+                userList.Concat(list);
+            }
+
+            if (fname != null)
+            {
+                IEnumerable<Yoga_User> list = getUserByFirstName(fname);
+                userList.Concat(list);
+            }
+
+            if (lname != null)
+            {
+                IEnumerable<Yoga_User> list = getUserByLastName(lname);
+                userList.Concat(list);
+            }
+
+            if (phone != null)
+            {
+                IEnumerable<Yoga_User> list = getUserByPhone(phone);
+                userList.Concat(list);
+            }
+
+            return userList;
+        }
+
         // User Create/Update Methods 
         public void CreateUser(Yoga_User y)
         {
