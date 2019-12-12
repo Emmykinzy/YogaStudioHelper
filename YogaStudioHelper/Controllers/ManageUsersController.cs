@@ -11,10 +11,6 @@ namespace YogaStudioHelper.Controllers
     {
         DBMaster db = new DBMaster();
         // GET: ManageUsers
-        public ActionResult ManageUsers()
-        {
-            return View();
-        }
 
         [HttpGet]
         public ActionResult FindUser()
@@ -112,14 +108,34 @@ namespace YogaStudioHelper.Controllers
             }
         }
 
+        [HttpGet]
         public ActionResult CreateUser()
         {
             return View();
         }
 
+        [HttpPost]
+        public ActionResult CreateUser(FormCollection collection)
+        {
+            string role = collection["role"];
+            string email = collection["Email"];
+            string fname = collection["FirstName"];
+            string lname = collection["LastName"];
+            Yoga_User y = new Yoga_User();
+            y.Roles_Id = db.getRoleId(role);
+            y.U_Email = email;
+            y.U_First_Name = fname;
+            y.U_Last_Name = lname;
+            y.Active = false;
+
+            db.CreateUser(y);
+            return View();
+        }
+
         public ActionResult UserList()
         {
-            return View();
+            IEnumerable<Yoga_User> list = db.getUsers();
+            return View(list);
         }
 
         public ActionResult EditUser()
