@@ -101,42 +101,55 @@ namespace Database
             return myDb.Yoga_User.Where(x => x.Roles_Id == r);
         }
 
-        public IEnumerable<Yoga_User> getUserAdvancedSearch(string role, string fname, string lname, string email, string phone)
+        public IEnumerable<Yoga_User> getUserAdvancedSearch(string role, string lname, string email)
         {
             IEnumerable<Yoga_User> userList = new List<Yoga_User>();
 
-            if (role != "")
+            if(role == "Select Role" && email == "" && lname == "")
+            {
+                IEnumerable<Yoga_User> list = getUsers();
+                userList = userList.Concat(list);
+            }
+            else if (role != "Select Role" && email != "" && lname != "")
+            {
+                IEnumerable<Yoga_User> list = getUserByRoleName(role);
+                var l = list.Where(x => x.Roles_Id == getRoleId(role) && x.U_Email.Contains(email) && x.U_Last_Name.Contains(lname));
+                userList = userList.Concat(l);
+            }
+            else if(role != "Select Role" && email != "" && lname == "")
+            {
+                IEnumerable<Yoga_User> list = getUserByRoleName(role);
+                var l = list.Where(x => x.Roles_Id == getRoleId(role) && x.U_Email.Contains(email));
+                userList = userList.Concat(l);
+            }
+            else if(role != "Select Role" && email == ""  && lname != "")
+            {
+                IEnumerable<Yoga_User> list = getUserByRoleName(role);
+                var l = list.Where(x => x.U_Last_Name.Contains(lname));
+                userList = userList.Concat(l);
+            }
+            else if( role == "Select Role" && email != "" && lname != "")
+            {
+                IEnumerable<Yoga_User> list = getUserByEmail(email);
+                var l = list.Where(x => x.U_Last_Name.Contains(lname));
+                userList = userList.Concat(l);
+            }
+            else if(role != "Select Role" && email == "" && lname == "")
             {
                 IEnumerable<Yoga_User> list = getUserByRoleName(role);
                 userList = userList.Concat(list);
             }
-
-            if (email != "")
+            else if (role == "Select Role" && email != "" && lname == "")
             {
                 IEnumerable<Yoga_User> list = getUserByEmail(email);
-                //list.Where(x => x.Availability)
-                userList.Concat(list);
+                userList = userList.Concat(list);
             }
-
-            if (fname != "")
-            {
-                IEnumerable<Yoga_User> list = getUserByFirstName(fname);
-                userList.Concat(list);
-            }
-
-            if (lname != "")
+            else if (role == "Select Role" && email == "" && lname != "")
             {
                 IEnumerable<Yoga_User> list = getUserByLastName(lname);
-                userList.Concat(list);
+                userList = userList.Concat(list);
             }
-
-            if (phone != "")
-            {
-                IEnumerable<Yoga_User> list = getUserByPhone(phone);
-                userList.Concat(list);
-            }
-
-
+ 
 
             return userList;
         }
@@ -187,7 +200,7 @@ namespace Database
 
         public int getRoleId(string name)
         {
-            var r = myDb.Roles.Where(x => x.Roles_Name == name).Single();
+            var r = myDb.Roles.Where(x => x.Roles_Name == name).FirstOrDefault();
             return r.Roles_Id;
         }
 

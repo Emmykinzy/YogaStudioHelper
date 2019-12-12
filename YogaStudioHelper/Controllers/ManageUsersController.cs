@@ -26,6 +26,7 @@ namespace YogaStudioHelper.Controllers
         public ActionResult FindUser(FormCollection collection)
         {
             string email = collection["Email"];
+            string active = collection["Active"];
             IEnumerable<Yoga_User> userList = db.getUserByEmail(email);
             
             if (userList.Count() == 0)
@@ -35,8 +36,18 @@ namespace YogaStudioHelper.Controllers
             }
             else
             {
-                TempData["userList"] = userList;
-                return RedirectToAction("FindUserList");
+                if(active == "true")
+                {
+                    IEnumerable<Yoga_User> l = userList.Where(x => x.Active == true);
+                    TempData["userList"] = l;
+                    return RedirectToAction("FindUserList");
+                }
+                else
+                {
+                    TempData["userList"] = userList;
+                    return RedirectToAction("FindUserList");
+                }
+               
             }
             
            
@@ -68,11 +79,10 @@ namespace YogaStudioHelper.Controllers
         {
             string role = collection["role"];
             string email = collection["Email"];
-            string fname =  collection["FirstName"];
             string lname = collection["LastName"];
-            string phone = collection["Phone"];
+           
 
-            IEnumerable<Yoga_User> list = db.getUserAdvancedSearch(role, fname, lname, email, phone);
+            IEnumerable<Yoga_User> list = db.getUserAdvancedSearch(role, lname, email);
 
             if (list.Count() == 0)
             {
