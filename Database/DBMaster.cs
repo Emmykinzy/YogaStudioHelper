@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Data.Entity.Validation;
+//using System.Web.Mvc;
+using IdentityModel.Client;
+using Scrypt;
 
 namespace Database
 {
@@ -12,7 +15,8 @@ namespace Database
     public class DBMaster
     {
          yogadbEntities myDb = new yogadbEntities();
-        
+        ScryptEncoder encoder = new ScryptEncoder();
+
 
         // User Get Methods 
         public IEnumerable<Yoga_User> getUsers()
@@ -29,17 +33,25 @@ namespace Database
         {
             try
             {
-                var u = myDb.Yoga_User.Where(x => x.U_Email == email && x.U_Password == pass).Single();
 
-                return true;
-                
+                var u = myDb.Yoga_User.Where(x => x.U_Email == email).Single();
+
+                //  var u = myDb.Yoga_User.Where(x => x.U_Email == email && x.U_Password == pass
+                bool isValidCustomer = encoder.Compare(pass, u.U_Password);
+
+                return isValidCustomer; 
+
             }
             catch
             {
                 return false;
             }
-            
+
         }
+
+
+            
+ 
         public bool ValidateUserExist(string email)
         {
             try
@@ -86,7 +98,9 @@ namespace Database
         public void CreateUser(Yoga_User y)
         {
             myDb.Yoga_User.Add(y);
+
             myDb.SaveChanges();
+
         }
 
         public void UpdateUser(int id)
