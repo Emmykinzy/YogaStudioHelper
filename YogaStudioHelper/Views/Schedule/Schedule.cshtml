@@ -1,19 +1,58 @@
-﻿
+﻿@model IEnumerable<Database.Schedule>
+@using Database
 @{
     ViewBag.Title = "Schedule";
     DateTime localDate = DateTime.Now;
-    DateTime localPlus1;
-    DateTime localPlus2;
-    DateTime localPlus3;
-    DateTime localPlus4;
-    DateTime localPlus5;
-    DateTime localPlus6;
-    localPlus1 = localDate.AddDays(1);
-    localPlus2 = localPlus1.AddDays(1);
-    localPlus3 = localPlus2.AddDays(1);
-    localPlus4 = localPlus3.AddDays(1);
-    localPlus5 = localPlus4.AddDays(1);
-    localPlus6 = localPlus5.AddDays(1);
+    DateTime localPlus1 = localDate.AddDays(1);
+    DateTime localPlus2 = localPlus1.AddDays(1);
+    DateTime localPlus3 = localPlus2.AddDays(1);
+    DateTime localPlus4 = localPlus3.AddDays(1);
+    DateTime localPlus5 = localPlus4.AddDays(1);
+    DateTime localPlus6 = localPlus5.AddDays(1);
+
+    int date1 = localDate.Day;
+    int date2 = localPlus1.Day;
+    int date3 = localPlus2.Day;
+    int date4 = localPlus3.Day;
+    int date5 = localPlus4.Day;
+    int date6 = localPlus5.Day;
+    int date7 = localPlus6.Day;
+    int count1 = 0;
+
+
+
+}
+
+
+@foreach (var item in Model)
+{
+    int day = item.Class_Date.Day;
+    int hr = item.Start_Time.Hours;
+
+    if (day == date1 + count1)
+    {
+        int hr2 = 8;
+        for (int hr1 = 7; hr1 < 19; hr1++)
+        {
+            if (hr >= hr1 && hr < hr2)
+            {
+                string className = @item.Start_Time.ToString(@"hh\:mm") + " " + @item.Class.Class_Name;
+                string sId = "r" + @hr + "c" + @count1;
+                <img src onerror="@("insertClass('"+sId+"','"+className+"')")">
+                // @day<span>&nbsp;</span>@item.Class.Class_Name<span>&nbsp;</span>@item.Start_Time
+            }
+            hr2++;
+        }
+    }
+    else
+    {
+        count1++;
+    }
+    if (count1 == 7)
+    {
+        count1 = 0;
+    }
+
 }
 
 <h3>Class Schedule</h3>
@@ -26,33 +65,33 @@
             @if (Session["Auth"] == null || (int)Session["Auth"] == 2 || (int)Session["Auth"] == 4)
             {
                 <p id="modalContent">
-                Our hot flow is a Vinyasa-style class created to heal, detoxify and exhilarate the body and mind by linking the breath with movement.
-                Hot flow incorporates creative flow sequences with a strong emphasis on the foundation postures which are designed to help build breath 
-                awareness, balance, flexibility and overall strength and endurance in the body’s core.<br /><br />
-                This class is taught in a heated room between (38 °C / 100 °F) to (39 °C / 102 °F).<br />
-                This class may be taught with music.<br />
+                    Our hot flow is a Vinyasa-style class created to heal, detoxify and exhilarate the body and mind by linking the breath with movement.
+                    Hot flow incorporates creative flow sequences with a strong emphasis on the foundation postures which are designed to help build breath
+                    awareness, balance, flexibility and overall strength and endurance in the body’s core.<br /><br />
+                    This class is taught in a heated room between (38 °C / 100 °F) to (39 °C / 102 °F).<br />
+                    This class may be taught with music.<br />
 
-                All levels, including beginners, are welcome and will find this class accessible.<br /><br />
-                <b>Date:</b> 26 Nov 2019
-                <b>Time:</b> 7:15am to 8:15am<br />
-                <b>Teacher:</b> Sarah Johnson<br />
-                <b>Room:</b> D-209<br />
-                <b>Signed up:</b> 19/30 Students<br /><br /><br />
+                    All levels, including beginners, are welcome and will find this class accessible.<br /><br />
+                    <b>Date:</b> 26 Nov 2019
+                    <b>Time:</b> 7:15am to 8:15am<br />
+                    <b>Teacher:</b> Sarah Johnson<br />
+                    <b>Room:</b> D-209<br />
+                    <b>Signed up:</b> 19/30 Students<br /><br /><br />
 
-                <a href="@Url.Action("ClassSignUp", "Schedule")" class="btn btn-default">Sign Up</a> 
+                    <a href="@Url.Action("ClassSignUp", "Schedule")" class="btn btn-default">Sign Up</a>
                 </p>
             }
             else
             {
                 <p id="modalContent">
-                <b>Date:</b> 26 Nov 2019<br />
-                <b>Time: </b>7:15am to 8:15am<br />
-                <b>Teacher: </b>Sarah Johnson<br />
-                <b>Room: </b> D-209<br />
-                <b>Signed up: </b> 19/30 Students<br /><br />
-                
-                <div id="countDown"></div><br />
-                <a href="@Url.Action("ClassSignUp", "Schedule")" id ="signupBtn" class="btn btn-default disabledA">Student Sign In</a> 
+                    <b>Date:</b> 26 Nov 2019<br />
+                    <b>Time: </b>7:15am to 8:15am<br />
+                    <b>Teacher: </b>Sarah Johnson<br />
+                    <b>Room: </b> D-209<br />
+                    <b>Signed up: </b> 19/30 Students<br /><br />
+
+                    <div id="countDown"></div><br />
+                    <a href="@Url.Action("ClassSignUp", "Schedule")" id="signupBtn" class="btn btn-default disabledA">Student Sign In</a>
                 </p>
             }
         </div>
@@ -60,207 +99,212 @@
     <div>
         <button class="floatRight btn btn-default">Next</button>
     </div>
-        <form action="/Form/FormOne" method="post" class="light-pad">
-         <select id="teacher">
-             <option>Select Teacher</option>
-         </select>&nbsp;
-         <button type="submit" class="btn btn-default">Sort</button>  
-        </form>
-   
-        <table class="schedule">
-            <tr>
-                <th></th>
-                <th>@localDate.ToString("dddd") <br />@localDate.ToString("dd MMM yyy")</th>
-                <th>@localPlus1.ToString("dddd") <br />@localPlus1.ToString("dd MMM yyy")</th>
-                <th>@localPlus2.ToString("dddd") <br />@localPlus2.ToString("dd MMM yyy")</th>
-                <th>@localPlus3.ToString("dddd") <br />@localPlus3.ToString("dd MMM yyy")</th>
-                <th>@localPlus4.ToString("dddd") <br />@localPlus4.ToString("dd MMM yyy")</th>
-                <th>@localPlus5.ToString("dddd") <br />@localPlus5.ToString("dd MMM yyy")</th>
-                <th>@localPlus6.ToString("dddd") <br />@localPlus6.ToString("dd MMM yyy")</th>
-            </tr>
-            <tr>
-                <th>7:00 - 8:00</th>
-                <td>
-                    <a id="1" onclick="classInfo(this.id)">7:15 Hot Yoga</a>&nbsp;&nbsp;&nbsp;
-                    <a id="2" onclick="classInfo(this.id)">7:45 Baby Yoga</a>
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th>8:00 - 9:00</th>
-                <td><p><a id="3" onclick="signUp(this.id)">8:00 Begginer's Yoga</a></p></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th>9:00 - 10:00</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th>10:00 - 11:00</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th>11:00 - 12:00</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th>12:00 - 13:00</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th>13:00 - 14:00</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th>14:00 - 15:00</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th>15:00 - 16:00</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-            <tr>
-                <th>16:00 - 17:00</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th>17:00 - 18:00</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th>18:00 - 19:00</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <th>19:00 - 20:00</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
-    </div>
+    <form action="/Form/FormOne" method="post" class="light-pad">
+        <select id="teacher">
+            <option>Select Teacher</option>
+        </select>&nbsp;
+        <button type="submit" class="btn btn-default">Sort</button>
+    </form>
+
+    <table class="schedule">
+        <tr>
+            <th></th>
+            <th>@localDate.ToString("dddd") <br />@localDate.ToString("dd MMM yyy")</th>
+            <th>@localPlus1.ToString("dddd") <br />@localPlus1.ToString("dd MMM yyy")</th>
+            <th>@localPlus2.ToString("dddd") <br />@localPlus2.ToString("dd MMM yyy")</th>
+            <th>@localPlus3.ToString("dddd") <br />@localPlus3.ToString("dd MMM yyy")</th>
+            <th>@localPlus4.ToString("dddd") <br />@localPlus4.ToString("dd MMM yyy")</th>
+            <th>@localPlus5.ToString("dddd") <br />@localPlus5.ToString("dd MMM yyy")</th>
+            <th>@localPlus6.ToString("dddd") <br />@localPlus6.ToString("dd MMM yyy")</th>
+        </tr>
+        <tr>
+            <th>7:00 - 8:00</th>
+            <td id="r7c0"></td>
+            <td id="r7c1"></td>
+            <td id="r7c2"></td>
+            <td id="r7c3"></td>
+            <td id="r7c4"></td>
+            <td id="r7c5"></td>
+            <td id="r7c6"></td>
+        </tr>
+        <tr>
+            <th>8:00 - 9:00</th>
+            <td id="r8c0"></td>
+            <td id="r8c1"></td>
+            <td id="r8c2"></td>
+            <td id="r8c3"></td>
+            <td id="r8c4"></td>
+            <td id="r8c5"></td>
+            <td id="r8c6"></td>
+        </tr>
+        <tr>
+            <th>9:00 - 10:00</th>
+            <td id="r9c0"></td>
+            <td id="r9c1"></td>
+            <td id="r9c2"></td>
+            <td id="r9c3"></td>
+            <td id="r9c4"></td>
+            <td id="r9c5"></td>
+            <td id="r9c6"></td>
+        </tr>
+        <tr>
+            <th>10:00 - 11:00</th>
+            <td id="r10c0"></td>
+            <td id="r10c1"></td>
+            <td id="r10c2"></td>
+            <td id="r10c3"></td>
+            <td id="r10c4"></td>
+            <td id="r10c5"></td>
+            <td id="r10c6"></td>
+        </tr>
+        <tr>
+            <th>11:00 - 12:00</th>
+            <td id="r11c0"></td>
+            <td id="r11c1"></td>
+            <td id="r11c2"></td>
+            <td id="r11c3"></td>
+            <td id="r11c4"></td>
+            <td id="r11c5"></td>
+            <td id="r11c6"></td>
+        </tr>
+        <tr>
+            <th>12:00 - 13:00</th>
+            <td id="r12c0"></td>
+            <td id="r12c1"></td>
+            <td id="r12c2"></td>
+            <td id="r12c3"></td>
+            <td id="r12c4"></td>
+            <td id="r12c5"></td>
+            <td id="r12c6"></td>
+        </tr>
+        <tr>
+            <th>13:00 - 14:00</th>
+            <td id="r13c0"></td>
+            <td id="r13c1"></td>
+            <td id="r13c2"></td>
+            <td id="r13c3"></td>
+            <td id="r13c4"></td>
+            <td id="r13c5"></td>
+            <td id="r13c6"></td>
+        </tr>
+        <tr>
+            <th>14:00 - 15:00</th>
+            <td id="r14c0"></td>
+            <td id="r14c1"></td>
+            <td id="r14c2"></td>
+            <td id="r14c3"></td>
+            <td id="r14c4"></td>
+            <td id="r14c5"></td>
+            <td id="r14c6"></td>
+        </tr>
+        <tr>
+            <th>15:00 - 16:00</th>
+            <td id="r15c0"></td>
+            <td id="r15c1"></td>
+            <td id="r15c2"></td>
+            <td id="r15c3"></td>
+            <td id="r15c4"></td>
+            <td id="r15c5"></td>
+            <td id="r15c6"></td>
+        </tr>
+        <tr>
+            <th>16:00 - 17:00</th>
+            <td id="r16c0"></td>
+            <td id="r16c1"></td>
+            <td id="r16c2"></td>
+            <td id="r16c3"></td>
+            <td id="r16c4"></td>
+            <td id="r16c5"></td>
+            <td id="r16c6"></td>
+        </tr>
+        <tr>
+            <th>17:00 - 18:00</th>
+            <td id="r17c0"></td>
+            <td id="r17c1"></td>
+            <td id="r17c2"></td>
+            <td id="r17c3"></td>
+            <td id="r17c4"></td>
+            <td id="r17c5"></td>
+            <td id="r17c6"></td>
+        </tr>
+        <tr>
+            <th>18:00 - 19:00</th>
+            <td id="r18c0"></td>
+            <td id="r18c1"></td>
+            <td id="r18c2"></td>
+            <td id="r18c3"></td>
+            <td id="r18c4"></td>
+            <td id="r18c5"></td>
+            <td id="r18c6"></td>
+        </tr>
+        <tr>
+            <th>19:00 - 20:00</th>
+            <td id="r19c0"></td>
+            <td id="r19c1"></td>
+            <td id="r19c2"></td>
+            <td id="r19c3"></td>
+            <td id="r19c4"></td>
+            <td id="r19c5"></td>
+            <td id="r19c6"></td>
+        </tr>
+    </table>
+
+
+
+</div>
 
 <script>
+    function insertClass(id, text) {
 
-var modal = document.getElementById("myModal");
+        document.getElementById(id).innerHTML = text;
 
-var span = document.getElementsByClassName("close")[0];
-   
- function classInfo(clickedId) {
-
-    var el = document.getElementById("1");
-    var test = el.innerHTML;
-    //document.getElementById("modalContent").innerHTML = test;
-    modal.style.display = "block";
-      
-}
-
-
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
     }
 
-  var countDownDate = new Date("Jan 5, 2020 15:00:00").getTime();
-    
-  var x = setInterval(function() {
+    var modal = document.getElementById("myModal");
 
-  var now = new Date().getTime();
-  var distance = countDownDate - now;
-    
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    
-  document.getElementById("countDown").innerHTML = "<b>Sign In Available In: </b><span style='color:red;'>"+ days + "d " + hours + "h "
-  + minutes + "m " + seconds + "s</span>";
-    
-  if (distance < 0) {
-    clearInterval(x);
-      document.getElementById("demo").innerHTML = "";
-      document.getElementById("signupBtn").classList.remove("disabledA")
+    var span = document.getElementsByClassName("close")[0];
 
-  }
-}, 1000);
+    function classInfo(clickedId) {
+
+        var el = document.getElementById("1");
+        var test = el.innerHTML;
+        //document.getElementById("modalContent").innerHTML = test;
+        modal.style.display = "block";
+
+    }
+
+
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    var countDownDate = new Date("Jan 5, 2020 15:00:00").getTime();
+
+    var x = setInterval(function () {
+
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countDown").innerHTML = "<b>Sign In Available In: </b><span style='color:red;'>" + days + "d " + hours + "h "
+            + minutes + "m " + seconds + "s</span>";
+
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("demo").innerHTML = "";
+            document.getElementById("signupBtn").classList.remove("disabledA")
+
+        }
+    }, 1000);
 </script>
 
