@@ -18,7 +18,9 @@ namespace Database
         ScryptEncoder encoder = new ScryptEncoder();
 
 
-        // User Get Methods 
+
+        // USER Methods 
+
         public IEnumerable<Yoga_User> getUsers()
         {
             return myDb.Yoga_User.ToList();
@@ -50,8 +52,6 @@ namespace Database
         }
 
 
-            
- 
         public bool ValidateUserExist(string email)
         {
             try
@@ -191,7 +191,11 @@ namespace Database
             myDb.SaveChanges();
         }
 
-        //Role Get Methods
+
+
+
+
+        //  ROLES Methods
         public string getRoleName(int id)
         {
             var r = myDb.Roles.Where(x => x.Roles_Id == id).Single();
@@ -204,7 +208,15 @@ namespace Database
             return r.Roles_Id;
         }
 
-        // Room Get Methods
+
+
+        // Room Methods
+
+        public Room getRoom(int id)
+        {
+            var room = myDb.Rooms.Where(x => x.Room_Id == id).Single();
+            return room;
+        }
         public IEnumerable<Room> getRooms()
         {
             return myDb.Rooms.ToList();
@@ -215,26 +227,33 @@ namespace Database
             return myDb.Rooms.Where(x => x.Room_Name.Contains(name));
         }
 
-        // Room Create/Update Methods 
-
         public void CreateRoom(Room r)
         {
             myDb.Rooms.Add(r);
             myDb.SaveChanges();
         }
 
-        public void UpdateRoom(int id)
+        public void UpdateRoom(Room newRoom)
         {
-            var or = myDb.Rooms.Where(x => x.Room_Id == id).Single();
+            var or = myDb.Rooms.Where(x => x.Room_Id == newRoom.Room_Id).Single();
 
-            Room nr = new Room();
 
-            nr.Room_Name = or.Room_Name;
-            nr.Room_Capacity = or.Room_Capacity;
+            or.Room_Name = newRoom.Room_Name;
+            or.Room_Capacity = newRoom.Room_Capacity;
 
             myDb.SaveChanges();
         }
 
+        // Add active in DB to be able to achive 
+        public void ArchiveRoom(int id)
+        {
+            var or = myDb.Rooms.Where(x => x.Room_Id == id).Single();
+
+            myDb.Rooms.Remove(or);
+            //or.R = false;
+
+            myDb.SaveChanges();
+        }
 
 
 
@@ -244,6 +263,14 @@ namespace Database
             return myDb.Classes.ToList();
         }
 
+        public Class getClass(int id)
+        {
+
+            var oc = myDb.Classes.Where(x => x.Class_Id == id).Single();
+            return oc;
+        }
+
+
         public IEnumerable<Class> getClassesByName(string name)
         {
 
@@ -251,7 +278,6 @@ namespace Database
             
         }
 
-        // Room Create/Update Methods 
 
         public void CreateClass(Class c)
         {
@@ -259,6 +285,8 @@ namespace Database
             myDb.SaveChanges();
         }
 
+
+        //not sure about this one 
         public void UpdateClass(int id)
         {
             var oc = myDb.Classes.Where(x => x.Class_Id == id).Single();
@@ -273,12 +301,30 @@ namespace Database
             myDb.SaveChanges();
         }
 
+        public void EditClass(Class newClass)
+        {
+            var oc = myDb.Classes.Where(x => x.Class_Id == newClass.Class_Id).Single();
 
+            //Class nc = new Class();
+
+            oc.Class_Name = newClass.Class_Name;
+            oc.Class_Desc = newClass.Class_Desc;
+            oc.Class_Length = newClass.Class_Length;
+            oc.Active = newClass.Active;
+
+            myDb.SaveChanges();
+        }
 
 
 
         //Promotion Get Methods
 
+        public Promotion getPromotion(int id)
+        {
+
+            var promo = myDb.Promotions.Where(x => x.Promotion_Id == id).Single();
+            return promo; 
+        }
         public IEnumerable<Promotion> getPromotions()
         {
             return myDb.Promotions.ToList();
@@ -323,6 +369,13 @@ namespace Database
 
         //Class Passes Get Methods
 
+
+        public Class_Passes getClassPasse(int id)
+        {
+            //return myDb.Class_Passes.ToList();
+            var class_passe = myDb.Class_Passes.Where(x => x.Pass_Id == id).Single();
+            return class_passe;
+        }
         public IEnumerable<Class_Passes> getClassPasses()
         {
             return myDb.Class_Passes.ToList();
@@ -349,16 +402,18 @@ namespace Database
             myDb.SaveChanges();
         }
 
-        public void UpdateClassPass(int id)
+        public void UpdateClassPass(Class_Passes pass)
         {
-            var ocp = myDb.Class_Passes.Where(x => x.Pass_Id == id).Single();
+
+
+            var ocp = myDb.Class_Passes.Where(x => x.Pass_Id == pass.Pass_Id).Single();
 
             Class_Passes ncp = new Class_Passes();
 
-            ocp.Pass_Name = ncp.Pass_Name;
-            ocp.Pass_Size = ncp.Pass_Size;
-            ocp.Pass_Price = ncp.Pass_Price;
-            ocp.Active = ncp.Active;
+            ocp.Pass_Name = pass.Pass_Name;
+            ocp.Pass_Size = pass.Pass_Size;
+            ocp.Pass_Price = pass.Pass_Price;
+            ocp.Active = pass.Active;
 
             myDb.SaveChanges();
         }

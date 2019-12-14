@@ -1,31 +1,63 @@
-﻿
+﻿@model IEnumerable<Database.Promotion>
+
 @{
     ViewBag.Title = "PromotionList";
 }
-<br />
-<h2>Promotion List</h2>
-<br />
-<table class="classes">
+
+<h2>PromotionList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
     <tr>
-        <th>Promotion Name</th>
-        <th>Discount</th>
-        <th>Extra Passes</th>
-        <th>Class Pass</th>
-        <th>Promotion End</th>
+        <th>
+            @Html.DisplayNameFor(model => model.Promotion_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pass_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Promo_Desc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Discount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Num_Classes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Promo_End)
+        </th>
         <th></th>
     </tr>
+
+@foreach (var item in Model) {
     <tr>
-        <td>Christmas Promo</td>
-        <td>20%</td>
-        <td></td>
-        <td>10 Pass Packet</td>
-        <td>26/12/2019</td>
         <td>
-            <button onclick="window.location.href ='/ManageStudio/EditPromotion'" class="btn btn-default">Edit</button>
+            @Html.DisplayFor(modelItem => item.Promotion_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pass_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Promo_Desc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Discount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Num_Classes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Promo_End)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditPromotion", new {  id=item.Promotion_Id  }) |
+            @Html.ActionLink("Details", "Details", new {  id=item.Promotion_Id  }) |
+            @Html.ActionLink("Delete", "Delete", new {  id=item.Promotion_Id  })
         </td>
     </tr>
+}
+
 </table>
-
-<br />
-<button onclick="goBack()">Go Back</button>
-

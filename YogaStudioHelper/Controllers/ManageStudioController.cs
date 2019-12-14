@@ -44,10 +44,50 @@ namespace YogaStudioHelper.Controllers
             db.CreateRoom(r);
             return RedirectToAction("RoomList");
         }
-        public ActionResult EditRoom()
+
+        //Ben todo 
+
+
+        [HttpGet]
+        public ActionResult EditRoom(int id)
         {
+            var roomEdit = db.getRoom(id);
+
+
+            ViewBag.EditRoom = roomEdit;
+
             return View();
         }
+       // todo 
+        [HttpPost]
+        public ActionResult EditRoom(FormCollection collection)
+        {
+
+            int id = (int)TempData["EditRoomId"];
+
+
+            var roomEdit = db.getRoom(id);
+
+            string roomname = collection["roomName"];
+            int capacity = Int32.Parse(collection["capacity"]);
+
+
+            roomEdit.Room_Name = roomname;
+            roomEdit.Room_Capacity = capacity;
+
+            db.UpdateRoom(roomEdit);
+            return RedirectToAction("RoomList");
+
+        }
+
+        public ActionResult DeleteRoom(int id)
+        {
+            db.ArchiveRoom(id);
+
+
+            return RedirectToAction("RoomList");
+        }
+
 
         public ActionResult Class()
         {
@@ -148,9 +188,82 @@ namespace YogaStudioHelper.Controllers
             return RedirectToAction("ClassList");
         }
 
-        public ActionResult EditClass()
+        // TODO
+
+        [HttpGet]
+        public ActionResult EditClass(int id)
         {
+            var classEdit = db.getClass(id);
+
+
+            ViewBag.EditClass = classEdit; 
+
+
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult EditClass(FormCollection collection)
+        {
+            // TempData["EditClassId"] 
+            //int id = 1; 
+            //int id = Int32.Parse(TempData["EditClassId"].ToString());
+            int id = (int)TempData["EditClassId"];
+
+
+            var classEdit = db.getClass(id);
+
+            string name = collection["ClassName"];
+            string desc = collection["ClassDesc"];
+            int minutes = Int32.Parse(collection["ClassLength"]);
+
+            TimeSpan length = new TimeSpan();
+
+            if (minutes < 60)
+            {
+                TimeSpan min = TimeSpan.FromMinutes(minutes);
+                length += min;
+            }
+            else
+            {
+                int remainder = minutes % 60;
+                if (remainder == 0)
+                {
+                    int hour = minutes / 60;
+                    TimeSpan hr = TimeSpan.FromHours(hour);
+                    length += hr;
+                }
+                else
+                {
+                    TimeSpan min = TimeSpan.FromMinutes(remainder);
+                    TimeSpan hr = TimeSpan.FromHours((minutes - remainder) / 60);
+
+                    length = hr + min;
+
+                }
+            }
+
+            Class c = new Class();
+
+            
+
+
+            classEdit.Class_Name = name;
+            classEdit.Class_Desc = desc;
+            classEdit.Class_Length = length;
+
+            //TODO check checkbox 
+
+            //c.Active = true;
+
+
+            db.EditClass(classEdit);
+            //db.CreateClass(c);
+
+            return RedirectToAction("ClassList");
+
+
+          
         }
 
         public ActionResult ClassPass()
@@ -163,24 +276,94 @@ namespace YogaStudioHelper.Controllers
             return View();
         }
 
+        // not use
         public ActionResult ClassPassList()
         {
             return View();
         }
+        // use
+        public ActionResult ClassPassList2()
+        {
 
+            IEnumerable<Class_Passes> class_Pass_List = db.getClassPasses();
+            return View(class_Pass_List);
+           
+        }
+        [HttpGet]
         public ActionResult CreateClassPass()
         {
             return View();
         }
 
-        public ActionResult EditClassPass()
+
+        [HttpPost]
+        public ActionResult CreateClassPass(FormCollection collection)
         {
+
+            string passname = collection["ClassPassName"];
+            int passqty = Int32.Parse(collection["ClassPassQty"]);
+            
+            double passprice= Convert.ToDouble(collection["ClassPassPrice"]);
+
+            Class_Passes pass = new Class_Passes();
+
+            pass.Active = true;
+            pass.Pass_Name = passname;
+            pass.Pass_Size = passqty;
+            pass.Pass_Price = Convert.ToDecimal(passprice);
+
+            db.CreateClassPass(pass);
+
+            return RedirectToAction("ClassPassList2");
+           
+        }
+
+        [HttpGet]
+        public ActionResult EditClassPass(int id)
+        {
+            var classPassEdit = db.getClassPasse(id);
+
+
+            ViewBag.EditClassPass = classPassEdit;
+
+
             return View();
         }
 
+        [HttpPost]
+        public ActionResult EditClassPass(FormCollection collection)
+        {
+            int id = (int)TempData["EditClassPassId"];
+
+
+            var passEdit = db.getClassPasse(id);
+
+
+
+            string passname = collection["ClassPassName"];
+
+            int passqty = Int32.Parse(collection["ClassPassQty"]);
+
+            double passprice = Double.Parse(collection["ClassPassPrice"]);
+
+            passEdit.Pass_Name = passname;
+            passEdit.Pass_Size = passqty;
+            // decimal? 
+            passEdit.Pass_Price = Convert.ToDecimal(passprice); 
+
+
+            db.UpdateClassPass(passEdit);
+            return RedirectToAction("ClassPassList2");
+
+       
+        }
+
+
         public ActionResult Promotion()
         {
+
             return View();
+
         }
 
         public ActionResult FindPromotion()
@@ -190,7 +373,9 @@ namespace YogaStudioHelper.Controllers
 
         public ActionResult PromotionList()
         {
-            return View();
+            IEnumerable<Promotion> promoList = db.getPromotions();
+            return View(promoList);
+        
         }
 
         public ActionResult CreatePromotion()
@@ -198,9 +383,30 @@ namespace YogaStudioHelper.Controllers
             return View();
         }
 
-        public ActionResult EditPromotion()
+        [HttpGet]
+        public ActionResult EditPromotion(int id)
         {
+            var promotionEdit = db.getPromotion(id);
+
+
+            ViewBag.EditPromotion = promotionEdit;
+
+
             return View();
+
+        }
+
+        [HttpPost]
+        public ActionResult EditPromotion(FormCollection collection)
+        {
+            var classPassEdit = db.getClassPasse(2);
+
+
+            ViewBag.EditClassPass = classPassEdit;
+
+
+            return View();
+
         }
     }
 }

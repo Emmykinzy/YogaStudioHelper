@@ -123,6 +123,11 @@
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -194,7 +199,7 @@
     <Content Include="Views\ManageStudio\Promotion.cshtml" />
     <Content Include="Views\ManageStudio\FindPromotion.cshtml" />
     <Content Include="Views\ManageStudio\CreatePromotion.cshtml" />
-    <Content Include="Views\ManageStudio\PromotionList.cshtml" />
+    <Content Include="Views\ManageStudio\PromotionListHardCoded.cshtml" />
     <Content Include="Views\ManageStudio\EditRoom.cshtml" />
     <Content Include="Views\ManageStudio\EditClass.cshtml" />
     <Content Include="Views\ManageStudio\EditClassPass.cshtml" />
@@ -209,6 +214,8 @@
     <Content Include="Views\ManageStudio\FindClassList.cshtml" />
     <Content Include="Views\ManageUsers\FindUserList.cshtml" />
     <Content Include="Views\ManageUsers\FindUserListAdvanced.cshtml" />
+    <Content Include="Views\ManageStudio\ClassPassList2.cshtml" />
+    <Content Include="Views\ManageStudio\PromotionList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

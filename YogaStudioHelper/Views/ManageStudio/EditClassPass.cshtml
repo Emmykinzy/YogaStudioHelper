@@ -1,12 +1,33 @@
-﻿
+﻿@using Database
+
 @{
     ViewBag.Title = "EditClassPass";
+
+
+    Class_Passes editClassPasses;
+
+    if (ViewBag.EditClassPass != null)
+    {
+        editClassPasses = ViewBag.EditClassPass;
+
+        int id = editClassPasses.Pass_Id;
+
+        TempData["EditClassPassId"] = id;
+
+    }
+    else
+    {
+        editClassPasses = new Class_Passes();
+        //editClass.U_Email = "";
+        //editClass.U_First_Name = "";
+    }
+
 }
 
-    <div class="centerDiv">
+<div class="centerDiv">
 
-        @using (Html.BeginForm())
-        {
+    @using (Html.BeginForm())
+    {
         <table class="inputTable">
             <tr>
                 <td></td>
@@ -14,15 +35,28 @@
             </tr>
             <tr>
                 <th>Class Pass Name:</th>
-                <td>@Html.TextBox("ClassPassName", "5 Pass Packet", new { @class = "inputs" })</td>
+                <td>
+
+                    <input id="ClassPassName" name="ClassPassName" class="inputs" required value=" @editClassPasses.Pass_Name"/>
+
+                </td>
             </tr>
             <tr>
+                <!-- put size instead? -->
                 <th>Quantity:</th>
-                <td>@Html.TextBox("ClassPassQty", 5, new { @class = "inputs", @input = "number" })</td>
+                <td>
+                    <input type="number" id="ClassPassQty" name="ClassPassQty" class="inputs" required value=" @editClassPasses.Pass_Size" />
+
+                </td>
             </tr>
             <tr>
                 <th>Price</th>
-                <td>@Html.TextBox("ClassPassPrice", 29.99, new { @class = "inputs", @input = "number" })</td>
+                <td>
+
+                    <input type="number" id="ClassPassPrice" name="ClassPassPrice" class="inputs" value=" @editClassPasses.Pass_Price"/>
+
+
+                </td>
             </tr>
             <tr>
                 <th>Active:</th>
@@ -38,5 +72,5 @@
                 <td><button onclick="goBack()">Go Back</button></td>
             </tr>
         </table>
-        }
-    </div>
+    }
+</div>

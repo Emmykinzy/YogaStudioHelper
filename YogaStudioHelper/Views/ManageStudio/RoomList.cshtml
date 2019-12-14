@@ -29,8 +29,8 @@
             @Html.DisplayFor(modelItem => item.Room_Capacity)
         </td>
         <td>
-            @Html.ActionLink("Edit", "EditRoom", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Archive", "DeleteRoom", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "EditRoom", new {id=item.Room_Id }) |
+            @Html.ActionLink("Archive", "DeleteRoom", new {  id=item.Room_Id })
         </td>
     </tr>
 }
