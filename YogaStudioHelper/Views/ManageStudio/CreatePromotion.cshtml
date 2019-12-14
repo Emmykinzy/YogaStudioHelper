@@ -13,16 +13,18 @@
     </tr>
     <tr>
         <th>Promotion Name:</th>
-        <td>@Html.TextBox("PromotionName", null, new { @class = "inputs" })</td>
+        <td><input id="PromotionDescription" name="PromotionDescription" class="inputs" required  /></td>
     </tr>
     <tr>
         <th>Discount %:</th>
-        <td>@Html.TextBox("discount", null, new { @class = "inputs", @input = "number" })</td>
-    </tr>
-    <tr><th>OR</th></tr>
+        <td>
+            <input id="discount" name="discount"
+                   type="number" class="inputs"   />
+<tr><th>OR</th></tr>
     <tr>
         <th>Extra Passes:</th>
-        <td>@Html.TextBox("passes", null, new { @class = "inputs", @input = "number" })</td>
+        <td><input id="passes" name="passes"
+       type="number"  class="inputs"  /></td>
     </tr>
     <tr>
         <th>Promo-ed Pass:</th>
@@ -37,9 +39,12 @@
     </tr>
     <tr>
         <th>Promotion End:</th>
-        <td>@Html.TextBox("promoEnd", null, new { @class = "inputs", @input = "date" })</td>
+        <td><input type="date" class="inputs" name="promoEnd" id="promoEnd" required/></td>
     </tr>
-    <tr></tr>
+    <tr>
+        <th>Active:</th>
+        <td style="text-align:center">@Html.CheckBox("isActive", true)</td>
+    </tr>
     <tr>
         <td></td>
         <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Create</button></td>

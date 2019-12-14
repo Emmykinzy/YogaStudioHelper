@@ -271,6 +271,8 @@ namespace YogaStudioHelper.Controllers
             return View();
         }
 
+
+
         public ActionResult FindClassPass()
         {
             return View();
@@ -359,6 +361,12 @@ namespace YogaStudioHelper.Controllers
         }
 
 
+        /// <summary>
+        /// Promotion 
+        /// </summary>
+        /// <returns></returns>
+
+
         public ActionResult Promotion()
         {
 
@@ -381,6 +389,49 @@ namespace YogaStudioHelper.Controllers
         public ActionResult CreatePromotion()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreatePromotion(FormCollection collection)
+        {
+            string promoDesc = collection["PromotionDescription"];
+
+            double discount;
+            int extraPasses;
+            try
+            {
+                 discount = Convert.ToDouble(collection["discount"])/100;
+            }
+            catch
+            {
+                 discount = 0;
+            }
+
+            try
+            {
+                 extraPasses = Int32.Parse(collection["passes"]);
+            }
+            catch
+            {
+                 extraPasses = 0; 
+            }
+
+             
+            DateTime promoEnd = Convert.ToDateTime(collection["promoEnd"]); 
+
+            Promotion promo = new Promotion();
+
+
+            promo.Promo_Desc = promoDesc;
+            promo.Discount = Convert.ToDecimal(discount);
+            promo.Num_Classes = extraPasses;
+            promo.Promo_End = promoEnd;
+            
+            //Fix todo add class pass dropdown option
+            promo.Pass_Id = 1;
+
+            db.CreatePromotion(promo);
+            return RedirectToAction("PromotionList");
         }
 
         [HttpGet]
