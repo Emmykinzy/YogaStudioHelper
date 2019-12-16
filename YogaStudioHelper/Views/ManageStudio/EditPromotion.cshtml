@@ -1,4 +1,6 @@
-﻿@using Database
+﻿@model YogaStudioHelper.ViewModels.DropdownListPassViewModel
+
+@using Database
 
 @{
     ViewBag.Title = "EditPromotion";
@@ -26,68 +28,63 @@
 
     }
 }
-    
-    <div class="centerDiv">
-        @using (Html.BeginForm())
-        {
-            <table class="inputTable">
-                <tr>
-                    <td></td>
-                    <td style="text-align:center;"><h2>Edit Promo</h2></td>
-                </tr>
-                <tr>
-                    <th>Promotion Name:</th>
-                    <td>
+
+<div class="centerDiv">
+    @using (Html.BeginForm())
+    {
+        <table class="inputTable">
+            <tr>
+                <td></td>
+                <td style="text-align:center;"><h2>Edit Promo</h2></td>
+            </tr>
+            <tr>
+                <th>Promotion Name:</th>
+                <td>
                     <input id="PromotionDescription" name="PromotionName" class="inputs" required value="@editPromotion.Promo_Desc" />
-                   </td>
-                </tr>
-                <tr>
-                    <th>Discount %:</th>
-                    <td>
-                        <input id="discount" name="discount" 
-type ="number"class="inputs"  value="@editPromotion.Discount" /> 
-                    </td>
-                </tr>
-                <tr><th>OR</th></tr>
-                <tr>
-                    <th>Extra Passes:</th>
-                    <td>
-                    
+                </td>
+            </tr>
+            <tr>
+                <th>Discount %:</th>
+                <td>
+                    <input id="discount" name="discount"
+                           type="number" class="inputs" value="@editPromotion.Discount" />
+                </td>
+            </tr>
+            <tr><th>OR</th></tr>
+            <tr>
+                <th>Extra Passes:</th>
+                <td>
+
                     <input id="passes" name="passes"
-                           type="number" class="inputs" value="@editPromotion.Num_Classes"/>
-                    
-                    </td>
-                </tr>
-                <tr>
-                    <th>Promo-ed Pass:</th>
-                    <td class="select">
-                        <select id="classPass">
-                            <option>5 Pass Packet</option>
-                            <option>10 Pass Packet</option>
-                            <option>20 Pass Packet</option>
-                            <option>30 Pass Packet</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Promotion End:</th>
-                    <td><input type="date" class="inputs" value="@dateEnd;" name="promoEnd" /></td>
-                </tr>
-                <tr>
-                    <th>Active:</th>
-                    <td style="text-align:center">@Html.CheckBox("isActive", true)</td>
-                </tr>
-                <tr></tr>
-                <tr>
-                    <td></td>
-                    <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Edit</button></td>
-                </tr>
-                <tr><td></td></tr>
-                <tr>
-                    <td><button onclick="goBack()">Go Back</button></td>
-                </tr>
-            </table>
-        }
-    </div>
+                           type="number" class="inputs" value="@editPromotion.Num_Classes" />
+
+                </td>
+            </tr>
+            <tr>
+                <th>Promo-ed Pass:</th>
+                <td class="select">
+                    @Html.DropDownListFor(m => m.Passes, new SelectList(Model.Passes, "pass_id", "pass_name")) <!-- add default value todo-->
+                </td>
+            </tr>
+            <tr>
+                <th>Promotion End:</th>
+                <td><input type="date" class="inputs" value="@dateEnd;" name="promoEnd" /></td>
+            </tr>
+            <tr>
+                <th>Active:</th>
+                <td style="text-align:center">@Html.CheckBox("isActive", true)</td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td></td>
+                <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Edit</button></td>
+            </tr>
+            <tr><td></td></tr>
+            <tr>
+                <td><button onclick="goBack()">Go Back</button></td>
+            </tr>
+        </table>
+    }
+</div>
 
 

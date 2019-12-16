@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Database;
+using YogaStudioHelper.ViewModels;
 
 namespace YogaStudioHelper.Controllers
 {
@@ -386,9 +387,17 @@ namespace YogaStudioHelper.Controllers
         
         }
 
+        // todo dropdown
         public ActionResult CreatePromotion()
         {
-            return View();
+
+            var passes = db.getClassPasses();
+            var viewTest = new DropdownListPassViewModel
+            {
+                Passes = passes
+            };
+        
+            return View(viewTest);
         }
 
         [HttpPost]
@@ -429,6 +438,8 @@ namespace YogaStudioHelper.Controllers
             
             //Fix todo add class pass dropdown option
             promo.Pass_Id = 1;
+            String KeyTest = collection["passList"]; 
+
 
             db.CreatePromotion(promo);
             return RedirectToAction("PromotionList");
@@ -442,8 +453,14 @@ namespace YogaStudioHelper.Controllers
 
             ViewBag.EditPromotion = promotionEdit;
 
+            //dropdown 
+            var passes = db.getClassPasses();
+            var viewTest = new DropdownListPassViewModel
+            {
+                Passes = passes
+            };
 
-            return View();
+            return View(viewTest);
 
         }
 

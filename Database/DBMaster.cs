@@ -376,7 +376,7 @@ namespace Database
             var class_passe = myDb.Class_Passes.Where(x => x.Pass_Id == id).Single();
             return class_passe;
         }
-        public IEnumerable<Class_Passes> getClassPasses()
+        public List<Class_Passes> getClassPasses()
         {
             return myDb.Class_Passes.ToList();
         }
