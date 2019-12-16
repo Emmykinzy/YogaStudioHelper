@@ -177,7 +177,7 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Views\Schedule\Schedule.cshtml" />
     <Content Include="Views\Profile\Profile.cshtml" />
-    <Content Include="Views\Passes\OnlineStore.cshtml" />
+    <Content Include="Views\Passes\OnlineStore_HardCoded.cshtml" />
     <Content Include="Views\ManageStudio\ManageStudio.cshtml" />
     <Content Include="Views\Profile\Classes.cshtml" />
     <Content Include="Views\Profile\Passes.cshtml" />
@@ -218,6 +218,7 @@
     <Content Include="Views\ManageUsers\FindUserListAdvanced.cshtml" />
     <Content Include="Views\ManageStudio\ClassPassList2.cshtml" />
     <Content Include="Views\ManageStudio\PromotionList.cshtml" />
+    <Content Include="Views\Passes\OnlineStore.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

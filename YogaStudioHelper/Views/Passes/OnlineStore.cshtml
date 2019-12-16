@@ -1,62 +1,109 @@
-﻿
+﻿@model IEnumerable<Database.Class_Passes>
+
 @{
-    ViewBag.Title = "Passes";
+    ViewBag.Title = "OnlineStorePasses";
 }
 
 <h2>Pass Packages</h2>
-<div class="passStore">
-    <div class="passContent">
-    <div class="floatLeft passTitle" style="padding-top:8px;">
-    <p>5 Pass Packet</p>
-    </div>
-    <div class="passPurchase floatRight">
-        <div class="floatRight" style="padding-right:25px;">
-            <div class="floatLeft" style="padding-top:8px; padding-right:20px;" >29.99$</div>
-            <button type="submit" class="btn btn-default floatRight">Purchase</button>
-        </div>
-    </div>
-    </div>
-</div>
 
-<div class="passStore">
-    <div class="passContent">
-        <div class="floatLeft passTitle">
-            <p>10 Pass Packet</p>
-            <p style="font-size:14px; color:red;">Christmas Promo 20% Off</p>
-        </div>
-        <div class="passPurchase floatRight">
-            <div class="floatRight" style="padding-right:25px;">
-                <div class="floatLeft" style="padding-top:8px; padding-right:20px;"><strike class="passDiscount">49.99$</strike>39.99$</div>
-                <button type="submit" class="btn btn-default floatRight">Purchase</button>
+<br />
+<table class="table">
+
+
+    @foreach (var item in Model)
+    {
+
+        <div class="passStore">
+            <div class="passContent">
+                <div class="floatLeft passTitle" style="padding-top:8px;">
+                    <p>@Html.DisplayFor(modelItem => item.Pass_Name)</p>
+                </div>
+                <div class="passPurchase floatRight">
+                    <div class="floatRight" style="padding-right:25px;">
+                        <div class="floatLeft" style="padding-top:8px; padding-right:20px;">@Html.DisplayFor(modelItem => item.Pass_Price)$</div>
+                        <button type="submit" class="btn btn-default floatRight">Purchase</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="passStore">
-    <div class="passContent">
-        <div class="floatLeft passTitle" style="padding-top:8px;">
-            <p>20 Pass Packet</p>
-        </div>
-        <div class="passPurchase floatRight">
-            <div class="floatRight" style="padding-right:25px;">
-                <div class="floatLeft" style="padding-top:8px; padding-right:20px;">84.99$</div>
-                <button type="submit" class="btn btn-default floatRight">Purchase</button>
+
+
+    }
+
+</table>
+
+
+<!--
+
+
+
+    With Promotion variant - todo
+
+        <div class="passStore">
+            <div class="passContent">
+                <div class="floatLeft passTitle">
+                    <p> a Html.DisplayFor(modelItem => item.Pass_Name)</p>
+                    <p style="font-size:14px; color:red;">Christmas Promo 20% Off</p>
+                </div>
+                <div class="passPurchase floatRight">
+                    <div class="floatRight" style="padding-right:25px;">
+                        <div class="floatLeft" style="padding-top:8px; padding-right:20px;"><strike class="passDiscount">49.99$</strike>  Html.DisplayFor(modelItem => item.Pass_Price)$</div>
+                        <button type="submit" class="btn btn-default floatRight">Purchase</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="passStore">
-    <div class="passContent">
-        <div class="floatLeft passTitle" style="padding-top:8px;">
-            <p>30 Pass Packet</p>
-        </div>
-        <div class="passPurchase floatRight">
-            <div class="floatRight" style="padding-right:25px;">
-                <div class="floatLeft" style="padding-top:8px; padding-right:20px;">99.99$</div>
-                <button type="submit" class="btn btn-default floatRight">Purchase</button>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+
+
+
+
+        <tr>
+        <th>
+            Html.DisplayNameFor(model => model.Pass_Id)
+        </th>
+        <th>
+            Html.DisplayNameFor(model => model.Pass_Name)
+        </th>
+        <th>
+            Html.DisplayNameFor(model => model.Pass_Size)
+        </th>
+        <th>
+            Html.DisplayNameFor(model => model.Pass_Price)
+        </th>
+        <th>
+            Html.DisplayNameFor(model => model.Active)
+        </th>
+        <th></th>
+    </tr>
+
+
+
+
+        <tr>
+            <td>
+                Html.DisplayFor(modelItem => item.Pass_Id)
+            </td>
+            <td>
+                Html.DisplayFor(modelItem => item.Pass_Name)
+            </td>
+            <td>
+               Html.DisplayFor(modelItem => item.Pass_Size)
+            </td>
+            <td>
+                Html.DisplayFor(modelItem => item.Pass_Price)
+            </td>
+            <td>
+                Html.DisplayFor(modelItem => item.Active)
+            </td>
+            <td>
+                Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+
+-->
