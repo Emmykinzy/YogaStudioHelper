@@ -39,6 +39,7 @@ namespace Database
                 var u = myDb.Yoga_User.Where(x => x.U_Email == email).Single();
 
                 //  var u = myDb.Yoga_User.Where(x => x.U_Email == email && x.U_Password == pass
+                //bool isValidCustomer = encoder.Compare(pass, u.U_Password);
                 bool isValidCustomer = encoder.Compare(pass, u.U_Password);
 
                 return isValidCustomer; 
@@ -245,7 +246,11 @@ namespace Database
         }
 
         // Add active in DB to be able to achive 
-        public void ArchiveRoom(int id)
+        public void ArchiveRoom()
+        {
+  
+        }
+        public void DeleteRoom(int id)
         {
             var or = myDb.Rooms.Where(x => x.Room_Id == id).Single();
 
@@ -254,6 +259,7 @@ namespace Database
 
             myDb.SaveChanges();
         }
+
 
 
 
@@ -315,6 +321,21 @@ namespace Database
             myDb.SaveChanges();
         }
 
+        public void DeleteClass(int id)
+        {
+            var or = myDb.Classes.Where(x => x.Class_Id == id).Single();
+
+            myDb.Classes.Remove(or);
+            //or.R = false;
+
+            myDb.SaveChanges();
+
+        }
+        public void ArchiveClass()
+        {
+
+        }
+
 
 
         //Promotion Get Methods
@@ -361,6 +382,22 @@ namespace Database
             op.Discount = np.Discount;
 
             myDb.SaveChanges();
+        }
+
+        // Archive testing todo see if db has active field
+        public void DeletePromotion(int id)
+        {
+            var or = myDb.Promotions.Where(x => x.Promotion_Id == id).Single();
+
+            myDb.Promotions.Remove(or);
+
+
+            myDb.SaveChanges();
+        }
+
+        public void ArchivePromotion()
+        {
+
         }
 
 
@@ -417,6 +454,23 @@ namespace Database
 
             myDb.SaveChanges();
         }
+
+        public void DeleteClassPass(int id)
+        {
+            var or = myDb.Class_Passes.Where(x => x.Pass_Id == id).Single();
+
+            myDb.Class_Passes.Remove(or);
+            //or.R = false;
+
+            myDb.SaveChanges();
+
+        }
+        public void ArchiveClassPass()
+        {
+
+        }
+
+
 
 
 

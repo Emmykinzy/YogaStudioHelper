@@ -26,20 +26,23 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Class_Name)
-            </td>
-            <td style="text-align:left;">
-                @Html.DisplayFor(modelItem => item.Class_Desc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Class_Length)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditClass", new {  id=item.Class_Id  })
-            </td>
-        </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Class_Name)
+    </td>
+    <td style="text-align:left;">
+        @Html.DisplayFor(modelItem => item.Class_Desc)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Class_Length)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "EditClass", new { id = item.Class_Id })
+    </td>
+    <td>
+        @Html.ActionLink("Archive", "ArchiveClass", new { id = item.Class_Id })
+    </td>
+</tr>
     }
 
 </table>

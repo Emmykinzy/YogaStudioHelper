@@ -83,7 +83,16 @@ namespace YogaStudioHelper.Controllers
 
         public ActionResult DeleteRoom(int id)
         {
-            db.ArchiveRoom(id);
+            db.DeleteRoom(id);
+
+
+            return RedirectToAction("RoomList");
+        }
+
+        //todo 
+        public ActionResult ArchiveRoom(int id)
+        {
+            db.DeleteRoom(id);
 
 
             return RedirectToAction("RoomList");
@@ -267,6 +276,16 @@ namespace YogaStudioHelper.Controllers
           
         }
 
+
+        public ActionResult ArchiveClass(int id)
+        {
+            
+            //SHould implement archive instead
+            db.DeleteClass(id);
+
+            return RedirectToAction("ClassList");
+        }
+
         public ActionResult ClassPass()
         {
             return View();
@@ -361,6 +380,13 @@ namespace YogaStudioHelper.Controllers
        
         }
 
+        public ActionResult ArchiveClassPass(int id)
+        {
+            //SHould implement archive instead
+            db.DeleteClassPass(id);
+
+            return RedirectToAction("ClassPassList2");
+        }
 
         /// <summary>
         /// Promotion 
@@ -474,6 +500,15 @@ namespace YogaStudioHelper.Controllers
 
 
             return View();
+
+        }
+
+        public ActionResult ArchivePromotion(int id)
+        {
+            db.DeletePromotion(id);
+
+
+            return RedirectToAction("PromotionList");
 
         }
     }
