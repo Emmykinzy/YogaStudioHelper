@@ -71,6 +71,7 @@
           <Property Name="Room_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Room_Name" Type="varchar" MaxLength="35" />
           <Property Name="Room_Capacity" Type="int" />
+          <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="Schedule">
           <Key>
@@ -336,6 +337,7 @@
           <Property Name="Room_Name" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
           <Property Name="Room_Capacity" Type="Int32" />
           <NavigationProperty Name="Schedules" Relationship="Self.FK_Schedule_Room_Id" FromRole="Room" ToRole="Schedule" />
+          <Property Name="Active" Type="Boolean" />
         </EntityType>
         <EntityType Name="Schedule">
           <Key>
@@ -603,6 +605,7 @@
           <EntitySetMapping Name="Rooms">
             <EntityTypeMapping TypeName="yogadbModel.Room">
               <MappingFragment StoreEntitySet="Room">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Room_Id" ColumnName="Room_Id" />
                 <ScalarProperty Name="Room_Name" ColumnName="Room_Name" />
                 <ScalarProperty Name="Room_Capacity" ColumnName="Room_Capacity" />

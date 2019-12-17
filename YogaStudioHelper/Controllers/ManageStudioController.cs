@@ -511,5 +511,26 @@ namespace YogaStudioHelper.Controllers
             return RedirectToAction("PromotionList");
 
         }
+
+
+        public ActionResult ScheduleList()
+        {
+            IEnumerable<Schedule> scheduleList = db.getSchedules();
+            return View(scheduleList);
+
+
+        }
+
+        public ActionResult CreateSchedule()
+        {
+
+            return View(); 
+        }
+
+        public ActionResult EditSchedule()
+        {
+            return View(); 
+
+        }
     }
 }

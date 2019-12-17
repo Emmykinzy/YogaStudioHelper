@@ -34,7 +34,10 @@ namespace YogaStudioHelper.Controllers
 
             if(valid)
             {
+                /*
                 IEnumerable<Yoga_User> list = db.getUserByEmail(email);
+
+
                 int id = list.First().Roles_Id;
                 string roleName = db.getRoleName(id);
                 if (roleName.Equals("ADMINISTRATOR"))
@@ -57,6 +60,7 @@ namespace YogaStudioHelper.Controllers
                 {
                    Session["Auth"] = null;
                 }
+                */
 
                 ViewBag.message = "Valid, Login";
                 Session["Auth"] = 1;

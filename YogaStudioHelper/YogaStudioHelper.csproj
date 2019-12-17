@@ -219,6 +219,9 @@
     <Content Include="Views\ManageStudio\ClassPassList2.cshtml" />
     <Content Include="Views\ManageStudio\PromotionList.cshtml" />
     <Content Include="Views\Passes\OnlineStore.cshtml" />
+    <Content Include="Views\ManageStudio\ScheduleList.cshtml" />
+    <Content Include="Views\ManageStudio\EditSchedule.cshtml" />
+    <Content Include="Views\ManageStudio\CreateSchedule.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

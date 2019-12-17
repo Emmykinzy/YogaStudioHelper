@@ -22,9 +22,13 @@ namespace YogaStudioHelper.Controllers
             //String message = Util.EmailSender.sendEmail();
             //Response.Write(message);
 
+            //IEnumerable<Promotion> promoList = db.getPromotions();
+            //ViewBag.PromoList = promoList; 
 
+            
             IEnumerable<Class_Passes> class_Pass_List = db.getClassPasses();
             return View(class_Pass_List);
+
 
         }
 
