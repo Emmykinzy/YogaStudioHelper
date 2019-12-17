@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Database.Schedule>
 @using Database
 @{
+    DBMaster db = new DBMaster();
     ViewBag.Title = "Schedule";
     DateTime localDate = DateTime.Now;
     DateTime localPlus1 = localDate.AddDays(1);
@@ -37,8 +38,11 @@
             if (hr >= hr1 && hr < hr2)
             {
                 string className = @item.Start_Time.ToString(@"hh\:mm") + " " + @item.Class.Class_Name;
-                string sId = "r" + @hr + "c" + @count1;
-                <img src onerror="@("insertClass('"+sId+"','"+className+"')")">
+                string pId = "r" + @hr + "c" + @count1;
+                int sId = @item.Schedule_Id;
+
+                 <img src onerror="@("insertClass('" + sId + "','" + pId + "','" + className + "')")">
+
                 // @day<span>&nbsp;</span>@item.Class.Class_Name<span>&nbsp;</span>@item.Start_Time
             }
             hr2++;
@@ -61,9 +65,9 @@
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h3>Hot Flow</h3>
+            <h3 id="title"></h3>
             @if (Session["Auth"] == null || (int)Session["Auth"] == 2 || (int)Session["Auth"] == 4)
-            {
+{
                 <p id="modalContent">
                     Our hot flow is a Vinyasa-style class created to heal, detoxify and exhilarate the body and mind by linking the breath with movement.
                     Hot flow incorporates creative flow sequences with a strong emphasis on the foundation postures which are designed to help build breath
@@ -80,9 +84,9 @@
 
                     <a href="@Url.Action("ClassSignUp", "Schedule")" class="btn btn-default">Sign Up</a>
                 </p>
-            }
-            else
-            {
+}
+else
+{
                 <p id="modalContent">
                     <b>Date:</b> 26 Nov 2019<br />
                     <b>Time: </b>7:15am to 8:15am<br />
@@ -93,7 +97,7 @@
                     <div id="countDown"></div><br />
                     <a href="@Url.Action("ClassSignUp", "Schedule")" id="signupBtn" class="btn btn-default disabledA">Student Sign In</a>
                 </p>
-            }
+}
         </div>
     </div>
     <div>
@@ -254,9 +258,10 @@
 </div>
 
 <script>
-    function insertClass(id, text) {
 
-        document.getElementById(id).innerHTML = text;
+    function insertClass(sId, pId, text) {
+
+        document.getElementById(pId).innerHTML = "<a id='" + sId + "' onclick='classInfo(this.id)'>" + text + "</a>";
 
     }
 
@@ -266,10 +271,19 @@
 
     function classInfo(clickedId) {
 
-        var el = document.getElementById("1");
-        var test = el.innerHTML;
-        //document.getElementById("modalContent").innerHTML = test;
-        modal.style.display = "block";
+       
+          @{int id;}
+          clickedId; 
+
+        @db.getScheduleById(@id).Class.Class_Name;
+
+        
+
+
+
+       document.getElementById("title").innerHTML = a;
+       modal.style.display = "block";
+
 
     }
 
