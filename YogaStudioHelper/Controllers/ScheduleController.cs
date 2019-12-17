@@ -14,7 +14,13 @@ namespace YogaStudioHelper.Controllers
         public ActionResult Schedule()
         {
             IEnumerable<Schedule> list = db.getSchedulesNext7Days();
-            return View(list);
+
+            IEnumerable<Schedule> orderedList = (from schedule in list
+                                                 orderby schedule.Class_Date
+                                                 orderby schedule.Start_Time
+                                                 select schedule);
+
+            return View(orderedList);
         }
 
         public ActionResult ClassSignUp()

@@ -18,46 +18,12 @@
     int date5 = localPlus4.Day;
     int date6 = localPlus5.Day;
     int date7 = localPlus6.Day;
-    int count1 = 0;
+    int hr2 = 8;
 
 
 
 }
 
-
-@foreach (var item in Model)
-{
-    int day = item.Class_Date.Day;
-    int hr = item.Start_Time.Hours;
-
-    if (day == date1 + count1)
-    {
-        int hr2 = 8;
-        for (int hr1 = 7; hr1 < 19; hr1++)
-        {
-            if (hr >= hr1 && hr < hr2)
-            {
-                string className = @item.Start_Time.ToString(@"hh\:mm") + " " + @item.Class.Class_Name;
-                string pId = "r" + @hr + "c" + @count1;
-                int sId = @item.Schedule_Id;
-
-                 <img src onerror="@("insertClass('" + sId + "','" + pId + "','" + className + "')")">
-
-                // @day<span>&nbsp;</span>@item.Class.Class_Name<span>&nbsp;</span>@item.Start_Time
-            }
-            hr2++;
-        }
-    }
-    else
-    {
-        count1++;
-    }
-    if (count1 == 7)
-    {
-        count1 = 0;
-    }
-
-}
 
 <h3>Class Schedule</h3>
 <div>
@@ -65,39 +31,33 @@
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h3 id="title"></h3>
+            <h3 id="name"></h3>
             @if (Session["Auth"] == null || (int)Session["Auth"] == 2 || (int)Session["Auth"] == 4)
-{
-                <p id="modalContent">
-                    Our hot flow is a Vinyasa-style class created to heal, detoxify and exhilarate the body and mind by linking the breath with movement.
-                    Hot flow incorporates creative flow sequences with a strong emphasis on the foundation postures which are designed to help build breath
-                    awareness, balance, flexibility and overall strength and endurance in the body’s core.<br /><br />
-                    This class is taught in a heated room between (38 °C / 100 °F) to (39 °C / 102 °F).<br />
-                    This class may be taught with music.<br />
+            {
+                <p id="desc"></p>
+                <p id="date"></p>
+                <p id="time"></p>
+                <p id="teacher"></p>
+                <p id="room"></p>
+                <p id="signedUp"></p>
 
-                    All levels, including beginners, are welcome and will find this class accessible.<br /><br />
-                    <b>Date:</b> 26 Nov 2019
-                    <b>Time:</b> 7:15am to 8:15am<br />
-                    <b>Teacher:</b> Sarah Johnson<br />
-                    <b>Room:</b> D-209<br />
-                    <b>Signed up:</b> 19/30 Students<br /><br /><br />
+                <br />
+               <div id="signUp"> 
+                <a href="Schedule/ClassSignUp" class="btn btn-default">Sign Up</a>
+               </div>
+            }
+            else
+            {
+                <p id="date"></p>
+                <p id="time"></p>
+                <p id="teacher"></p>
+                <p id="room"></p>
+                <p id="signedUp"></p>
 
-                    <a href="@Url.Action("ClassSignUp", "Schedule")" class="btn btn-default">Sign Up</a>
-                </p>
-}
-else
-{
-                <p id="modalContent">
-                    <b>Date:</b> 26 Nov 2019<br />
-                    <b>Time: </b>7:15am to 8:15am<br />
-                    <b>Teacher: </b>Sarah Johnson<br />
-                    <b>Room: </b> D-209<br />
-                    <b>Signed up: </b> 19/30 Students<br /><br />
+                <div id="countDown"></div><br />
+                <a href="@Url.Action("ClassSignUp", "Schedule")" id="signupBtn" class="btn btn-default disabledA">Student Sign In</a>
 
-                    <div id="countDown"></div><br />
-                    <a href="@Url.Action("ClassSignUp", "Schedule")" id="signupBtn" class="btn btn-default disabledA">Student Sign In</a>
-                </p>
-}
+            }
         </div>
     </div>
     <div>
@@ -110,148 +70,211 @@ else
         <button type="submit" class="btn btn-default">Sort</button>
     </form>
 
-    <table class="schedule">
-        <tr>
-            <th></th>
-            <th>@localDate.ToString("dddd") <br />@localDate.ToString("dd MMM yyy")</th>
-            <th>@localPlus1.ToString("dddd") <br />@localPlus1.ToString("dd MMM yyy")</th>
-            <th>@localPlus2.ToString("dddd") <br />@localPlus2.ToString("dd MMM yyy")</th>
-            <th>@localPlus3.ToString("dddd") <br />@localPlus3.ToString("dd MMM yyy")</th>
-            <th>@localPlus4.ToString("dddd") <br />@localPlus4.ToString("dd MMM yyy")</th>
-            <th>@localPlus5.ToString("dddd") <br />@localPlus5.ToString("dd MMM yyy")</th>
-            <th>@localPlus6.ToString("dddd") <br />@localPlus6.ToString("dd MMM yyy")</th>
-        </tr>
-        <tr>
-            <th>7:00 - 8:00</th>
-            <td id="r7c0"></td>
-            <td id="r7c1"></td>
-            <td id="r7c2"></td>
-            <td id="r7c3"></td>
-            <td id="r7c4"></td>
-            <td id="r7c5"></td>
-            <td id="r7c6"></td>
-        </tr>
-        <tr>
-            <th>8:00 - 9:00</th>
-            <td id="r8c0"></td>
-            <td id="r8c1"></td>
-            <td id="r8c2"></td>
-            <td id="r8c3"></td>
-            <td id="r8c4"></td>
-            <td id="r8c5"></td>
-            <td id="r8c6"></td>
-        </tr>
-        <tr>
-            <th>9:00 - 10:00</th>
-            <td id="r9c0"></td>
-            <td id="r9c1"></td>
-            <td id="r9c2"></td>
-            <td id="r9c3"></td>
-            <td id="r9c4"></td>
-            <td id="r9c5"></td>
-            <td id="r9c6"></td>
-        </tr>
-        <tr>
-            <th>10:00 - 11:00</th>
-            <td id="r10c0"></td>
-            <td id="r10c1"></td>
-            <td id="r10c2"></td>
-            <td id="r10c3"></td>
-            <td id="r10c4"></td>
-            <td id="r10c5"></td>
-            <td id="r10c6"></td>
-        </tr>
-        <tr>
-            <th>11:00 - 12:00</th>
-            <td id="r11c0"></td>
-            <td id="r11c1"></td>
-            <td id="r11c2"></td>
-            <td id="r11c3"></td>
-            <td id="r11c4"></td>
-            <td id="r11c5"></td>
-            <td id="r11c6"></td>
-        </tr>
-        <tr>
-            <th>12:00 - 13:00</th>
-            <td id="r12c0"></td>
-            <td id="r12c1"></td>
-            <td id="r12c2"></td>
-            <td id="r12c3"></td>
-            <td id="r12c4"></td>
-            <td id="r12c5"></td>
-            <td id="r12c6"></td>
-        </tr>
-        <tr>
-            <th>13:00 - 14:00</th>
-            <td id="r13c0"></td>
-            <td id="r13c1"></td>
-            <td id="r13c2"></td>
-            <td id="r13c3"></td>
-            <td id="r13c4"></td>
-            <td id="r13c5"></td>
-            <td id="r13c6"></td>
-        </tr>
-        <tr>
-            <th>14:00 - 15:00</th>
-            <td id="r14c0"></td>
-            <td id="r14c1"></td>
-            <td id="r14c2"></td>
-            <td id="r14c3"></td>
-            <td id="r14c4"></td>
-            <td id="r14c5"></td>
-            <td id="r14c6"></td>
-        </tr>
-        <tr>
-            <th>15:00 - 16:00</th>
-            <td id="r15c0"></td>
-            <td id="r15c1"></td>
-            <td id="r15c2"></td>
-            <td id="r15c3"></td>
-            <td id="r15c4"></td>
-            <td id="r15c5"></td>
-            <td id="r15c6"></td>
-        </tr>
-        <tr>
-            <th>16:00 - 17:00</th>
-            <td id="r16c0"></td>
-            <td id="r16c1"></td>
-            <td id="r16c2"></td>
-            <td id="r16c3"></td>
-            <td id="r16c4"></td>
-            <td id="r16c5"></td>
-            <td id="r16c6"></td>
-        </tr>
-        <tr>
-            <th>17:00 - 18:00</th>
-            <td id="r17c0"></td>
-            <td id="r17c1"></td>
-            <td id="r17c2"></td>
-            <td id="r17c3"></td>
-            <td id="r17c4"></td>
-            <td id="r17c5"></td>
-            <td id="r17c6"></td>
-        </tr>
-        <tr>
-            <th>18:00 - 19:00</th>
-            <td id="r18c0"></td>
-            <td id="r18c1"></td>
-            <td id="r18c2"></td>
-            <td id="r18c3"></td>
-            <td id="r18c4"></td>
-            <td id="r18c5"></td>
-            <td id="r18c6"></td>
-        </tr>
-        <tr>
-            <th>19:00 - 20:00</th>
-            <td id="r19c0"></td>
-            <td id="r19c1"></td>
-            <td id="r19c2"></td>
-            <td id="r19c3"></td>
-            <td id="r19c4"></td>
-            <td id="r19c5"></td>
-            <td id="r19c6"></td>
-        </tr>
-    </table>
+ <table class="schedule">
+   <tr>
+       <th></th>
+       <th>@localDate.ToString("dddd") <br />@localDate.ToString("dd MMM yyy")</th>
+       <th>@localPlus1.ToString("dddd") <br />@localPlus1.ToString("dd MMM yyy")</th>
+       <th>@localPlus2.ToString("dddd") <br />@localPlus2.ToString("dd MMM yyy")</th>
+       <th>@localPlus3.ToString("dddd") <br />@localPlus3.ToString("dd MMM yyy")</th>
+       <th>@localPlus4.ToString("dddd") <br />@localPlus4.ToString("dd MMM yyy")</th>
+       <th>@localPlus5.ToString("dddd") <br />@localPlus5.ToString("dd MMM yyy")</th>
+       <th>@localPlus6.ToString("dddd") <br />@localPlus6.ToString("dd MMM yyy")</th>
+   </tr>
+
+
+   @for (int hour = 7; hour < 20; hour++)
+   {
+       int date = date1;
+       bool empty = true;
+       List<Schedule> s = Model.Where(x => x.Start_Time.Hours == hour).ToList();
+       int size = s.Count();
+       int count = 0;
+       bool mult = false;
+       int multiple;
+ <tr>
+     <th style="text-align:center;">@hour:00 @*- @hr2:00*@</th>
+
+
+     @foreach (var item in Model.Where(x => x.Start_Time.Hours == hour))
+     {
+         if (date > item.Class_Date.Day)
+         {
+         }
+         else
+         {
+             count++;
+             empty = false;
+
+             if (item.Class_Date.Day == date)
+             {
+                 multiple = Model.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date).Count();
+                 if (multiple > 1 && mult == false)
+                 {
+                     empty = false;
+                     if (mult == false)
+                     {
+                         mult = true;
+                         <td>
+                             @foreach (var it in Model.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date))
+                             {
+
+                                 List<string> list = db.getSchedulesInfo(it.Schedule_Id).ToList();
+                                 string id = list.ElementAt(0);
+                                 string description = list.ElementAt(1);
+                                 string name = list.ElementAt(2);
+                                 string startDate = list.ElementAt(3);
+                                 string room = list.ElementAt(4);
+                                 string teacher = list.ElementAt(5);
+                                 string startTime = list.ElementAt(6);
+                                 string signedUp = list.ElementAt(7);
+                                 string duration = list.ElementAt(8);
+                             <td><a onclick="@("classInfo('"+id+"','"+description+"','"+name+"','"+startDate+"','"+room+"','"+teacher+"','"+startTime+"','"+signedUp+"','"+duration+"')")">@it.Start_Time.ToString(@"hh\:mm")    @it.Class.Class_Name</a></td>
+                             <br />
+
+
+                         }
+                             </td>
+                             date++;
+                         }
+                     }
+                     else
+                     {
+                         List<string> list = db.getSchedulesInfo(item.Schedule_Id).ToList();
+                         string id = list.ElementAt(0);
+                         string description = list.ElementAt(1);
+                         string name = list.ElementAt(2);
+                         string startDate = list.ElementAt(3);
+                         string room = list.ElementAt(4);
+                         string teacher = list.ElementAt(5);
+                         string startTime = list.ElementAt(6);
+                         string signedUp = list.ElementAt(7);
+                         string duration = list.ElementAt(8);
+                         <td><a onclick="@("classInfo('"+id+"','"+description+"','"+name+"','"+startDate+"','"+room+"','"+teacher+"','"+startTime+"','"+signedUp+"','"+duration+"')")">@item.Start_Time.ToString(@"hh\:mm")    @item.Class.Class_Name</a></td>
+
+                         date++;
+                     }
+                 }
+                 else
+                 {
+
+                     multiple = Model.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date).Count();
+                     if (multiple > 1 && mult == false)
+                     {
+                         empty = false;
+
+                         if (mult == false)
+                         {
+                             mult = true;
+                             <td>
+                                 @foreach (var it in Model.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date))
+                                 {
+
+                                     List<string> list = db.getSchedulesInfo(it.Schedule_Id).ToList();
+                                     string id = list.ElementAt(0);
+                                     string description = list.ElementAt(1);
+                                     string name = list.ElementAt(2);
+                                     string startDate = list.ElementAt(3);
+                                     string room = list.ElementAt(4);
+                                     string teacher = list.ElementAt(5);
+                                     string startTime = list.ElementAt(6);
+                                     string signedUp = list.ElementAt(7);
+                                     string duration = list.ElementAt(8);
+                                 <td><a onclick="@("classInfo('"+id+"','"+description+"','"+name+"','"+startDate+"','"+room+"','"+teacher+"','"+startTime+"','"+signedUp+"','"+duration+"')")">@it.Start_Time.ToString(@"hh\:mm")    @it.Class.Class_Name</a></td>
+                                 <br />
+
+
+                             }
+                                 </td>
+                                 date++;
+                             }
+                         }
+                         else
+                         {
+                             while (item.Class_Date.Day != date)
+                             {
+                                 <td></td>
+                                 date++;
+                             }
+
+                             multiple = Model.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date).Count();
+                             if (multiple > 1 && mult == false)
+                             {
+                                 empty = false;
+
+                                 if (mult == false)
+                                 {
+                                     mult = true;
+                                     <td>
+                                         @foreach (var it in Model.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date))
+                                         {
+
+                                             List<string> list = db.getSchedulesInfo(it.Schedule_Id).ToList();
+                                             string id = list.ElementAt(0);
+                                             string description = list.ElementAt(1);
+                                             string name = list.ElementAt(2);
+                                             string startDate = list.ElementAt(3);
+                                             string room = list.ElementAt(4);
+                                             string teacher = list.ElementAt(5);
+                                             string startTime = list.ElementAt(6);
+                                             string signedUp = list.ElementAt(7);
+                                             string duration = list.ElementAt(8);
+                                             <a onclick="@("classInfo('"+id+"','"+description+"','"+name+"','"+startDate+"','"+room+"','"+teacher+"','"+startTime+"','"+signedUp+"','"+duration+"')")">@it.Start_Time.ToString(@"hh\:mm")    @it.Class.Class_Name</a>
+                                             <br />
+
+
+                                         }
+                                     </td>
+                                     date++;
+                                 }
+                             }
+                             else
+                             {
+                                 List<string> list = db.getSchedulesInfo(item.Schedule_Id).ToList();
+                                 string id = list.ElementAt(0);
+                                 string description = list.ElementAt(1);
+                                 string name = list.ElementAt(2);
+                                 string startDate = list.ElementAt(3);
+                                 string room = list.ElementAt(4);
+                                 string teacher = list.ElementAt(5);
+                                 string startTime = list.ElementAt(6);
+                                 string signedUp = list.ElementAt(7);
+                                 string duration = list.ElementAt(8);
+                                 <td><a onclick="@("classInfo('"+id+"','"+description+"','"+name+"','"+startDate+"','"+room+"','"+teacher+"','"+startTime+"','"+signedUp+"','"+duration+"')")">@item.Start_Time.ToString(@"hh\:mm")    @item.Class.Class_Name</a></td>
+                                 date++;
+                             }
+                         }
+
+                     }
+
+                     if (count == size || multiple == size)
+                     {
+                         while (date <= date7)
+                         {
+                             <td></td>
+                             date++;
+                         }
+                     }
+                 }
+             }
+
+
+
+
+     @if (empty == true)
+     {
+         while (date <= date7)
+         {
+             <td></td>
+             date++;
+         }
+     }
+ </tr>
+
+      hr2++;
+
+    }
+</table>
 
 
 
@@ -259,32 +282,27 @@ else
 
 <script>
 
-    function insertClass(sId, pId, text) {
-
-        document.getElementById(pId).innerHTML = "<a id='" + sId + "' onclick='classInfo(this.id)'>" + text + "</a>";
-
-    }
 
     var modal = document.getElementById("myModal");
 
     var span = document.getElementsByClassName("close")[0];
 
-    function classInfo(clickedId) {
+    function classInfo(id, description, name, startDate, room, teacher, startTime, signedUp, duration) {
 
-       
-          @{int id;}
-          clickedId; 
+        document.getElementById("desc").innerHTML = ""+description;
+        document.getElementById("name").innerHTML = "" + name;
+        document.getElementById("date").innerHTML = "<b>Date:</b> " + startDate;
+        document.getElementById("time").innerHTML = "<b>Length:</b> " + startTime + " - "+duration;
+        document.getElementById("room").innerHTML = "<b>Room:</b> "+room;
+        document.getElementById("teacher").innerHTML = "<b>Teacher:</b> "+teacher;
+        document.getElementById("signedUp").innerHTML = "<b>Students Signed Up: </b>" + signedUp;
 
-        @db.getScheduleById(@id).Class.Class_Name;
+        var today = new Date();
+        var date = today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date + ' ' + time;
 
-        
-
-
-
-       document.getElementById("title").innerHTML = a;
-       modal.style.display = "block";
-
-
+        modal.style.display = "block";
     }
 
 
@@ -310,8 +328,7 @@ else
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        document.getElementById("countDown").innerHTML = "<b>Sign In Available In: </b><span style='color:red;'>" + days + "d " + hours + "h "
-            + minutes + "m " + seconds + "s</span>";
+        document.getElementById("countDown").innerHTML = "<b>Sign In Available In: </b><span style='color:red;'>" + days + "d " + hours + "h " + minutes + "m " + seconds + "s</span>";
 
         if (distance < 0) {
             clearInterval(x);
