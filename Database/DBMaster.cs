@@ -102,6 +102,13 @@ namespace Database
             return myDb.Yoga_User.Where(x => x.Roles_Id == r);
         }
 
+        //Ben added for schedule
+        public List<Yoga_User> getTeacherList()
+        {
+            //int r = getRoleId(role);
+            return myDb.Yoga_User.Where(x => x.Roles_Id == 2).ToList();
+        }
+
         public IEnumerable<Yoga_User> getUserAdvancedSearch(string role, string lname, string email)
         {
             IEnumerable<Yoga_User> userList = new List<Yoga_User>();
@@ -218,6 +225,10 @@ namespace Database
             var room = myDb.Rooms.Where(x => x.Room_Id == id).Single();
             return room;
         }
+        public List<Room> getRoomList()
+        {
+            return myDb.Rooms.ToList();
+        }
         public IEnumerable<Room> getRooms()
         {
             return myDb.Rooms.ToList();
@@ -268,6 +279,12 @@ namespace Database
         {
             return myDb.Classes.ToList();
         }
+
+        public List<Class> getClassList()
+        {
+            return myDb.Classes.ToList();
+        }
+
 
         public Class getClass(int id)
         {

@@ -511,5 +511,50 @@ namespace YogaStudioHelper.Controllers
             return RedirectToAction("PromotionList");
 
         }
+
+
+        public ActionResult ScheduleList()
+        {
+            IEnumerable<Schedule> scheduleList = db.getSchedules();
+            return View(scheduleList);
+
+
+        }
+
+        [HttpGet]
+        public ActionResult CreateSchedule()
+        {
+
+            // DropDown 
+            //ScheduleViewModel 
+            var classes = db.getClassList();
+            var teachers = db.getTeacherList();
+            var rooms = db.getRoomList(); 
+
+            var scheduleViewModel = new ScheduleViewModel
+            {
+                Classes = classes,
+               Teachers = teachers,
+               Rooms = rooms
+
+            };
+
+
+            return View(scheduleViewModel); 
+        }
+
+        [HttpPost]
+        public ActionResult CreateSchedule(FormCollection collection)
+        {
+            // how to get dropdown value 
+
+            return RedirectToAction("ClassPassList2");
+        }
+
+        public ActionResult EditSchedule()
+        {
+            return View(); 
+
+        }
     }
 }

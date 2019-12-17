@@ -17,11 +17,18 @@
         background: #555;
     }
 
+
+    /* test ben */
+body {
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+}
+
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
-    padding-bottom:15px;
+    padding-bottom: 15px;
 }
 
 .vCenter {
