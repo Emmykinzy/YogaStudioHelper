@@ -540,6 +540,11 @@ namespace Database
             return myDb.Schedules.ToList();
         }
 
+        public Schedule getScheduleById(int id)
+        {
+            return myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
+        }
+
         public IEnumerable<Schedule> getSchedulesNext7Days()
         {
             DateTime today = DateTime.Today;
