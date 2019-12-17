@@ -1,4 +1,6 @@
 ﻿
+@model YogaStudioHelper.ViewModels.DropdownListPassViewModel
+
 @{
     ViewBag.Title = "CreatePromotion";
 }
@@ -6,49 +8,52 @@
 <div class="centerDiv">
     @using (Html.BeginForm())
     {
-<table class="inputTable">
-    <tr>
-        <td></td>
-        <td style="text-align:center;"><h2>Create Promo</h2></td>
-    </tr>
-    <tr>
-        <th>Promotion Name:</th>
-        <td>@Html.TextBox("PromotionName", null, new { @class = "inputs" })</td>
-    </tr>
-    <tr>
-        <th>Discount %:</th>
-        <td>@Html.TextBox("discount", null, new { @class = "inputs", @input = "number" })</td>
-    </tr>
-    <tr><th>OR</th></tr>
-    <tr>
-        <th>Extra Passes:</th>
-        <td>@Html.TextBox("passes", null, new { @class = "inputs", @input = "number" })</td>
-    </tr>
-    <tr>
-        <th>Promo-ed Pass:</th>
-        <td class="select">
-            <select id="classPass">
-                <option>10 Pass Packet</option>
-                <option>5 Pass Packet</option>
-                <option>20 Pass Packet</option>
-                <option>30 Pass Packet</option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <th>Promotion End:</th>
-        <td>@Html.TextBox("promoEnd", null, new { @class = "inputs", @input = "date" })</td>
-    </tr>
-    <tr></tr>
-    <tr>
-        <td></td>
-        <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Create</button></td>
-    </tr>
-    <tr><td></td></tr>
-                <tr>
-                    <td><button onclick="goBack()">Go Back</button></td>
-                </tr>
-</table>
+        <table class="inputTable">
+            <tr>
+                <td></td>
+                <td style="text-align:center;"><h2>Create Promo</h2></td>
+            </tr>
+            <tr>
+                <th>Promotion Name:</th>
+                <td><input id="PromotionDescription" name="PromotionDescription" class="inputs" required /></td>
+            </tr>
+            <tr>
+                <th>Discount %:</th>
+                <td>
+                    <input id="discount" name="discount"
+                           type="number" class="inputs" />
+            <tr><th>OR</th></tr>
+            <tr>
+                <th>Extra Passes:</th>
+                <td>
+                    <input id="passes" name="passes"
+                           type="number" class="inputs" />
+                </td>
+            </tr>
+            <tr>
+                <th>Promo-ed Pass:</th>
+                <td class="select">
+                    @Html.DropDownListFor(m => m.Passes, new SelectList(Model.Passes, "pass_id", "pass_name"),new { @id="passList"})
+                </td>
+                
+            </tr>
+            <tr>
+                <th>Promotion End:</th>
+                <td><input type="date" class="inputs" name="promoEnd" id="promoEnd" required /></td>
+            </tr>
+            <tr>
+                <th>Active:</th>
+                <td style="text-align:center">@Html.CheckBox("isActive", true)</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Create</button></td>
+            </tr>
+            <tr><td></td></tr>
+            <tr>
+                <td><button onclick="goBack()">Go Back</button></td>
+            </tr>
+        </table>
     }
 </div>
 

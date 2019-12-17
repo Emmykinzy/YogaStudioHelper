@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Database.Class_Passes>
+
+@{
+    ViewBag.Title = "ClassPassList2";
+}
+
+<h2>ClassPassList2</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="classes">
+    <tr>
+   
+        <th>
+            Pass Name
+        </th>
+        <th>
+            Pass Size
+        </th>
+        <th>
+            Pass Price
+        </th>
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Pass_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pass_Size)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pass_Price)
+        </td>
+     
+        <td>
+            @Html.ActionLink("Edit", "EditClassPass", new {  id=item.Pass_Id  }) |
+            <!--Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) | -->
+            @Html.ActionLink("Archive", "ArchiveClassPass", new {  id=item.Pass_Id  })
+        </td>
+    </tr>
+}
+
+</table>

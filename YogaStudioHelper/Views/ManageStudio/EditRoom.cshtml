@@ -1,11 +1,36 @@
 ﻿
+@using Database
+
 @{
     ViewBag.Title = "Edit Room";
+
+
+
+    Room editRoom;
+    if (ViewBag.EditRoom != null)
+    {
+        editRoom = ViewBag.EditRoom;
+
+        int id = editRoom.Room_Id;
+
+        TempData["EditRoomId"] = id;
+
+
+    }
+    else
+    {
+        editRoom = new Room();
+        //editClass.U_Email = "";
+        //editClass.U_First_Name = "";
+    }
+
+
+
 }
 
-    <div class="centerDiv">
-        @using (Html.BeginForm())
-        {
+<div class="centerDiv">
+    @using (Html.BeginForm())
+    {
         <table class="inputTable">
             <tr>
                 <td></td>
@@ -13,16 +38,27 @@
             </tr>
             <tr>
                 <th>Room Name:</th>
-                <td>@Html.TextBox("roomName", "F-248", new { @class = "inputs" })</td>
+                <td>
+                <input type="text" id="roomName" name="roomName" class="inputs" required value="@editRoom.Room_Name" />
+
+                
+                </td>
             </tr>
             <tr>
-                <th>First Name:</th>
-                <td>@Html.TextBox("capacity", "45", new { @class = "inputs", @type = "number" })</td>
+                <th>Room capacity:</th>
+                <td>
+                
+                <input type="number" id="capacity", name="capacity" class="inputs" required value="@editRoom.Room_Capacity" />
+
+                </td>
             </tr>
             <tr></tr>
             <tr>
                 <th>Active:</th>
-                <td style="text-align:center">@Html.CheckBox("isActive", true)</td>
+                <td style="text-align:center">
+
+                    <input type="checkbox" id="isActive" name="isActive" checked />
+                </td>
             </tr>
             <tr>
                 <td></td>
@@ -33,6 +69,6 @@
                 <td><button onclick="goBack()">Go Back</button></td>
             </tr>
         </table>
-        }
-    </div>
+    }
+</div>
 

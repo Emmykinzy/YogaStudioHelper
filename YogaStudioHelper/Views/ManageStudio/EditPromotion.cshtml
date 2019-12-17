@@ -1,11 +1,37 @@
-﻿
+﻿@model YogaStudioHelper.ViewModels.DropdownListPassViewModel
+
+@using Database
+
 @{
     ViewBag.Title = "EditPromotion";
+
+
+    Promotion editPromotion;
+    String dateEnd = "";
+
+    if (ViewBag.EditPromotion != null)
+    {
+        editPromotion = ViewBag.EditPromotion;
+
+        int id = editPromotion.Promotion_Id;
+
+        TempData["EditPromotionId"] = id;
+
+        DateTime dateEndT = Convert.ToDateTime(editPromotion.Promo_End);
+
+        dateEnd = dateEndT.ToString("yyyy-MM-dd");
+
+    }
+    else
+    {
+        editPromotion = new Promotion();
+
+    }
 }
 
-    <div class="centerDiv">
-        @using (Html.BeginForm())
-        {
+<div class="centerDiv">
+    @using (Html.BeginForm())
+    {
         <table class="inputTable">
             <tr>
                 <td></td>
@@ -13,31 +39,36 @@
             </tr>
             <tr>
                 <th>Promotion Name:</th>
-                <td>@Html.TextBox("PromotionName", "Christmas Promo", new { @class = "inputs" })</td>
+                <td>
+                    <input id="PromotionDescription" name="PromotionName" class="inputs" required value="@editPromotion.Promo_Desc" />
+                </td>
             </tr>
             <tr>
                 <th>Discount %:</th>
-                <td>@Html.TextBox("discount", 20, new { @class = "inputs", @input = "number" })</td>
+                <td>
+                    <input id="discount" name="discount"
+                           type="number" class="inputs" value="@editPromotion.Discount" />
+                </td>
             </tr>
             <tr><th>OR</th></tr>
             <tr>
                 <th>Extra Passes:</th>
-                <td>@Html.TextBox("passes", null, new { @class = "inputs", @input = "number" })</td>
+                <td>
+
+                    <input id="passes" name="passes"
+                           type="number" class="inputs" value="@editPromotion.Num_Classes" />
+
+                </td>
             </tr>
             <tr>
                 <th>Promo-ed Pass:</th>
                 <td class="select">
-                    <select id="classPass">
-                        <option>5 Pass Packet</option>
-                        <option>10 Pass Packet</option>
-                        <option>20 Pass Packet</option>
-                        <option>30 Pass Packet</option>
-                    </select>
+                    @Html.DropDownListFor(m => m.Passes, new SelectList(Model.Passes, "pass_id", "pass_name")) <!-- add default value todo-->
                 </td>
             </tr>
             <tr>
                 <th>Promotion End:</th>
-                <td><input type="date" class="inputs" value="2019-12-26" name="promoEnd" /></td>
+                <td><input type="date" class="inputs" value="@dateEnd;" name="promoEnd" /></td>
             </tr>
             <tr>
                 <th>Active:</th>
@@ -53,7 +84,7 @@
                 <td><button onclick="goBack()">Go Back</button></td>
             </tr>
         </table>
-        }
-    </div>
+    }
+</div>
 
 

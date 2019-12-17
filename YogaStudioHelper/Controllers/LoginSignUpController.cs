@@ -37,26 +37,26 @@ namespace YogaStudioHelper.Controllers
                 IEnumerable<Yoga_User> list = db.getUserByEmail(email);
                 int id = list.First().Roles_Id;
                 string roleName = db.getRoleName(id);
-                //if (roleName.Equals("ADMINISTRATOR"))
-                //{
-                //    Session["Auth"] = 1;
-                //}
-                //else if (roleName.Equals("TEACHER"))
-                //{
-                //    Session["Auth"] = 2;
-                //}
-                //else if (roleName.Equals("RECEPTIONIST"))
-                //{
-                //    Session["Auth"] = 3;
-                //}
-                //else if (roleName.Equals("STUDENT"))
-                //{
-                //    Session["Auth"] = 4;
-                //}
-                //else 
-                //{
-                //    Session["Auth"] = null;
-                //}
+                if (roleName.Equals("ADMINISTRATOR"))
+                {
+                    Session["Auth"] = 1;
+                }
+                else if (roleName.Equals("TEACHER"))
+                {
+                    Session["Auth"] = 2;
+                }
+                else if (roleName.Equals("RECEPTIONIST"))
+                {
+                    Session["Auth"] = 3;
+                }
+                else if (roleName.Equals("STUDENT"))
+                {
+                    Session["Auth"] = 4;
+                }
+                else 
+                {
+                   Session["Auth"] = null;
+                }
 
                 ViewBag.message = "Valid, Login";
                 Session["Auth"] = 1;
@@ -135,8 +135,10 @@ namespace YogaStudioHelper.Controllers
             }
 
 
-         
+
             // encode hash the password
+            string test = password2; 
+            string test2 = encoder.Encode(password2);
             newUser.U_Password = encoder.Encode(password2);
              //newUser.U_Password = password2;
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
@@ -9,15 +10,25 @@ namespace YogaStudioHelper.Controllers
 {
     public class PassesController : Controller
     {
+
+        DBMaster db = new DBMaster();
+
         // GET: Passes
+
+        //View hardcoded 
         public ActionResult OnlineStore()
         {
 
-            String message = Util.EmailSender.sendEmail();
+            //String message = Util.EmailSender.sendEmail();
+            //Response.Write(message);
 
-            Response.Write(message);
-            return View();
+
+            IEnumerable<Class_Passes> class_Pass_List = db.getClassPasses();
+            return View(class_Pass_List);
+
         }
+
+
 
 
 
@@ -25,5 +36,5 @@ namespace YogaStudioHelper.Controllers
 
 
 
-  
+
 }
