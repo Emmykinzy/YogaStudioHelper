@@ -521,10 +521,34 @@ namespace YogaStudioHelper.Controllers
 
         }
 
+        [HttpGet]
         public ActionResult CreateSchedule()
         {
 
-            return View(); 
+            // DropDown 
+            //ScheduleViewModel 
+            var classes = db.getClassList();
+            var teachers = db.getTeacherList();
+            var rooms = db.getRoomList(); 
+
+            var scheduleViewModel = new ScheduleViewModel
+            {
+                Classes = classes,
+               Teachers = teachers,
+               Rooms = rooms
+
+            };
+
+
+            return View(scheduleViewModel); 
+        }
+
+        [HttpPost]
+        public ActionResult CreateSchedule(FormCollection collection)
+        {
+            // how to get dropdown value 
+
+            return RedirectToAction("ClassPassList2");
         }
 
         public ActionResult EditSchedule()

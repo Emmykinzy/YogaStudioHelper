@@ -1,104 +1,102 @@
-﻿@model Database.Schedule
+﻿
+
+
+@model YogaStudioHelper.ViewModels.ScheduleViewModel
+
 
 @{
+
+    // a model YogaStudioHelper.ViewModels.ScheduleViewModel
+    //model Database.Schedule
+
     ViewBag.Title = "CreateSchedule";
 }
 
 <h2>CreateSchedule</h2>
 
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Schedule</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Schedule_Id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Schedule_Id, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Schedule_Id, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Teacher_Id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Teacher_Id, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Teacher_Id, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="centerDiv">
+    @using (Html.BeginForm())
+    {
+        <table class="inputTable">
+            <tr>
+                <td></td>
+                <td style="text-align:center;"><h2>Schedule</h2></td>
+            </tr>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Class_Id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Class_Id, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Class_Id, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            <tr>
+                <th>Teacher:</th>
+              
+                <td>
+                    @Html.DropDownListFor(m => m.Teachers, new SelectList(Model.Teachers, "U_Id", "U_Last_Name"), new { @id = "classList" })
+                </td>
+            </tr>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Room_Id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Room_Id, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Room_Id, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            <tr>
+                <th>Class</th>
+                <td>
+                    @Html.DropDownListFor(m => m.Classes, new SelectList(Model.Classes, "Class_Id", "Class_Name"), new { @id = "classList" })
+                </td>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Start_Time, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Start_Time, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Start_Time, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Class_Date, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Class_Date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Class_Date, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Signed_Up, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Signed_Up, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Signed_Up, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            <tr>
+                <th>Room:</th>
+                <td>
+                    @Html.DropDownListFor(m => m.Rooms, new SelectList(Model.Rooms, "Room_Id", "Room_Name"), new { @id = "classList" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Group_Id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Group_Id, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Group_Id, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                </td>
+            </tr>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Schedule_Status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Schedule_Status, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Schedule_Status, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            <tr>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
+                <th>Time:</th>
+                <td class="select">
+                </td>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+            </tr>
+            <tr>
+                <th>Date:</th>
+                <td><input type="date" class="inputs" name="promoEnd" id="promoEnd" required /></td>
+            </tr>
+
+
+            <tr>
+                <th>Schedule Status:</th>
+                <td style="text-align:center">@Html.CheckBox("isActive", true)</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Create</button></td>
+            </tr>
+            <tr><td></td></tr>
+            <tr>
+                <td><button onclick="goBack()">Go Back</button></td>
+            </tr>
+        </table>
+    }
 </div>
 
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+<!--
+                       Html.DropDownListFor(m => m.Passes, new SelectList(Model.Passes, "pass_id", "pass_name"), new { a id = "passList" })
+
+        <div class="form-group">
+          Html.LabelFor(model => model.Teacher_Id, htmlAttributes: new { class = "control-label col-md-2" })
+            <div class="col-md-10">
+                Html.EditorFor(model => model.Teacher_Id, new { htmlAttributes = new { class = "form-control" } })
+                Html.ValidationMessageFor(model => model.Teacher_Id, "", new { class = "text-danger" })
+            </div>
+        </div>
+
+-->
