@@ -588,13 +588,14 @@ namespace YogaStudioHelper.Controllers
 
             DateTime classDate = Convert.ToDateTime(collection["classDate"]);
 
-
+            var status = collection["status"]; 
 
 
             schedule.Teacher_Id = selectedTeacher;
             schedule.Class_Id = selectedCLass;
             schedule.Room_Id = selectedRoom;
-            schedule.Class_Date = classDate; 
+            schedule.Class_Date = classDate;
+            schedule.Schedule_Status = status; 
 
 
 

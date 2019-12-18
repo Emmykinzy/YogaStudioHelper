@@ -64,7 +64,15 @@
 
             <tr>
                 <th>Schedule Status:</th>
-                <td style="text-align:center">@Html.CheckBox("isActive", true)</td>
+                <td style="text-align:center">
+
+                    <select id="status" name="status">
+                        <option value="ACTIVE" selected>Active</option>
+                        <option value="CANCELLED">Cancelled</option>
+    
+                    </select>
+                </td>
+
             </tr>
             <tr>
                 <td></td>
