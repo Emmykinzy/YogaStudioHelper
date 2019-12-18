@@ -24,9 +24,10 @@ namespace Database
         public int Teacher_Id { get; set; }
         public int Class_Id { get; set; }
         public int Room_Id { get; set; }
-        public Nullable<System.TimeSpan> Start_Time { get; set; }
-        public Nullable<System.DateTime> Class_Date { get; set; }
-        public Nullable<int> Signed_Up { get; set; }
+        public TimeSpan Start_Time { get; set; }
+        public DateTime Class_Date { get; set; }
+        public int Signed_Up { get; set; }
+        //test nllavle
         public Nullable<int> Group_Id { get; set; }
         public string Schedule_Status { get; set; }
     

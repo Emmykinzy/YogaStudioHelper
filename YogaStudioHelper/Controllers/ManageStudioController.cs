@@ -293,6 +293,11 @@ namespace YogaStudioHelper.Controllers
 
 
 
+        /// <summary>
+        ///         ClassPass
+        /// </summary>
+        /// <returns></returns>
+
         public ActionResult FindClassPass()
         {
             return View();
@@ -389,7 +394,7 @@ namespace YogaStudioHelper.Controllers
         }
 
         /// <summary>
-        /// Promotion 
+        ///         Promotion 
         /// </summary>
         /// <returns></returns>
 
@@ -529,9 +534,11 @@ namespace YogaStudioHelper.Controllers
             //ScheduleViewModel
 
             //https://localhost:44332/ManageStudio/CreateSchedule 
-            //var classes = db.getClassList();
-            //var teachers = db.getTeacherList();
-            //var rooms = db.getRoomList();
+            var classes = db.getClassList();
+            var teachers = db.getTeacherList();
+            var rooms = db.getRoomList();
+
+            /*
 
             List<Class> classListTest = new List<Class>();
 
@@ -552,14 +559,14 @@ namespace YogaStudioHelper.Controllers
             roomListTest.Add(new Room { Room_Id = 11, Room_Name = "F-245" });
             roomListTest.Add(new Room { Room_Id = 12, Room_Name = "B-06" });
 
-
+    */
 
 
             var scheduleViewModel = new ScheduleViewModel
             {
-                Classes = classListTest,
-                Teachers = teacherListTest,
-                Rooms = roomListTest
+                Classes = classes,
+                Teachers = teachers,
+                Rooms = rooms
 
             };
 
@@ -572,7 +579,26 @@ namespace YogaStudioHelper.Controllers
         {
             // how to get dropdown value 
 
-            return RedirectToAction("ClassPassList2");
+            Schedule schedule = new Schedule(); 
+
+
+            var selectedTeacher = Convert.ToInt32(collection["Teachers"]);
+            var selectedCLass = Convert.ToInt32(collection["Classes"]);
+            var selectedRoom = Convert.ToInt32(collection["Rooms"]);
+
+
+            schedule.Teacher_Id = selectedTeacher;
+            schedule.Class_Id = selectedCLass;
+            schedule.Room_Id = selectedRoom; 
+
+
+
+
+
+
+            db.CreateSchedule(schedule);
+
+            return RedirectToAction("ScheduleList");
         }
 
         public ActionResult EditSchedule()
