@@ -615,5 +615,21 @@ namespace Database
             myDb.SaveChanges();
         }
 
+        public void DeleteSchedule(int id)
+        {
+            var or = myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
+
+            myDb.Schedules.Remove(or);
+            //or.R = false;
+
+            myDb.SaveChanges();
+
+        }
+        public void ArchiveSchedule()
+        {
+
+        }
+
+
     }
 }

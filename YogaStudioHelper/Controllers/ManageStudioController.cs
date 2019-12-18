@@ -586,11 +586,15 @@ namespace YogaStudioHelper.Controllers
             var selectedCLass = Convert.ToInt32(collection["Classes"]);
             var selectedRoom = Convert.ToInt32(collection["Rooms"]);
 
+            DateTime classDate = Convert.ToDateTime(collection["classDate"]);
+
+
+
 
             schedule.Teacher_Id = selectedTeacher;
             schedule.Class_Id = selectedCLass;
-            schedule.Room_Id = selectedRoom; 
-
+            schedule.Room_Id = selectedRoom;
+            schedule.Class_Date = classDate; 
 
 
 
@@ -604,6 +608,15 @@ namespace YogaStudioHelper.Controllers
         public ActionResult EditSchedule()
         {
             return View(); 
+
+        }
+
+        public ActionResult ArchiveSchedule(int id)
+        {
+            db.DeleteSchedule(id);
+
+
+            return RedirectToAction("ScheduleList");
 
         }
     }

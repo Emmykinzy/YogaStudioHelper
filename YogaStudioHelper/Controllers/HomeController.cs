@@ -13,6 +13,11 @@ namespace YogaStudioHelper.Controllers
         [HttpGet]
         public ActionResult Homepage()
         {
+
+            // For testing purposes (admin) 
+            Session["Auth"] = 1;
+
+
             return View();
         }
 
