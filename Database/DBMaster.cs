@@ -578,28 +578,28 @@ namespace Database
             string name = s.Class.Class_Name;
             string room = s.Room.Room_Name;
             string teacher = s.Yoga_User.U_First_Name + " " + s.Yoga_User.U_Last_Name;
-            string startDate = s.Class_Date.ToString("dd/MM/yy");
-            string startTime = s.Start_Time.ToString(@"hh\:mm");
+            //string startDate = s.Class_Date. ToString("dd/MM/yy");
+            //string startTime = s.Start_Time.ToString(@"hh\:mm");
             string signedUp = s.Signed_Up.ToString();
 
-            TimeSpan l = s.Class.Class_Length;
-            TimeSpan st = s.Start_Time;
+            //TimeSpan l = s.Class.Class_Length;
+            //TimeSpan st = s.Start_Time;
 
-            TimeSpan dur = l + st;
+            //TimeSpan dur = l + st;
 
-            string duration = dur.ToString(@"hh\:mm");
+            //string duration = dur.ToString(@"hh\:mm");
 
             desc.Add(id.ToString());
             desc.Add(description);
             desc.Add(name);
-            desc.Add(startDate);
+            //desc.Add(startDate);
             desc.Add(room);
             desc.Add(teacher);
-            desc.Add(startTime);
+            //desc.Add(startTime);
             desc.Add(signedUp);
-            desc.Add(duration);
+            //desc.Add(duration);
 
-            s.Start_Time.ToString(@"hh\:mm\:ss");
+            //s.Start_Time.ToString(@"hh\:mm\:ss");
 
             return desc;
         }

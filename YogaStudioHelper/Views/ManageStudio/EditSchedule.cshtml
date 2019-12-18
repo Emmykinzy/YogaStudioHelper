@@ -1,6 +1,10 @@
 ﻿@model Database.Schedule
 
+
+
 @{
+
+    //model YogaStudioHelper.ViewModels.ScheduleViewModel
     ViewBag.Title = "EditSchedule";
 }
 
@@ -10,7 +14,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Schedule</h4>
         <hr />
