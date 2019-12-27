@@ -606,10 +606,69 @@ namespace YogaStudioHelper.Controllers
             return RedirectToAction("ScheduleList");
         }
 
-        public ActionResult EditSchedule()
+        [HttpGet]
+        public ActionResult EditSchedule(int id)
         {
-            return View(); 
+            var schedule = db.getScheduleById(id);
+            ViewBag.EditSchedule = schedule;
 
+            // set dropdown model
+            var classes = db.getClassList();
+            var teachers = db.getTeacherList();
+            var rooms = db.getRoomList();
+
+            var scheduleViewModel = new ScheduleViewModel
+            {
+                Classes = classes,
+                SelectedClassId = schedule.Class_Id,
+                ClasseEdit = new SelectList(classes, "Class_Id", "Class_Name", schedule.Class_Id),
+                Teachers = teachers,
+                SelectedTeacherId = schedule.Teacher_Id,
+                Rooms = rooms,
+                SelectedRoomId = schedule.Room_Id
+            };
+
+
+
+
+            return View(scheduleViewModel); 
+
+        }
+
+        [HttpPost]
+        public ActionResult EditSchedule(FormCollection collection)
+        {
+            int id = (int)TempData["EditScheduleId"];
+
+
+            var schedule = db.getScheduleById(id);
+
+            // getg 
+
+            var selectedTeacher = Convert.ToInt32(collection["SelectedTeacherId"]);
+            //var selectedCLass = collection["SelectedClassId"];
+            var selectedCLass = Convert.ToInt32(collection["SelectedClassId"]);
+            var selectedRoom = Convert.ToInt32(collection["SelectedRoomId"]);
+
+            DateTime classDate = Convert.ToDateTime(collection["classDate"]);
+
+            var status = collection["status"];
+
+
+            schedule.Teacher_Id = selectedTeacher;
+            schedule.Class_Id = selectedCLass;
+            schedule.Room_Id = selectedRoom;
+            schedule.Class_Date = classDate;
+            schedule.Schedule_Status = status;
+
+
+            // put db update method 
+
+
+            db.UpdateSchedule(schedule); 
+
+
+            return RedirectToAction("ScheduleList");
         }
 
         public ActionResult ArchiveSchedule(int id)

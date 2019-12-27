@@ -615,6 +615,27 @@ namespace Database
             myDb.SaveChanges();
         }
 
+
+        public void UpdateSchedule(Schedule np )
+        {
+            var sched = myDb.Schedules.Where(x => x.Schedule_Id == np.Schedule_Id).Single();
+
+            //Schedule sched = new Schedule();
+
+            sched.Teacher_Id = np.Teacher_Id;
+            sched.Class_Id = np.Class_Id;
+            sched.Room_Id = np.Room_Id;
+            sched.Start_Time = np.Start_Time;
+            sched.Class_Date = np.Class_Date;
+            //sched.Signed_Up = np.Signed_Up;
+            // sched.Group_Id = np.Group_Id;
+            sched.Schedule_Status = np.Schedule_Status;
+            sched.Room = np.Room;
+            // yoga user?  class log ? class ? 
+
+            myDb.SaveChanges();
+        }
+
         public void DeleteSchedule(int id)
         {
             var or = myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
