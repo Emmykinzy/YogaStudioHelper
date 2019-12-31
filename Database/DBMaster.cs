@@ -171,11 +171,11 @@ namespace Database
 
         }
 
-        public void UpdateUser(int id)
+        public void UpdateUser(Yoga_User o)
         {
-           var o = myDb.Yoga_User.Where(x => x.U_Id == id).Single();
+           var n = myDb.Yoga_User.Where(x => x.U_Id == o.U_Id).Single();
 
-            Yoga_User n = new Yoga_User();
+            //Yoga_User n = new Yoga_User();
 
             n.Roles_Id = o.Roles_Id;
             n.U_First_Name = o.U_First_Name;
@@ -199,6 +199,16 @@ namespace Database
             myDb.SaveChanges();
         }
 
+        public void DeleteUser(int id)
+        {
+            var y = myDb.Yoga_User.Where(x => x.U_Id == id).Single();
+
+            myDb.Yoga_User.Remove(y); 
+
+            //y.Active = false;
+
+            myDb.SaveChanges();
+        }
 
 
 

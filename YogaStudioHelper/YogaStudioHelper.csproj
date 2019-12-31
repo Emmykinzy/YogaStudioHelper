@@ -186,7 +186,7 @@
     <Content Include="Views\LoginSignUp\LogInSignUp.cshtml" />
     <Content Include="Views\Profile\Availabilities.cshtml" />
     <Content Include="Views\ManageUsers\FindUser.cshtml" />
-    <Content Include="Views\ManageUsers\CreateUser.cshtml" />
+    <Content Include="Views\ManageUsers\CreateUser_Old.cshtml" />
     <Content Include="Views\ManageUsers\FindUserAdvanced.cshtml" />
     <Content Include="Views\ManageUsers\UserList.cshtml" />
     <Content Include="Views\ManageStudio\CreateRoom.cshtml" />
@@ -206,7 +206,7 @@
     <Content Include="Views\ManageStudio\EditClass.cshtml" />
     <Content Include="Views\ManageStudio\EditClassPass.cshtml" />
     <Content Include="Views\ManageStudio\EditPromotion.cshtml" />
-    <Content Include="Views\ManageUsers\EditUser.cshtml" />
+    <Content Include="Views\ManageUsers\EditUser_Old.cshtml" />
     <Content Include="Views\Report\HoursWorked.cshtml" />
     <Content Include="Views\Report\Attendence.cshtml" />
     <Content Include="Views\Report\Sales.cshtml" />
@@ -222,6 +222,8 @@
     <Content Include="Views\ManageStudio\ScheduleList.cshtml" />
     <Content Include="Views\ManageStudio\EditSchedule.cshtml" />
     <Content Include="Views\ManageStudio\CreateSchedule.cshtml" />
+    <Content Include="Views\ManageUsers\CreateUser.cshtml" />
+    <Content Include="Views\ManageUsers\EditUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -137,10 +137,53 @@ namespace YogaStudioHelper.Controllers
             IEnumerable<Yoga_User> list = db.getUsers();
             return View(list);
         }
-
-        public ActionResult EditUser()
+        
+        [HttpGet]
+        public ActionResult EditUser(int id)
         {
+            var user = db.getUserById(id);
+
+            ViewBag.StickyUser = user;
+
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult EditUser(FormCollection collection)
+        {
+
+            int id = (int)TempData["EditUserId"];
+
+            var y = db.getUserById(id);
+
+
+            string role = collection["role"];
+            string email = collection["Email"];
+            string fname = collection["FirstName"];
+            string lname = collection["LastName"];
+            //Yoga_User y = new Yoga_User();
+            y.Roles_Id = db.getRoleId(role);
+            y.U_Email = email;
+            y.U_First_Name = fname;
+            y.U_Last_Name = lname;
+            y.Active = false;
+
+
+            //update db method
+            db.UpdateUser(y);
+
+            //ViewBag.StickyUser = user;
+
+            return RedirectToAction("UserList");
+        }
+
+        public ActionResult ArchiveUser(int id)
+        {
+            //SHould implement archive instead
+            db.DeleteUser(id);
+            // should use delete method in futur instead 
+
+            return RedirectToAction("UserList");
         }
 
     }
