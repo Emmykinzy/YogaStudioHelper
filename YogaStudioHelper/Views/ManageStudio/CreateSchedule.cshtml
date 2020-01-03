@@ -14,6 +14,15 @@
 
 <h2>CreateSchedule</h2>
 
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
 
 
 <div class="centerDiv">
@@ -27,7 +36,7 @@
 
             <tr>
                 <th>Teacher:</th>
-              
+
                 <td>
                     @Html.DropDownListFor(m => m.Teachers, new SelectList(Model.Teachers, "U_Id", "U_Last_Name"), new { @id = "classList" })
                 </td>
@@ -53,8 +62,23 @@
 
                 <th>Time:</th>
                 <td class="select">
+                    <input type="text" id="picker" name="picker" class="form-control" />
+
                 </td>
 
+                <script>
+
+                    $('#picker').datetimepicker({
+                        timepicker: true,
+                        datepicker: false,
+                        format: 'H:i',
+                        value: '10:00',
+                        hours12: false, 
+                        step: 30
+                       // allowTimes: ['']
+
+                    })
+                </script>
             </tr>
             <tr>
                 <th>Date:</th>
@@ -69,7 +93,7 @@
                     <select id="status" name="status">
                         <option value="ACTIVE" selected>Active</option>
                         <option value="CANCELLED">Cancelled</option>
-    
+
                     </select>
                 </td>
 

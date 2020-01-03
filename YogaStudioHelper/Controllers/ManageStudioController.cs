@@ -588,6 +588,9 @@ namespace YogaStudioHelper.Controllers
 
             DateTime classDate = Convert.ToDateTime(collection["classDate"]);
 
+            TimeSpan timePicker = TimeSpan.Parse(collection["picker"]);
+
+
             var status = collection["status"]; 
 
 
@@ -595,8 +598,8 @@ namespace YogaStudioHelper.Controllers
             schedule.Class_Id = selectedCLass;
             schedule.Room_Id = selectedRoom;
             schedule.Class_Date = classDate;
-            schedule.Schedule_Status = status; 
-
+            schedule.Schedule_Status = status;
+            schedule.Start_Time = timePicker;
 
 
 
