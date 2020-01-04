@@ -15,7 +15,8 @@ namespace YogaStudioHelper.Controllers
         {
 
             // For testing purposes (admin) 
-            Session["Auth"] = 1;
+            Session["Auth"] = 2;
+            Session["Uid"] = 2;
 
 
             return View();

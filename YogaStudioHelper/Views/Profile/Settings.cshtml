@@ -8,7 +8,8 @@
     @Html.ActionLink("Settings", "Settings", "Profile")
     @if ((int)Session["Auth"] == 2)
     {
-       @Html.ActionLink("Availabilities", "Availabilities", "Profile")
+        @Html.ActionLink("View Availabilities", "ViewAvailabilities", "Profile")
+        @Html.ActionLink("Create Availabilities", "CreateAvailabilities", "Profile")
     }  
 </div>
 

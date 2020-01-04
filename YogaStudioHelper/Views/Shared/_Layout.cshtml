@@ -80,7 +80,7 @@
                                 <li>@Html.ActionLink("Settings", "Settings", "Profile")</li>
                                 @if ((int)Session["Auth"] == 2)
                                 {
-                                    <li>@Html.ActionLink("Availabilities", "Availabilities", "Profile")</li>
+                                    <li>@Html.ActionLink("Availabilities", "ViewAvailabilities", "Profile")</li>
                                 }
                                 <li>@Html.ActionLink("Log Out", "LogOut", "LoginSignUp")</li>
                             </ul>

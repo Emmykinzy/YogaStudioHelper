@@ -186,7 +186,7 @@
     <Content Include="Views\Profile\Settings.cshtml" />
     <Content Include="Views\Schedule\ClassSignUp.cshtml" />
     <Content Include="Views\LoginSignUp\LogInSignUp.cshtml" />
-    <Content Include="Views\Profile\Availabilities.cshtml" />
+    <Content Include="Views\Profile\CreateAvailabilities.cshtml" />
     <Content Include="Views\ManageUsers\FindUser.cshtml" />
     <Content Include="Views\ManageUsers\CreateUser_Old.cshtml" />
     <Content Include="Views\ManageUsers\FindUserAdvanced.cshtml" />
@@ -226,6 +226,7 @@
     <Content Include="Views\ManageStudio\CreateSchedule.cshtml" />
     <Content Include="Views\ManageUsers\CreateUser.cshtml" />
     <Content Include="Views\ManageUsers\EditUser.cshtml" />
+    <Content Include="Views\Profile\ViewAvailabilities.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

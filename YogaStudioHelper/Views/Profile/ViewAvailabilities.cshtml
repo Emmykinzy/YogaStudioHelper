@@ -1,0 +1,63 @@
+﻿@using System.Xml.Linq;
+
+@model XDocument
+@{
+    ViewBag.Title = "Availabilities";
+    IEnumerable<XElement> all = Model.Element("Root").Elements();
+}
+
+
+<div class="sidebar">
+    @Html.ActionLink("Profile", "Profile", "Profile")
+    @Html.ActionLink("Settings", "Settings", "Profile")
+    @if ((int)Session["Auth"] == 2)
+    {
+        @Html.ActionLink("View Availabilities", "ViewAvailabilities", "Profile")
+        @Html.ActionLink("Create Availabilities", "CreateAvailabilities", "Profile")
+    }
+</div>
+
+<div class="main">
+    <div class="cont">
+        <h3>Availabilities</h3><br />
+        <table class="avail">
+            <tr>
+                <th></th>
+                <th>Sunday</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+            </tr>
+            <tr>
+                <th>Start</th>
+                @foreach (XElement n in all)
+                {
+                    XNode s = n.Element("Start").FirstNode;
+                    
+                    if (s != null)
+                    {  
+                        <td>@s.ToString()</td>
+                    }
+                }
+            </tr>
+            <tr>
+                <th>End</th>
+                @foreach (XElement n in all)
+                {
+                    XNode e = n.Element("End").FirstNode;
+
+                    if (e != null)
+                    {
+                        <td>@e.ToString()</td>
+                    }
+                }
+            </tr>
+
+        </table>
+
+    </div>
+</div>
+

@@ -7,6 +7,7 @@ using System.Data.Entity.Validation;
 //using System.Web.Mvc;
 using IdentityModel.Client;
 using Scrypt;
+using System.Xml.Linq;
 
 namespace Database
 {
@@ -107,6 +108,20 @@ namespace Database
         {
             //int r = getRoleId(role);
             return myDb.Yoga_User.Where(x => x.Roles_Id == 2).ToList();
+        }
+
+        public void AddAvailability(int id, XDocument schedule)
+        {
+            Yoga_User u = myDb.Yoga_User.Where(x => x.U_Id == id).Single();
+            u.Availability = schedule.ToString();
+            myDb.SaveChanges();
+        }
+
+        public XDocument getAvailability(int id)
+        {
+            Yoga_User u = myDb.Yoga_User.Where(x => x.U_Id == id).Single();
+            XDocument xd = XDocument.Parse(u.Availability);
+            return xd;
         }
 
         public IEnumerable<Yoga_User> getUserAdvancedSearch(string role, string lname, string email)

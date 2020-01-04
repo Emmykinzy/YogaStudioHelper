@@ -63,7 +63,9 @@ namespace YogaStudioHelper.Controllers
                 */
 
                 ViewBag.message = "Valid, Login";
-                Session["Auth"] = 1;
+                
+                Yoga_User u = db.getUserByEmail(email).Single();
+                Session["Uid"] = u.U_Id;
 
                 return RedirectToAction("Homepage", "Home");
             }
