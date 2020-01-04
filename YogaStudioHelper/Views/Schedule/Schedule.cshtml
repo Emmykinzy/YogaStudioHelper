@@ -42,9 +42,12 @@
                 <p id="signedUp"></p>
 
                 <br />
-               <div id="signUp"> 
-                <a href="Schedule/ClassSignUp" class="btn btn-default">Sign Up</a>
-               </div>
+                <div id="signUp">
+                    <!-- <a href="Schedule/ClassSignUp" class="btn btn-default">Sign Up</a> 
+                        need also to pass schedule id 
+                        -->
+                    @Html.ActionLink("Sign Up", "ClassSignUp", new { @id = "signupBtn" }, new { @class = "btn btn-default" })
+                </div>
             }
             else
             {
@@ -56,6 +59,7 @@
 
                 <div id="countDown"></div><br />
                 <a href="@Url.Action("ClassSignUp", "Schedule")" id="signupBtn" class="btn btn-default disabledA">Student Sign In</a>
+              
 
             }
         </div>

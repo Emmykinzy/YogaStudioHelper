@@ -25,6 +25,21 @@ namespace YogaStudioHelper.Controllers
 
         public ActionResult ClassSignUp()
         {
+
+
+            var test = 1; 
+            //Need to check student passes available 
+            
+            //if so call db method 
+
+            // increment sign up to schedule 
+
+            // Create class log 
+            // add upcoming class to the student profile 
+            // remove 1 pass from the student 
+            
+
+
             return View();
         }
     }

@@ -671,10 +671,32 @@ namespace Database
             myDb.SaveChanges();
 
         }
+     
         public void ArchiveSchedule()
         {
 
         }
+
+
+
+        /// <summary>
+        /// Schedule Controller 
+        /// </summary>
+
+        public void SignUp()
+        {
+            // How to I know which user I am ? 
+            // check teacher session etc? similar? 
+
+            // after check etc and if else 
+
+
+
+
+
+
+        }
+
 
 
     }
