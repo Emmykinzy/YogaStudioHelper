@@ -683,15 +683,18 @@ namespace Database
         /// Schedule Controller 
         /// </summary>
 
-        public void SignUp()
+        public void ScheduleSignUp(int id)
         {
             // How to I know which user I am ? 
             // check teacher session etc? similar? 
 
             // after check etc and if else 
 
+            var sched = myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
 
+            sched.Signed_Up++;
 
+            myDb.SaveChanges();
 
 
 
