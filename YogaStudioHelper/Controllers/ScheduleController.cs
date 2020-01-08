@@ -48,7 +48,7 @@ namespace YogaStudioHelper.Controllers
             newClassLog.U_Id = userId;
 
             // incase not null etc 
-            newClassLog.Log_Status = "Upcoming";
+            //newClassLog.Log_Status = "Upcoming";
 
             db.CreateClass_Log(newClassLog); 
 

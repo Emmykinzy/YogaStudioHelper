@@ -23,7 +23,23 @@ namespace YogaStudioHelper.Controllers
 
         public ActionResult ClassLogList()
         {
-            return View();
+
+            IEnumerable<Class_Log> class_Log_List = db.GetClass_Logs();
+
+            /*
+             * 
+             * using (var context = new BloggingContext())
+{
+    var blogs = context.Blogs
+        .Include(blog => blog.Posts)
+            .ThenInclude(post => post.Author)
+        .ToList();
+}
+
+    */
+
+
+            return View(class_Log_List);
         }
 
 
@@ -86,3 +102,4 @@ namespace YogaStudioHelper.Controllers
         }
     }
 }
+ 

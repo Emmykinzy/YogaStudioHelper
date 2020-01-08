@@ -622,7 +622,7 @@ namespace Database
             string name = s.Class.Class_Name;
             string room = s.Room.Room_Name;
             string teacher = s.Yoga_User.U_First_Name + " " + s.Yoga_User.U_Last_Name;
-            string startDate = s.Class_Date. ToString("dd/MM/yy");
+            string startDate = s.Class_Date.ToString("dd/MM/yy");
             string startTime = s.Start_Time.ToString(@"hh\:mm");
             string signedUp = s.Signed_Up.ToString();
 
