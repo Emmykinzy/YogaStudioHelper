@@ -227,6 +227,7 @@
     <Content Include="Views\ManageUsers\CreateUser.cshtml" />
     <Content Include="Views\ManageUsers\EditUser.cshtml" />
     <Content Include="Views\Profile\ViewAvailabilities.cshtml" />
+    <Content Include="Views\Profile\ClassLogList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -18,6 +18,15 @@ namespace YogaStudioHelper.Controllers
             return View();
         }
 
+
+        // test class log 
+
+        public ActionResult ClassLogList()
+        {
+            return View();
+        }
+
+
         public ActionResult Passes()
         {
             return View();

@@ -541,6 +541,21 @@ namespace Database
         }
 
 
+        // method to test fix null pointer exception 
+        public void DeleteAllClass_Log()
+        {
+
+            foreach (var log in myDb.Class_Log)
+            {
+                myDb.Class_Log.Remove(log); 
+
+           
+            }
+
+            myDb.SaveChanges();
+        }
+
+ 
 
 
         //Pass Log Get Methods
@@ -699,6 +714,10 @@ namespace Database
 
 
         }
+
+
+
+        
 
 
 

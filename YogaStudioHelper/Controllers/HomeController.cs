@@ -30,6 +30,9 @@ namespace YogaStudioHelper.Controllers
             // student  
             Session["Auth"] = 4;
 
+            //yoga user id 4 is a student id
+            Session["Uid"] = 4;
+
             return View(); 
         }
 

@@ -37,6 +37,27 @@ namespace YogaStudioHelper.Controllers
             db.ScheduleSignUp(scheduleId);
 
 
+            int userId = Convert.ToInt32(Session["Uid"]);
+
+
+
+            Class_Log newClassLog = new Class_Log();
+
+            newClassLog.Schedule_Id = scheduleId;
+
+            newClassLog.U_Id = userId;
+
+            // incase not null etc 
+            newClassLog.Log_Status = "Upcoming";
+
+            db.CreateClass_Log(newClassLog); 
+
+            //db.DeleteAllClass_Log();
+            
+
+            // Create class log 
+
+
 
 
             return RedirectToAction("Schedule");
@@ -51,6 +72,10 @@ namespace YogaStudioHelper.Controllers
             var test2 = TempData["ScheduleId"];
 
             var test3 = collection["scheduleId"];
+
+
+          
+
 
 
             //Need to check student passes available 
