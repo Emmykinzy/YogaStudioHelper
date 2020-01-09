@@ -1,7 +1,11 @@
 ﻿@model IEnumerable<Database.Class_Log>
+@using Database;
 
 @{
     ViewBag.Title = "ClassLogList";
+
+    DBMaster db = new DBMaster();
+
 }
 
 <h2>ClassLogList Upcoming ClassLog </h2>
@@ -12,55 +16,80 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Class_Log_Id)
+            Date
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Schedule_Id)
+            Class Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.U_Id)
+            Start Time
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Log_Status)
+            Lenght
         </th>
-        <th></th>
+        <th>
+            Teacher
+        </th>
     </tr>
-
-
-
-    <!-- We do  if statement to compare schedule date to sysdate -->
 
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Class_Log_Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Schedule_Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.U_Id)
-            </td>
-            <td>
-                <!-- Html.DisplayFor(modelItem => item.Log_Status) -->
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+
+        <!-- We do  if statement to compare schedule date to sysdate -->
+
+        var sched = db.getScheduleById(item.Schedule_Id);
+        var user = db.getUserById(item.U_Id);
+
+        var todaysDate = DateTime.Today;
+
+
+        var className = db.getClass(sched.Class_Id);
+
+        int result = DateTime.Compare(sched.Class_Date, todaysDate);
+
+        // date greater than todays date
+
+        if (result == 1)
+        {
+
+
+
+            <tr>
+                <td>
+                    @sched.Class_Date
+                </td>
+                <td>
+                    @className.Class_Name
+                </td>
+                <td>
+                    @sched.Start_Time
+                </td>
+                <td>
+                    Length 
+                </td>
+                <td>
+                    @user.U_First_Name @user.U_Last_Name
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+
+        }
     }
 
 </table>
 
 
 
+
+
+
+
 <!-- do second foreach table but we compare date lower than today -->
-
-
 
 <h2>Pass ClassLog</h2>
 
@@ -68,48 +97,83 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
+    <!--
+        Html.DisplayNameFor(model => model.Schedule_Id)
+        Html.DisplayNameFor(model => model.Class_Log_Id)
+                 Html.DisplayNameFor(model => model.U_Id)
+                             Html.DisplayNameFor(model => model.Log_Status)
+    -->
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Class_Log_Id)
+            Date
+
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Schedule_Id)
+            Class Name
+
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.U_Id)
+            Start Time
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Log_Status)
+            Length
         </th>
-        <th></th>
+        <th>
+            Teacher
+        </th>
+
     </tr>
-
-
-
-    <!-- We do  if statement to compare schedule date to sysdate -->
 
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Class_Log_Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Schedule_Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.U_Id)
-            </td>
-            <td>
-                <!-- Html.DisplayFor(modelItem => item.Log_Status) -->
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-    }
+
+        <!-- We do  if statement to compare schedule date to sysdate -->
+
+        var sched = db.getScheduleById(item.Schedule_Id);
+        var user = db.getUserById(item.U_Id);
+        var todaysDate = DateTime.Today;
+
+        var className = db.getClass(sched.Class_Id);
+
+        int result = DateTime.Compare(sched.Class_Date, todaysDate);
+
+        //if date is lower or equal since we cannot cancel a class 24 hours before it's start
+        if (result == -1 || result == 0)
+        {
+
+            <!--
+                Html.DisplayFor(modelItem => item.Class_Log_Id)
+                Html.DisplayFor(modelItem => item.Schedule_Id)
+                Html.DisplayFor(modelItem => item.U_Id)
+                Html.DisplayFor(modelItem => item.Log_Status) 
+            -->
+<tr>
+    <td>
+        @sched.Class_Date
+    </td>
+
+    <td>
+        @className.Class_Name
+    </td>
+    <td>
+        @sched.Start_Time
+    </td>
+    <td>
+        Lenght
+    </td>
+    <td>
+        @user.U_First_Name @user.U_Last_Name
+
+    </td>
+
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+    </td>
+</tr>
+}
+}
 
 </table>

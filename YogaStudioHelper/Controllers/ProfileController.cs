@@ -12,9 +12,11 @@ namespace YogaStudioHelper.Controllers
     {
         DBMaster db = new DBMaster();
 
-
+       
         public ActionResult Classes()
         {
+          //  var  c = db.getScheduleById(2);
+           // c.Cl
             return View();
         }
 
