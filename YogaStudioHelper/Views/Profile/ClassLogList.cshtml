@@ -66,17 +66,23 @@
                     @sched.Start_Time
                 </td>
                 <td>
-                    Length 
+                    Length
                 </td>
                 <td>
                     @user.U_First_Name @user.U_Last_Name
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    @Html.ActionLink("Cancel", "Cancel", new {  id=item.Class_Log_Id  }, new { @class = "btn btn-default" }) 
+
                 </td>
             </tr>
+
+
+            <!--
+            Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            -->
 
         }
     }

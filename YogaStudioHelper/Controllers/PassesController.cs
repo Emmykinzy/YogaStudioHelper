@@ -32,6 +32,38 @@ namespace YogaStudioHelper.Controllers
 
         }
 
+      
+        public ActionResult Purchase(int passId)
+        {
+
+            // veryfy paypal successfull before 
+
+
+            //
+
+            int userId = Int32.Parse(Session["Uid"].ToString());
+
+
+            // create purchase log 
+            Pass_Log pass_Log = new Pass_Log();
+
+            pass_Log.Pass_Id = passId;
+            pass_Log.U_Id = userId;
+            // num classes 
+            // price 
+            // date 
+
+            //todo add the other field above 
+            pass_Log.Date_Purchased = DateTime.Now;
+
+            //db.CreatePass_Log(pass_Log);
+
+                       
+            // todo success message with receipt etc. 
+
+            return RedirectToAction("OnlineStore"); 
+        }
+
 
 
 

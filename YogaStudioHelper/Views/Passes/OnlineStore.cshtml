@@ -30,7 +30,9 @@
                 <div class="passPurchase floatRight">
                     <div class="floatRight" style="padding-right:25px;">
                         <div class="floatLeft" style="padding-top:8px; padding-right:20px;">@Html.DisplayFor(modelItem => item.Pass_Price)$</div>
-                        <button type="submit" class="btn btn-default floatRight">Purchase</button>
+
+                        @Html.ActionLink("Purchase", "Purchase", new { passId = item.Pass_Id }, new { @class = "btn btn-default" })
+                        <!--utton type="submit" class="btn btn-default floatRight">Purchase</button> -->
                     </div>
                 </div>
             </div>

@@ -28,21 +28,42 @@ namespace YogaStudioHelper.Controllers
 
             IEnumerable<Class_Log> class_Log_List = db.GetClass_Logs();
 
-            /*
-             * 
-             * using (var context = new BloggingContext())
-{
-    var blogs = context.Blogs
-        .Include(blog => blog.Posts)
-            .ThenInclude(post => post.Author)
-        .ToList();
-}
+            /* 
+             
+            ? more efficienct way to do ? less search in view etc ?
 
-    */
+            using (var context = new BloggingContext())
+            {
+                var blogs = context.Blogs
+                    .Include(blog => blog.Posts)
+                        .ThenInclude(post => post.Author)
+                    .ToList();
+            }
+            */
 
 
             return View(class_Log_List);
         }
+
+
+        // cancel upcoming class 
+        public ActionResult Cancel()
+        {
+
+            //db remove or archive class log 
+
+            //Give back token to student 
+
+
+            // give confirmation 
+
+
+
+            return RedirectToAction("ClassLogList");
+        }
+
+
+
 
 
         public ActionResult Passes()
