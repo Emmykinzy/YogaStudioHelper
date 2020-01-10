@@ -58,10 +58,17 @@ namespace YogaStudioHelper.Controllers
             // give confirmation 
 
 
-
             return RedirectToAction("ClassLogList");
         }
 
+
+        public ActionResult PassLogList()
+        {
+            IEnumerable<Pass_Log> pass_Log_List = db.getPass_Logs();
+
+
+            return View(pass_Log_List); 
+        }
 
 
 

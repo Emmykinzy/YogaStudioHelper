@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Database.Pass_Log>
+@using Database;
+
+@{
+    ViewBag.Title = "PassLogList";
+    DBMaster db = new DBMaster();
+
+}
+
+<h2>PassLogList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Pass_Log_Id)
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_Id)
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+            Purchase Price
+        </th>
+        <th>
+            Promotion
+        </th>
+        <th>
+            Purchase Date
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        var pass = db.getClassPasse(item.Pass_Id);
+
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pass_Log_Id)
+            </td>
+            <td>
+                @pass.Pass_Name
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.U_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Num_Classes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Purchase_Price)
+            </td>
+            <td>
+                Promo todo 
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_Purchased)
+            </td>
+            <td>
+                <!--
+                Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                -->
+            </td>
+        </tr>
+    }
+
+</table>

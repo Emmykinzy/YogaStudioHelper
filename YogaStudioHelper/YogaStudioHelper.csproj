@@ -228,6 +228,7 @@
     <Content Include="Views\ManageUsers\EditUser.cshtml" />
     <Content Include="Views\Profile\ViewAvailabilities.cshtml" />
     <Content Include="Views\Profile\ClassLogList.cshtml" />
+    <Content Include="Views\Profile\PassLogList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

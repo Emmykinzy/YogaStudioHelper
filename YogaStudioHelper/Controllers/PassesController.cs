@@ -39,10 +39,11 @@ namespace YogaStudioHelper.Controllers
             // veryfy paypal successfull before 
 
 
-            //
+            var pass = db.getClassPasse(passId);
 
             int userId = Int32.Parse(Session["Uid"].ToString());
 
+            //todo update all field correctly later on 
 
             // create purchase log 
             Pass_Log pass_Log = new Pass_Log();
@@ -50,13 +51,15 @@ namespace YogaStudioHelper.Controllers
             pass_Log.Pass_Id = passId;
             pass_Log.U_Id = userId;
             // num classes 
+            pass_Log.Num_Classes = pass.Pass_Size;
             // price 
-            // date 
+            // todo include total with promo if present and taxes 
+            pass_Log.Purchase_Price = pass.Pass_Price; 
 
-            //todo add the other field above 
+            // date 
             pass_Log.Date_Purchased = DateTime.Now;
 
-            //db.CreatePass_Log(pass_Log);
+            db.CreatePass_Log(pass_Log);
 
                        
             // todo success message with receipt etc. 
