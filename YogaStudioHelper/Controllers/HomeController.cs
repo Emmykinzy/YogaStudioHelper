@@ -15,7 +15,7 @@ namespace YogaStudioHelper.Controllers
         {
 
             /*
-            // For testing purposes (admin) 
+            // For testing purposes teachers
             Session["Auth"] = 2;
             Session["Uid"] = 2;
             */
@@ -24,14 +24,14 @@ namespace YogaStudioHelper.Controllers
             //Session["Auth"] = 3;
 
             //Admin
-            //Session["Auth"] = 1;
+            Session["Auth"] = 1;
 
 
             // student  
-            Session["Auth"] = 4;
+            //Session["Auth"] = 4;
 
             //yoga user id 4 is a student id
-            Session["Uid"] = 4;
+            //Session["Uid"] = 4;
 
             return View(); 
         }

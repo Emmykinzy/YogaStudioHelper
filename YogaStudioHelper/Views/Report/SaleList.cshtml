@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Database.Pass_Log>
+
+@{
+    ViewBag.Title = "SaleList";
+}
+
+<h2>SaleList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Pass_Log_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pass_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Num_Classes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Purchase_Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date_Purchased)
+        </th>
+        <th></th>
+    </tr>
+
+    @{ 
+        double totalSales = 0; 
+    }
+
+@foreach (var item in Model) {
+
+    totalSales += Convert.ToDouble(item.Purchase_Price); 
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pass_Log_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pass_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Num_Classes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Purchase_Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date_Purchased)
+        </td>
+        <td>
+            <!--
+    html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+    Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+    Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        -->
+        </td>
+    </tr>
+}
+
+    <tr>
+
+    </tr>
+    <tr>
+        <th>Total Sales:</th>
+        <td>@totalSales</td>
+    </tr>
+
+
+</table>

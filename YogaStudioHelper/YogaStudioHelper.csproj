@@ -229,6 +229,7 @@
     <Content Include="Views\Profile\ViewAvailabilities.cshtml" />
     <Content Include="Views\Profile\ClassLogList.cshtml" />
     <Content Include="Views\Profile\PassLogList.cshtml" />
+    <Content Include="Views\Report\SaleList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

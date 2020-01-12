@@ -717,7 +717,18 @@ namespace Database
 
 
 
-        
+        /// <summary>
+        /// Report Controller 
+        /// </summary>
+        /// 
+
+
+        public IEnumerable<Pass_Log> GetSaleReport(DateTime d1, DateTime d2) 
+        {
+
+            return myDb.Pass_Log.Where(x => x.Date_Purchased >= d1 && x.Date_Purchased <= d2);
+
+        }
 
 
 
