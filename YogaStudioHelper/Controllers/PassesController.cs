@@ -52,6 +52,11 @@ namespace YogaStudioHelper.Controllers
             pass_Log.U_Id = userId;
             // num classes 
             pass_Log.Num_Classes = pass.Pass_Size;
+            int token = pass.Pass_Size;
+
+            //Update User Token 
+            db.AddTokens(userId, token);
+
             // price 
             // todo include total with promo if present and taxes 
             pass_Log.Purchase_Price = pass.Pass_Price; 

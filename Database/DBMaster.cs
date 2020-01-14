@@ -11,11 +11,11 @@ using System.Xml.Linq;
 
 namespace Database
 {
-   
+
 
     public class DBMaster
     {
-         yogadbEntities myDb = new yogadbEntities();
+        yogadbEntities myDb = new yogadbEntities();
         ScryptEncoder encoder = new ScryptEncoder();
 
 
@@ -43,7 +43,7 @@ namespace Database
                 //bool isValidCustomer = encoder.Compare(pass, u.U_Password);
                 bool isValidCustomer = encoder.Compare(pass, u.U_Password);
 
-                return isValidCustomer; 
+                return isValidCustomer;
 
             }
             catch
@@ -60,7 +60,7 @@ namespace Database
             {
                 var u = myDb.Yoga_User.Where(x => x.U_Email == email).Single();
                 return true;
-            }catch
+            } catch
             {
                 return false;
             }
@@ -128,7 +128,7 @@ namespace Database
         {
             IEnumerable<Yoga_User> userList = new List<Yoga_User>();
 
-            if(role == "Select Role" && email == "" && lname == "")
+            if (role == "Select Role" && email == "" && lname == "")
             {
                 IEnumerable<Yoga_User> list = getUsers();
                 userList = userList.Concat(list);
@@ -139,25 +139,25 @@ namespace Database
                 var l = list.Where(x => x.Roles_Id == getRoleId(role) && x.U_Email.Contains(email) && x.U_Last_Name.Contains(lname));
                 userList = userList.Concat(l);
             }
-            else if(role != "Select Role" && email != "" && lname == "")
+            else if (role != "Select Role" && email != "" && lname == "")
             {
                 IEnumerable<Yoga_User> list = getUserByRoleName(role);
                 var l = list.Where(x => x.Roles_Id == getRoleId(role) && x.U_Email.Contains(email));
                 userList = userList.Concat(l);
             }
-            else if(role != "Select Role" && email == ""  && lname != "")
+            else if (role != "Select Role" && email == "" && lname != "")
             {
                 IEnumerable<Yoga_User> list = getUserByRoleName(role);
                 var l = list.Where(x => x.U_Last_Name.Contains(lname));
                 userList = userList.Concat(l);
             }
-            else if( role == "Select Role" && email != "" && lname != "")
+            else if (role == "Select Role" && email != "" && lname != "")
             {
                 IEnumerable<Yoga_User> list = getUserByEmail(email);
                 var l = list.Where(x => x.U_Last_Name.Contains(lname));
                 userList = userList.Concat(l);
             }
-            else if(role != "Select Role" && email == "" && lname == "")
+            else if (role != "Select Role" && email == "" && lname == "")
             {
                 IEnumerable<Yoga_User> list = getUserByRoleName(role);
                 userList = userList.Concat(list);
@@ -172,7 +172,7 @@ namespace Database
                 IEnumerable<Yoga_User> list = getUserByLastName(lname);
                 userList = userList.Concat(list);
             }
- 
+
 
             return userList;
         }
@@ -188,7 +188,7 @@ namespace Database
 
         public void UpdateUser(Yoga_User o)
         {
-           var n = myDb.Yoga_User.Where(x => x.U_Id == o.U_Id).Single();
+            var n = myDb.Yoga_User.Where(x => x.U_Id == o.U_Id).Single();
 
             //Yoga_User n = new Yoga_User();
 
@@ -218,7 +218,7 @@ namespace Database
         {
             var y = myDb.Yoga_User.Where(x => x.U_Id == id).Single();
 
-            myDb.Yoga_User.Remove(y); 
+            myDb.Yoga_User.Remove(y);
 
             //y.Active = false;
 
@@ -284,7 +284,7 @@ namespace Database
         // Add active in DB to be able to achive 
         public void ArchiveRoom()
         {
-  
+
         }
         public void DeleteRoom(int id)
         {
@@ -322,8 +322,8 @@ namespace Database
         public IEnumerable<Class> getClassesByName(string name)
         {
 
-            return myDb.Classes.Where(x => x.Class_Name.Contains(name));  
-            
+            return myDb.Classes.Where(x => x.Class_Name.Contains(name));
+
         }
 
 
@@ -386,7 +386,7 @@ namespace Database
         {
 
             var promo = myDb.Promotions.Where(x => x.Promotion_Id == id).Single();
-            return promo; 
+            return promo;
         }
         public IEnumerable<Promotion> getPromotions()
         {
@@ -513,7 +513,10 @@ namespace Database
         }
 
 
-
+        /// <summary>
+        ///     Class Log
+        /// </summary>
+        /// <returns></returns>
 
 
         //Class Log Get Methods
@@ -547,15 +550,15 @@ namespace Database
 
             foreach (var log in myDb.Class_Log)
             {
-                myDb.Class_Log.Remove(log); 
+                myDb.Class_Log.Remove(log);
 
-           
+
             }
 
             myDb.SaveChanges();
         }
 
- 
+
 
 
         //Pass Log Get Methods
@@ -587,6 +590,19 @@ namespace Database
             myDb.Pass_Log.Add(pl);
             myDb.SaveChanges();
         }
+
+        public void DeleteClass_Log(int id)
+        {
+            var classLog = myDb.Class_Log.Where(x => x.Class_Log_Id == id).Single();
+
+            myDb.Class_Log.Remove(classLog);
+            //or.R = false;
+
+            myDb.SaveChanges();
+
+        }
+
+
 
 
         /// <summary>
@@ -656,7 +672,7 @@ namespace Database
         }
 
 
-        public void UpdateSchedule(Schedule np )
+        public void UpdateSchedule(Schedule np)
         {
             var sched = myDb.Schedules.Where(x => x.Schedule_Id == np.Schedule_Id).Single();
 
@@ -686,7 +702,7 @@ namespace Database
             myDb.SaveChanges();
 
         }
-     
+
         public void ArchiveSchedule()
         {
 
@@ -707,7 +723,15 @@ namespace Database
 
             var sched = myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
 
-            sched.Signed_Up++;
+            if(sched.Signed_Up == null)
+            {
+                sched.Signed_Up = 1;
+            }
+            else
+            {
+                sched.Signed_Up++;
+            }
+            
 
             myDb.SaveChanges();
 
@@ -715,8 +739,42 @@ namespace Database
 
         }
 
+        /// <summary>
+        /// Passes Controller 
+        /// </summary>
+        /// 
+
+        public void AddTokens(int id, int tokens)
+        {
+
+            var n = myDb.Yoga_User.Where(x => x.U_Id == id).Single();
+
+            if (n.U_Tokens == null)
+            {
+                n.U_Tokens = tokens;
+            }
+            else
+            {
+                n.U_Tokens += tokens;
+            }
 
 
+
+            myDb.SaveChanges();
+
+        }
+
+
+        public void RemoveToken(int id)
+        {
+
+            var n = myDb.Yoga_User.Where(x => x.U_Id == id).Single();
+
+            if (n.U_Tokens != null || n.U_Tokens != 0)
+            n.U_Tokens--;
+            myDb.SaveChanges();
+
+        }
         /// <summary>
         /// Report Controller 
         /// </summary>
@@ -730,7 +788,7 @@ namespace Database
 
         }
 
-
+        
 
     }
 }

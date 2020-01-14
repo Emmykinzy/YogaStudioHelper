@@ -47,13 +47,15 @@ namespace YogaStudioHelper.Controllers
 
 
         // cancel upcoming class 
-        public ActionResult Cancel()
+        public ActionResult Cancel(int id)
         {
 
             //db remove or archive class log 
+            db.DeleteClass_Log(id);
 
             //Give back token to student 
-
+            int userId = Int32.Parse(Session["Uid"].ToString());
+            db.AddTokens(userId, 1);
 
             // give confirmation 
 

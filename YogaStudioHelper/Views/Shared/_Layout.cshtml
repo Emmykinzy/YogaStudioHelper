@@ -74,8 +74,8 @@
                             <ul>
                                 @if ((int)Session["Auth"] == 4)
                                 {
-                                    <li>@Html.ActionLink("Classes", "Classes", "Profile")</li>
-                                    <li>@Html.ActionLink("Passes", "Passes", "Profile")</li>
+                                    <li>@Html.ActionLink("Classes", "ClassLogList", "Profile")</li>
+                                    <li>@Html.ActionLink("Passes", "PassLogList", "Profile")</li>
                                 }
                                 <li>@Html.ActionLink("Settings", "Settings", "Profile")</li>
                                 @if ((int)Session["Auth"] == 2)

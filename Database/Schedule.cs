@@ -26,7 +26,7 @@ namespace Database
         public int Room_Id { get; set; }
         public TimeSpan Start_Time { get; set; }
         public DateTime Class_Date { get; set; }
-        public int Signed_Up { get; set; }
+        public Nullable<int> Signed_Up { get; set; }
         public Nullable<int> Group_Id { get; set; }
         public string Schedule_Status { get; set; }
     

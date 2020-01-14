@@ -590,6 +590,11 @@ namespace YogaStudioHelper.Controllers
 
             TimeSpan timePicker = TimeSpan.Parse(collection["picker"]);
 
+           // Add course length to timeSpan? no sure working 
+            var classTime = db.getClass(selectedCLass).Class_Length;
+
+            timePicker.Add(classTime);
+
 
             var status = collection["status"]; 
 

@@ -100,6 +100,7 @@
           <Property Name="U_Phone" Type="varchar" MaxLength="10" />
           <Property Name="Availability" Type="xml" />
           <Property Name="U_Birthday" Type="date" />
+          <Property Name="U_Tokens" Type="int" />
           <Property Name="Active" Type="bit" />
         </EntityType>
         <Association Name="FK_CLASS_LOG_SCHEDULE_ID">
@@ -375,6 +376,7 @@
           <NavigationProperty Name="Pass_Log" Relationship="Self.FK_Pass_Log_U_Id" FromRole="Yoga_User" ToRole="Pass_Log" />
           <NavigationProperty Name="Role" Relationship="Self.FK_Yoga_User_Roles_Id" FromRole="Yoga_User" ToRole="Roles" />
           <NavigationProperty Name="Schedules" Relationship="Self.FK_Schedule_Teacher_Id" FromRole="Yoga_User" ToRole="Schedule" />
+          <Property Name="U_Tokens" Type="Int32" />
         </EntityType>
         <Association Name="FK_Schedule_Class_Id">
           <End Role="Class" Type="Self.Class" Multiplicity="1" />
@@ -630,6 +632,7 @@
           <EntitySetMapping Name="Yoga_User">
             <EntityTypeMapping TypeName="yogadbModel.Yoga_User">
               <MappingFragment StoreEntitySet="Yoga_User">
+                <ScalarProperty Name="U_Tokens" ColumnName="U_Tokens" />
                 <ScalarProperty Name="U_Id" ColumnName="U_Id" />
                 <ScalarProperty Name="Roles_Id" ColumnName="Roles_Id" />
                 <ScalarProperty Name="U_First_Name" ColumnName="U_First_Name" />

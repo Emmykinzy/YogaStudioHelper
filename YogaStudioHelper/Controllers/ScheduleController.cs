@@ -50,9 +50,12 @@ namespace YogaStudioHelper.Controllers
             // incase not null etc 
             //newClassLog.Log_Status = "Upcoming";
 
-            db.CreateClass_Log(newClassLog); 
+            db.CreateClass_Log(newClassLog);
 
-            //db.DeleteAllClass_Log();
+
+
+            // remove token 
+            db.RemoveToken(userId);
             
 
             // Create class log 

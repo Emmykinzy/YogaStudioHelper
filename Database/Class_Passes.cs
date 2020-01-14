@@ -23,7 +23,7 @@ namespace Database
     
         public int Pass_Id { get; set; }
         public string Pass_Name { get; set; }
-        public Nullable<int> Pass_Size { get; set; }
+        public int Pass_Size { get; set; }
         public Nullable<decimal> Pass_Price { get; set; }
         public Nullable<bool> Active { get; set; }
     

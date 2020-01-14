@@ -5,9 +5,18 @@
     ViewBag.Title = "PassLogList";
     DBMaster db = new DBMaster();
 
+    int userId = Int32.Parse(Session["Uid"].ToString());
+
+    var student = db.getUserById(userId);
 }
 
-<h2>PassLogList</h2>
+<h2>Passes Purchased</h2>
+
+<div>
+
+    <h4>Student Passes:</h4>
+    <h4>@student.U_Tokens</h4>
+</div>
 
 <p>
     @Html.ActionLink("Create New", "Create")
