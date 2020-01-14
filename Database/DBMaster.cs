@@ -687,6 +687,9 @@ namespace Database
             string startTime = s.Start_Time.ToString(@"hh\:mm");
             string signedUp = s.Signed_Up.ToString();
 
+            //
+            string size = s.Room.Room_Capacity.ToString();
+
             TimeSpan l = s.Class.Class_Length;
             TimeSpan st = s.Start_Time;
 
@@ -703,6 +706,7 @@ namespace Database
             desc.Add(startTime);
             desc.Add(signedUp);
             desc.Add(duration);
+            desc.Add(size);
 
             s.Start_Time.ToString(@"hh\:mm\:ss");
 

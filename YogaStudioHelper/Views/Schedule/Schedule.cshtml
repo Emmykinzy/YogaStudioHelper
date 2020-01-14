@@ -21,13 +21,28 @@
     int hr2 = 8;
 
 
+    //Boolean message = true;
 
+    var Message = "";
+    if (TempData["Message"] != null)
+    {
+        Message = TempData["Message"].ToString();
+    }
 }
 
+
+    <script language=javascript>
+        var test = 5;
+        if (test == 5) {
+            alert('Succesfully Enroll');
+    </script>
+        
+        
 
     
 
 <h3>Class Schedule</h3>
+<h5 name="message" id="message">Message: @Message </h5>
 <div>
     <div class="floatRight"></div>
     <div id="myModal" class="modal">
@@ -159,7 +174,8 @@ string teacher = list.ElementAt(5);
 string startTime = list.ElementAt(6);
 string signedUp = list.ElementAt(7);
 string duration = list.ElementAt(8);
-                    <td><a onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "')")">@it.Start_Time.ToString(@"hh\:mm")    @it.Class.Class_Name</a></td>
+string roomSize = list.ElementAt(9);
+                    <td><a onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize + "')")">@it.Start_Time.ToString(@"hh\:mm")    @it.Class.Class_Name</a></td>
                     <br />
 
 
@@ -180,7 +196,8 @@ string teacher = list.ElementAt(5);
 string startTime = list.ElementAt(6);
 string signedUp = list.ElementAt(7);
 string duration = list.ElementAt(8);
-                        <td><a onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "')")">@item.Start_Time.ToString(@"hh\:mm")    @item.Class.Class_Name</a></td>
+string roomSize = list.ElementAt(9);
+                        <td><a onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize+ "')")">@item.Start_Time.ToString(@"hh\:mm")    @item.Class.Class_Name</a></td>
 
                                              date++;
                                          }
@@ -210,10 +227,11 @@ string teacher = list.ElementAt(5);
 string startTime = list.ElementAt(6);
 string signedUp = list.ElementAt(7);
 string duration = list.ElementAt(8);
+string roomSize = list.ElementAt(9);
 
 
 
-                        <td><a onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "')")">@it.Start_Time.ToString(@"hh\:mm")    @it.Class.Class_Name</a></td>
+                        <td><a onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize + "')")">@it.Start_Time.ToString(@"hh\:mm")    @it.Class.Class_Name</a></td>
                         <br />
 
 
@@ -240,19 +258,20 @@ string duration = list.ElementAt(8);
                                                          mult = true;
                             <td>
                                 @foreach (var it in Model.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date))
-                                                                         {
+                                {
 
-                                                                             List<string> list = db.getSchedulesInfo(it.Schedule_Id).ToList();
-string id = list.ElementAt(0);
-string description = list.ElementAt(1);
-string name = list.ElementAt(2);
-string startDate = list.ElementAt(3);
-string room = list.ElementAt(4);
-string teacher = list.ElementAt(5);
-string startTime = list.ElementAt(6);
-string signedUp = list.ElementAt(7);
-string duration = list.ElementAt(8);
-                                <a onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "')")">@it.Start_Time.ToString(@"hh\:mm")    @it.Class.Class_Name</a>
+                                    List<string> list = db.getSchedulesInfo(it.Schedule_Id).ToList();
+                                    string id = list.ElementAt(0);
+                                    string description = list.ElementAt(1);
+                                    string name = list.ElementAt(2);
+                                    string startDate = list.ElementAt(3);
+                                    string room = list.ElementAt(4);
+                                    string teacher = list.ElementAt(5);
+                                    string startTime = list.ElementAt(6);
+                                    string signedUp = list.ElementAt(7);
+                                    string duration = list.ElementAt(8);
+                                    string roomSize = list.ElementAt(9);
+                                <a onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize + "')")">@it.Start_Time.ToString(@"hh\:mm")    @it.Class.Class_Name</a>
                                 <br />
 
 
@@ -273,7 +292,8 @@ string teacher = list.ElementAt(5);
 string startTime = list.ElementAt(6);
 string signedUp = list.ElementAt(7);
 string duration = list.ElementAt(8);
-                            <td><a onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "')")">@item.Start_Time.ToString(@"hh\:mm")    @item.Class.Class_Name</a></td>
+string roomSize = list.ElementAt(9);
+                            <td><a onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize + "')")">@item.Start_Time.ToString(@"hh\:mm")    @item.Class.Class_Name</a></td>
                                                      date++;
                                                  }
                                              }
@@ -320,9 +340,10 @@ string duration = list.ElementAt(8);
 
     var span = document.getElementsByClassName("close")[0];
 
-    function classInfo(id, description, name, startDate, room, teacher, startTime, signedUp, duration) {
+    function classInfo(id, description, name, startDate, room, teacher, startTime, signedUp, duration, size) {
         //test asp.net inside script etc 
         //{TempData["ScheduleId"] = } id; }
+        
 
         //test hidden field  
 
@@ -334,7 +355,7 @@ string duration = list.ElementAt(8);
         document.getElementById("time").innerHTML = "<b>Length:</b> " + startTime + " - "+duration;
         document.getElementById("room").innerHTML = "<b>Room:</b> "+room;
         document.getElementById("teacher").innerHTML = "<b>Teacher:</b> "+teacher;
-        document.getElementById("signedUp").innerHTML = "<b>Students Signed Up: </b>" + signedUp;
+        document.getElementById("signedUp").innerHTML = "<b>Students Signed Up: </b>" + signedUp + "/"+size;
 
         var today = new Date();
             var date = today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear();

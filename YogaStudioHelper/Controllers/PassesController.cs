@@ -37,7 +37,7 @@ namespace YogaStudioHelper.Controllers
         {
 
             // veryfy paypal successfull before 
-
+             
 
             var pass = db.getClassPasse(passId);
 
@@ -66,9 +66,11 @@ namespace YogaStudioHelper.Controllers
 
             db.CreatePass_Log(pass_Log);
 
-                       
+
             // todo success message with receipt etc. 
 
+            //ViewBag.Message = "Purchase successful";
+            TempData["Message"] = "Purchase successful";
             return RedirectToAction("OnlineStore"); 
         }
 
