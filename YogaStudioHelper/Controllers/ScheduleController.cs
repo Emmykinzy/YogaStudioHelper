@@ -41,6 +41,15 @@ namespace YogaStudioHelper.Controllers
             var yogaUser = db.getUserById(userId);
             var sched = db.getScheduleById(scheduleId);
 
+            // Validate if student already sign in  
+            var checkIfSignin = db.CheckIfSignIn(scheduleId, userId);
+
+            if (checkIfSignin)
+            {
+                TempData["Message"] = "Error: You are already sign to this course";
+                return RedirectToAction("Schedule");
+
+            }
 
             // Validation: student has passes 
             if(yogaUser.U_Tokens < 1)

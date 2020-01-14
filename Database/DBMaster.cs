@@ -604,9 +604,22 @@ namespace Database
         }
 
 
+        public bool CheckIfSignIn(int schedId, int userId)
+        {
+
+            //bool s = Convert.ToBoolean(myDb.Class_Log.Where(x => x.Schedule_Id == schedId && x.U_Id == userId));
+            bool s = myDb.Class_Log.Any(x => x.Schedule_Id == schedId && x.U_Id == userId);
+
+            // .Any();
+            return s;
+        }
 
 
-        //Pass Log Get Methods
+        /// <summary>
+        ///         //Pass Log Get Methods
+        /// </summary>
+        /// <returns></returns>
+
 
         public IEnumerable<Pass_Log> getPass_Logs()
         {
