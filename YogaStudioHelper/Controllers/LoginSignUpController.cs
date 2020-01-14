@@ -30,15 +30,15 @@ namespace YogaStudioHelper.Controllers
             string email = collection["Email"];
             string pass = collection["Password"];
 
-            bool valid = db.ValidateUser(email, pass);
+            bool valid = db.LoginUser(email, pass);
 
             if(valid)
             {
-                /*
-                IEnumerable<Yoga_User> list = db.getUserByEmail(email);
+                
+                Yoga_User u = db.getUserByEmail(email).Single();
 
 
-                int id = list.First().Roles_Id;
+                int id = u.Roles_Id;
                 string roleName = db.getRoleName(id);
                 if (roleName.Equals("ADMINISTRATOR"))
                 {
@@ -60,19 +60,27 @@ namespace YogaStudioHelper.Controllers
                 {
                    Session["Auth"] = null;
                 }
-                */
+                
 
                 ViewBag.message = "Valid, Login";
                 
-                Yoga_User u = db.getUserByEmail(email).Single();
                 Session["Uid"] = u.U_Id;
 
                 return RedirectToAction("Homepage", "Home");
             }
             else
             {
-                ViewBag.message = "Invalid Login Credentials";
-                ViewBag.StickyEmail = email; 
+                Yoga_User u = db.getUserByEmail(email).Single();
+                if (u.Active == true)
+                {
+                    ViewBag.message = "Invalid Login Credentials";
+                    ViewBag.StickyEmail = email;
+                }
+                else
+                {
+                    ViewBag.message = "Email has not yet been confirmed";
+                    ViewBag.StickyEmail = email;
+                }
                 return View();
             }
            
@@ -95,8 +103,12 @@ namespace YogaStudioHelper.Controllers
         [HttpPost]
         public ActionResult SignUp(FormCollection collection)
         {
+            string token = Guid.NewGuid().ToString();            
+
             string email = collection["Email"];
-           
+
+            Util.EmailSender.sendSignUpConfirmation(email, token);
+
             String password1 = collection["password1"].ToString();
 
             String password2 = collection["password2"].ToString();
@@ -112,6 +124,7 @@ namespace YogaStudioHelper.Controllers
             newUser.U_First_Name = firstName;
             newUser.U_Last_Name = lastName;
             newUser.Roles_Id = 4;
+            newUser.Email_Confirmation = token;
 
 
             // check if user exist 
@@ -173,6 +186,25 @@ namespace YogaStudioHelper.Controllers
 
 
             return View();
+        }
+
+        public ActionResult ConfirmEmail()
+        {
+            string email = Request.QueryString["email"].ToString();
+            string token = Request.QueryString["token"].ToString();
+
+            bool valid = db.emailConfirmation(email, token);
+
+            if(valid)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("EmailConfirmation", "Error");
+            }
+
+            
         }
     }
 }

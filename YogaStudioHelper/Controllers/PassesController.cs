@@ -25,7 +25,10 @@ namespace YogaStudioHelper.Controllers
             //IEnumerable<Promotion> promoList = db.getPromotions();
             //ViewBag.PromoList = promoList; 
 
-            
+            string token = Guid.NewGuid().ToString();
+            Util.EmailSender.sendSignUpConfirmation("ekjohnson99@gmail.com", token);
+
+
             IEnumerable<Class_Passes> class_Pass_List = db.getClassPasses();
             return View(class_Pass_List);
 

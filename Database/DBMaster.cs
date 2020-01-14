@@ -53,6 +53,32 @@ namespace Database
 
         }
 
+        public bool LoginUser(string email, string pass)
+        {
+            try
+            {
+                bool isValidCustomer;
+                var u = myDb.Yoga_User.Where(x => x.U_Email == email).Single();
+
+                if(encoder.Compare(pass, u.U_Password) && u.Active == true)
+                {
+                   isValidCustomer = true;
+                }
+                else
+                {
+                    isValidCustomer = false;
+                }
+                
+
+                return isValidCustomer;
+
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
 
         public bool ValidateUserExist(string email)
         {
@@ -64,6 +90,25 @@ namespace Database
             {
                 return false;
             }
+        }
+
+        public bool emailConfirmation(string email, string token)
+        {
+            bool isConfirmed;
+            Yoga_User u = getUserByEmail(email).Single();
+
+            if(u.Email_Confirmation == token)
+            {
+                isConfirmed = true;
+                u.Active = true;
+            }
+            else
+            {
+                isConfirmed = false;
+            }
+
+            myDb.SaveChanges();
+            return isConfirmed;
         }
 
         public IEnumerable<Yoga_User> getUserByEmail(string email)

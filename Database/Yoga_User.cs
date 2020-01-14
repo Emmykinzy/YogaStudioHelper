@@ -33,6 +33,7 @@ namespace Database
         public Nullable<System.DateTime> U_Birthday { get; set; }
         public Nullable<bool> Active { get; set; }
         public Nullable<int> U_Tokens { get; set; }
+        public string Email_Confirmation { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Class_Log> Class_Log { get; set; }
