@@ -117,16 +117,18 @@ namespace YogaStudioHelper.Controllers
         [HttpPost]
         public ActionResult CreateUser(FormCollection collection)
         {
-            string role = collection["role"];
+            int role = Convert.ToInt32(collection["role"]);
             string email = collection["Email"];
             string fname = collection["FirstName"];
             string lname = collection["LastName"];
             Yoga_User y = new Yoga_User();
-            y.Roles_Id = db.getRoleId(role);
+            //y.Roles_Id = db.getRoleId(role);
+            y.Roles_Id = role;
+
             y.U_Email = email;
             y.U_First_Name = fname;
             y.U_Last_Name = lname;
-            y.Active = false;
+            y.Active = true;
 
             db.CreateUser(y);
             return View();

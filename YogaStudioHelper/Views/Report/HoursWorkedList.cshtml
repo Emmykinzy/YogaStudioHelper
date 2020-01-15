@@ -1,0 +1,66 @@
+﻿@model IEnumerable<YogaStudioHelper.ViewModels.HoursWorkedViewModel>
+
+@{
+    ViewBag.Title = "HoursWorkedList";
+
+    TimeSpan totalHours = TimeSpan.Zero;
+}
+
+<h2>Hours Worked Report</h2>
+
+<p>
+
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Class Date
+        </th>
+        <th>
+            First Name
+        </th>
+        <th>
+            Last Name
+        </th>
+        <th>
+            Class Name
+        </th>
+        <th>
+            Class length
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        totalHours = totalHours.Add(item.Class_Length);
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.U_First_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.U_Last_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class_Length)
+            </td>
+        
+        </tr>
+    }
+
+    <tr>
+    </tr>
+    <tr>
+        <th>Total Hours Worked:</th>
+        <td>@totalHours</td>
+    </tr>
+
+
+</table>

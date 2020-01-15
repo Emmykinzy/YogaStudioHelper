@@ -902,7 +902,15 @@ namespace Database
 
         }
 
-        
+
+        public IEnumerable<Schedule> GetHoursWorkedReport(DateTime d1, DateTime d2, int userId)
+        {
+
+            return myDb.Schedules.Where(x => x.Class_Date >= d1 && x.Class_Date <= d2 && x.Teacher_Id == userId);
+
+        }
+
+
 
     }
 }
