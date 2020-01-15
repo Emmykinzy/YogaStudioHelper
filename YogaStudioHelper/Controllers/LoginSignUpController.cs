@@ -78,7 +78,7 @@ namespace YogaStudioHelper.Controllers
                 }
                 else
                 {
-                    ViewBag.message = "Email has not yet been confirmed";
+                    ViewBag.message = "Account is not Activated";
                     ViewBag.StickyEmail = email;
                 }
                 return View();

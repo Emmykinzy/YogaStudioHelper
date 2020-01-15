@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
@@ -9,6 +10,7 @@ namespace YogaStudioHelper.Util
     public class EmailSender
     {
 
+       
 
         public static string sendEmail()
         {
@@ -93,4 +95,35 @@ namespace YogaStudioHelper.Util
             client.Send(msobj);
         }
     }
+
+    public static void sendPurchaseConfirmation(Yoga_User user, Class_Passes pass)
+    {
+
+        SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+
+        client.EnableSsl = true;
+
+        client.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+        client.UseDefaultCredentials = false;
+
+        client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
+
+
+        MailMessage msobj = new MailMessage();
+
+        msobj.To.Add(user.U_Email);
+
+        msobj.From = new MailAddress("SamsaraYogaMontreal@gmail.com");
+        msobj.Subject = "Confirmation of Digital Purchase from Samsara Yoga";
+        msobj.IsBodyHtml = true;
+        msobj.Body = "<h1 style='color:#557ee6;'>Saṃsāra Yoga</h1>" +
+                     "<p>Thank you for your recent digital purchase from Samsara Yoga. Details of this transaction are below:</p><br/><br/>" +
+                     "";
+
+
+
+        client.Send(msobj);
+    }
+}
 }

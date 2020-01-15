@@ -24,7 +24,7 @@ namespace Database
         public int Pass_Id { get; set; }
         public string Pass_Name { get; set; }
         public int Pass_Size { get; set; }
-        public Nullable<decimal> Pass_Price { get; set; }
+        public decimal Pass_Price { get; set; }
         public Nullable<bool> Active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

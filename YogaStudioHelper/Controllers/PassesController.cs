@@ -1,17 +1,21 @@
 ﻿using Database;
+using PayPal.Api;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using YogaStudioHelper.Util;
 
 namespace YogaStudioHelper.Controllers
 {
     public class PassesController : Controller
     {
-
+        private Payment payment;
         DBMaster db = new DBMaster();
+
 
         // GET: Passes
 
@@ -32,14 +36,87 @@ namespace YogaStudioHelper.Controllers
 
         }
 
-      
-        public ActionResult Purchase(int passId)
+
+        public ActionResult Purchase(int passId, string Cancel = null)
         {
+            var pass = db.getClassPasse(passId);
 
             // veryfy paypal successfull before 
+            //getting the apiContext  
+            APIContext apiContext = Paypal.GetAPIContext();
+            try
+            {
 
+                string payerId = Request.Params["PayerID"];
+                if (string.IsNullOrEmpty(payerId))
+                {
 
+                    string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/Passes/Purchases?passId="+pass.Pass_Id+"&";
+
+                    var guid = Convert.ToString((new Random()).Next(100000));
+
+                    var createdPayment = CreatePayment(apiContext, baseURI + "guid=" + guid, pass);
+
+                    var links = createdPayment.links.GetEnumerator();
+                    string paypalRedirectUrl = null;
+                    while (links.MoveNext())
+                    {
+                        Links lnk = links.Current;
+                        if (lnk.rel.ToLower().Trim().Equals("approval_url"))
+                        {
+                            paypalRedirectUrl = lnk.href;
+                        }
+                    }
+                    Session.Add(guid, createdPayment.id);
+                    return Redirect(paypalRedirectUrl);
+                }
+                else
+                {
+                    var guid = Request.Params["guid"];
+                    var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
+
+                    if (executedPayment.state.ToLower() != "approved")
+                    {
+                        return View("FailureView");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return View("FailureView");
+            }
+
+            return View("FailureView");
+        }
+
+        public ActionResult Purchases(string Cancel = null)
+        {
+            int passId = Int32.Parse(Request.QueryString["passId"]);
             var pass = db.getClassPasse(passId);
+
+            // veryfy paypal successfull before 
+            //getting the apiContext  
+            APIContext apiContext = Paypal.GetAPIContext();
+            try
+            {
+
+                string payerId = Request.Params["PayerID"];
+                
+                var guid = Request.Params["guid"];
+                var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
+
+                if (executedPayment.state.ToLower() != "approved")
+                {
+                    return View("FailureView");
+                }
+                
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return View("FailureView");
+            }
 
             int userId = Int32.Parse(Session["Uid"].ToString());
 
@@ -59,26 +136,112 @@ namespace YogaStudioHelper.Controllers
 
             // price 
             // todo include total with promo if present and taxes 
-            pass_Log.Purchase_Price = pass.Pass_Price; 
+            pass_Log.Purchase_Price = pass.Pass_Price;
 
             // date 
-            pass_Log.Date_Purchased = DateTime.Now;
+            DateTime date = DateTime.Now;
+            pass_Log.Date_Purchased = date;
 
             db.CreatePass_Log(pass_Log);
 
-                       
+            string purchaseDateTime = date.ToString("dd/MM/yyyy HH:mm:ss");
+            string purchaseDate = date.ToString("ddMMyy");
+            string invoice = purchaseDate + userId;
+
+            
+
+
+
             // todo success message with receipt etc. 
 
-            return RedirectToAction("OnlineStore"); 
+            return View("SuccessView");
         }
 
+            public ActionResult FailureView()
+        {
+            return View();
+        }
 
+        public ActionResult SuccessView()
+        {
+            return View();
+        }
+
+        private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
+        {
+            var paymentExecution = new PaymentExecution()
+            {
+                payer_id = payerId
+            };
+            payment = new Payment()
+            {
+                id = paymentId
+            };
+            return payment.Execute(apiContext, paymentExecution);
+        }
+        private Payment CreatePayment(APIContext apiContext, string redirectUrl, Class_Passes cp)
+        {
+            double t = ((double)cp.Pass_Price * .15);
+            //create itemlist and add item objects to it  
+            var itemList = new ItemList()
+            {
+                items = new List<Item>()
+            };
+            //Adding Item Details like name, currency, price etc  
+            itemList.items.Add(new Item()
+            {
+                name = cp.Pass_Name,
+                currency = "CAD",
+                price = cp.Pass_Price.ToString("F"),
+                quantity = "1",
+                sku = "sku"
+            });
+            var payer = new Payer()
+            {
+                payment_method = "paypal"
+            };
+            // Configure Redirect Urls here with RedirectUrls object  
+            var redirUrls = new RedirectUrls()
+            {
+                cancel_url = redirectUrl + "&Cancel=true",
+                return_url = redirectUrl
+            };
+            // Adding Tax, shipping and Subtotal details  
+            var details = new Details()
+            {
+                tax = t.ToString("F"),
+                subtotal = cp.Pass_Price.ToString("F")
+
+            };
+            //Final amount with details  
+            var amount = new Amount()
+            {
+                currency = "CAD",
+                total = ((double)cp.Pass_Price + t).ToString("F"), // Total must be equal to sum of tax, shipping and subtotal.  
+                details = details
+            };
+            var transactionList = new List<Transaction>();
+            // Adding description about the transaction  
+            transactionList.Add(new Transaction()
+            {
+                description = "Transaction description",                
+                amount = amount,
+                item_list = itemList
+            });
+                payment = new Payment()
+            {
+                intent = "sale",
+                payer = payer,
+                transactions = transactionList,
+                redirect_urls = redirUrls
+            };
+            // Create a payment using a APIContext  
+            return payment.Create(apiContext);
+        }
 
 
 
     }
 
 
-
-
-}
+    }

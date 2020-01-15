@@ -54,6 +54,12 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PayPal, Version=1.9.1.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PayPal.1.9.1\lib\net451\PayPal.dll</HintPath>
+    </Reference>
     <Reference Include="Scrypt, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Scrypt.NET.1.3.0\lib\net20\Scrypt.dll</HintPath>
     </Reference>
@@ -157,6 +163,7 @@
     <Compile Include="Models\YogaUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\EmailSender.cs" />
+    <Compile Include="Util\Paypal.cs" />
     <Compile Include="ViewModels\DropdownListPassViewModel.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\ScheduleViewModel.cs" />
@@ -231,6 +238,10 @@
     <Content Include="Views\Profile\PassLogList.cshtml" />
     <Content Include="Views\Report\SaleList.cshtml" />
     <Content Include="Views\LoginSignUp\ConfirmEmail.cshtml" />
+    <Content Include="Views\Paypal\FailureView.cshtml" />
+    <Content Include="Views\Paypal\SuccessView.cshtml" />
+    <Content Include="Views\Passes\FailureView.cshtml" />
+    <Content Include="Views\Passes\SuccessView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
