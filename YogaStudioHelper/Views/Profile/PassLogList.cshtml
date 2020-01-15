@@ -17,7 +17,7 @@
     <h4>Student Passes:</h4>
     <h4>@student.U_Tokens</h4>
 </div>
-
+    
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -74,6 +74,15 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date_Purchased)
+                
+
+                @{ 
+                    //, new { @Value = item.Date_Purchased.ToString("dddd, dd MMMM yyyy") })
+                    //Html.DisplayFor(modelItem => item.Date_Purchased.ToString("dddd, dd MMMM yyyy"))
+                    //DateTime.Now.ToString("dddd, dd MMMM yyyy") , "{0:dddd, MMMM yyyy}")
+
+                    // new { @Value = Model.StartDate.ToString("dd-MMM-yyyy") }
+                }
             </td>
             <td>
                 <!--

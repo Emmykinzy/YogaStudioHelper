@@ -6,10 +6,17 @@
 
     // view bag promo list 
 
+    var Message = "";
+    if (TempData["Message"] != null)
+    {
+        Message = TempData["Message"].ToString();
+    }
+
 }
 
 <h2>Pass Packages</h2>
 
+<h4>Message: @Message</h4>
 <br />
 <table class="table">
 

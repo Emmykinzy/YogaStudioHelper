@@ -38,31 +38,58 @@ namespace YogaStudioHelper.Controllers
 
 
             int userId = Convert.ToInt32(Session["Uid"]);
+            var yogaUser = db.getUserById(userId);
+            var sched = db.getScheduleById(scheduleId);
 
+            // Validate if student already sign in  
+            var checkIfSignin = db.CheckIfSignIn(scheduleId, userId);
 
+            if (checkIfSignin)
+            {
+                TempData["Message"] = "Error: You are already sign to this course";
+                return RedirectToAction("Schedule");
 
+            }
+
+            // Validation: student has passes 
+            if(yogaUser.U_Tokens < 1)
+            {
+                TempData["Message"] = "Error: The course required a passe";
+                return RedirectToAction("Schedule");
+            }
+            // Validation: classrom has places 
+            var room = db.getRoom(sched.Room_Id); 
+            if(sched.Signed_Up >= room.Room_Capacity)
+            {
+                TempData["Message"] = "Error: Sorry this class is full";
+                return RedirectToAction("Schedule");
+            }
+
+            // Creating Class log 
             Class_Log newClassLog = new Class_Log();
 
             newClassLog.Schedule_Id = scheduleId;
 
             newClassLog.U_Id = userId;
 
-            // incase not null etc 
+        
             //newClassLog.Log_Status = "Upcoming";
 
             db.CreateClass_Log(newClassLog);
 
-
-
             // remove token 
             db.RemoveToken(userId);
-            
 
-            // Create class log 
+ 
 
+            //Message
+            ViewBag.Message = "Sucessfully Enrolled";
 
+            Response.Write("<script language=javascript>alert('Succesfully Enroll');</script>");
 
-
+            // window.location='~/Schedule/Schedule'
+            Response.Write("<script>alert('" + "Test" + "')</script>");
+            TempData["Message"] = "Error: The course required a passe";
             return RedirectToAction("Schedule");
         }
 

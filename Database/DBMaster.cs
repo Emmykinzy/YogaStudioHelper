@@ -604,9 +604,22 @@ namespace Database
         }
 
 
+        public bool CheckIfSignIn(int schedId, int userId)
+        {
+
+            //bool s = Convert.ToBoolean(myDb.Class_Log.Where(x => x.Schedule_Id == schedId && x.U_Id == userId));
+            bool s = myDb.Class_Log.Any(x => x.Schedule_Id == schedId && x.U_Id == userId);
+
+            // .Any();
+            return s;
+        }
 
 
-        //Pass Log Get Methods
+        /// <summary>
+        ///         //Pass Log Get Methods
+        /// </summary>
+        /// <returns></returns>
+
 
         public IEnumerable<Pass_Log> getPass_Logs()
         {
@@ -687,6 +700,9 @@ namespace Database
             string startTime = s.Start_Time.ToString(@"hh\:mm");
             string signedUp = s.Signed_Up.ToString();
 
+            //
+            string size = s.Room.Room_Capacity.ToString();
+
             TimeSpan l = s.Class.Class_Length;
             TimeSpan st = s.Start_Time;
 
@@ -703,6 +719,7 @@ namespace Database
             desc.Add(startTime);
             desc.Add(signedUp);
             desc.Add(duration);
+            desc.Add(size);
 
             s.Start_Time.ToString(@"hh\:mm\:ss");
 
