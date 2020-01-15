@@ -8,10 +8,11 @@ using System.Data.Entity.Validation;
 using IdentityModel.Client;
 using Scrypt;
 using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace Database
 {
-
+   
 
     public class DBMaster
     {
@@ -30,6 +31,57 @@ namespace Database
         public Yoga_User getUserById(int id)
         {
             return myDb.Yoga_User.Where(x => x.U_Id == id).Single();
+        }
+
+        public Pass_Log getPassLog(DateTime date, int userId)
+        {
+            IEnumerable<Pass_Log> pls = myDb.Pass_Log.Where(x => x.U_Id == userId);
+            Pass_Log pass = (from passlog in pls
+                          where passlog.Date_Purchased.Date == date.Date && passlog.Date_Purchased.TimeOfDay == date.TimeOfDay && passlog.U_Id == userId
+                          orderby passlog.Pass_Id
+                          select passlog).Single();
+
+            return pass;
+        }
+
+        public Pass_Log processPurchase(Class_Passes pass, int userId)
+        {
+            Pass_Log pass_Log = new Pass_Log();
+
+            pass_Log.Pass_Id = pass.Pass_Id;
+            pass_Log.U_Id = userId;
+            // num classes 
+            pass_Log.Num_Classes = pass.Pass_Size;
+            int token = pass.Pass_Size;
+
+            //Update User Token 
+            AddTokens(userId, token);
+
+            // price 
+            // todo include total with promo if present and taxes 
+            pass_Log.Purchase_Price = pass.Pass_Price;
+
+            // date 
+            DateTime date = DateTime.Now;
+            pass_Log.Date_Purchased = date;
+
+            CreatePass_Log(pass_Log);
+
+            string purchaseDateTime = date.ToString("dd/MM/yyyy HH:mm:ss");
+            string purchaseDate = date.ToString("ddMMyy");
+            string invoice = purchaseDate + userId;
+
+
+            Pass_Log pl = getPassLog(date, userId);
+
+            string invoiceNumber = invoice + pl.Pass_Log_Id;
+
+            pl.Invoice_Number = Int32.Parse(invoiceNumber);
+
+            myDb.SaveChanges();
+
+            return pl;
+
         }
 
         public bool ValidateUser(string email, string pass)

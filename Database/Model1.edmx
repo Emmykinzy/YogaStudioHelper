@@ -39,11 +39,12 @@
             <PropertyRef Name="Pass_Log_Id" />
           </Key>
           <Property Name="Pass_Log_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Invoice_Number" Type="int" />
           <Property Name="Pass_Id" Type="int" Nullable="false" />
           <Property Name="U_Id" Type="int" Nullable="false" />
           <Property Name="Num_Classes" Type="int" />
           <Property Name="Purchase_Price" Type="smallmoney" />
-          <Property Name="Date_Purchased" Type="date" />
+          <Property Name="Date_Purchased" Type="datetime" />
         </EntityType>
         <EntityType Name="Promotion">
           <Key>
@@ -306,9 +307,10 @@
           <Property Name="U_Id" Type="Int32" Nullable="false" />
           <Property Name="Num_Classes" Type="Int32" />
           <Property Name="Purchase_Price" Type="Decimal" Precision="10" Scale="4" />
-          <Property Name="Date_Purchased" Type="DateTime" Precision="0" />
+          <Property Name="Date_Purchased" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Class_Passes" Relationship="Self.FK_Pass_Log_Pass_Id" FromRole="Pass_Log" ToRole="Class_Passes" />
           <NavigationProperty Name="Yoga_User" Relationship="Self.FK_Pass_Log_U_Id" FromRole="Pass_Log" ToRole="Yoga_User" />
+          <Property Name="Invoice_Number" Type="Int32" />
         </EntityType>
         <EntityType Name="Promotion">
           <Key>
@@ -576,6 +578,7 @@
           <EntitySetMapping Name="Pass_Log">
             <EntityTypeMapping TypeName="yogadbModel.Pass_Log">
               <MappingFragment StoreEntitySet="Pass_Log">
+                <ScalarProperty Name="Invoice_Number" ColumnName="Invoice_Number" />
                 <ScalarProperty Name="Pass_Log_Id" ColumnName="Pass_Log_Id" />
                 <ScalarProperty Name="Pass_Id" ColumnName="Pass_Id" />
                 <ScalarProperty Name="U_Id" ColumnName="U_Id" />

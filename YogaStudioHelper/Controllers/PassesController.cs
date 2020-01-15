@@ -123,35 +123,11 @@ namespace YogaStudioHelper.Controllers
             //todo update all field correctly later on 
 
             // create purchase log 
-            Pass_Log pass_Log = new Pass_Log();
+            Pass_Log pl = db.processPurchase(pass, userId);
 
-            pass_Log.Pass_Id = passId;
-            pass_Log.U_Id = userId;
-            // num classes 
-            pass_Log.Num_Classes = pass.Pass_Size;
-            int token = pass.Pass_Size;
+            Yoga_User u = db.getUserById(userId);
 
-            //Update User Token 
-            db.AddTokens(userId, token);
-
-            // price 
-            // todo include total with promo if present and taxes 
-            pass_Log.Purchase_Price = pass.Pass_Price;
-
-            // date 
-            DateTime date = DateTime.Now;
-            pass_Log.Date_Purchased = date;
-
-            db.CreatePass_Log(pass_Log);
-
-            string purchaseDateTime = date.ToString("dd/MM/yyyy HH:mm:ss");
-            string purchaseDate = date.ToString("ddMMyy");
-            string invoice = purchaseDate + userId;
-
-            
-
-
-
+            Util.EmailSender.sendPurchaseConfirmation(u, pl);
             // todo success message with receipt etc. 
 
             return View("SuccessView");
