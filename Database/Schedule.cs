@@ -11,7 +11,8 @@ namespace Database
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Schedule
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -25,6 +26,9 @@ namespace Database
         public int Class_Id { get; set; }
         public int Room_Id { get; set; }
         public TimeSpan Start_Time { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MMMM dd, yyyy}")]
+
         public DateTime Class_Date { get; set; }
         public Nullable<int> Signed_Up { get; set; }
         public Nullable<int> Group_Id { get; set; }

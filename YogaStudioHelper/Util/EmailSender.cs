@@ -96,6 +96,7 @@ namespace YogaStudioHelper.Util
         }
     }
 
+    /*
     public static void sendPurchaseConfirmation(Yoga_User user, Class_Passes pass)
     {
 
@@ -125,5 +126,5 @@ namespace YogaStudioHelper.Util
 
         client.Send(msobj);
     }
-}
+    */
 }
