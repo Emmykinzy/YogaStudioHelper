@@ -165,6 +165,7 @@
     <Compile Include="Util\EmailSender.cs" />
     <Compile Include="Util\Paypal.cs" />
     <Compile Include="ViewModels\DropdownListPassViewModel.cs" />
+    <Compile Include="ViewModels\HoursWorkedViewModel.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\ScheduleViewModel.cs" />
   </ItemGroup>
@@ -242,6 +243,7 @@
     <Content Include="Views\Paypal\SuccessView.cshtml" />
     <Content Include="Views\Passes\FailureView.cshtml" />
     <Content Include="Views\Passes\SuccessView.cshtml" />
+    <Content Include="Views\Report\HoursWorkedList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
