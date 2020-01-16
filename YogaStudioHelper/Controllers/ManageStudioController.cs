@@ -362,7 +362,6 @@ namespace YogaStudioHelper.Controllers
         {
             int id = (int)TempData["EditClassPassId"];
 
-
             var passEdit = db.getClassPasse(id);
 
 
@@ -498,13 +497,44 @@ namespace YogaStudioHelper.Controllers
         [HttpPost]
         public ActionResult EditPromotion(FormCollection collection)
         {
-            var classPassEdit = db.getClassPasse(2);
+
+            int id = (int)TempData["EditPromotionId"];
+
+            var promo = db.getPromotion(id);
 
 
-            ViewBag.EditClassPass = classPassEdit;
+            string promoDesc = collection["PromotionName"];
+
+            double discount;
+            int extraPasses;
+            try
+            {                discount = Convert.ToDouble(collection["discount"]) / 100; }
+            catch
+            {                discount = 0;            }
+
+            try
+            {   extraPasses = Int32.Parse(collection["passes"]);   }
+            catch
+            {    extraPasses = 0; }
+
+            DateTime promoEnd = Convert.ToDateTime(collection["promoEnd"]);
+
+            //Promotion promo = new Promotion();
+
+            promo.Promo_Desc = promoDesc;
+            promo.Discount = Convert.ToDecimal(discount);
+            promo.Num_Classes = extraPasses;
+            promo.Promo_End = promoEnd;
+
+            //Fix todo add class pass dropdown option
+            // TODO dropdown to select class pass
+            //promo.Pass_Id = 1;
+
+            db.UpdatePromotion(promo);
 
 
-            return View();
+
+            return RedirectToAction("PromotionList");
 
         }
 
