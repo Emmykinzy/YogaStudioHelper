@@ -513,11 +513,14 @@ namespace YogaStudioHelper.Controllers
             {                discount = 0;            }
 
             try
-            {   extraPasses = Int32.Parse(collection["passes"]);   }
+            {   extraPasses = Int32.Parse(collection["extra_passes"]);   }
             catch
             {    extraPasses = 0; }
 
             DateTime promoEnd = Convert.ToDateTime(collection["promoEnd"]);
+
+            //var passs = collection["Passes"]; 
+            int promotedPass = Convert.ToInt32(collection["Passes"]);
 
             //Promotion promo = new Promotion();
 
@@ -525,7 +528,7 @@ namespace YogaStudioHelper.Controllers
             promo.Discount = Convert.ToDecimal(discount);
             promo.Num_Classes = extraPasses;
             promo.Promo_End = promoEnd;
-
+            promo.Pass_Id = promotedPass;
             //Fix todo add class pass dropdown option
             // TODO dropdown to select class pass
             //promo.Pass_Id = 1;

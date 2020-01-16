@@ -562,6 +562,7 @@ namespace Database
             op.Promo_End = np.Promo_End;
             op.Num_Classes = np.Num_Classes;
             op.Discount = np.Discount;
+            op.Num_Classes = np.Num_Classes;
 
             myDb.SaveChanges();
         }

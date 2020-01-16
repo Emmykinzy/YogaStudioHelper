@@ -64,7 +64,7 @@
                 <th>Extra Passes:</th>
                 <td>
 
-                    <input id="passes" name="passes"
+                    <input id="extra_passes" name="extra_passes"
                            type="number" class="inputs" value="@editPromotion.Num_Classes" />
 
                 </td>
@@ -72,7 +72,9 @@
             <tr>
                 <th>Promo-ed Pass:</th>
                 <td class="select">
-                    @Html.DropDownListFor(m => m.Passes, new SelectList(Model.Passes, "pass_id", "pass_name")) <!-- add default value todo-->
+                    @Html.DropDownListFor(m => m.Passes, new SelectList(Model.Passes, "Pass_Id", "Pass_Name"), new { @id = "Pass" } )
+
+<!-- add default value todo-->
                 </td>
             </tr>
             <tr>
