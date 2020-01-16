@@ -19,7 +19,7 @@ namespace Database
         public string Promo_Desc { get; set; }
         public Nullable<decimal> Discount { get; set; }
         public Nullable<int> Num_Classes { get; set; }
-        public Nullable<System.DateTime> Promo_End { get; set; }
+        public DateTime Promo_End { get; set; }
     
         public virtual Class_Passes Class_Passes { get; set; }
     }

@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<Database.Class_Passes>
-
 @{
     ViewBag.Title = "OnlineStorePasses";
 
 
     // view bag promo list 
-
+    var p = ViewBag.PromoList;
     var Message = "";
+    bool hasPromo = false;
     if (TempData["Message"] != null)
     {
         Message = TempData["Message"].ToString();
@@ -23,7 +23,7 @@
 
     @foreach (var item in Model)
     {
-
+        
         // check if pass id present in promo list
 
         // do if so, then display discount 
@@ -32,11 +32,57 @@
         <div class="passStore">
             <div class="passContent">
                 <div class="floatLeft passTitle" style="padding-top:8px;">
-                    <p>@Html.DisplayFor(modelItem => item.Pass_Name)</p>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.Pass_Name) &nbsp;
+                        @foreach (var promo in p)
+                        {
+                            if (item.Pass_Id == promo.Pass_Id && promo.Promo_End > DateTime.Now)
+                            {
+                                <span style="font-size:15px;color:red;">
+                                    @promo.Promo_Desc
+                                </span> 
+                            }
+                        }
+                    </p>
                 </div>
                 <div class="passPurchase floatRight">
                     <div class="floatRight" style="padding-right:25px;">
-                        <div class="floatLeft" style="padding-top:8px; padding-right:20px;">@Html.DisplayFor(modelItem => item.Pass_Price)$</div>
+                        <div class="floatLeft" style="padding-top:8px; padding-right:20px;">
+                        @foreach (var promo in p)
+                        {
+                            if (item.Pass_Id == promo.Pass_Id)
+                            {
+                                hasPromo = true;
+                                
+                                if(promo.Num_Classes == 0 && promo.Promo_End > DateTime.Now)
+                                {
+                                    <span style="text-decoration: line-through;">
+                                    @item.Pass_Price.ToString("F")$ 
+                                    </span> 
+                                    decimal disPrice = item.Pass_Price - (item.Pass_Price * promo.Discount);
+                                    <span style="color:red">
+                                        &nbsp;@disPrice.ToString("F")$
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span>
+                                    @item.Pass_Price$ 
+                                    </span>
+                                }
+
+
+                            }
+                        }
+                        @if (hasPromo == false)
+                        {
+                            @Html.DisplayFor(modelItem => item.Pass_Price)<p>$</p>
+                        }
+                        else
+                        {
+                            hasPromo = false;
+                        }
+                        </div>
 
                         @Html.ActionLink("Purchase", "Purchase", new { passId = item.Pass_Id }, new { @class = "btn btn-default" })
                         <!--utton type="submit" class="btn btn-default floatRight">Purchase</button> -->

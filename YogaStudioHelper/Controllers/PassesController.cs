@@ -26,10 +26,10 @@ namespace YogaStudioHelper.Controllers
             //String message = Util.EmailSender.sendEmail();
             //Response.Write(message);
 
-            //IEnumerable<Promotion> promoList = db.getPromotions();
-            //ViewBag.PromoList = promoList; 
+            IEnumerable<Promotion> promoList = db.getPromotions();
+            ViewBag.PromoList = promoList; 
 
-
+           
             IEnumerable<Class_Passes> class_Pass_List = db.getClassPasses();
             return View(class_Pass_List);
 
@@ -157,7 +157,14 @@ namespace YogaStudioHelper.Controllers
         }
         private Payment CreatePayment(APIContext apiContext, string redirectUrl, Class_Passes cp)
         {
-            double t = ((double)cp.Pass_Price * .15);
+            Promotion p = db.getPromotionByPassId(cp.Pass_Id);
+            decimal price = cp.Pass_Price;
+            decimal dis = 0;
+            if(p.Promo_End.Date > DateTime.Today && p.Num_Classes == 0)
+            {
+                dis = (price * (decimal)p.Discount)* -1;
+            }
+            double t = ((double)(price+dis) * .15);
             //create itemlist and add item objects to it  
             var itemList = new ItemList()
             {
@@ -168,9 +175,16 @@ namespace YogaStudioHelper.Controllers
             {
                 name = cp.Pass_Name,
                 currency = "CAD",
-                price = cp.Pass_Price.ToString("F"),
+                price = price.ToString("F"),
+                quantity = "1"
+            });
+            itemList.items.Add(new Item()
+            {
+                name = p.Promo_Desc,
+                currency = "CAD",
+                price = dis.ToString("F"),
                 quantity = "1",
-                sku = "sku"
+                
             });
             var payer = new Payer()
             {
@@ -186,21 +200,21 @@ namespace YogaStudioHelper.Controllers
             var details = new Details()
             {
                 tax = t.ToString("F"),
-                subtotal = cp.Pass_Price.ToString("F")
+                subtotal = (price+dis).ToString("F")
 
             };
             //Final amount with details  
             var amount = new Amount()
             {
                 currency = "CAD",
-                total = ((double)cp.Pass_Price + t).ToString("F"), // Total must be equal to sum of tax, shipping and subtotal.  
-                details = details
+                total = ((double)(price + dis) + t).ToString("F"), // Total must be equal to sum of tax, shipping and subtotal.  
+                details = details,
             };
             var transactionList = new List<Transaction>();
             // Adding description about the transaction  
             transactionList.Add(new Transaction()
             {
-                description = "Transaction description",                
+                description = "Promo",                
                 amount = amount,
                 item_list = itemList
             });
