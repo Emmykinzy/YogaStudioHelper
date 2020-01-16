@@ -516,11 +516,11 @@ namespace Database
             myDb.SaveChanges();
         }
 
-        public void UpdatePromotion(int id)
+        public void UpdatePromotion(Promotion np)
         {
-            var op = myDb.Promotions.Where(x => x.Promotion_Id == id).Single();
+            var op = myDb.Promotions.Where(x => x.Promotion_Id == np.Promotion_Id).Single();
 
-            Promotion np = new Promotion();
+            //Promotion np = new Promotion();
 
             op.Promo_Desc = np.Promo_Desc;
             op.Pass_Id = np.Pass_Id;

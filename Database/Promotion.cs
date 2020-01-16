@@ -11,7 +11,8 @@ namespace Database
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Promotion
     {
         public int Promotion_Id { get; set; }
@@ -19,6 +20,8 @@ namespace Database
         public string Promo_Desc { get; set; }
         public Nullable<decimal> Discount { get; set; }
         public Nullable<int> Num_Classes { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MMMM dd, yyyy}")]
         public DateTime Promo_End { get; set; }
     
         public virtual Class_Passes Class_Passes { get; set; }
