@@ -485,10 +485,18 @@ namespace Database
             var promo = myDb.Promotions.Where(x => x.Promotion_Id == id).Single();
             return promo;
         }
+
+        public Promotion getPromotionByPassId(int id)
+        {
+            var promo = myDb.Promotions.Where(x => x.Pass_Id == id).FirstOrDefault();
+            return promo;
+        }
         public IEnumerable<Promotion> getPromotions()
         {
             return myDb.Promotions.ToList();
         }
+
+        
 
         public IEnumerable<Promotion> getPromotionByDiscount(int dis)
         {
