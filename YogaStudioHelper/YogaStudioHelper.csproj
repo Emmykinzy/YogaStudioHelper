@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginSignUpController.cs" />
     <Compile Include="Controllers\ManageStudioController.cs" />
@@ -244,6 +245,7 @@
     <Content Include="Views\Passes\FailureView.cshtml" />
     <Content Include="Views\Passes\SuccessView.cshtml" />
     <Content Include="Views\Report\HoursWorkedList.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
