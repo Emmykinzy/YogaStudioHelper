@@ -433,6 +433,17 @@ namespace YogaStudioHelper.Controllers
         [HttpPost]
         public ActionResult CreatePromotion(FormCollection collection)
         {
+            int promotedPass = Convert.ToInt32(collection["Passes"]);
+
+
+            // Check first if pass already has one 
+            if (db.CheckIfPromoExist(promotedPass))
+            {
+                TempData["Message"] = "This class pass already has a promotion assigned";
+                return RedirectToAction("CreatePromotion");
+            }
+
+
             string promoDesc = collection["PromotionDescription"];
 
             double discount;
@@ -448,7 +459,7 @@ namespace YogaStudioHelper.Controllers
 
             try
             {
-                 extraPasses = Int32.Parse(collection["passes"]);
+                 extraPasses = Int32.Parse(collection["extra_passes"]);
             }
             catch
             {
@@ -465,10 +476,29 @@ namespace YogaStudioHelper.Controllers
             promo.Discount = Convert.ToDecimal(discount);
             promo.Num_Classes = extraPasses;
             promo.Promo_End = promoEnd;
-            
+            promo.Pass_Id = promotedPass;
+
+
             //Fix todo add class pass dropdown option
             promo.Pass_Id = 1;
             String KeyTest = collection["passList"]; 
+
+
+            // validation (one or the other type of promo but not both 
+            if(discount>0 && extraPasses > 0)
+            {
+                TempData["Message"] = "The Promotion can have either a discount or extra classes but not both type of promo";
+
+                //ViewBag.StickyEmail = email;
+                return RedirectToAction("CreatePromotion");
+            }
+            // validation (one or the other type of promo but not both 
+            if (discount == 0 && extraPasses == 0)
+            {
+                TempData["Message"] = "The Promotion need to have either a discount or extra classes but not both type of promo";
+
+                return RedirectToAction("CreatePromotion");
+            }
 
 
             db.CreatePromotion(promo);
