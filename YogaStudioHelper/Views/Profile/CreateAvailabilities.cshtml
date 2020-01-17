@@ -1,18 +1,31 @@
-﻿
+﻿@using System.Xml.Linq;
+@model XDocument
+
 @{
     ViewBag.Title = "Availabilities";
+      String message;
+        if (ViewBag.message != null)
+        {
+            message = ViewBag.message;
+        }
+        else
+        {
+            message = "";
+        }
 }
 
 
-    <div class="sidebar">
-        @Html.ActionLink("Profile", "Profile", "Profile")
-        @Html.ActionLink("Settings", "Settings", "Profile")
-        @if ((int)Session["Auth"] == 2)
-        {
-            @Html.ActionLink("View Availabilities", "ViewAvailabilities", "Profile")
-            @Html.ActionLink("Create Availabilities", "CreateAvailabilities", "Profile")
-        }
-    </div>
+<div class="sidebar">
+    @Html.ActionLink("Profile", "Profile", "Profile")
+    @Html.ActionLink("Settings", "Settings", "Profile")
+    @if ((int)Session["Auth"] == 2)
+    {
+        @Html.ActionLink("View Availabilities", "ViewAvailabilities", "Profile")
+        @Html.ActionLink("Create Availabilities", "CreateAvailabilities", "Profile")
+
+       
+     }
+</div>
 
 <div class="main">
     <div class="cont">
@@ -34,198 +47,86 @@
                     <th>Start</th>
                     <td>
                         <select name="sundayStart">
-                            <option value="N/A">N/A</option>
-                            <option value="8:00">8:00</option>
-                            <option value="8:30">8:30</option>
-                            <option value="9:00">9:00</option>
-                            <option value="9:30">9:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
-                            <option value="16:00">16:00</option>
-                            <option value="16:30">16:30</option>
-                            <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
-                            <option value="18:30">18:30</option>
-                            <option value="19:00">19:00</option>
+                            <option value="N/A" @if (Model.Root.Element("Sunday").Element("Start").Value == "N/A") { @Html.Raw("selected") }>N/A</option>
+                            @for (int x = 8; x < 19; x++)
+                            {
+                                <option value="@x:00" @if (Model.Root.Element("Sunday").Element("Start").Value == x + ":00") { @Html.Raw("selected") }>@x:00</option>
+                                <option value="@x:30" @if (Model.Root.Element("Sunday").Element("Start").Value == x + ":30") { @Html.Raw("selected") }>@x:30</option>
+                            }
+
+                            <option value="19:00" @if (Model.Root.Element("Sunday").Element("Start").Value == "19:00") { @Html.Raw("selected") }>19:00</option>
                         </select>
                     </td>
                     <td>
                         <select name="mondayStart">
-                            <option value="N/A">N/A</option>
-                            <option value="8:00">8:00</option>
-                            <option value="8:30">8:30</option>
-                            <option value="9:00">9:00</option>
-                            <option value="9:30">9:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
-                            <option value="16:00">16:00</option>
-                            <option value="16:30">16:30</option>
-                            <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
-                            <option value="18:30">18:30</option>
-                            <option value="19:00">19:00</option>
+                            <option value="N/A" @if (Model.Root.Element("Monday").Element("Start").Value == "N/A") { @Html.Raw("selected") }>N/A</option>
+                            @for (int x = 8; x < 19; x++)
+                            {
+                                <option value="@x:00" @if (Model.Root.Element("Monday").Element("Start").Value == x + ":00") { @Html.Raw("selected") }>@x:00</option>
+                                <option value="@x:30" @if (Model.Root.Element("Monday").Element("Start").Value == x + ":30") { @Html.Raw("selected") }>@x:30</option>
+                            }
+
+                            <option value="19:00" @if (Model.Root.Element("Monday").Element("Start").Value == "19:00") { @Html.Raw("selected") }>19:00</option>
                         </select>
                     </td>
                     <td>
                         <select name="tuesdayStart">
-                            <option value="N/A">N/A</option>
-                            <option value="8:00">8:00</option>
-                            <option value="8:30">8:30</option>
-                            <option value="9:00">9:00</option>
-                            <option value="9:30">9:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
-                            <option value="16:00">16:00</option>
-                            <option value="16:30">16:30</option>
-                            <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
-                            <option value="18:30">18:30</option>
-                            <option value="19:00">19:00</option>
+                            <option value="N/A" @if (Model.Root.Element("Tuesday").Element("Start").Value == "N/A") { @Html.Raw("selected") }>N/A</option>
+                            @for (int x = 8; x < 19; x++)
+                            {
+                                <option value="@x:00" @if (Model.Root.Element("Tuesday").Element("Start").Value == x + ":00") { @Html.Raw("selected") }>@x:00</option>
+                                <option value="@x:30" @if (Model.Root.Element("Tuesday").Element("Start").Value == x + ":30") { @Html.Raw("selected") }>@x:30</option>
+                            }
+
+                            <option value="19:00" @if (Model.Root.Element("Tuesday").Element("Start").Value == "19:00") { @Html.Raw("selected") }>19:00</option>
                         </select>
                     </td>
                     <td>
                         <select name="wednesdayStart">
-                            <option value="N/A">N/A</option>
-                            <option value="8:00">8:00</option>
-                            <option value="8:30">8:30</option>
-                            <option value="9:00">9:00</option>
-                            <option value="9:30">9:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
-                            <option value="16:00">16:00</option>
-                            <option value="16:30">16:30</option>
-                            <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
-                            <option value="18:30">18:30</option>
-                            <option value="19:00">19:00</option>
+                            <option value="N/A" @if (Model.Root.Element("Wednesday").Element("Start").Value == "N/A") { @Html.Raw("selected") }>N/A</option>
+                            @for (int x = 8; x < 19; x++)
+                            {
+                                <option value="@x:00" @if (Model.Root.Element("Wednesday").Element("Start").Value == x + ":00") { @Html.Raw("selected") }>@x:00</option>
+                                <option value="@x:30" @if (Model.Root.Element("Wednesday").Element("Start").Value == x + ":30") { @Html.Raw("selected") }>@x:30</option>
+                            }
+
+                            <option value="19:00" @if (Model.Root.Element("Wednesday").Element("Start").Value == "19:00") { @Html.Raw("selected") }>19:00</option>
                         </select>
                     </td>
                     <td>
                         <select name="thursdayStart">
-                            <option value="N/A">N/A</option>
-                            <option value="8:00">8:00</option>
-                            <option value="8:30">8:30</option>
-                            <option value="9:00">9:00</option>
-                            <option value="9:30">9:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
-                            <option value="16:00">16:00</option>
-                            <option value="16:30">16:30</option>
-                            <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
-                            <option value="18:30">18:30</option>
-                            <option value="19:00">19:00</option>
+                            <option value="N/A" @if (Model.Root.Element("Thursday").Element("Start").Value == "N/A") { @Html.Raw("selected") }>N/A</option>
+                            @for (int x = 8; x < 19; x++)
+                            {
+                                <option value="@x:00" @if (Model.Root.Element("Thursday").Element("Start").Value == x + ":00") { @Html.Raw("selected") }>@x:00</option>
+                                <option value="@x:30" @if (Model.Root.Element("Thursday").Element("Start").Value == x + ":30") { @Html.Raw("selected") }>@x:30</option>
+                            }
+
+                            <option value="19:00" @if (Model.Root.Element("Thursday").Element("Start").Value == "19:00") { @Html.Raw("selected") }>19:00</option>
                         </select>
                     </td>
                     <td>
                         <select name="fridayStart">
-                            <option value="N/A">N/A</option>
-                            <option value="8:00">8:00</option>
-                            <option value="8:30">8:30</option>
-                            <option value="9:00">9:00</option>
-                            <option value="9:30">9:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
-                            <option value="16:00">16:00</option>
-                            <option value="16:30">16:30</option>
-                            <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
-                            <option value="18:30">18:30</option>
-                            <option value="19:00">19:00</option>
+                            <option value="N/A" @if (Model.Root.Element("Friday").Element("Start").Value == "N/A") { @Html.Raw("selected") }>N/A</option>
+                            @for (int x = 8; x < 19; x++)
+                            {
+                                <option value="@x:00" @if (Model.Root.Element("Friday").Element("Start").Value == x + ":00") { @Html.Raw("selected") }>@x:00</option>
+                                <option value="@x:30" @if (Model.Root.Element("Friday").Element("Start").Value == x + ":30") { @Html.Raw("selected") }>@x:30</option>
+                            }
+
+                            <option value="19:00" @if (Model.Root.Element("Friday").Element("Start").Value == "19:00") { @Html.Raw("selected") }>19:00</option>
                         </select>
                     </td>
                     <td>
                         <select name="saturdayStart">
-                            <option value="N/A">N/A</option>
-                            <option value="8:00">8:00</option>
-                            <option value="8:30">8:30</option>
-                            <option value="9:00">9:00</option>
-                            <option value="9:30">9:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
-                            <option value="16:00">16:00</option>
-                            <option value="16:30">16:30</option>
-                            <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
-                            <option value="18:30">18:30</option>
-                            <option value="19:00">19:00</option>
+                            <option value="N/A" @if (Model.Root.Element("Saturday").Element("Start").Value == "N/A") { @Html.Raw("selected") }>N/A</option>
+                            @for (int x = 8; x < 19; x++)
+                            {
+                                <option value="@x:00" @if (Model.Root.Element("Saturday").Element("Start").Value == x + ":00") { @Html.Raw("selected") }>@x:00</option>
+                                <option value="@x:30" @if (Model.Root.Element("Saturday").Element("Start").Value == x + ":30") { @Html.Raw("selected") }>@x:30</option>
+                            }
+
+                            <option value="19:00" @if (Model.Root.Element("Saturday").Element("Start").Value == "19:00") { @Html.Raw("selected") }>19:00</option>
                         </select>
                     </td>
                 </tr>
@@ -233,198 +134,86 @@
                     <th>End</th>
                     <td>
                         <select name="sundayEnd">
-                            <option value="N/A">N/A</option>
-                            <option value="9:00">9:00</option>
-                            <option value="9:30">9:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
-                            <option value="16:00">16:00</option>
-                            <option value="16:30">16:30</option>
-                            <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
-                            <option value="18:30">18:30</option>
-                            <option value="19:00">19:00</option>
-                            <option value="19:30">19:30</option>
-                            <option value="20:00">20:00</option>
+                            <option value="N/A" @if (Model.Root.Element("Sunday").Element("End").Value == "N/A") { @Html.Raw("selected") }>N/A</option>
+                            @for (int x = 9; x < 20; x++)
+                            {
+                                <option value="@x:00" @if (Model.Root.Element("Sunday").Element("End").Value == x + ":00") { @Html.Raw("selected") }>@x:00</option>
+                                <option value="@x:30" @if (Model.Root.Element("Sunday").Element("End").Value == x + ":30") { @Html.Raw("selected") }>@x:30</option>
+                            }
+
+                            <option value="20:00" @if (Model.Root.Element("Sunday").Element("End").Value == "19:00") { @Html.Raw("selected") }>20:00</option>
                         </select>
                     </td>
                     <td>
                         <select name="mondayEnd">
-                            <option value="N/A">N/A</option>
-                            <option value="9:00">9:00</option>
-                            <option value="9:30">9:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
-                            <option value="16:00">16:00</option>
-                            <option value="16:30">16:30</option>
-                            <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
-                            <option value="18:30">18:30</option>
-                            <option value="19:00">19:00</option>
-                            <option value="19:30">19:30</option>
-                            <option value="20:00">20:00</option>
+                            <option value="N/A" @if (Model.Root.Element("Monday").Element("End").Value == "N/A") { @Html.Raw("selected") }>N/A</option>
+                            @for (int x = 9; x < 20; x++)
+                            {
+                                <option value="@x:00" @if (Model.Root.Element("Monday").Element("End").Value == x + ":00") { @Html.Raw("selected") }>@x:00</option>
+                                <option value="@x:30" @if (Model.Root.Element("Monday").Element("End").Value == x + ":30") { @Html.Raw("selected") }>@x:30</option>
+                            }
+
+                            <option value="20:00" @if (Model.Root.Element("Monday").Element("End").Value == "19:00") { @Html.Raw("selected") }>20:00</option>
                         </select>
                     </td>
                     <td>
                         <select name="tuesdayEnd">
-                            <option value="N/A">N/A</option>
-                            <option value="9:00">9:00</option>
-                            <option value="9:30">9:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
-                            <option value="16:00">16:00</option>
-                            <option value="16:30">16:30</option>
-                            <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
-                            <option value="18:30">18:30</option>
-                            <option value="19:00">19:00</option>
-                            <option value="19:30">19:30</option>
-                            <option value="20:00">20:00</option>
+                            <option value="N/A" @if (Model.Root.Element("Tuesday").Element("End").Value == "N/A") { @Html.Raw("selected") }>N/A</option>
+                            @for (int x = 9; x < 20; x++)
+                            {
+                                <option value="@x:00" @if (Model.Root.Element("Tuesday").Element("End").Value == x + ":00") { @Html.Raw("selected") }>@x:00</option>
+                                <option value="@x:30" @if (Model.Root.Element("Tuesday").Element("End").Value == x + ":30") { @Html.Raw("selected") }>@x:30</option>
+                            }
+
+                            <option value="20:00" @if (Model.Root.Element("Tuesday").Element("End").Value == "19:00") { @Html.Raw("selected") }>20:00</option>
                         </select>
                     </td>
                     <td>
                         <select name="wednesdayEnd">
-                            <option value="N/A">N/A</option>
-                            <option value="9:00">9:00</option>
-                            <option value="9:30">9:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
-                            <option value="16:00">16:00</option>
-                            <option value="16:30">16:30</option>
-                            <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
-                            <option value="18:30">18:30</option>
-                            <option value="19:00">19:00</option>
-                            <option value="19:30">19:30</option>
-                            <option value="20:00">20:00</option>
+                            <option value="N/A" @if (Model.Root.Element("Wednesday").Element("End").Value == "N/A") { @Html.Raw("selected") }>N/A</option>
+                            @for (int x = 9; x < 20; x++)
+                            {
+                                <option value="@x:00" @if (Model.Root.Element("Wednesday").Element("End").Value == x + ":00") { @Html.Raw("selected") }>@x:00</option>
+                                <option value="@x:30" @if (Model.Root.Element("Wednesday").Element("End").Value == x + ":30") { @Html.Raw("selected") }>@x:30</option>
+                            }
+
+                            <option value="20:00" @if (Model.Root.Element("Wednesday").Element("End").Value == "19:00") { @Html.Raw("selected") }>20:00</option>
                         </select>
                     </td>
                     <td>
                         <select name="thursdayEnd">
-                            <option value="N/A">N/A</option>
-                            <option value="9:00">9:00</option>
-                            <option value="9:30">9:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
-                            <option value="16:00">16:00</option>
-                            <option value="16:30">16:30</option>
-                            <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
-                            <option value="18:30">18:30</option>
-                            <option value="19:00">19:00</option>
-                            <option value="19:30">19:30</option>
-                            <option value="20:00">20:00</option>
+                            <option value="N/A" @if (Model.Root.Element("Thursday").Element("End").Value == "N/A") { @Html.Raw("selected") }>N/A</option>
+                            @for (int x = 9; x < 20; x++)
+                            {
+                                <option value="@x:00" @if (Model.Root.Element("Thursday").Element("End").Value == x + ":00") { @Html.Raw("selected") }>@x:00</option>
+                                <option value="@x:30" @if (Model.Root.Element("Thursday").Element("End").Value == x + ":30") { @Html.Raw("selected") }>@x:30</option>
+                            }
+
+                            <option value="20:00" @if (Model.Root.Element("Thursday").Element("End").Value == "19:00") { @Html.Raw("selected") }>20:00</option>
                         </select>
                     </td>
                     <td>
                         <select name="fridayEnd">
-                            <option value="N/A">N/A</option>
-                            <option value="9:00">9:00</option>
-                            <option value="9:30">9:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
-                            <option value="16:00">16:00</option>
-                            <option value="16:30">16:30</option>
-                            <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
-                            <option value="18:30">18:30</option>
-                            <option value="19:00">19:00</option>
-                            <option value="19:30">19:30</option>
-                            <option value="20:00">20:00</option>
+                            <option value="N/A" @if (Model.Root.Element("Friday").Element("End").Value == "N/A") { @Html.Raw("selected") }>N/A</option>
+                            @for (int x = 9; x < 20; x++)
+                            {
+                                <option value="@x:00" @if (Model.Root.Element("Friday").Element("End").Value == x + ":00") { @Html.Raw("selected") }>@x:00</option>
+                                <option value="@x:30" @if (Model.Root.Element("Friday").Element("End").Value == x + ":30") { @Html.Raw("selected") }>@x:30</option>
+                            }
+
+                            <option value="20:00" @if (Model.Root.Element("Friday").Element("End").Value == "19:00") { @Html.Raw("selected") }>20:00</option>
                         </select>
                     </td>
                     <td>
                         <select name="saturdayEnd">
-                            <option value="N/A">N/A</option>
-                            <option value="9:00">9:00</option>
-                            <option value="9:30">9:30</option>
-                            <option value="10:00">10:00</option>
-                            <option value="10:30">10:30</option>
-                            <option value="11:00">11:00</option>
-                            <option value="11:30">11:30</option>
-                            <option value="12:00">12:00</option>
-                            <option value="12:30">12:30</option>
-                            <option value="13:00">13:00</option>
-                            <option value="13:30">13:30</option>
-                            <option value="14:00">14:00</option>
-                            <option value="14:30">14:30</option>
-                            <option value="15:00">15:00</option>
-                            <option value="15:30">15:30</option>
-                            <option value="16:00">16:00</option>
-                            <option value="16:30">16:30</option>
-                            <option value="17:00">17:00</option>
-                            <option value="17:30">17:30</option>
-                            <option value="18:00">18:00</option>
-                            <option value="18:30">18:30</option>
-                            <option value="19:00">19:00</option>
-                            <option value="19:30">19:30</option>
-                            <option value="20:00">20:00</option>
+                            <option value="N/A" @if (Model.Root.Element("Saturday").Element("End").Value == "N/A") { @Html.Raw("selected") }>N/A</option>
+                            @for (int x = 9; x < 20; x++)
+                            {
+                                <option value="@x:00" @if (Model.Root.Element("Saturday").Element("End").Value == x + ":00") { @Html.Raw("selected") }>@x:00</option>
+                                <option value="@x:30" @if (Model.Root.Element("Saturday").Element("End").Value == x + ":30") { @Html.Raw("selected") }>@x:30</option>
+                            }
+
+                            <option value="20:00" @if (Model.Root.Element("Saturday").Element("End").Value == "19:00") { @Html.Raw("selected") }>20:00</option>
                         </select>
                     </td>
                 </tr>
@@ -432,7 +221,11 @@
             </table>
             <br />
             <button type="submit" class="btn btn-default">Submit</button>
+
         }
+        <br />
+        <p style="color:red;">@message</p>
     </div>
+    
 </div>
 

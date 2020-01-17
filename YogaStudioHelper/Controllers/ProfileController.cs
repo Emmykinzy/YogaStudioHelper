@@ -95,7 +95,9 @@ namespace YogaStudioHelper.Controllers
         [HttpGet]
         public ActionResult CreateAvailabilities()
         {
-            return View();
+            int id = Int32.Parse(Session["Uid"].ToString());
+            XDocument xd = db.getAvailability(id);
+            return View(xd);
         }
 
         [HttpPost]
@@ -127,10 +129,40 @@ namespace YogaStudioHelper.Controllers
                    new XElement("Start", collection["saturdayStart"]),
                    new XElement("End", collection["saturdayEnd"]))
            ));
+            DateTime s1 = Convert.ToDateTime(collection["sundayStart"]);
+            DateTime e1 = Convert.ToDateTime(collection["sundayEnd"]);
 
-            int id = Int32.Parse(Session["Uid"].ToString());
-            db.AddAvailability(id, availabilities);
-            return View();
+            DateTime s2 = Convert.ToDateTime(collection["mondayStart"]);
+            DateTime e2 = Convert.ToDateTime(collection["mondayEnd"]);
+
+            DateTime s3 = Convert.ToDateTime(collection["tuesdayStart"]);
+            DateTime e3 = Convert.ToDateTime(collection["tuesdayEnd"]);
+
+            DateTime s4 = Convert.ToDateTime(collection["wednesdayStart"]);
+            DateTime e4 = Convert.ToDateTime(collection["wednesdayEnd"]);
+
+            DateTime s5 = Convert.ToDateTime(collection["thursdayStart"]);
+            DateTime e5 = Convert.ToDateTime(collection["thursdayEnd"]);
+
+            DateTime s6 = Convert.ToDateTime(collection["fridayStart"]);
+            DateTime e6 = Convert.ToDateTime(collection["fridayEnd"]);
+
+            DateTime s7 = Convert.ToDateTime(collection["saturdayStart"]);
+            DateTime e7 = Convert.ToDateTime(collection["saturdayEnd"]);
+
+
+            if (s1 > e1|| s2 > e2 || s3 > e3 || s4 > e4 || s5 > e5 || s6 > e6 || s7 > e7)
+            {
+                ViewBag.message = "End time set before start time!";
+                
+                return View(availabilities);
+            }
+            else
+            {
+                int id = Int32.Parse(Session["Uid"].ToString());
+                db.AddAvailability(id, availabilities);
+                return RedirectToAction("ViewAvailabilities");
+            }
         }
     }
 }
