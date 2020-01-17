@@ -3,7 +3,14 @@
 
 @{
     ViewBag.Title = "CreatePromotion";
+
+        String message = "";
+    if (TempData["Message"] != null) { 
+        message = TempData["Message"].ToString();
+    }
+
 }
+
 
 <div class="centerDiv">
     @using (Html.BeginForm())
@@ -12,6 +19,9 @@
             <tr>
                 <td></td>
                 <td style="text-align:center;"><h2>Create Promo</h2></td>
+            </tr>
+            <tr>
+                <p>@message</p>
             </tr>
             <tr>
                 <th>Promotion Name:</th>
@@ -26,7 +36,7 @@
             <tr>
                 <th>Extra Passes:</th>
                 <td>
-                    <input id="passes" name="passes"
+                    <input id="extra_passes" name="extra_passes"
                            type="number" class="inputs" />
                 </td>
             </tr>

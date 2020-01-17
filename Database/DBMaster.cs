@@ -476,8 +476,12 @@ namespace Database
         }
 
 
+        /// <summary>
+        ///  // Promotion Get Methods
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
-        //Promotion Get Methods
 
         public Promotion getPromotion(int id)
         {
@@ -546,6 +550,17 @@ namespace Database
         public void ArchivePromotion()
         {
 
+        }
+
+
+        public bool CheckIfPromoExist(int passId)
+        {
+
+            //bool s = Convert.ToBoolean(myDb.Class_Log.Where(x => x.Schedule_Id == schedId && x.U_Id == userId));
+            bool s = myDb.Promotions.Any(x => x.Pass_Id == passId);
+
+            // .Any();
+            return s;
         }
 
 
