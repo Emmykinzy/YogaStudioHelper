@@ -7,6 +7,7 @@
     var p = ViewBag.PromoList;
     var Message = "";
     bool hasPromo = false;
+    bool isValid = true;
     if (TempData["Message"] != null)
     {
         Message = TempData["Message"].ToString();
@@ -39,7 +40,16 @@
                             if (item.Pass_Id == promo.Pass_Id && promo.Promo_End > DateTime.Now)
                             {
                                 <span style="font-size:15px;color:red;">
-                                    @promo.Promo_Desc
+                                    @promo.Promo_Desc  
+                                    @if (promo.Discount == 0)
+                                    {
+                                        <span>+ @promo.Num_Classes classes</span>
+                                    }
+                                    else
+                                    {
+                                        double per = (double)promo.Discount * 100;
+                                        <span>@per% Off </span>
+                                    }
                                 </span> 
                             }
                         }
@@ -66,21 +76,28 @@
                                 }
                                 else
                                 {
-                                    <span>
-                                    @item.Pass_Price$ 
-                                    </span>
+                                    isValid = false;
                                 }
+
+
+
+
+
 
 
                             }
                         }
                         @if (hasPromo == false)
                         {
-                            @Html.DisplayFor(modelItem => item.Pass_Price)<p>$</p>
+                            @item.Pass_Price.ToString("F")<p>$</p>
                         }
-                        else
+                        else if (isValid == false)
                         {
+                            <span>
+                            @item.Pass_Price.ToString("F")$ 
+                            </span>
                             hasPromo = false;
+                            isValid = true;
                         }
                         </div>
 

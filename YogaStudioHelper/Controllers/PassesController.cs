@@ -157,68 +157,133 @@ namespace YogaStudioHelper.Controllers
         }
         private Payment CreatePayment(APIContext apiContext, string redirectUrl, Class_Passes cp)
         {
-            Promotion p = db.getPromotionByPassId(cp.Pass_Id);
-            decimal price = cp.Pass_Price;
+            Promotion p;
+
+            p = db.getPromotionByPassId(cp.Pass_Id);
+            
+
+            decimal price = decimal.Round(cp.Pass_Price, 2);
             decimal dis = 0;
-            if(p.Promo_End.Date > DateTime.Today && p.Num_Classes == 0)
-            {
-                dis = (price * (decimal)p.Discount)* -1;
-            }
-            double t = ((double)(price+dis) * .15);
-            //create itemlist and add item objects to it  
+            decimal t;
+            var amount = new Amount();
             var itemList = new ItemList()
             {
                 items = new List<Item>()
             };
-            //Adding Item Details like name, currency, price etc  
-            itemList.items.Add(new Item()
-            {
-                name = cp.Pass_Name,
-                currency = "CAD",
-                price = price.ToString("F"),
-                quantity = "1"
-            });
-            itemList.items.Add(new Item()
-            {
-                name = p.Promo_Desc,
-                currency = "CAD",
-                price = dis.ToString("F"),
-                quantity = "1",
-                
-            });
             var payer = new Payer()
             {
                 payment_method = "paypal"
             };
-            // Configure Redirect Urls here with RedirectUrls object  
             var redirUrls = new RedirectUrls()
             {
                 cancel_url = redirectUrl + "&Cancel=true",
                 return_url = redirectUrl
             };
-            // Adding Tax, shipping and Subtotal details  
-            var details = new Details()
+            var details = new Details();
+            string desc = "";
+            try
             {
-                tax = t.ToString("F"),
-                subtotal = (price+dis).ToString("F")
+                if (p.Promo_End.Date > DateTime.Today && p.Num_Classes == 0)
+                {
+                    decimal discount = (decimal)p.Discount;
+                    dis = (price * discount * -1);
+                    dis = decimal.Round(dis, 2);
 
-            };
-            //Final amount with details  
-            var amount = new Amount()
+                    t = ((price + dis) * (decimal).15);
+                    t = decimal.Round(t, 2);
+                    //create itemlist and add item objects to it  
+                    //Adding Item Details like name, currency, price etc  
+                    itemList.items.Add(new Item()
+                    {
+                        name = cp.Pass_Name,
+                        currency = "CAD",
+                        price = price.ToString("F"),
+                        quantity = "1"
+                    });
+                    itemList.items.Add(new Item()
+                    {
+                        name = p.Promo_Desc + " " + (int)(discount * 100) + "% Off",
+                        currency = "CAD",
+                        price = dis.ToString("F"),
+                        quantity = "1",
+
+                    });
+                    // Adding Tax, shipping and Subtotal details  
+
+
+                    details.tax = t.ToString("F");
+                    details.subtotal = (price + dis).ToString("F");
+
+                    
+                    //Final amount with details  
+                    amount.currency = "CAD";
+                    amount.total = ((price + dis) + t).ToString("F");
+                    amount.details = details;
+                }
+                else
+                {
+                    
+                    t = ((price) * (decimal).15);
+                    //create itemlist and add item objects to it  
+
+                    //Adding Item Details like name, currency, price etc  
+                    itemList.items.Add(new Item()
+                    {
+                        name = cp.Pass_Name+" + "+p.Num_Classes+" Classes",
+                        currency = "CAD",
+                        price = price.ToString("F"),
+                        quantity = "1"
+                    });
+
+                    details.tax = t.ToString("F");
+                    details.subtotal = (price).ToString("F");
+
+
+                    //Final amount with details  
+                    amount.currency = "CAD";
+                    amount.total = ((price) + t).ToString("F");
+                    amount.details = details;
+                }
+            }
+            catch
             {
-                currency = "CAD",
-                total = ((double)(price + dis) + t).ToString("F"), // Total must be equal to sum of tax, shipping and subtotal.  
-                details = details,
-            };
+                t = ((price) * (decimal).15);
+                //create itemlist and add item objects to it  
+
+                //Adding Item Details like name, currency, price etc  
+                itemList.items.Add(new Item()
+                {
+                    name = cp.Pass_Name,
+                    currency = "CAD",
+                    price = price.ToString("F"),
+                    quantity = "1"
+                });
+                details.tax = t.ToString("F");
+                details.subtotal = (price).ToString("F");
+
+
+                //Final amount with details  
+                amount.currency = "CAD";
+                amount.total = ((price) + t).ToString("F");
+                amount.details = details;
+            }
+
+            // Configure Redirect Urls here with RedirectUrls object  
+
+            // Adding Tax, shipping and Subtotal details  
+
+            
+
+
             var transactionList = new List<Transaction>();
             // Adding description about the transaction  
             transactionList.Add(new Transaction()
             {
-                description = "Promo",                
+                description = desc,
                 amount = amount,
                 item_list = itemList
             });
-                payment = new Payment()
+            payment = new Payment()
             {
                 intent = "sale",
                 payer = payer,
@@ -227,11 +292,14 @@ namespace YogaStudioHelper.Controllers
             };
             // Create a payment using a APIContext  
             return payment.Create(apiContext);
+
         }
-
-
-
+            
     }
 
 
-    }
+
+}
+
+
+    

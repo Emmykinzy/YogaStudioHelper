@@ -48,18 +48,53 @@ namespace Database
         {
             Pass_Log pass_Log = new Pass_Log();
 
+          
+
+            Promotion p = getPromotionByPassId(pass.Pass_Id);
+            
+            
             pass_Log.Pass_Id = pass.Pass_Id;
             pass_Log.U_Id = userId;
             // num classes 
-            pass_Log.Num_Classes = pass.Pass_Size;
-            int token = pass.Pass_Size;
+            int token;
+            if (p != null)
+            {
+                if (p.Num_Classes == 0)
+                {
+                    token = pass.Pass_Size;
+                    pass_Log.Num_Classes = token;
 
-            //Update User Token 
-            AddTokens(userId, token);
+                }
+                else
+                {
+                    token = pass.Pass_Size + (int)p.Num_Classes;
+                    pass_Log.Num_Classes = token;
 
-            // price 
-            // todo include total with promo if present and taxes 
-            pass_Log.Purchase_Price = pass.Pass_Price;
+                }
+
+                //Update User Token 
+                AddTokens(userId, token);
+
+                // price 
+                if (p.Discount == 0)
+                {
+                    pass_Log.Purchase_Price = pass.Pass_Price;
+
+                }
+                else
+                {
+                    decimal subtotal = decimal.Round((pass.Pass_Price - (pass.Pass_Price * (decimal)p.Discount)), 2);
+
+                    pass_Log.Purchase_Price = decimal.Round((subtotal * (decimal)1.15), 2);
+
+                }
+            }
+            else
+            {
+                token = pass.Pass_Size;
+                pass_Log.Num_Classes = token;
+                pass_Log.Purchase_Price = pass.Pass_Price;
+            }
 
             // date 
             DateTime date = DateTime.Now;
