@@ -30,66 +30,47 @@ namespace YogaStudioHelper.Controllers
       
 
             int scheduleId = Convert.ToInt32(collection["scheduleId"]);
-
-            // call create class log method 
-
-            // call increment schedule count 
-            db.ScheduleSignUp(scheduleId);
-
-
             int userId = Convert.ToInt32(Session["Uid"]);
+
+ 
             var yogaUser = db.getUserById(userId);
             var sched = db.getScheduleById(scheduleId);
 
             // Validate if student already sign in  
-            var checkIfSignin = db.CheckIfSignIn(scheduleId, userId);
+            var checkIfSignin = db.CheckIfSignedUp(scheduleId, userId);
 
             if (checkIfSignin)
             {
-                TempData["Message"] = "Error: You are already sign to this course";
+                TempData["Message"] = "<h5 style=\"color:red;\">Error: You are already signed up to this course</h5>";
                 return RedirectToAction("Schedule");
 
             }
-
             // Validation: student has passes 
             if(yogaUser.U_Tokens < 1)
             {
-                TempData["Message"] = "Error: The course required a passe";
+                TempData["Message"] = "<h5 style=\"color:red;\">Error: Out of passes</h5>";
                 return RedirectToAction("Schedule");
             }
             // Validation: classrom has places 
             var room = db.getRoom(sched.Room_Id); 
             if(sched.Signed_Up >= room.Room_Capacity)
             {
-                TempData["Message"] = "Error: Sorry this class is full";
+                TempData["Message"] = "<h5 style=\"color:red;\">Error: Sorry this class is full</h5>";
                 return RedirectToAction("Schedule");
             }
 
+            db.ScheduleSignUp(scheduleId);
             // Creating Class log 
-            Class_Log newClassLog = new Class_Log();
 
-            newClassLog.Schedule_Id = scheduleId;
+            db.CreateClass_Log(scheduleId, userId);
 
-            newClassLog.U_Id = userId;
-           
-        
-            //newClassLog.Log_Status = "Upcoming";
-
-            db.CreateClass_Log(newClassLog);
-
-            // remove token 
             db.RemoveToken(userId);
 
  
 
             //Message
-            ViewBag.Message = "Sucessfully Enrolled";
+            ViewBag.Message = "<h5>Sucessfully Enrolled</h5>";
 
-            Response.Write("<script language=javascript>alert('Succesfully Enroll');</script>");
-
-            // window.location='~/Schedule/Schedule'
-            Response.Write("<script>alert('" + "Test" + "')</script>");
-            TempData["Message"] = "Success: Your are enroll in";
             return RedirectToAction("Schedule");
         }
 

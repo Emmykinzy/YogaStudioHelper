@@ -78,7 +78,7 @@ namespace Database
                 // price 
                 if (p.Discount == 0)
                 {
-                    pass_Log.Purchase_Price = pass.Pass_Price;
+                    pass_Log.Purchase_Price = decimal.Round(pass.Pass_Price * (decimal)1.15, 2);
 
                 }
                 else
@@ -93,7 +93,7 @@ namespace Database
             {
                 token = pass.Pass_Size;
                 pass_Log.Num_Classes = token;
-                pass_Log.Purchase_Price = pass.Pass_Price;
+                pass_Log.Purchase_Price = decimal.Round(pass.Pass_Price*(decimal)1.15, 2);
             }
 
             // date 
@@ -693,9 +693,15 @@ namespace Database
 
         //Class Log Create Method
 
-        public void CreateClass_Log(Class_Log cl)
+        public void CreateClass_Log(int sId, int userId)
         {
-            myDb.Class_Log.Add(cl);
+            Class_Log newClassLog = new Class_Log();
+
+            newClassLog.Schedule_Id = sId;
+            newClassLog.U_Id = userId;
+            newClassLog.Log_Status = "SIGNED-UP";
+
+            myDb.Class_Log.Add(newClassLog);
             myDb.SaveChanges();
         }
 
@@ -715,7 +721,7 @@ namespace Database
         }
 
 
-        public bool CheckIfSignIn(int schedId, int userId)
+        public bool CheckIfSignedUp(int schedId, int userId)
         {
 
             //bool s = Convert.ToBoolean(myDb.Class_Log.Where(x => x.Schedule_Id == schedId && x.U_Id == userId));
@@ -840,6 +846,7 @@ namespace Database
 
         public void CreateSchedule(Schedule schedule)
         {
+            schedule.Signed_Up = 0;
             myDb.Schedules.Add(schedule);
             myDb.SaveChanges();
         }
@@ -896,16 +903,8 @@ namespace Database
 
             var sched = myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
 
-            if(sched.Signed_Up == null)
-            {
-                sched.Signed_Up = 1;
-            }
-            else
-            {
-                sched.Signed_Up++;
-            }
+            sched.Signed_Up++;
             
-
             myDb.SaveChanges();
 
 
