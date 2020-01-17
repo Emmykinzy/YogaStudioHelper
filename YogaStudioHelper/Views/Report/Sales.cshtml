@@ -3,65 +3,15 @@
     ViewBag.Title = "Sales";
 }
 
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-
-<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
-
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-
-<script src="~/Scripts/bootstrap.min.js"></script>
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
+<h2>Sales</h2>
 
 
+<p>
+    @Html.ActionLink("Monthly Sale Report", "SalesMonth")
+</p>
+<br />
+<p>
+    @Html.ActionLink("Date Selection Sale Report", "SalesDates")
 
+</p>
 
-@using (Html.BeginForm())
-{
-    <table class="inputTable">
-        <tr>
-            <td></td>
-            <td style="text-align:center"><h2>Sales Report</h2></td>
-        </tr>
-        <tr>
-            <th>Date:</th>
-            <td style="text-align:center">
-                <select class="report" id="month" name="month">
-                    <option>Select</option>
-                    <option>November 2019</option>
-                    <option>October 2019</option>
-                    <option>September 2019</option>
-                </select>
-            </td>
-        </tr>
-
-
-        <tr>
-
-            <th>Month:</th>
-            <td class="select">
-                <input type="text" id="datepicker" name="datepicker" class="form-control" />
-
-            </td>
-
-            <script>
-
-                // ttps://www.youtube.com/watch?v=ub-vK97VOhE
-                $('#datepicker').datetimepicker({
-                    timepicker: false,
-                    datepicker: true,
-                    format: 'Y-m-d',
-                    value: '2019-8-1'
-                    
-                    // allowTimes: ['']
-
-                })
-            </script>
-        </tr>
-        <tr>
-            <td></td>
-            <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Search</button></td>
-        </tr>
-    </table>
-
-}

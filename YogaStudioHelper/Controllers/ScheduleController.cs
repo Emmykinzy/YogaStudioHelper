@@ -71,7 +71,7 @@ namespace YogaStudioHelper.Controllers
             newClassLog.Schedule_Id = scheduleId;
 
             newClassLog.U_Id = userId;
-
+           
         
             //newClassLog.Log_Status = "Upcoming";
 
@@ -89,7 +89,7 @@ namespace YogaStudioHelper.Controllers
 
             // window.location='~/Schedule/Schedule'
             Response.Write("<script>alert('" + "Test" + "')</script>");
-            TempData["Message"] = "Error: The course required a passe";
+            TempData["Message"] = "Success: Your are enroll in";
             return RedirectToAction("Schedule");
         }
 

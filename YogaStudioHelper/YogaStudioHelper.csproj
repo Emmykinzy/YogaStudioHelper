@@ -220,7 +220,7 @@
     <Content Include="Views\ManageUsers\EditUser_Old.cshtml" />
     <Content Include="Views\Report\HoursWorked.cshtml" />
     <Content Include="Views\Report\Attendence.cshtml" />
-    <Content Include="Views\Report\Sales.cshtml" />
+    <Content Include="Views\Report\SalesMonth.cshtml" />
     <Content Include="Views\LoginSignUp\SignUp.cshtml" />
     <Content Include="Views\ManageStudio\ClassList.cshtml" />
     <Content Include="Views\ManageStudio\RoomList.cshtml" />
@@ -246,6 +246,8 @@
     <Content Include="Views\Passes\SuccessView.cshtml" />
     <Content Include="Views\Report\HoursWorkedList.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Report\SalesDates.cshtml" />
+    <Content Include="Views\Report\Sales.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

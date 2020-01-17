@@ -66,7 +66,10 @@ namespace YogaStudioHelper.Controllers
 
         public ActionResult PassLogList()
         {
-            IEnumerable<Pass_Log> pass_Log_List = db.getPass_Logs();
+            // User id 
+            int userId = Int32.Parse(Session["Uid"].ToString());
+
+            IEnumerable<Pass_Log> pass_Log_List = db.getPass_LogsByUId(userId);
 
 
             return View(pass_Log_List); 
@@ -101,6 +104,7 @@ namespace YogaStudioHelper.Controllers
         [HttpPost]
         public ActionResult CreateAvailabilities(FormCollection collection)
         {
+            // "N/A"
             string ss = collection["sundayStart"];
             XDocument availabilities = new XDocument
            (

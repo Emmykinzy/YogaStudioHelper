@@ -96,8 +96,15 @@ namespace YogaStudioHelper.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult SalesMonth()
+        {
+            return View();
+        }
+
+
         [HttpPost]
-        public ActionResult Sales(FormCollection collection)
+        public ActionResult SalesMonth(FormCollection collection)
         {
             // get the date in form collection 
 
@@ -112,6 +119,34 @@ namespace YogaStudioHelper.Controllers
             // redirect view with list of passlog 
             return RedirectToAction("SaleList");
         }
+
+
+        [HttpGet]
+        public ActionResult SalesDates()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult SalesDates(FormCollection collection)
+        {
+            // get the date in form collection 
+
+            DateTime startDate = DateTime.Parse(collection["startDate"]);
+
+            DateTime endDate = DateTime.Parse(collection["endDate"]);
+
+
+            //get list with this time constraint 
+            IEnumerable<Pass_Log> saleList = db.GetSaleReport(startDate, endDate);
+            TempData["saleList"] = saleList;
+
+            // redirect view with list of passlog 
+            return RedirectToAction("SaleList");
+        }
+
+
 
         [HttpGet]
         public ActionResult SaleList()
