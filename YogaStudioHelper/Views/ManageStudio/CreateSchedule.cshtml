@@ -10,6 +10,7 @@
     //model Database.Schedule
 
     ViewBag.Title = "CreateSchedule";
+    string message = ViewBag.message;
 }
 
 <h2>CreateSchedule</h2>
@@ -28,12 +29,15 @@
 <div class="centerDiv">
     @using (Html.BeginForm())
     {
+        if (message != null)
+        {
+            @Html.Raw(message)
+        }
         <table class="inputTable">
             <tr>
                 <td></td>
                 <td style="text-align:center;"><h2>Schedule</h2></td>
             </tr>
-
             <tr>
                 <th>Teacher:</th>
 
@@ -72,10 +76,10 @@
                         timepicker: true,
                         datepicker: false,
                         format: 'H:i',
-                        value: '10:00',
-                        hours12: false, 
-                        step: 30
-                       // allowTimes: ['']
+                        value: '7:00',
+                        hours12: false,
+                        step: 30,
+                        allowTimes: [@for (int x = 7; x < 19; x++) { @Html.Raw("'"+x+":00', '"+x+":30',")} @Html.Raw("'19:00'")]
 
                     })
                 </script>
@@ -102,11 +106,15 @@
                 <td></td>
                 <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Create</button></td>
             </tr>
-            <tr><td></td></tr>
+            <tr>
+                <td>
+                </td>
+            </tr>
             <tr>
                 <td><button onclick="goBack()">Go Back</button></td>
             </tr>
         </table>
+
     }
 </div>
 

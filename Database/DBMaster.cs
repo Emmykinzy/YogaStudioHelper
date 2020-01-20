@@ -99,6 +99,8 @@ namespace Database
             // date 
             DateTime date = DateTime.Now;
             pass_Log.Date_Purchased = date;
+            
+
 
             CreatePass_Log(pass_Log);
 
@@ -239,7 +241,7 @@ namespace Database
         public List<Yoga_User> getTeacherList()
         {
             //int r = getRoleId(role);
-            return myDb.Yoga_User.Where(x => x.Roles_Id == 2).ToList();
+            return myDb.Yoga_User.Where(x => x.Roles_Id == 2 && x.Active == true).ToList();
         }
 
         public void AddAvailability(int id, XDocument schedule)
@@ -439,7 +441,7 @@ namespace Database
 
         public List<Class> getClassList()
         {
-            return myDb.Classes.ToList();
+            return myDb.Classes.Where(x => x.Active == true).ToList();
         }
 
 
@@ -681,6 +683,12 @@ namespace Database
             return myDb.Class_Log.ToList();
         }
 
+        public int getSignedUp(int scheduleId)
+        {
+            IEnumerable<Class_Log> cl = myDb.Class_Log.Where(x => x.Schedule_Id == scheduleId);
+            return cl.Count();
+        }
+
         public IEnumerable<Class_Log> GetClass_LogsByScheduleId(int id)
         {
             return myDb.Class_Log.Where(x => x.Schedule_Id == id);
@@ -699,9 +707,16 @@ namespace Database
 
             newClassLog.Schedule_Id = sId;
             newClassLog.U_Id = userId;
-            newClassLog.Log_Status = "SIGNED-UP";
+            newClassLog.Log_Status = "MISSED";
 
             myDb.Class_Log.Add(newClassLog);
+            myDb.SaveChanges();
+        }
+
+        public void changeClass_LogStatus(int userId, int scheduleId, string attendance)
+        {
+            Class_Log cl = myDb.Class_Log.Where(x => x.U_Id == userId && x.Schedule_Id == scheduleId).SingleOrDefault();
+            cl.Log_Status = attendance;
             myDb.SaveChanges();
         }
 
@@ -792,6 +807,14 @@ namespace Database
             return myDb.Schedules.ToList();
         }
 
+        public IEnumerable<Schedule> getScheduleByRoomAndDay(int roomId, DateTime day)
+        {
+            IEnumerable<Schedule> sList = (from schedule in myDb.Schedules
+                     where schedule.Class_Date == day && schedule.Room_Id == roomId
+                     select schedule);
+            return sList;
+        }
+
         public Schedule getScheduleById(int id)
         {
             return myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
@@ -815,7 +838,7 @@ namespace Database
             string teacher = s.Yoga_User.U_First_Name + " " + s.Yoga_User.U_Last_Name;
             string startDate = s.Class_Date.ToString("dd/MM/yy");
             string startTime = s.Start_Time.ToString(@"hh\:mm");
-            string signedUp = s.Signed_Up.ToString();
+            string signedUp = getSignedUp(s.Schedule_Id).ToString();
 
             //
             string size = s.Room.Room_Capacity.ToString();
@@ -881,6 +904,18 @@ namespace Database
 
             myDb.SaveChanges();
 
+        }
+
+        public List<Yoga_User> getScheduleSignUpList(int scheduleId)
+        {
+            IEnumerable<Class_Log> cl = myDb.Class_Log.Where(x => x.Schedule_Id == scheduleId);
+            List<Yoga_User> yu = new List<Yoga_User>();
+            foreach(Class_Log log in cl)
+            {
+                yu.Add(log.Yoga_User);
+            }
+
+            return yu;
         }
 
         public void ArchiveSchedule()

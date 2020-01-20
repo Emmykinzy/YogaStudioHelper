@@ -68,34 +68,40 @@
 
                 // created form to get schedule id in hidden field
                 // not sure if best way
-
-                if (Session["Auth"] != null)
+                using (Html.BeginForm())
                 {
-                    using (Html.BeginForm())
+                    if (Session["Auth"] != null)
                     {
+
                         <input type="hidden" id="scheduleId" name="scheduleId" value="" />
 
-                        
+
                         <button type="submit" class="btn btn-default">Sign up</button>
-                        
+
+
                     }
-                }
-                else
-                {
-                    <a href="LoginSignUp/LogInSignUp" class="btn btn-default">Login to Sign Up</a>
+                    else
+                    {
+                        <input type="hidden" id="scheduleId" name="scheduleId" value="" />
+                        <button href="LoginSignUp/LogInSignUp" class="btn btn-default">Login to Sign Up</button>
+                    }
                 }
 
             }
-            else
+            else if ((int)Session["Auth"] == 1 || (int)Session["Auth"] == 3)
             {
+                <p id="desc"></p>
                 <p id="date"></p>
                 <p id="time"></p>
                 <p id="teacher"></p>
                 <p id="room"></p>
                 <p id="signedUp"></p>
                 <div id="countDown"></div><br />
-                <a href="@Url.Action("ClassSignUp", "Schedule")" id="signupBtn" class="btn btn-default disabledA">Student Sign In</a>
-
+                using (Html.BeginForm())
+                {
+                <input type="hidden" id="scheduleId" name="scheduleId" value="" />
+                <button type="submit" class="btn btn-default">Student Sign In</button>
+                }
 
             }
         </div>
@@ -352,11 +358,6 @@
         document.getElementById("teacher").innerHTML = "<b>Teacher:</b> "+teacher;
         document.getElementById("signedUp").innerHTML = "<b>Students Signed Up: </b>" + signedUp + "/"+size;
 
-        var today = new Date();
-            var date = today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear();
-            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-            var dateTime = date + ' ' + time;
-
             modal.style.display = "block";
     }
 
@@ -371,26 +372,26 @@
         }
     }
 
-    var countDownDate = new Date("Jan 5, 2020 15:00:00").getTime();
+    //var countDownDate = new Date("Jan 20, 2020 15:00:00").getTime();
 
-    var x = setInterval(function () {
+    //var x = setInterval(function () {
 
-        var now = new Date().getTime();
-        var distance = countDownDate - now;
+    //    var now = new Date().getTime();
+    //    var distance = countDownDate - now;
 
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    //    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    //    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    //    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    //    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        document.getElementById("countDown").innerHTML = "<b>Sign In Available In: </b><span style='color:red;'>" + days + "d " + hours + "h " + minutes + "m " + seconds + "s</span>";
+    //    document.getElementById("countDown").innerHTML = "<b>Sign In Available In: </b><span style='color:red;'>" + days + "d " + hours + "h " + minutes + "m " + seconds + "s</span>";
 
-        if (distance < 0) {
-            clearInterval(x);
-            document.getElementById("demo").innerHTML = "";
-            document.getElementById("signupBtn").classList.remove("disabledA")
+    //    if (distance < 0) {
+    //        clearInterval(x);
+    //        document.getElementById("demo").innerHTML = "";
+    //        document.getElementById("signupBtn").classList.remove("disabledA")
 
-        }
-    }, 1000);
+    //    }
+    //}, 1000);
 </script>
 

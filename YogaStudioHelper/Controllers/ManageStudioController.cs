@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml.Linq;
 using Database;
 using YogaStudioHelper.ViewModels;
 
@@ -641,6 +642,17 @@ namespace YogaStudioHelper.Controllers
         public ActionResult CreateSchedule(FormCollection collection)
         {
             // how to get dropdown value 
+            var classes = db.getClassList();
+            var teachers = db.getTeacherList();
+            var rooms = db.getRoomList();
+
+            var scheduleViewModel = new ScheduleViewModel
+            {
+                Classes = classes,
+                Teachers = teachers,
+                Rooms = rooms
+
+            };
 
             Schedule schedule = new Schedule(); 
 
@@ -652,6 +664,45 @@ namespace YogaStudioHelper.Controllers
             DateTime classDate = Convert.ToDateTime(collection["classDate"]);
 
             TimeSpan timePicker = TimeSpan.Parse(collection["picker"]);
+            XDocument xd = db.getAvailability(selectedTeacher);
+            string dayOftheWeek = classDate.DayOfWeek.ToString();
+            TimeSpan sTime = TimeSpan.Parse(xd.Root.Element(dayOftheWeek).Element("Start").Value);
+            TimeSpan eTime = TimeSpan.Parse(xd.Root.Element(dayOftheWeek).Element("End").Value);
+            Class c = db.getClass(selectedCLass);
+            TimeSpan classEnd = sTime.Add(c.Class_Length);
+
+            Yoga_User u = db.getUserById(selectedTeacher);
+
+            if (sTime > timePicker)
+            {
+                
+                ViewBag.message = "Availability Error: "+u.U_First_Name+" "+u.U_Last_Name+" starts "+dayOftheWeek+" at "+sTime.Hours+":"+sTime.Minutes.ToString("00");
+                return View(scheduleViewModel);
+                
+            }
+
+            if(classEnd > eTime)
+            {
+                ViewBag.message = "<p><span style=\"color:red\">Availability Error: </span>" + u.U_First_Name + " " + u.U_Last_Name + " ends " + dayOftheWeek + " at " + eTime.Hours + ":" + eTime.Minutes.ToString("00")+"<br/>"+
+                                  "Class End: "+classEnd.Hours+":"+ classEnd.Minutes.ToString("00")+"</p><br/>";
+                return View(scheduleViewModel);
+            }
+
+            IEnumerable<Schedule> sList = db.getScheduleByRoomAndDay(selectedRoom, classDate);
+
+            foreach(Schedule s in sList)
+            {
+                String date = s.Class_Date.ToString("dd/MM/yyyy");
+                TimeSpan sEnd = s.Start_Time.Add(s.Class.Class_Length);
+                if (timePicker >= s.Start_Time && timePicker < sEnd || classEnd > s.Start_Time && classEnd <= sEnd)
+                {
+                    ViewBag.message = "<p><span style=\"color:red\">Room Error: </span>" + s.Room.Room_Name + " is unavailable from " + s.Start_Time.Hours + ":" + s.Start_Time.Minutes.ToString("00") + " until " + sEnd.Hours + ":" + sEnd.Minutes.ToString("00") + " on " +date+"</p>";
+                    return View(scheduleViewModel);
+                }
+
+            }
+
+
 
            // Add course length to timeSpan? no sure working 
             var classTime = db.getClass(selectedCLass).Class_Length;

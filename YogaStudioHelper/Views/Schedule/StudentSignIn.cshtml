@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Database.Yoga_User>
+@using Database
+@{
+    ViewBag.Title = "StudentSignIn";
+    Schedule s = TempData["class"] as Schedule;
+    TempData["class"] = s.Schedule_Id;
+    TempData["yu"] = Model;
+}
+
+<h2>Student Sign In</h2>
+
+@s.Class.Class_Name
+@s.Start_Time
+@s.Class_Date
+@using (Html.BeginForm())
+{
+    <table class="table">
+        <tr>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Status
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+
+            Class_Log log = item.Class_Log.Where(x => x.Schedule_Id == s.Schedule_Id && x.U_Id == item.U_Id).FirstOrDefault();
+            string status = log.Log_Status;
+
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.U_Last_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.U_First_Name)
+                </td>
+                <td>
+
+                    <select name="@item.U_Id">
+                        <option value="MISSED" @if (status == "MISSED") { @Html.Raw("selected") ; }>Not Signed In</option>
+                        <option value="ATTENDED" @if (status == "ATTENDED") { @Html.Raw("selected") ; }>Attended</option>
+                    </select>
+                </td>
+            </tr>
+        }
+
+        <tr>
+            <td>
+            </td>
+        </tr>
+    </table>
+    <button class="btn btn-default" type="submit">Submit</button>
+
+}
