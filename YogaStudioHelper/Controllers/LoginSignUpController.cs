@@ -23,6 +23,7 @@ namespace YogaStudioHelper.Controllers
             return View();
         }
 
+
         [HttpPost]
         public ActionResult LogInSignUp(FormCollection collection)
         {
@@ -32,7 +33,9 @@ namespace YogaStudioHelper.Controllers
 
             bool valid = db.LoginUser(email, pass);
 
-            if(valid)
+
+
+            if (valid)
             {
                 
                 Yoga_User u = db.getUserByEmail(email).Single();
@@ -40,6 +43,32 @@ namespace YogaStudioHelper.Controllers
 
                 int id = u.Roles_Id;
                 string roleName = db.getRoleName(id);
+                //#+Nta{-- 
+
+
+                if (id == 1 && u.Active == false || id == 2 && u.Active == false || id == 3 && u.Active == false)
+                {
+                    Session["Uid"] = u.U_Id;
+                    //redirect view to set new password. (replace temporary password)
+                    return RedirectToAction("NewPassword","LoginSignUp");
+                }
+
+
+                if(u.Active == true)
+                {
+                    if (id == 1 || id == 2 || id == 3 || id == 4)
+                    {
+                        Session["Auth"] = id;
+                    }
+                }
+                else
+                {
+                    Session["Auth"] = null;
+                }
+
+
+
+                /*
                 if (roleName.Equals("ADMINISTRATOR"))
                 {
                     Session["Auth"] = 1;
@@ -56,11 +85,11 @@ namespace YogaStudioHelper.Controllers
                 {
                     Session["Auth"] = 4;
                 }
-                else 
-                {
-                   Session["Auth"] = null;
-                }
-                
+                */
+
+
+
+
 
                 ViewBag.message = "Valid, Login";
                 
@@ -86,6 +115,45 @@ namespace YogaStudioHelper.Controllers
            
 
            
+        }
+
+        [HttpGet]
+        public ActionResult NewPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult NewPassword(FormCollection collection)
+        {
+            // SHould pass the user id in a safer way so that no one can modify the session id to change the password of someoneelse 
+            // hiddenfield instead of session Uid? 
+
+            int userId = Convert.ToInt32(Session["Uid"]);
+
+            var user = db.getUserById(userId); 
+
+            String password1 = collection["password1"].ToString();
+            String password2 = collection["password2"].ToString();
+
+            //Validate password enter equal 
+            if (!string.Equals(password1, password2))
+            {
+
+                TempData["Message"] = "<h5 style=\"color:red;\">Please make sure the two passwords are the same</h5>";
+                return View();
+            }
+
+            user.U_Password = encoder.Encode(password2);
+            user.Active = true;
+
+            db.UpdateUser(user);
+            TempData["Message"] = "Your password was successfully updated";
+
+
+            //return View();
+            return RedirectToAction("MessageView","Home");
+
         }
 
         public ActionResult LogOut()

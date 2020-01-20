@@ -5,12 +5,17 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
+using System.Web.Security;
+using Scrypt;
 
 namespace YogaStudioHelper.Controllers
 {
     public class ManageUsersController : Controller
     {
         DBMaster db = new DBMaster();
+        ScryptEncoder encoder = new ScryptEncoder();
+
+
         // GET: ManageUsers
 
         [HttpGet]
@@ -131,7 +136,19 @@ namespace YogaStudioHelper.Controllers
             y.U_Email = email;
             y.U_First_Name = fname;
             y.U_Last_Name = lname;
-            y.Active = true;
+
+            // will do false so that the user need to update the temporary password
+            y.Active = false;
+
+            //  Generate temporary password and send confirmation email 
+
+            String tempPassword = Membership.GeneratePassword(8, 2);
+            y.U_Password = encoder.Encode(tempPassword);
+
+            string token = Guid.NewGuid().ToString();
+            Util.EmailSender.sendSignUpConfirmationTempPassword(email, token, tempPassword);
+
+
 
             // If teacher 
             if (role == 2)

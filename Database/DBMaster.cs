@@ -147,7 +147,8 @@ namespace Database
                 bool isValidCustomer;
                 var u = myDb.Yoga_User.Where(x => x.U_Email == email).Single();
 
-                if(encoder.Compare(pass, u.U_Password) && u.Active == true)
+                // && u.Active == true
+                if (encoder.Compare(pass, u.U_Password))
                 {
                    isValidCustomer = true;
                 }
