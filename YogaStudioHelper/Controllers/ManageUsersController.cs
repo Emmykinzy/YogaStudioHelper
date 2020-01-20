@@ -4,12 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml.Linq;
+using System.Web.Security;
+using Scrypt;
 
 namespace YogaStudioHelper.Controllers
 {
     public class ManageUsersController : Controller
     {
         DBMaster db = new DBMaster();
+        ScryptEncoder encoder = new ScryptEncoder();
+
+
         // GET: ManageUsers
 
         [HttpGet]
@@ -121,6 +127,8 @@ namespace YogaStudioHelper.Controllers
             string email = collection["Email"];
             string fname = collection["FirstName"];
             string lname = collection["LastName"];
+            
+            
             Yoga_User y = new Yoga_User();
             //y.Roles_Id = db.getRoleId(role);
             y.Roles_Id = role;
@@ -128,7 +136,52 @@ namespace YogaStudioHelper.Controllers
             y.U_Email = email;
             y.U_First_Name = fname;
             y.U_Last_Name = lname;
-            y.Active = true;
+
+            // will do false so that the user need to update the temporary password
+            y.Active = false;
+
+            //  Generate temporary password and send confirmation email 
+
+            String tempPassword = Membership.GeneratePassword(8, 2);
+            y.U_Password = encoder.Encode(tempPassword);
+
+            string token = Guid.NewGuid().ToString();
+            Util.EmailSender.sendSignUpConfirmationTempPassword(email, token, tempPassword);
+
+
+
+            // If teacher 
+            if (role == 2)
+            {
+                // "N/A" Me
+                XDocument availabilities = new XDocument
+                (
+                new XElement("Root",
+                       new XElement("Sunday",
+                       new XElement("Start", "N/A"),
+                       new XElement("End", "N/A")),
+                   new XElement("Monday",
+                       new XElement("Start", "N/A"),
+                       new XElement("End", "N/A")),
+                   new XElement("Tuesday",
+                       new XElement("Start", "N/A"),
+                       new XElement("End", "N/A")),
+                   new XElement("Wednesday",
+                       new XElement("Start", "N/A"),
+                       new XElement("End", "N/A")),
+                   new XElement("Thursday",
+                       new XElement("Start", "N/A"),
+                       new XElement("End", "N/A")),
+                   new XElement("Friday",
+                       new XElement("Start", "N/A"),
+                       new XElement("End", "N/A")),
+                   new XElement("Saturday",
+                       new XElement("Start", "N/A"),
+                       new XElement("End", "N/A"))
+                ));
+
+                y.Availability = availabilities.ToString();
+            }
 
             db.CreateUser(y);
             return View();

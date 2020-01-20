@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "MessageView";
+
+    
+    var Message = "";
+    if (TempData["Message"] != null)
+    {
+        Message = TempData["Message"].ToString();
+    }
+    else
+    {
+        Message = "";
+    }
+}
+
+<h2>Message</h2>
+
+
+<p>@Message</p>
+
+@Html.ActionLink("HomePage", "Homepage");
+

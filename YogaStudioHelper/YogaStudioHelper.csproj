@@ -248,7 +248,8 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Report\SalesDates.cshtml" />
     <Content Include="Views\Report\Sales.cshtml" />
-    <Content Include="Views\Schedule\StudentSignIn.cshtml" />
+    <Content Include="Views\LoginSignUp\NewPassword.cshtml" />
+    <Content Include="Views\Home\MessageView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

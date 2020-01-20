@@ -97,6 +97,43 @@ namespace YogaStudioHelper.Util
         }
 
 
+        public static void sendSignUpConfirmationTempPassword(string email, string token, string tempPass)
+        {
+            string test = Guid.NewGuid().ToString();
+
+            SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+            //client.EnableSsl = false;
+
+            client.EnableSsl = true;
+
+            client.DeliveryMethod =
+                SmtpDeliveryMethod.Network;
+
+            client.UseDefaultCredentials = false;
+            //client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
+
+            client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
+
+
+
+            MailMessage msobj = new MailMessage();
+
+            msobj.To.Add(email);
+
+            msobj.From = new MailAddress("SamsaraYogaMontreal@gmail.com");
+            msobj.Subject = "Confirm Your Email Address";
+            msobj.IsBodyHtml = true;
+            msobj.Body = "<h1 style='color:#557ee6;'>Saṃsāra Yoga</h1>" +
+                         "<p>Before you can start purchasing passes and signing up to classes you need to confirm your email address and set a new password</p><br/>" +
+                         "<a href='https://localhost:44332/LoginSignUp/LoginSignUp'>Login here</a>"+
+                         "<br/><p>Your temporary password is "+tempPass;
+
+
+
+            client.Send(msobj);
+        }
+
+
 
         public static void sendPurchaseConfirmation(Yoga_User user, Pass_Log pl)
         {
