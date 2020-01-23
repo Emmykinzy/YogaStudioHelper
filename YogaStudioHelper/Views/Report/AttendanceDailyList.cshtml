@@ -1,0 +1,78 @@
+﻿@model IEnumerable<YogaStudioHelper.Models.AttendanceDaily>
+
+@{
+    ViewBag.Title = "AttendanceDailyList";
+
+    int totalAttended = 0;
+
+    int totalMissed = 0;
+}
+
+<h2>Attendance Daily Report</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.scheduleId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.className)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.startTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SignUp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.attended)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.missed)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+
+    totalAttended += item.attended;
+    totalMissed += item.missed;
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.scheduleId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.className)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.startTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SignUp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.attended)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.missed)
+        </td>
+        <td>
+            <!--
+            Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            -->
+        </td>
+    </tr>
+}
+    <tr>
+
+    </tr>
+    <tr>
+        <td>Total Attended: @totalAttended</td><td>Total Missed: @totalMissed</td>
+    </tr>
+
+</table>

@@ -30,7 +30,9 @@ namespace Database
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MMMM dd, yyyy}")]
 
         public DateTime Class_Date { get; set; }
-        public Nullable<int> Signed_Up { get; set; }
+        //public Nullable<int> Signed_Up { get; set; }
+        public int Signed_Up { get; set; }
+
         public Nullable<int> Group_Id { get; set; }
         public string Schedule_Status { get; set; }
     

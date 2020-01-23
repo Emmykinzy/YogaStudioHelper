@@ -9,6 +9,8 @@ using IdentityModel.Client;
 using Scrypt;
 using System.Xml.Linq;
 using System.Diagnostics;
+using YogaStudioHelper.Models;
+//using YogaStudioHelper.Models;
 
 namespace Database
 {
@@ -535,7 +537,7 @@ namespace Database
         }
         public IEnumerable<Promotion> getPromotions()
         {
-            return myDb.Promotions.ToList();
+            return myDb.Promotions.OrderBy(x => x.Promo_End).ToList();
         }
 
         
@@ -1004,6 +1006,50 @@ namespace Database
 
         }
 
+
+        //
+
+        //Attendance 
+        public IEnumerable<Schedule> GetAttendanceDailySchedule(DateTime d1)
+        {
+            //IEnumerable<Schedule> 
+            return myDb.Schedules.Where(x => x.Class_Date == d1);
+        }
+
+        //Attendance 
+        public List<AttendanceDaily> GetAttendanceDailyReport(DateTime d1)
+        {
+            List<AttendanceDaily> attendanceList = new List<AttendanceDaily>(); 
+
+            //IEnumerable<Schedule> 
+            
+            List<Schedule> schedList = myDb.Schedules.Where(x => x.Class_Date == d1).ToList();
+
+            foreach(var sched in schedList)
+            {
+                // loop classes 
+                var attended = myDb.Class_Log.Count(x => x.Schedule_Id == sched.Schedule_Id && x.Log_Status == "ATTENDED");
+
+                var missed = myDb.Class_Log.Count(x => x.Schedule_Id == sched.Schedule_Id && x.Log_Status == "MISSED");
+
+                AttendanceDaily ad = new AttendanceDaily();
+                ad.scheduleId = sched.Schedule_Id;
+                ad.startTime = sched.Start_Time;
+                ad.SignUp = sched.Signed_Up;
+                //
+                ad.attended = attended;
+                ad.missed = missed;
+
+                var classe = getClass(sched.Class_Id);
+                ad.className = classe.Class_Name;
+                // class name 
+
+                attendanceList.Add(ad);
+            }
+
+
+            return attendanceList;
+        }
 
 
     }

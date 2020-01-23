@@ -4,9 +4,11 @@
     ViewBag.Title = "PromotionList";
 
     String message = "";
-    if (TempData["Message"] != null) { 
+    if (TempData["Message"] != null) {
         message = TempData["Message"].ToString();
     }
+
+    int result = 0;
 }
 
 <h2>PromotionList</h2>
@@ -39,7 +41,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Promotion_Id)
@@ -57,7 +60,34 @@
             @Html.DisplayFor(modelItem => item.Num_Classes)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Promo_End)
+          @{
+              // check if end date expire
+              DateTime test = DateTime.Today;
+              DateTime test2 = item.Promo_End;
+              //                result = DateTime.CompareTo(item.Promo_End, DateTime.Today);
+
+              //result = item.Promo_End.CompareTo(DateTime.Today);
+
+              result = test2.CompareTo(test);
+
+
+              if (result > 0)
+              {
+
+                    <font color="red">@item.Promo_End</font>
+
+                                 // result = 0;
+
+              }
+              else
+              {
+                    @Html.DisplayFor(modelItem => item.Promo_End)
+
+                  
+
+              }
+            }
+
         </td>
         <td>
             @Html.ActionLink("Edit", "EditPromotion", new {  id=item.Promotion_Id  }) |

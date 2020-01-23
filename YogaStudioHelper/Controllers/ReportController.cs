@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using YogaStudioHelper.Models;
 using YogaStudioHelper.ViewModels;
 
 namespace YogaStudioHelper.Controllers
@@ -78,13 +79,13 @@ namespace YogaStudioHelper.Controllers
 
 
         [HttpGet]
-        public ActionResult Attendence()
+        public ActionResult Attendance()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Attendence(FormCollection collection)
+        public ActionResult Attendance(FormCollection collection)
         {
 
             return View();
@@ -113,7 +114,7 @@ namespace YogaStudioHelper.Controllers
             DateTime date2 = date.AddMonths(1);
 
             //get list with this time constraint 
-            IEnumerable<Pass_Log> saleList = db.GetSaleReport(date, date2);
+            IEnumerable<Database.Pass_Log> saleList = db.GetSaleReport(date, date2);
             TempData["saleList"] = saleList;
 
             // redirect view with list of passlog 
@@ -139,7 +140,7 @@ namespace YogaStudioHelper.Controllers
 
 
             //get list with this time constraint 
-            IEnumerable<Pass_Log> saleList = db.GetSaleReport(startDate, endDate);
+            IEnumerable<Database.Pass_Log> saleList = db.GetSaleReport(startDate, endDate);
             TempData["saleList"] = saleList;
 
             // redirect view with list of passlog 
@@ -151,9 +152,50 @@ namespace YogaStudioHelper.Controllers
         [HttpGet]
         public ActionResult SaleList()
         {
-            IEnumerable<Pass_Log> saleList = TempData["saleList"] as IEnumerable<Pass_Log>; 
+            IEnumerable<Database.Pass_Log> saleList = TempData["saleList"] as IEnumerable<Database.Pass_Log>; 
             return View(saleList);
         }
 
+
+        //
+
+        [HttpGet]
+        public ActionResult AttendanceDaily()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult AttendanceDaily(FormCollection collection)
+        {
+            // get the date in form collection 
+            DateTime startDate = DateTime.Parse(collection["startDate"]);
+
+            //IEnumerable<Schedule> scheduleList = db.GetAttendanceDailyReport(startDate);
+            List<AttendanceDaily> list = db.GetAttendanceDailyReport(startDate);
+
+            TempData["AttendanceDaily"] = list;
+            //get list with this time constraint 
+            //IEnumerable<Pass_Log> saleList = db.GetSaleReport(startDate, endDate);
+            //TempData["saleList"] = saleList;
+
+            // redirect view with list of passlog 
+            return RedirectToAction("AttendanceDailyList");
+        }
+
+        [HttpGet]
+        public ActionResult AttendanceDailyList()
+        {
+            List<AttendanceDaily> list = TempData["AttendanceDaily"] as List<AttendanceDaily>;
+            return View(list);
+        }
+
+
+        [HttpGet]
+        public ActionResult AttendanceDates()
+        {
+            return View();
+        }
     }
 }
