@@ -254,6 +254,7 @@
     <Content Include="Views\Report\AttendanceDaily.cshtml" />
     <Content Include="Views\Report\AttendanceDailyList.cshtml" />
     <Content Include="Views\Report\Attendance.cshtml" />
+    <Content Include="Views\Report\AttendanceDatesList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

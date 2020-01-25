@@ -10,6 +10,8 @@ using Scrypt;
 using System.Xml.Linq;
 using System.Diagnostics;
 using YogaStudioHelper.Models;
+using Database.ModelsDB;
+using System.Collections;
 //using YogaStudioHelper.Models;
 
 namespace Database
@@ -1016,16 +1018,23 @@ namespace Database
             return myDb.Schedules.Where(x => x.Class_Date == d1);
         }
 
+        public IEnumerable<Schedule> GetAttendanceDatesSchedule(DateTime d1, DateTime d2)
+        {
+            //IEnumerable<Schedule> 
+            return myDb.Schedules.Where(x => x.Class_Date == d1);
+        }
+
         //Attendance 
+
         public List<AttendanceDaily> GetAttendanceDailyReport(DateTime d1)
         {
-            List<AttendanceDaily> attendanceList = new List<AttendanceDaily>(); 
+            List<AttendanceDaily> attendanceList = new List<AttendanceDaily>();
 
             //IEnumerable<Schedule> 
-            
+
             List<Schedule> schedList = myDb.Schedules.Where(x => x.Class_Date == d1).ToList();
 
-            foreach(var sched in schedList)
+            foreach (var sched in schedList)
             {
                 // loop classes 
                 var attended = myDb.Class_Log.Count(x => x.Schedule_Id == sched.Schedule_Id && x.Log_Status == "ATTENDED");
@@ -1050,6 +1059,225 @@ namespace Database
 
             return attendanceList;
         }
+
+
+        public List<AttendanceDates> GetAttendanceDatesReport(DateTime d1, DateTime d2)
+        {
+            List<AttendanceDates> attendanceList = new List<AttendanceDates>();
+
+
+            List<Schedule> schedList = myDb.Schedules.Where(x => x.Class_Date >= d1 && x.Class_Date <= d2).ToList();
+
+            List<Class> classList = myDb.Classes.ToList();
+
+
+            Class classt = new Class();
+
+            ArrayList classArray = new ArrayList();
+
+
+            foreach (var classe in classList)
+            {
+
+                AttendanceDates ad = new AttendanceDates();
+
+                ad.classId = classe.Class_Id;
+                ad.className = classe.Class_Name;
+                ad.SignUp = 0;
+                ad.attended = 0;
+                ad.missed = 0;
+                //AttendanceDates ad = new AttendanceDates();
+
+                attendanceList.Add(ad);
+
+            }
+
+
+            foreach (var att in attendanceList)
+            {
+
+                foreach (var sched in schedList)
+                {
+                    // check if classes
+                    if (att.classId == sched.Class_Id)
+                    {
+
+
+                        att.SignUp += sched.Signed_Up;
+
+                        // loop class log 
+                        int attended = myDb.Class_Log.Count(x => x.Schedule_Id == sched.Schedule_Id && x.Log_Status == "ATTENDED");
+
+                        int missed = myDb.Class_Log.Count(x => x.Schedule_Id == sched.Schedule_Id && x.Log_Status == "MISSED");
+
+                        att.attended += attended;
+                        att.missed += missed;
+
+                    }
+
+                }
+            }
+
+            return attendanceList;
+
+        }
+
+
+            /*
+
+            for (int i = 0; i < classArray.Count; i++)
+            {
+                foreach (var sched in schedList)
+                {
+
+
+
+                }
+
+
+            }
+
+
+                ad = new AttendanceDates();
+                ad.SignUp = 0;
+                ad.attended = 0;
+                ad.missed = 0;
+
+                classt = classe;
+
+
+                foreach (var sched in schedList)
+                {
+                    classt.Class_Name = " ";
+                    // Check each classes in the sched list 
+
+                    if(sched.Class_Id == classt.Class_Id)
+                    {
+                        ad.missed = 0;
+
+                        ad.SignUp += sched.Signed_Up;
+
+
+
+                    }
+
+                    // loop classes 
+                    var attended = myDb.Class_Log.Count(x => x.Schedule_Id == sched.Schedule_Id && x.Log_Status == "ATTENDED");
+
+                    var missed = myDb.Class_Log.Count(x => x.Schedule_Id == sched.Schedule_Id && x.Log_Status == "MISSED");
+
+                    AttendanceDaily ad = new AttendanceDaily();
+                    ad.scheduleId = sched.Schedule_Id;
+                    ad.startTime = sched.Start_Time;
+                    ad.SignUp = sched.Signed_Up;
+                    //
+                    ad.attended = attended;
+                    ad.missed = missed;
+
+                    var classe2 = getClass(sched.Class_Id);
+                    ad.className = classe2.Class_Name;
+                    // class name 
+
+                    attendanceList.Add(ad);
+                }
+
+            }
+
+            
+
+
+            return attendanceList;
+        }
+
+            */
+
+
+
+        /*
+         * 
+         * 
+         * 
+         
+    public List<AttendanceDaily> GetAttendanceDatesReport(DateTime d1, DateTime d2)
+        {
+            List<AttendanceDates> attendanceList = new List<AttendanceDates>(); 
+
+            //IEnumerable<Schedule> 
+            
+            List<Schedule> schedList = myDb.Schedules.Where(x => x.Class_Date >= d1 && x.Class_Date <= d2).ToList();
+
+            List<Class> classList = myDb.Classes.ToList();
+
+           
+
+            Class classt = new Class();
+            AttendanceDates ad = new AttendanceDates();
+
+            ad.SignUp = 0;
+            ad.attended = 0;
+            ad.missed = 0;
+
+            ArrayList classArray = new ArrayList(); 
+
+
+            foreach (var classe in classList)
+            {
+                //AttendanceDates ad = new AttendanceDates();
+
+                classArray.Add(classe.Class_Id); 
+
+
+                ad = new AttendanceDates();
+                ad.SignUp = 0;
+                ad.attended = 0;
+                ad.missed = 0;
+
+                classt = classe;
+
+
+                foreach (var sched in schedList)
+                {
+                    classt.Class_Name = " ";
+                    // Check each classes in the sched list 
+
+                    if(sched.Class_Id == classt.Class_Id)
+                    {
+                        ad.missed = 0;
+
+                        ad.SignUp += sched.Signed_Up;
+
+
+
+                    }
+
+                    // loop classes 
+                    var attended = myDb.Class_Log.Count(x => x.Schedule_Id == sched.Schedule_Id && x.Log_Status == "ATTENDED");
+
+                    var missed = myDb.Class_Log.Count(x => x.Schedule_Id == sched.Schedule_Id && x.Log_Status == "MISSED");
+
+                    AttendanceDaily ad = new AttendanceDaily();
+                    ad.scheduleId = sched.Schedule_Id;
+                    ad.startTime = sched.Start_Time;
+                    ad.SignUp = sched.Signed_Up;
+                    //
+                    ad.attended = attended;
+                    ad.missed = missed;
+
+                    var classe2 = getClass(sched.Class_Id);
+                    ad.className = classe2.Class_Name;
+                    // class name 
+
+                    attendanceList.Add(ad);
+                }
+
+            }
+
+            
+
+
+            return attendanceList;
+        }
+        */
 
 
     }

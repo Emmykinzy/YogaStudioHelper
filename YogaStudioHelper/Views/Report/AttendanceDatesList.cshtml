@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Database.ModelsDB.AttendanceDates>
+
+@{
+    ViewBag.Title = "AttendanceDatesList";
+
+
+    int signUp = 0; 
+
+    int totalAttended = 0;
+
+    int totalMissed = 0;
+}
+
+<h2>AttendanceDatesList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.classId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.className)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SignUp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.attended)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.missed)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        signUp += item.SignUp;
+        totalAttended += item.attended;
+        totalMissed += item.missed;
+
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.classId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.className)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SignUp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.attended)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.missed)
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+    }
+
+    <tr>
+        <td><br /></td>
+    </tr>
+    <tr>
+        <td>Total SignUp: @signUp</td>
+        <td>Total Attended: @totalAttended</td>
+        <td>Total Missed: @totalMissed</td>
+    </tr>
+
+
+</table>

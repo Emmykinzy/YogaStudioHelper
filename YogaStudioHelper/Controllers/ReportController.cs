@@ -1,4 +1,5 @@
 ﻿using Database;
+using Database.ModelsDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -197,5 +198,32 @@ namespace YogaStudioHelper.Controllers
         {
             return View();
         }
+
+
+        [HttpPost]
+        public ActionResult AttendanceDates(FormCollection collection)
+        {
+            // get the date in form collection 
+
+            DateTime startDate = DateTime.Parse(collection["startDate"]);
+
+            DateTime endDate = DateTime.Parse(collection["endDate"]);
+
+
+            //get list with this time constraint 
+            List<AttendanceDates> list = db.GetAttendanceDatesReport(startDate, endDate);
+            TempData["AttendanceDates"] = list;
+
+            // redirect view with list of passlog 
+            return RedirectToAction("AttendanceDatesList");
+        }
+
+        [HttpGet]
+        public ActionResult AttendanceDatesList()
+        {
+            List<AttendanceDates> list = TempData["AttendanceDates"] as List<AttendanceDates>;
+            return View(list);
+        }
+
     }
 }
