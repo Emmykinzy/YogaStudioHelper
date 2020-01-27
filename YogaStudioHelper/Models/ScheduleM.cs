@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace YogaStudioHelper.Models
 {
-    public class Schedule
+    public class ScheduleM
     { 
         [Key]
         public int schedule_id { get; set; }

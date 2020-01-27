@@ -4,9 +4,12 @@
     ViewBag.Title = "ScheduleList";
 }
 
-<h2>ScheduleList</h2>
+<h2>Schedules</h2>
 
 <p>
+    @Html.ActionLink("Find Schedule", "FindSchedule", "ManageStudio")
+    <br />
+
     @Html.ActionLink("Create New", "CreateSchedule")
 </p>
 <table class="table">

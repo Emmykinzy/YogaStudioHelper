@@ -1,27 +1,15 @@
 ﻿
-@model YogaStudioHelper.ViewModels.HoursWorkedViewModel
-
 @{
-    ViewBag.Title = "HoursWorked";
+    ViewBag.Title = "Attendence";
 }
-
 
 @using (Html.BeginForm())
 {
     <table class="inputTable">
         <tr>
             <td></td>
-            <td style="text-align:center"><h2>Hours Work Report</h2></td>
+            <td style="text-align:center"><h2>Attendance By Dates Report</h2></td>
         </tr>
-
-        <tr>
-            <th>Teacher:</th>
-
-            <td>
-                @Html.DropDownListFor(m => m.Teachers, new SelectList(Model.Teachers, "U_Id", "U_Last_Name"), new { @id = "classList" })
-            </td>
-        </tr>
-
         <tr>
             <th>Start Date:</th>
             <td style="text-align:center">

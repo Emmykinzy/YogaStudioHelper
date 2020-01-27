@@ -4,9 +4,12 @@
     ViewBag.Title = "ClassPassList2";
 }
 
-<h2>ClassPassList2</h2>
+<h2>Class Passes</h2>
 
 <p>
+    @Html.ActionLink("Find Class Pass", "FindClassPass", "ManageStudio")
+    <br />
+
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="classes">
