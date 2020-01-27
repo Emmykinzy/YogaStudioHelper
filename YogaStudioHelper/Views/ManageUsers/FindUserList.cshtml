@@ -6,7 +6,7 @@
     TempData["List"] = Model;
 }
 
-<h2>FindUserList</h2>
+<h2>Users</h2>
 
 <p>
     @Html.ActionLink("Create New", "CreateUser")
@@ -50,9 +50,9 @@
                 @item.Active
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Archive", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Edit", "EditUser", new { id = item.U_Id }) |
+                <!--Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |-->
+                @Html.ActionLink("Archive", "ArchiveUser", new { id = item.U_Id })
             </td>
         </tr>
     }

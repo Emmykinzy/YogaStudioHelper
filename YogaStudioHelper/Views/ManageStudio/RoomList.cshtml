@@ -4,9 +4,11 @@
     ViewBag.Title = "Room List";
 }
 <br />
-<h2>Room List</h2>
+<h2>Rooms</h2>
 <br />
 <p>
+    @Html.ActionLink("Find Room", "FindRoom", "ManageStudio")
+    <br />
     @Html.ActionLink("Create New", "CreateRoom")
 </p>
 <table class="classes">
