@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using Database;
+using YogaStudioHelper.Util;
 using YogaStudioHelper.ViewModels;
 
 namespace YogaStudioHelper.Controllers
@@ -744,18 +745,13 @@ namespace YogaStudioHelper.Controllers
             timePicker.Add(classTime);
 
 
-            var status = collection["status"]; 
-
-
             schedule.Teacher_Id = selectedTeacher;
             schedule.Class_Id = selectedCLass;
             schedule.Room_Id = selectedRoom;
             schedule.Class_Date = classDate;
-            schedule.Schedule_Status = status;
+            schedule.Schedule_Status = "ACTIVE";
             schedule.Start_Time = timePicker;
-
-
-
+                       
 
             db.CreateSchedule(schedule);
 
@@ -767,7 +763,7 @@ namespace YogaStudioHelper.Controllers
         {
             var schedule = db.getScheduleById(id);
             ViewBag.EditSchedule = schedule;
-
+            ViewBag.time = schedule.Start_Time.Hours + ":" + schedule.Start_Time.Minutes;
             // set dropdown model
             var classes = db.getClassList();
             var teachers = db.getTeacherList();
@@ -784,9 +780,6 @@ namespace YogaStudioHelper.Controllers
                 SelectedRoomId = schedule.Room_Id
             };
 
-
-
-
             return View(scheduleViewModel); 
 
         }
@@ -794,10 +787,23 @@ namespace YogaStudioHelper.Controllers
         [HttpPost]
         public ActionResult EditSchedule(FormCollection collection)
         {
+            var classes = db.getClassList();
+            var teachers = db.getTeacherList();
+            var rooms = db.getRoomList();
+
+            var scheduleViewModel = new ScheduleViewModel
+            {
+                Classes = classes,
+                Teachers = teachers,
+                Rooms = rooms
+
+            };
+
             int id = (int)TempData["EditScheduleId"];
 
-
             var schedule = db.getScheduleById(id);
+
+            ViewBag.EditSchedule = schedule;
 
             // getg 
 
@@ -807,27 +813,45 @@ namespace YogaStudioHelper.Controllers
             var selectedRoom = Convert.ToInt32(collection["SelectedRoomId"]);
 
             DateTime classDate = Convert.ToDateTime(collection["classDate"]);
-            TimeSpan timePicker = classDate.TimeOfDay;
+            TimeSpan timePicker = TimeSpan.Parse(collection["picker"]);
 
             var status = collection["status"];
 
 
-
+            ViewBag.tid = selectedTeacher;
+            ViewBag.cid = selectedCLass;
+            ViewBag.rid = selectedRoom;
 
             XDocument xd = db.getAvailability(selectedTeacher);
             string dayOftheWeek = classDate.DayOfWeek.ToString();
-            TimeSpan sTime = TimeSpan.Parse(xd.Root.Element(dayOftheWeek).Element("Start").Value);
-            TimeSpan eTime = TimeSpan.Parse(xd.Root.Element(dayOftheWeek).Element("End").Value);
-            Class c = db.getClass(selectedCLass);
-            TimeSpan classEnd = sTime.Add(c.Class_Length);
+            TimeSpan sTime;
+            TimeSpan eTime;
 
             Yoga_User u = db.getUserById(selectedTeacher);
+
+            try
+            {
+                sTime = TimeSpan.Parse(xd.Root.Element(dayOftheWeek).Element("Start").Value);
+                eTime = TimeSpan.Parse(xd.Root.Element(dayOftheWeek).Element("End").Value);
+            }
+            catch
+            {
+                ViewBag.message = "<p><span style=\"color:red\">Availability Error: </span>" + u.U_First_Name + " " + u.U_Last_Name + " is unavailable " + dayOftheWeek.ToLower() + "s.";
+                return View(scheduleViewModel);
+            }
+
+            Class c = db.getClass(selectedCLass);
+            TimeSpan classEnd = timePicker.Add(c.Class_Length);
+
+            ViewBag.time = timePicker.Hours + ":" + timePicker.Minutes;
+            ViewBag.date = classDate.ToString("yyyy-MM-dd");
+
             // put db update method 
             if (sTime > timePicker)
             {
 
                 ViewBag.message = "Availability Error: " + u.U_First_Name + " " + u.U_Last_Name + " starts " + dayOftheWeek + " at " + sTime.Hours + ":" + sTime.Minutes.ToString("00");
-                return View();
+                return View(scheduleViewModel);
 
             }
 
@@ -835,7 +859,7 @@ namespace YogaStudioHelper.Controllers
             {
                 ViewBag.message = "<p><span style=\"color:red\">Availability Error: </span>" + u.U_First_Name + " " + u.U_Last_Name + " ends " + dayOftheWeek + " at " + eTime.Hours + ":" + eTime.Minutes.ToString("00") + "<br/>" +
                                   "Class End: " + classEnd.Hours + ":" + classEnd.Minutes.ToString("00") + "</p><br/>";
-                return View();
+                return View(scheduleViewModel);
             }
 
             IEnumerable<Schedule> sList = db.getScheduleByRoomAndDay(selectedRoom, classDate);
@@ -844,10 +868,10 @@ namespace YogaStudioHelper.Controllers
             {
                 String date = s.Class_Date.ToString("dd/MM/yyyy");
                 TimeSpan sEnd = s.Start_Time.Add(s.Class.Class_Length);
-                if (timePicker >= s.Start_Time && timePicker < sEnd || classEnd > s.Start_Time && classEnd <= sEnd)
+                if (timePicker >= s.Start_Time && timePicker < sEnd && s.Schedule_Id != schedule.Schedule_Id|| classEnd > s.Start_Time && classEnd <= sEnd && s.Schedule_Id != schedule.Schedule_Id)
                 {
                     ViewBag.message = "<p><span style=\"color:red\">Room Error: </span>" + s.Room.Room_Name + " is unavailable from " + s.Start_Time.Hours + ":" + s.Start_Time.Minutes.ToString("00") + " until " + sEnd.Hours + ":" + sEnd.Minutes.ToString("00") + " on " + date + "</p>";
-                    return View();
+                    return View(scheduleViewModel);
                 }
 
             }
@@ -859,11 +883,25 @@ namespace YogaStudioHelper.Controllers
             {
                 String date = s.Class_Date.ToString("dd/MM/yyyy");
                 TimeSpan sEnd = s.Start_Time.Add(s.Class.Class_Length);
-                if (timePicker >= s.Start_Time && timePicker < sEnd || classEnd > s.Start_Time && classEnd <= sEnd)
+                if (timePicker >= s.Start_Time && timePicker < sEnd && s.Schedule_Id != schedule.Schedule_Id || classEnd > s.Start_Time && classEnd <= sEnd && s.Schedule_Id != schedule.Schedule_Id)
                 {
                     ViewBag.message = "<p><span style=\"color:red\">Availability Error: </span>" + u.U_First_Name + " " + u.U_Last_Name + " is already scheduleed from " + s.Start_Time.Hours + ":" + s.Start_Time.Minutes.ToString("00") + " until " + sEnd.Hours + ":" + sEnd.Minutes.ToString("00") + " on " + date + "</p>";
-                    return View();
+                    return View(scheduleViewModel);
                 }
+            }
+
+            if(schedule.Schedule_Status != status && status == "CANCELLED" && schedule.Class_Date.Date > DateTime.Now.Date)
+            {
+                List<Yoga_User> list = db.getScheduleSignUpList(schedule.Schedule_Id);
+                db.CancelledScheduleRefund(id);
+                EmailSender.ClassCancelledEmail(list, schedule);
+            }
+
+            if (schedule.Schedule_Status != status && status == "ACTIVE" && schedule.Class_Date.Date > DateTime.Now.Date)
+            {
+                List<Yoga_User> list = db.getScheduleSignUpList(schedule.Schedule_Id);
+                db.RestoreScheduleRemoveUsers(id);
+                EmailSender.ClassRestoreEmail(list, schedule);
             }
 
             schedule.Teacher_Id = selectedTeacher;
@@ -875,16 +913,32 @@ namespace YogaStudioHelper.Controllers
             db.UpdateSchedule(schedule); 
 
 
+
             return RedirectToAction("ScheduleList");
         }
 
-        public ActionResult ArchiveSchedule(int id)
+        public ActionResult CancelSchedule(int id)
         {
-            db.DeleteSchedule(id);
+            Schedule schedule = db.getScheduleById(id);
+            db.CancelSchedule(id);
+            db.CancelledScheduleRefund(id);
+            List<Yoga_User> list = db.getScheduleSignUpList(schedule.Schedule_Id);
+            EmailSender.ClassCancelledEmail(list, schedule);
 
 
             return RedirectToAction("ScheduleList");
 
+        }
+
+        public ActionResult RestoreSchedule(int id)
+        {
+            Schedule schedule = db.getScheduleById(id);
+            List<Yoga_User> list = db.getScheduleSignUpList(schedule.Schedule_Id);
+            db.RestoreSchedule(id);
+            db.RestoreScheduleRemoveUsers(id);
+            EmailSender.ClassRestoreEmail(list, schedule);
+
+            return RedirectToAction("ScheduleList");
         }
     }
 }

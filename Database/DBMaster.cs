@@ -689,6 +689,11 @@ namespace Database
             return myDb.Class_Log.ToList();
         }
 
+        public Class_Log GetClass_LogsByUidAndSid(int uid, int sid)
+        {
+            Class_Log cl = myDb.Class_Log.Where(x => x.U_Id == uid && x.Schedule_Id == sid).FirstOrDefault();
+            return cl;
+        }
         public int getSignedUp(int scheduleId)
         {
             IEnumerable<Class_Log> cl = myDb.Class_Log.Where(x => x.Schedule_Id == scheduleId);
@@ -821,6 +826,18 @@ namespace Database
             return sList;
         }
 
+        public bool isScheduleActive(int id)
+        {
+            Schedule schedule = myDb.Schedules.Where(x => x.Schedule_Id == id).FirstOrDefault();
+            if(schedule.Schedule_Status == "ACTIVE")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public IEnumerable<Schedule> getScheduleByTeacherAndDay(int uid, DateTime day)
         {
             IEnumerable<Schedule> sList = (from schedule in myDb.Schedules
@@ -918,6 +935,54 @@ namespace Database
 
             myDb.SaveChanges();
 
+        }
+
+        public void RestoreSchedule(int id)
+        {
+            Schedule schedule = myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
+
+            schedule.Schedule_Status = "ACTIVE";
+            //or.R = false;
+
+            myDb.SaveChanges();
+
+        }
+
+        public void CancelSchedule(int id)
+        {
+            Schedule schedule = myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
+
+            schedule.Schedule_Status = "CANCELLED";
+            //or.R = false;
+
+            myDb.SaveChanges();
+
+        }
+
+        public void CancelledScheduleRefund(int id)
+        {
+            Schedule schedule = myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
+            List<Yoga_User> list = getScheduleSignUpList(id);
+            foreach(Yoga_User u in list)
+            {
+                u.U_Tokens++;
+                Class_Log cl = GetClass_LogsByUidAndSid(u.U_Id, id);
+                cl.Log_Status = "CANCELLED";
+            }
+
+            myDb.SaveChanges();
+        }
+
+        public void RestoreScheduleRemoveUsers(int id)
+        {
+            Schedule schedule = myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
+            List<Yoga_User> list = getScheduleSignUpList(id);
+            foreach (Yoga_User u in list)
+            {
+                Class_Log cl = GetClass_LogsByUidAndSid(u.U_Id, id);
+                myDb.Class_Log.Remove(cl);
+            }
+            myDb.SaveChanges();
         }
 
         public List<Yoga_User> getScheduleSignUpList(int scheduleId)
