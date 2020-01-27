@@ -73,7 +73,7 @@ namespace Database
                 }
 
                 //Update User Token 
-                AddTokens(userId, token);
+                
 
                 // price 
                 if (p.Discount == 0)
@@ -96,6 +96,7 @@ namespace Database
                 pass_Log.Purchase_Price = decimal.Round(pass.Pass_Price*(decimal)1.15, 2);
             }
 
+            AddTokens(userId, token);
             // date 
             DateTime date = DateTime.Now;
             pass_Log.Date_Purchased = date;
@@ -813,6 +814,14 @@ namespace Database
             IEnumerable<Schedule> sList = (from schedule in myDb.Schedules
                      where schedule.Class_Date == day && schedule.Room_Id == roomId
                      select schedule);
+            return sList;
+        }
+
+        public IEnumerable<Schedule> getScheduleByTeacherAndDay(int uid, DateTime day)
+        {
+            IEnumerable<Schedule> sList = (from schedule in myDb.Schedules
+                                           where schedule.Class_Date == day && schedule.Teacher_Id == uid
+                                           select schedule);
             return sList;
         }
 

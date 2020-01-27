@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "FindUser";
+}
+
+<br />
+<div class="centerDiv">
+
+    @using (Html.BeginForm())
+    {
+        <table class="inputTable">
+            <tr>
+                <td></td>
+                <td style="text-align:center"><h2>Find User</h2></td>
+            </tr>
+            <tr>
+                <th>Email:</th>
+                <td>@Html.TextBox("Email", null, new { @class = "inputs" })</td>
+            </tr>
+            <tr></tr>
+            <tr>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Search</button></td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td></td>
+                <td style="text-align:center"><a href="/ManageUsers/FindUserAdvanced">Advanced Search</a></td>
+            </tr>
+        </table>
+    }
+
+
+
+</div>

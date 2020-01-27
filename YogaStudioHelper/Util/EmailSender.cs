@@ -167,7 +167,7 @@ namespace YogaStudioHelper.Util
 
 
                 msobj.Body = "<h1 style='color:#557ee6;'>Saṃsāra Yoga</h1>" +
-                             "<p>Thank you for your recent digital purchase from Samsara Yoga. Details of this transaction are below:</p><br/>" +
+                             "<p>Thank you for your recent purchase from Samsara Yoga. Details of this transaction are below:</p><br/>" +
                              "Transaction ID: " + pl.Invoice_Number + "<br/>" +
                              "Transaction Date: " + pl.Date_Purchased + "<br/><br/>" +
                              "Purchased Item: " + pass.Pass_Name + " Packet<br/><br/>" +

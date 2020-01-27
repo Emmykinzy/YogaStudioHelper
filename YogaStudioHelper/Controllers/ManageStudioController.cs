@@ -657,26 +657,46 @@ namespace YogaStudioHelper.Controllers
             Schedule schedule = new Schedule(); 
 
 
-            var selectedTeacher = Convert.ToInt32(collection["Teachers"]);
-            var selectedCLass = Convert.ToInt32(collection["Classes"]);
-            var selectedRoom = Convert.ToInt32(collection["Rooms"]);
+            var selectedTeacher = Convert.ToInt32(collection["SelectedTeacherId"]);
+            var selectedCLass = Convert.ToInt32(collection["SelectedClassId"]);
+            var selectedRoom = Convert.ToInt32(collection["SelectedRoomId"]);
+
+            ViewBag.tid = selectedTeacher;
+            ViewBag.cid = selectedCLass;
+            ViewBag.rid = selectedRoom;
 
             DateTime classDate = Convert.ToDateTime(collection["classDate"]);
 
+            ViewBag.date = classDate.ToString("yyyy-MM-dd");
             TimeSpan timePicker = TimeSpan.Parse(collection["picker"]);
+
+            ViewBag.time = timePicker.Hours + ":" + timePicker.Minutes;
             XDocument xd = db.getAvailability(selectedTeacher);
             string dayOftheWeek = classDate.DayOfWeek.ToString();
-            TimeSpan sTime = TimeSpan.Parse(xd.Root.Element(dayOftheWeek).Element("Start").Value);
-            TimeSpan eTime = TimeSpan.Parse(xd.Root.Element(dayOftheWeek).Element("End").Value);
+            TimeSpan sTime;
+            TimeSpan eTime;
+
+            Yoga_User u = db.getUserById(selectedTeacher);
+
+            try
+            {
+                 sTime = TimeSpan.Parse(xd.Root.Element(dayOftheWeek).Element("Start").Value);
+                 eTime = TimeSpan.Parse(xd.Root.Element(dayOftheWeek).Element("End").Value);
+            }
+            catch
+            {
+                ViewBag.message = "<p><span style=\"color:red\">Availability Error: </span>" + u.U_First_Name + " " + u.U_Last_Name + " is unavailable " + dayOftheWeek.ToLower()+".";
+                return View(scheduleViewModel);
+            }
             Class c = db.getClass(selectedCLass);
             TimeSpan classEnd = sTime.Add(c.Class_Length);
 
-            Yoga_User u = db.getUserById(selectedTeacher);
+            
 
             if (sTime > timePicker)
             {
                 
-                ViewBag.message = "Availability Error: "+u.U_First_Name+" "+u.U_Last_Name+" starts "+dayOftheWeek+" at "+sTime.Hours+":"+sTime.Minutes.ToString("00");
+                ViewBag.message = "<p><span style=\"color:red\">Availability Error: </span>" + u.U_First_Name+" "+u.U_Last_Name+" starts "+dayOftheWeek+" at "+sTime.Hours+":"+sTime.Minutes.ToString("00");
                 return View(scheduleViewModel);
                 
             }
@@ -699,7 +719,21 @@ namespace YogaStudioHelper.Controllers
                     ViewBag.message = "<p><span style=\"color:red\">Room Error: </span>" + s.Room.Room_Name + " is unavailable from " + s.Start_Time.Hours + ":" + s.Start_Time.Minutes.ToString("00") + " until " + sEnd.Hours + ":" + sEnd.Minutes.ToString("00") + " on " +date+"</p>";
                     return View(scheduleViewModel);
                 }
+                
 
+            }
+
+            IEnumerable<Schedule> sListbyTeacher = db.getScheduleByTeacherAndDay(selectedTeacher, classDate);
+
+            foreach(Schedule s in sListbyTeacher)
+            {
+                String date = s.Class_Date.ToString("dd/MM/yyyy");
+                TimeSpan sEnd = s.Start_Time.Add(s.Class.Class_Length);
+                if (timePicker >= s.Start_Time && timePicker < sEnd || classEnd > s.Start_Time && classEnd <= sEnd)
+                {
+                    ViewBag.message = "<p><span style=\"color:red\">Availability Error: </span>" + u.U_First_Name + " "+u.U_Last_Name+" already scheduleed from " + s.Start_Time.Hours + ":" + s.Start_Time.Minutes.ToString("00") + " until " + sEnd.Hours + ":" + sEnd.Minutes.ToString("00") + " on " + date + "</p>";
+                    return View(scheduleViewModel);
+                }
             }
 
 
@@ -773,19 +807,70 @@ namespace YogaStudioHelper.Controllers
             var selectedRoom = Convert.ToInt32(collection["SelectedRoomId"]);
 
             DateTime classDate = Convert.ToDateTime(collection["classDate"]);
+            TimeSpan timePicker = classDate.TimeOfDay;
 
             var status = collection["status"];
 
+
+
+
+            XDocument xd = db.getAvailability(selectedTeacher);
+            string dayOftheWeek = classDate.DayOfWeek.ToString();
+            TimeSpan sTime = TimeSpan.Parse(xd.Root.Element(dayOftheWeek).Element("Start").Value);
+            TimeSpan eTime = TimeSpan.Parse(xd.Root.Element(dayOftheWeek).Element("End").Value);
+            Class c = db.getClass(selectedCLass);
+            TimeSpan classEnd = sTime.Add(c.Class_Length);
+
+            Yoga_User u = db.getUserById(selectedTeacher);
+            // put db update method 
+            if (sTime > timePicker)
+            {
+
+                ViewBag.message = "Availability Error: " + u.U_First_Name + " " + u.U_Last_Name + " starts " + dayOftheWeek + " at " + sTime.Hours + ":" + sTime.Minutes.ToString("00");
+                return View();
+
+            }
+
+            if (classEnd > eTime)
+            {
+                ViewBag.message = "<p><span style=\"color:red\">Availability Error: </span>" + u.U_First_Name + " " + u.U_Last_Name + " ends " + dayOftheWeek + " at " + eTime.Hours + ":" + eTime.Minutes.ToString("00") + "<br/>" +
+                                  "Class End: " + classEnd.Hours + ":" + classEnd.Minutes.ToString("00") + "</p><br/>";
+                return View();
+            }
+
+            IEnumerable<Schedule> sList = db.getScheduleByRoomAndDay(selectedRoom, classDate);
+
+            foreach (Schedule s in sList)
+            {
+                String date = s.Class_Date.ToString("dd/MM/yyyy");
+                TimeSpan sEnd = s.Start_Time.Add(s.Class.Class_Length);
+                if (timePicker >= s.Start_Time && timePicker < sEnd || classEnd > s.Start_Time && classEnd <= sEnd)
+                {
+                    ViewBag.message = "<p><span style=\"color:red\">Room Error: </span>" + s.Room.Room_Name + " is unavailable from " + s.Start_Time.Hours + ":" + s.Start_Time.Minutes.ToString("00") + " until " + sEnd.Hours + ":" + sEnd.Minutes.ToString("00") + " on " + date + "</p>";
+                    return View();
+                }
+
+            }
+
+
+            IEnumerable<Schedule> sListbyTeacher = db.getScheduleByTeacherAndDay(selectedTeacher, classDate);
+
+            foreach (Schedule s in sListbyTeacher)
+            {
+                String date = s.Class_Date.ToString("dd/MM/yyyy");
+                TimeSpan sEnd = s.Start_Time.Add(s.Class.Class_Length);
+                if (timePicker >= s.Start_Time && timePicker < sEnd || classEnd > s.Start_Time && classEnd <= sEnd)
+                {
+                    ViewBag.message = "<p><span style=\"color:red\">Availability Error: </span>" + u.U_First_Name + " " + u.U_Last_Name + " is already scheduleed from " + s.Start_Time.Hours + ":" + s.Start_Time.Minutes.ToString("00") + " until " + sEnd.Hours + ":" + sEnd.Minutes.ToString("00") + " on " + date + "</p>";
+                    return View();
+                }
+            }
 
             schedule.Teacher_Id = selectedTeacher;
             schedule.Class_Id = selectedCLass;
             schedule.Room_Id = selectedRoom;
             schedule.Class_Date = classDate;
             schedule.Schedule_Status = status;
-
-
-            // put db update method 
-
 
             db.UpdateSchedule(schedule); 
 

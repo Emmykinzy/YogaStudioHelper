@@ -3,7 +3,7 @@
     ViewBag.Title = "OnlineStorePasses";
 
 
-    // view bag promo list 
+    // view bag promo list
     var p = ViewBag.PromoList;
     var Message = "";
     bool hasPromo = false;
@@ -17,7 +17,6 @@
 
 <h2>Pass Packages</h2>
 
-<h4>Message: @Message</h4>
 <br />
 <table class="table">
 
@@ -79,18 +78,12 @@
                                         isValid = false;
                                     }
 
-
-
-
-
-
-
                                 }
                             }
                             @if (hasPromo == false)
                             {
                                 <span>
-                                @item.Pass_Price.ToString("F")$
+                                    @item.Pass_Price.ToString("F")$
                                 </span>
                             }
                             else if (isValid == false)
@@ -103,9 +96,8 @@
                             }
                         </div>
 
-
-                        @Html.ActionLink("Purchase", "Purchase", new { passId = item.Pass_Id }, new { @class = "btn btn-default" })
-
+                            @Html.ActionLink("Add Pass To Account", "StorePurchase", new { passId = item.Pass_Id, userId = ViewBag.uId }, new { @class = "btn btn-default" })
+                        
 
                     </div>
                 </div>
@@ -117,78 +109,3 @@
     }
 
 </table>
-
-
-<!--
-
-
-
-    With Promotion variant - todo
-
-        <div class="passStore">
-            <div class="passContent">
-                <div class="floatLeft passTitle">
-                    <p> a Html.DisplayFor(modelItem => item.Pass_Name)</p>
-                    <p style="font-size:14px; color:red;">Christmas Promo 20% Off</p>
-                </div>
-                <div class="passPurchase floatRight">
-                    <div class="floatRight" style="padding-right:25px;">
-                        <div class="floatLeft" style="padding-top:8px; padding-right:20px;"><strike class="passDiscount">49.99$</strike>  Html.DisplayFor(modelItem => item.Pass_Price)$</div>
-                        <button type="submit" class="btn btn-default floatRight">Purchase</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-
-
-
-
-        <tr>
-        <th>
-            Html.DisplayNameFor(model => model.Pass_Id)
-        </th>
-        <th>
-            Html.DisplayNameFor(model => model.Pass_Name)
-        </th>
-        <th>
-            Html.DisplayNameFor(model => model.Pass_Size)
-        </th>
-        <th>
-            Html.DisplayNameFor(model => model.Pass_Price)
-        </th>
-        <th>
-            Html.DisplayNameFor(model => model.Active)
-        </th>
-        <th></th>
-    </tr>
-
-
-
-
-        <tr>
-            <td>
-                Html.DisplayFor(modelItem => item.Pass_Id)
-            </td>
-            <td>
-                Html.DisplayFor(modelItem => item.Pass_Name)
-            </td>
-            <td>
-               Html.DisplayFor(modelItem => item.Pass_Size)
-            </td>
-            <td>
-                Html.DisplayFor(modelItem => item.Pass_Price)
-            </td>
-            <td>
-                Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-
--->

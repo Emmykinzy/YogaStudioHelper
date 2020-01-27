@@ -36,6 +36,33 @@ namespace YogaStudioHelper.Controllers
 
         }
 
+        public ActionResult Store(int id)
+        {
+
+            //String message = Util.EmailSender.sendEmail();
+            //Response.Write(message);
+            ViewBag.uId = id;
+            IEnumerable<Promotion> promoList = db.getPromotions();
+            ViewBag.PromoList = promoList;
+
+
+            IEnumerable<Class_Passes> class_Pass_List = db.getClassPasses();
+            return View(class_Pass_List);
+
+
+        }
+
+        public ActionResult StorePurchase(int passId, int userId)
+        {
+            Pass_Log pl = db.processPurchase(db.getClassPasse(passId), userId);
+
+            Yoga_User u = db.getUserById(userId);
+
+            EmailSender.sendPurchaseConfirmation(u, pl);
+
+            return RedirectToAction("Store");
+        }
+
 
         public ActionResult Purchase(int passId, string Cancel = null)
         {
@@ -127,7 +154,7 @@ namespace YogaStudioHelper.Controllers
 
             Yoga_User u = db.getUserById(userId);
 
-            Util.EmailSender.sendPurchaseConfirmation(u, pl);
+            EmailSender.sendPurchaseConfirmation(u, pl);
             // todo success message with receipt etc. 
 
             return View("SuccessView");
@@ -294,12 +321,63 @@ namespace YogaStudioHelper.Controllers
             return payment.Create(apiContext);
 
         }
-            
+
+        [HttpGet]
+        public ActionResult PurchaseFindUser()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult PurchaseFindUser(FormCollection collection)
+        {
+
+            string email = collection["Email"];
+            IEnumerable<Yoga_User> userList = db.getUserByEmail(email);
+
+            if (userList.Count() == 0)
+            {
+                ViewBag.FindClassMessage = "No users with an email containing " + email + " was found";
+                return View();
+            }
+            else
+            {
+
+                    IEnumerable<Yoga_User> l = userList.Where(x => x.Active == true);
+                    TempData["userList"] = l;
+                    return RedirectToAction("UserList");
+  
+            }
+
+        }
+
+        public ActionResult UserList()
+        {
+            if (TempData["userList"] != null)
+            {
+                IEnumerable<Yoga_User> c = TempData["userList"] as IEnumerable<Yoga_User>;
+                return View(c);
+            }
+            else
+            {
+                IEnumerable<Yoga_User> c = TempData["List"] as IEnumerable<Yoga_User>;
+
+                return View(c);
+            }
+        }
     }
 
-
+   
 
 }
+
+ 
+        
+
+
+
+
 
 
     

@@ -250,6 +250,9 @@
     <Content Include="Views\Report\Sales.cshtml" />
     <Content Include="Views\LoginSignUp\NewPassword.cshtml" />
     <Content Include="Views\Home\MessageView.cshtml" />
+    <Content Include="Views\Passes\PurchaseFindUser.cshtml" />
+    <Content Include="Views\Passes\UserList.cshtml" />
+    <Content Include="Views\Passes\Store.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -40,24 +40,41 @@
             </tr>
             <tr>
                 <th>Teacher:</th>
-
+                @{
+                    if(ViewBag.tid != null)
+                    {
+                        Model.SelectedTeacherId = ViewBag.tid;
+                    }
+                 }
                 <td>
-                    @Html.DropDownListFor(m => m.Teachers, new SelectList(Model.Teachers, "U_Id", "U_Last_Name"), new { @id = "classList" })
+                    @Html.DropDownListFor(m => m.SelectedTeacherId, new SelectList(Model.Teachers, "U_Id", "U_Last_Name"), new { @id = "classList" })
                 </td>
             </tr>
 
             <tr>
                 <th>Class</th>
+                @{
+                     if(ViewBag.tid != null)
+                    {
+                        Model.SelectedClassId = ViewBag.cid;
+                    }
+                 }
                 <td>
-                    @Html.DropDownListFor(m => m.Classes, new SelectList(Model.Classes, "Class_Id", "Class_Name"), new { @id = "classList" })
+                    @Html.DropDownListFor(m => m.SelectedClassId, new SelectList(Model.Classes, "Class_Id", "Class_Name"), new { @id = "classList" })
                 </td>
 
 
 
             <tr>
                 <th>Room:</th>
+                @{
+                      if(ViewBag.tid != null)
+                    {
+                       Model.SelectedRoomId = ViewBag.rid;
+                    }
+                 }
                 <td>
-                    @Html.DropDownListFor(m => m.Rooms, new SelectList(Model.Rooms, "Room_Id", "Room_Name"), new { @id = "classList" })
+                    @Html.DropDownListFor(m => m.SelectedRoomId, new SelectList(Model.Rooms, "Room_Id", "Room_Name"), new { @id = "classList" })
 
                 </td>
             </tr>
@@ -76,35 +93,26 @@
                         timepicker: true,
                         datepicker: false,
                         format: 'H:i',
-                        value: '7:00',
+                        value: @if (ViewBag.time != null) {@Html.Raw("'"+ViewBag.time + "'") } else {@Html.Raw("'7:00'") } ,
                         hours12: false,
                         step: 30,
-                        allowTimes: [@for (int x = 7; x < 19; x++) { @Html.Raw("'"+x+":00', '"+x+":30',")} @Html.Raw("'19:00'")]
+                        allowTimes: [@for (int x = 7; x < 19; x++) { @Html.Raw("'"+x+":00', '"+x+":30',")} @Html.Raw("'19:00'")],
+
 
                     })
                 </script>
             </tr>
             <tr>
                 <th>Date:</th>
-                <td><input type="date" class="inputs" name="classDate" id="classDate" required /></td>
-            </tr>
+                <td><input type="date" class="inputs" name="classDate" id="classDate" required @if (ViewBag.date != null) {@Html.Raw("value=\""+ViewBag.date+"\"") } value="" /></td>
 
+</tr>
 
-            <tr>
-                <th>Schedule Status:</th>
-                <td style="text-align:center">
+<tr>
 
-                    <select id="status" name="status">
-                        <option value="ACTIVE" selected>Active</option>
-                        <option value="CANCELLED">Cancelled</option>
+<td></td>
 
-                    </select>
-                </td>
-
-            </tr>
-            <tr>
-                <td></td>
-                <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Create</button></td>
+<td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Create</button></td>
             </tr>
             <tr>
                 <td>
