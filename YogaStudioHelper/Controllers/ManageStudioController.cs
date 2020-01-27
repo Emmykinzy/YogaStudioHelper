@@ -6,6 +6,9 @@ using System.Web.Mvc;
 using System.Xml.Linq;
 using Database;
 using YogaStudioHelper.ViewModels;
+using Database.ModelsDB;
+
+
 
 namespace YogaStudioHelper.Controllers
 {
@@ -584,7 +587,11 @@ namespace YogaStudioHelper.Controllers
 
         public ActionResult ScheduleList()
         {
-            IEnumerable<Schedule> scheduleList = db.getSchedules();
+
+            // 
+            List<Database.ModelsDB.ScheduleListViewModel> scheduleList = db.getScheduleViewModelList();
+            
+            //IEnumerable<Schedule> scheduleLis = db.getSchedules();
             return View(scheduleList);
 
 

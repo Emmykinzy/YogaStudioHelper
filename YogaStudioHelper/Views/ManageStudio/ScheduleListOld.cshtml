@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Database.Schedule>
+
+@{
+    ViewBag.Title = "ScheduleList";
+}
+
+<h2>Schedules</h2>
+
+<p>
+    @Html.ActionLink("Find Schedule", "FindSchedule", "ManageStudio")
+    <br />
+
+    @Html.ActionLink("Create New", "CreateSchedule")
+</p>
+<table class="table">
+    <tr>
+        <!-- 
+        <th>
+            Html.DisplayNameFor(model => model.Schedule_Id)
+        </th>
+            --> 
+        <th>
+            Teacher Id
+        </th>
+        <th>
+            Class Id
+        </th>
+        <th>
+            Room Id
+        </th>
+        <th>
+            Start Time
+        </th>
+        <th>
+            Class Date
+        </th>
+        <th>
+            Student Signed Up
+        </th>
+        <th>
+            Group Id
+        </th>
+        <th>
+            Schedule Status
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    
+
+    <!--
+                 <td>
+        Html.DisplayFor(modelItem => item.Schedule_Id)
+    </td>
+
+         -->
+
+    <td>
+        @Html.DisplayFor(modelItem => item.Teacher_Id)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Class_Id)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Room_Id)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Start_Time)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Class_Date)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Signed_Up)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Group_Id)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Schedule_Status)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "EditSchedule", new { id = item.Schedule_Id }) |
+
+        <!-- Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })-->
+        @Html.ActionLink("Delete", "ArchiveSchedule", new { id=item.Schedule_Id  })
+    </td>
+</tr>
+}
+
+</table>

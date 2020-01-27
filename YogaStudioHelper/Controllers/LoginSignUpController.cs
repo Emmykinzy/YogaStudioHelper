@@ -159,8 +159,9 @@ namespace YogaStudioHelper.Controllers
         public ActionResult LogOut()
         {
             Session["Auth"] = null;
+            Session["Uid"] = null;
 
-            return RedirectToAction("Homepage", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult SignUp()
