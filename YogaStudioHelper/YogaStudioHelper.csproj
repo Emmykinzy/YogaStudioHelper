@@ -231,7 +231,7 @@
     <Content Include="Views\ManageStudio\ClassPassList2.cshtml" />
     <Content Include="Views\ManageStudio\PromotionList.cshtml" />
     <Content Include="Views\Passes\OnlineStore.cshtml" />
-    <Content Include="Views\ManageStudio\ScheduleList.cshtml" />
+    <Content Include="Views\ManageStudio\ScheduleListOld.cshtml" />
     <Content Include="Views\ManageStudio\EditSchedule.cshtml" />
     <Content Include="Views\ManageStudio\CreateSchedule.cshtml" />
     <Content Include="Views\ManageUsers\CreateUser.cshtml" />
@@ -255,6 +255,7 @@
     <Content Include="Views\Report\AttendanceDailyList.cshtml" />
     <Content Include="Views\Report\Attendance.cshtml" />
     <Content Include="Views\Report\AttendanceDatesList.cshtml" />
+    <Content Include="Views\ManageStudio\ScheduleList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

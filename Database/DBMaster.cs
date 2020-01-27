@@ -818,6 +818,35 @@ namespace Database
             return myDb.Schedules.ToList();
         }
 
+        public List<ScheduleListViewModel> getScheduleViewModelList()
+        {
+
+            List<ScheduleListViewModel> list = new List<ScheduleListViewModel>();
+            var scheduleList = myDb.Schedules.ToList();
+
+            foreach(var sched in scheduleList) {
+
+                var schedVM = new ScheduleListViewModel();
+
+                var teacher = getUserById(sched.Teacher_Id);
+                var classe = getClass(sched.Class_Id);
+
+                schedVM.Schedule_Id = sched.Schedule_Id;
+                schedVM.U_First_Name = teacher.U_First_Name;
+                schedVM.U_Last_Name = teacher.U_Last_Name;
+                schedVM.Class_Name = classe.Class_Name;
+                schedVM.Start_Time = sched.Start_Time;
+                schedVM.Class_Date = sched.Class_Date;
+                schedVM.Signed_Up = sched.Signed_Up;
+                schedVM.Group_Id = sched.Group_Id;
+                schedVM.Schedule_Status = sched.Schedule_Status;
+
+                list.Add(schedVM);
+            }
+
+            return list;
+        }
+
         public IEnumerable<Schedule> getScheduleByRoomAndDay(int roomId, DateTime day)
         {
             IEnumerable<Schedule> sList = (from schedule in myDb.Schedules
