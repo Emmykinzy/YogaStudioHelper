@@ -887,6 +887,21 @@ namespace Database
             return myDb.Schedules.Where(x => x.Class_Date >= today && x.Class_Date <= week);
         }
 
+        public IEnumerable<Schedule> getSchedulesNextWeek(DateTime currday)
+        { 
+            DateTime weekStart = currday.AddDays(7).Date;
+            DateTime weekEnd = weekStart.AddDays(6).Date;
+            return myDb.Schedules.Where(x => x.Class_Date >= weekStart && x.Class_Date <= weekEnd);
+        }
+
+        public IEnumerable<Schedule> getSchedulesBackWeek(DateTime weekEnd)
+        {
+            DateTime weekStart = weekEnd.AddDays(-7).Date;
+            weekEnd = weekEnd.AddDays(-1).Date;
+            return myDb.Schedules.Where(x => x.Class_Date >= weekStart && x.Class_Date <= weekEnd);
+        }
+
+
         public IEnumerable<string> getSchedulesInfo(int id)
         {
             Schedule s = getScheduleById(id);

@@ -4,6 +4,22 @@
     DBMaster db = new DBMaster();
     ViewBag.Title = "Schedule";
     DateTime localDate = DateTime.Now;
+    IEnumerable<Database.Schedule> list;
+    if(ViewBag.date != null)
+    {
+        localDate = ViewBag.date;
+        ViewBag.date = ViewBag.date;
+        TempData["date"] = ViewBag.date;
+    }
+
+    //if (ViewBag.back != null)
+    //{
+    //    localDate = ViewBag.back;
+    //    ViewBag.back = ViewBag.back;
+    //    TempData["back"] = ViewBag.back;
+    //}
+
+    list = Model;
     DateTime localPlus1 = localDate.AddDays(1);
     DateTime localPlus2 = localPlus1.AddDays(1);
     DateTime localPlus3 = localPlus2.AddDays(1);
@@ -54,7 +70,7 @@
             <span class="close">&times;</span>
             <h3 id="name"></h3>
             @if (Session["Auth"] == null || (int)Session["Auth"] == 2 || (int)Session["Auth"] == 4)
-            {
+{
 
 
                 <p id="desc"></p>
@@ -66,12 +82,12 @@
 
                 <br />
 
-                // created form to get schedule id in hidden field
-                // not sure if best way
-                using (Html.BeginForm())
-                {
-                    if (Session["Auth"] != null)
-                    {
+    // created form to get schedule id in hidden field
+    // not sure if best way
+    using (Html.BeginForm())
+    {
+        if (Session["Auth"] != null)
+        {
 
                         <input type="hidden" id="scheduleId" name="scheduleId" value="" />
 
@@ -79,17 +95,17 @@
                         <button type="submit" class="btn btn-default">Sign up</button>
 
 
-                    }
-                    else
-                    {
+        }
+        else
+        {
                         <input type="hidden" id="scheduleId" name="scheduleId" value="" />
                         <button href="LoginSignUp/LogInSignUp" class="btn btn-default">Login to Sign Up</button>
-                    }
-                }
+        }
+    }
 
-            }
-            else if ((int)Session["Auth"] == 1 || (int)Session["Auth"] == 3)
-            {
+}
+else if ((int)Session["Auth"] == 1 || (int)Session["Auth"] == 3)
+{
                 <p id="desc"></p>
                 <p id="date"></p>
                 <p id="time"></p>
@@ -97,24 +113,34 @@
                 <p id="room"></p>
                 <p id="signedUp"></p>
                 <div id="countDown"></div><br />
-                using (Html.BeginForm())
-                {
+    using (Html.BeginForm())
+    {
                 <input type="hidden" id="scheduleId" name="scheduleId" value="" />
                 <button type="submit" class="btn btn-default">Student Sign In</button>
-                }
+    }
 
-            }
+}
         </div>
 </div>
-<div>
-    <button class="floatRight btn btn-default">Next</button>
-</div>
-<form action = "/Form/FormOne" method="post" class="light-pad">
-    <select id = "teacher" >
-        <option> Select Teacher</option>
-    </select>&nbsp;
-        <button type="submit" class="btn btn-default">Sort</button>
-        </form>
+    <div>
+        @using (Html.BeginForm())
+        {
+            <button class="floatRight btn btn-default" name="next" value="1">Next</button>
+        }
+        @using (Html.BeginForm())
+        {
+            <button class="floatRight btn btn-default" name="back" value="2"> Back</button>
+        }
+    </div>
+<form action="/Form/FormOne" method="post" class="light-pad">
+    
+<select id="teacher">
+
+<option> Select Teacher</option>
+
+</select>&nbsp;
+    <button type="submit" class="btn btn-default">Sort</button>
+</form>
 
         <table class="schedule">
             <tr>
@@ -131,9 +157,9 @@
 
             @for (int hour = 7; hour< 20; hour++)
                {
-                   int date = date1;
+                   DateTime date = localDate;
                 bool empty = true;
-                List<Schedule> s = Model.Where(x => x.Start_Time.Hours == hour).ToList();
+                List<Schedule> s = list.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Date >= localDate.Date && x.Class_Date.Date <= localPlus6.Date).ToList();
                 int size = s.Count();
                 int count = 0;
                 bool mult = false;
@@ -142,9 +168,9 @@
                     <th style="text-align:center;">@hour:00 @*- @hr2:00*@</th>
 
 
-                    @foreach (var item in Model.Where(x => x.Start_Time.Hours == hour))
+                    @foreach (var item in s)
                          {
-                             if (date > item.Class_Date.Day)
+                             if (date.Day > item.Class_Date.Day)
                              {
                              }
                              else
@@ -152,9 +178,9 @@
                                  count++;
                                  empty = false;
 
-                                 if (item.Class_Date.Day == date)
+                                 if (item.Class_Date.Day == date.Day)
                                  {
-                                     multiple = Model.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date).Count();
+                                     multiple = Model.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date.Day).Count();
                                      if (multiple > 1 && mult == false)
                                      {
                                          empty = false;
@@ -162,19 +188,19 @@
                                          {
                                              mult = true;
                                            <td>
-                                            @foreach (var it in Model.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date))
+                                            @foreach (var it in list.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date.Day))
                                             {
-                                                List<string> list = db.getSchedulesInfo(it.Schedule_Id).ToList();
-                                                string id = list.ElementAt(0);
-                                                string description = list.ElementAt(1);
-                                                string name = list.ElementAt(2);
-                                                string startDate = list.ElementAt(3);
-                                                string room = list.ElementAt(4);
-                                                string teacher = list.ElementAt(5);
-                                                string startTime = list.ElementAt(6);
-                                                string signedUp = list.ElementAt(7);
-                                                string duration = list.ElementAt(8);
-                                                string roomSize = list.ElementAt(9);
+                                                List<string> sList = db.getSchedulesInfo(it.Schedule_Id).ToList();
+                                                string id = sList.ElementAt(0);
+                                                string description = sList.ElementAt(1);
+                                                string name = sList.ElementAt(2);
+                                                string startDate = sList.ElementAt(3);
+                                                string room = sList.ElementAt(4);
+                                                string teacher = sList.ElementAt(5);
+                                                string startTime = sList.ElementAt(6);
+                                                string signedUp = sList.ElementAt(7);
+                                                string duration = sList.ElementAt(8);
+                                                string roomSize = sList.ElementAt(9);
                                                 
                                                 <a onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize + "')")">@it.Start_Time.ToString(@"hh\:mm")    @it.Class.Class_Name</a>
                                                 
@@ -183,33 +209,34 @@
 
                                              }
                                            </td>
-                                              date++;
+                                              date = date.AddDays(1);
                                          }
+
                                      }
                                      else
                                      {
-                                        List<string> list = db.getSchedulesInfo(item.Schedule_Id).ToList();
-                                        string id = list.ElementAt(0);
-                                        string description = list.ElementAt(1);
-                                        string name = list.ElementAt(2);
-                                        string startDate = list.ElementAt(3);
-                                        string room = list.ElementAt(4);
-                                        string teacher = list.ElementAt(5);
-                                        string startTime = list.ElementAt(6);
-                                        string signedUp = list.ElementAt(7);
-                                        string duration = list.ElementAt(8);
-                                        string roomSize = list.ElementAt(9);
+                                        List<string> sList = db.getSchedulesInfo(item.Schedule_Id).ToList();
+                                        string id = sList.ElementAt(0);
+                                        string description = sList.ElementAt(1);
+                                        string name = sList.ElementAt(2);
+                                        string startDate = sList.ElementAt(3);
+                                        string room = sList.ElementAt(4);
+                                        string teacher = sList.ElementAt(5);
+                                        string startTime = sList.ElementAt(6);
+                                        string signedUp = sList.ElementAt(7);
+                                        string duration = sList.ElementAt(8);
+                                        string roomSize = sList.ElementAt(9);
                                         <td>
                                         <a onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize+ "')")">@item.Start_Time.ToString(@"hh\:mm")    @item.Class.Class_Name</a>
                                         </td>
 
-                                        date++;
+                                        date = date.AddDays(1);
                                      }
                                  }
                                  else
                                  {
 
-                                    multiple = Model.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date).Count();
+                                    multiple = list.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date.Day).Count();
                                     if (multiple > 1 && mult == false)
                                     {
                                         empty = false;
@@ -218,19 +245,19 @@
                                         {
                                             mult = true;
                                            <td>
-                                            @foreach (var it in Model.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date))
+                                            @foreach (var it in list.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date.Day))
                                             {
-                                                List<string> list = db.getSchedulesInfo(it.Schedule_Id).ToList();
-                                                string id = list.ElementAt(0);
-                                                string description = list.ElementAt(1);
-                                                string name = list.ElementAt(2);
-                                                string startDate = list.ElementAt(3);
-                                                string room = list.ElementAt(4);
-                                                string teacher = list.ElementAt(5);
-                                                string startTime = list.ElementAt(6);
-                                                string signedUp = list.ElementAt(7);
-                                                string duration = list.ElementAt(8);
-                                                string roomSize = list.ElementAt(9);
+                                                List<string> sList = db.getSchedulesInfo(it.Schedule_Id).ToList();
+                                                string id = sList.ElementAt(0);
+                                                string description = sList.ElementAt(1);
+                                                string name = sList.ElementAt(2);
+                                                string startDate = sList.ElementAt(3);
+                                                string room = sList.ElementAt(4);
+                                                string teacher = sList.ElementAt(5);
+                                                string startTime = sList.ElementAt(6);
+                                                string signedUp = sList.ElementAt(7);
+                                                string duration = sList.ElementAt(8);
+                                                string roomSize = sList.ElementAt(9);
                                                 
                                                 
                                                 <a onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize + "')")">@it.Start_Time.ToString(@"hh\:mm")    @it.Class.Class_Name</a>
@@ -238,18 +265,19 @@
                         
                                              }
                                            </td>
-                                           date++;
+                                           date = date.AddDays(1);
                                         }
+                                
                                     }
                                     else
                                     {
-                                        while (item.Class_Date.Day != date)
+                                        while (item.Class_Date.Day != date.Day)
                                         {
                                             <td></td>
-                                            date++;
+                                            date = date.AddDays(1);
                                         }
 
-                                        multiple = Model.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date).Count();
+                                        multiple = list.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date.Day).Count();
                                         if (multiple > 1 && mult == false)
                                         {
                                             empty = false;
@@ -258,44 +286,48 @@
                                             {
                                                 mult = true;
                                                <td>
-                                                @foreach (var it in Model.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date))
+                                                @foreach (var it in list.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date.Day))
                                                  {
 
-                                                    List<string> list = db.getSchedulesInfo(it.Schedule_Id).ToList();
-                                                    string id = list.ElementAt(0);
-                                                    string description = list.ElementAt(1);
-                                                    string name = list.ElementAt(2);
-                                                    string startDate = list.ElementAt(3);
-                                                    string room = list.ElementAt(4);
-                                                    string teacher = list.ElementAt(5);
-                                                    string startTime = list.ElementAt(6);
-                                                    string signedUp = list.ElementAt(7);
-                                                    string duration = list.ElementAt(8);
-                                                    string roomSize = list.ElementAt(9);
+                                                    List<string> sList = db.getSchedulesInfo(it.Schedule_Id).ToList();
+                                                    string id = sList.ElementAt(0);
+                                                    string description = sList.ElementAt(1);
+                                                    string name = sList.ElementAt(2);
+                                                    string startDate = sList.ElementAt(3);
+                                                    string room = sList.ElementAt(4);
+                                                    string teacher = sList.ElementAt(5);
+                                                    string startTime = sList.ElementAt(6);
+                                                    string signedUp = sList.ElementAt(7);
+                                                    string duration = sList.ElementAt(8);
+                                                    string roomSize = sList.ElementAt(9);
                                                      <a onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize + "')")">@it.Start_Time.ToString(@"hh\:mm")    @it.Class.Class_Name</a>
                                                     
 
 
-                                                                         }
+                                                 }
                                                </td>
-                                               date++;
-                                            }
+                                            date = date.AddDays(1);
                                         }
                                         else
                                         {
-                                            List<string> list = db.getSchedulesInfo(item.Schedule_Id).ToList();
-                                            string id = list.ElementAt(0);
-                                            string description = list.ElementAt(1);
-                                            string name = list.ElementAt(2);
-                                            string startDate = list.ElementAt(3);
-                                            string room = list.ElementAt(4);
-                                            string teacher = list.ElementAt(5);
-                                            string startTime = list.ElementAt(6);
-                                            string signedUp = list.ElementAt(7);
-                                            string duration = list.ElementAt(8);
-                                            string roomSize = list.ElementAt(9);
+                                            <td></td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        List<string> sList = db.getSchedulesInfo(item.Schedule_Id).ToList();
+                                        string id = sList.ElementAt(0);
+                                        string description = sList.ElementAt(1);
+                                        string name = sList.ElementAt(2);
+                                        string startDate = sList.ElementAt(3);
+                                        string room = sList.ElementAt(4);
+                                        string teacher = sList.ElementAt(5);
+                                        string startTime = sList.ElementAt(6);
+                                        string signedUp = sList.ElementAt(7);
+                                        string duration = sList.ElementAt(8);
+                                        string roomSize = sList.ElementAt(9);
                                             <td><a onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize + "')")">@item.Start_Time.ToString(@"hh\:mm")    @item.Class.Class_Name</a></td>
-                                            date++;
+                                            date = date.AddDays(1);
                                         }
                                     }
 
@@ -303,10 +335,10 @@
 
                                 if (count == size || multiple == size)
                                 {
-                                    while (date <= date7)
+                                    while (date <= localPlus6)
                                     {
                                         <td></td>
-                                        date++;
+                                        date = date.AddDays(1);
                                     }
                                 }
                              }
@@ -317,10 +349,10 @@
 
                     @if (empty == true)
                      {
-                        while (date <= date7)
+                        while (date <= localPlus6)
                         {
                             <td></td>
-                            date++;
+                            date = date.AddDays(1);
                         }
                      }
                 </tr>
