@@ -167,7 +167,7 @@ namespace YogaStudioHelper.Util
 
 
                 msobj.Body = "<h1 style='color:#557ee6;'>Saṃsāra Yoga</h1>" +
-                             "<p>Thank you for your recent digital purchase from Samsara Yoga. Details of this transaction are below:</p><br/>" +
+                             "<p>Thank you for your recent purchase from Samsara Yoga. Details of this transaction are below:</p><br/>" +
                              "Transaction ID: " + pl.Invoice_Number + "<br/>" +
                              "Transaction Date: " + pl.Date_Purchased + "<br/><br/>" +
                              "Purchased Item: " + pass.Pass_Name + " Packet<br/><br/>" +
@@ -225,6 +225,84 @@ namespace YogaStudioHelper.Util
                     client.Send(msobj);
                 }
             }
+        }
+
+        public static void ClassCancelledEmail(List<Yoga_User> list, Schedule schedule)
+        {
+            string test = Guid.NewGuid().ToString();
+
+            SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+            //client.EnableSsl = false;
+
+            client.EnableSsl = true;
+
+            client.DeliveryMethod =
+                SmtpDeliveryMethod.Network;
+
+            client.UseDefaultCredentials = false;
+            //client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
+
+            client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
+
+
+            
+                MailMessage msobj = new MailMessage();
+
+                foreach (Yoga_User u in list)
+                {
+                msobj.To.Add(u.U_Email);
+                }
+                msobj.From = new MailAddress("SamsaraYogaMontreal@gmail.com");
+                msobj.Subject = "Cancelled Class";
+                msobj.IsBodyHtml = true;
+                msobj.Body = "<h1 style='color:#557ee6;'>Saṃsāra Yoga</h1>" +
+                             "<p>We're sorry to inform you that the " + schedule.Class.Class_Name + " class scheduled for " + schedule.Start_Time.ToString("hh':'mm") + " " + schedule.Class_Date.ToShortDateString() + " has been cancelled.<br/>" +
+                             "We've refunded you your class pass.</p><br/>" +
+                             "<p>Have a wonderful day,<br/>The Saṃsāra Team</p>";
+
+
+
+                client.Send(msobj);
+            
+        }
+
+        public static void ClassRestoreEmail(List<Yoga_User> list, Schedule schedule)
+        {
+            string test = Guid.NewGuid().ToString();
+
+            SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+            //client.EnableSsl = false;
+
+            client.EnableSsl = true;
+
+            client.DeliveryMethod =
+                SmtpDeliveryMethod.Network;
+
+            client.UseDefaultCredentials = false;
+            //client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
+
+            client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
+
+
+
+            MailMessage msobj = new MailMessage();
+
+            foreach (Yoga_User u in list)
+            {
+                msobj.To.Add(u.U_Email);
+            }
+            msobj.From = new MailAddress("SamsaraYogaMontreal@gmail.com");
+            msobj.Subject = "Class Reinstated";
+            msobj.IsBodyHtml = true;
+            msobj.Body = "<h1 style='color:#557ee6;'>Saṃsāra Yoga</h1>" +
+                         "<p>We're witting to inform you that the " + schedule.Class.Class_Name + " class scheduled for " + schedule.Start_Time.ToString("hh':'mm") + " " + schedule.Class_Date.ToShortDateString() + " is no longer cancelled.<br/>" +
+                         "If you'd wish to sign up once again please feel free to visit the <a href = 'https://localhost:44332/' > Saṃsāra site</a></p><br/>" +
+                         "<p>Have a wonderful day,<br/>The Saṃsāra Team</p>";
+
+
+
+            client.Send(msobj);
+
         }
     }
 

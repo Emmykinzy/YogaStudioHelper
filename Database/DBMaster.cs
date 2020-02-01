@@ -77,7 +77,7 @@ namespace Database
                 }
 
                 //Update User Token 
-                AddTokens(userId, token);
+                
 
                 // price 
                 if (p.Discount == 0)
@@ -100,6 +100,7 @@ namespace Database
                 pass_Log.Purchase_Price = decimal.Round(pass.Pass_Price*(decimal)1.15, 2);
             }
 
+            AddTokens(userId, token);
             // date 
             DateTime date = DateTime.Now;
             pass_Log.Date_Purchased = date;
@@ -688,6 +689,11 @@ namespace Database
             return myDb.Class_Log.ToList();
         }
 
+        public Class_Log GetClass_LogsByUidAndSid(int uid, int sid)
+        {
+            Class_Log cl = myDb.Class_Log.Where(x => x.U_Id == uid && x.Schedule_Id == sid).FirstOrDefault();
+            return cl;
+        }
         public int getSignedUp(int scheduleId)
         {
             IEnumerable<Class_Log> cl = myDb.Class_Log.Where(x => x.Schedule_Id == scheduleId);
@@ -849,6 +855,26 @@ namespace Database
             return sList;
         }
 
+        public bool isScheduleActive(int id)
+        {
+            Schedule schedule = myDb.Schedules.Where(x => x.Schedule_Id == id).FirstOrDefault();
+            if(schedule.Schedule_Status == "ACTIVE")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public IEnumerable<Schedule> getScheduleByTeacherAndDay(int uid, DateTime day)
+        {
+            IEnumerable<Schedule> sList = (from schedule in myDb.Schedules
+                                           where schedule.Class_Date == day && schedule.Teacher_Id == uid
+                                           select schedule);
+            return sList;
+        }
+
         public Schedule getScheduleById(int id)
         {
             return myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
@@ -860,6 +886,21 @@ namespace Database
             DateTime week = today.AddDays(7);
             return myDb.Schedules.Where(x => x.Class_Date >= today && x.Class_Date <= week);
         }
+
+        public IEnumerable<Schedule> getSchedulesNextWeek(DateTime currday)
+        { 
+            DateTime weekStart = currday.AddDays(7).Date;
+            DateTime weekEnd = weekStart.AddDays(6).Date;
+            return myDb.Schedules.Where(x => x.Class_Date >= weekStart && x.Class_Date <= weekEnd);
+        }
+
+        public IEnumerable<Schedule> getSchedulesBackWeek(DateTime weekEnd)
+        {
+            DateTime weekStart = weekEnd.AddDays(-7).Date;
+            weekEnd = weekEnd.AddDays(-1).Date;
+            return myDb.Schedules.Where(x => x.Class_Date >= weekStart && x.Class_Date <= weekEnd);
+        }
+
 
         public IEnumerable<string> getSchedulesInfo(int id)
         {
@@ -938,6 +979,54 @@ namespace Database
 
             myDb.SaveChanges();
 
+        }
+
+        public void RestoreSchedule(int id)
+        {
+            Schedule schedule = myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
+
+            schedule.Schedule_Status = "ACTIVE";
+            //or.R = false;
+
+            myDb.SaveChanges();
+
+        }
+
+        public void CancelSchedule(int id)
+        {
+            Schedule schedule = myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
+
+            schedule.Schedule_Status = "CANCELLED";
+            //or.R = false;
+
+            myDb.SaveChanges();
+
+        }
+
+        public void CancelledScheduleRefund(int id)
+        {
+            Schedule schedule = myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
+            List<Yoga_User> list = getScheduleSignUpList(id);
+            foreach(Yoga_User u in list)
+            {
+                u.U_Tokens++;
+                Class_Log cl = GetClass_LogsByUidAndSid(u.U_Id, id);
+                cl.Log_Status = "CANCELLED";
+            }
+
+            myDb.SaveChanges();
+        }
+
+        public void RestoreScheduleRemoveUsers(int id)
+        {
+            Schedule schedule = myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
+            List<Yoga_User> list = getScheduleSignUpList(id);
+            foreach (Yoga_User u in list)
+            {
+                Class_Log cl = GetClass_LogsByUidAndSid(u.U_Id, id);
+                myDb.Class_Log.Remove(cl);
+            }
+            myDb.SaveChanges();
         }
 
         public List<Yoga_User> getScheduleSignUpList(int scheduleId)

@@ -83,7 +83,21 @@
             @Html.ActionLink("Edit", "EditSchedule", new { id = item.Schedule_Id }) |
 
             <!-- Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })-->
-            @Html.ActionLink("Delete", "ArchiveSchedule", new { id = item.Schedule_Id })
+            @{
+
+                if (item.Schedule_Status == "ACTIVE")
+                {
+                    @Html.ActionLink("Cancel", "CancelSchedule", new { id = item.Schedule_Id })
+                }
+                else if (item.Schedule_Status == "CANCELLED" && item.Class_Date < DateTime.Now.Date)
+                {
+
+                }
+                else
+                {
+                    @Html.ActionLink("Restore", "RestoreSchedule", new { id = item.Schedule_Id })
+                }
+            }
         </td>
     </tr>
 }

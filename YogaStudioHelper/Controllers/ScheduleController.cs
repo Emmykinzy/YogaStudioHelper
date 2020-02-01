@@ -27,64 +27,112 @@ namespace YogaStudioHelper.Controllers
         [HttpPost]
         public ActionResult Schedule(FormCollection collection)
         {
-            int scheduleId = Convert.ToInt32(collection["scheduleId"]);
-            if(Session["Auth"] == null)
+            if (collection["next"] == null && collection["back"] == null)
             {
-                return RedirectToAction("LogInSignUp", "LoginSignUp");
-            }
-            if ((int)Session["Auth"] == 4 || (int)Session["Auth"] == 2)
-            {
-                
-                int userId = Convert.ToInt32(Session["Uid"]);
-
-
-                var yogaUser = db.getUserById(userId);
-                var sched = db.getScheduleById(scheduleId);
-
-                // Validate if student already sign in  
-                var checkIfSignin = db.CheckIfSignedUp(scheduleId, userId);
-
-                if (checkIfSignin)
+                int scheduleId = Convert.ToInt32(collection["scheduleId"]);
+                if (Session["Auth"] == null)
                 {
-                    TempData["Message"] = "<h5 style=\"color:red;\">Error: You are already signed up to this course</h5>";
+                    return RedirectToAction("LogInSignUp", "LoginSignUp");
+                }
+                if ((int)Session["Auth"] == 4 || (int)Session["Auth"] == 2)
+                {
+
+                    int userId = Convert.ToInt32(Session["Uid"]);
+
+
+                    var yogaUser = db.getUserById(userId);
+                    var sched = db.getScheduleById(scheduleId);
+
+                    // Validate if student already sign in  
+                    var checkIfSignin = db.CheckIfSignedUp(scheduleId, userId);
+
+                    if (checkIfSignin)
+                    {
+                        TempData["Message"] = "<h5 style=\"color:red;\">Error: You are already signed up to this course</h5>";
+                        return RedirectToAction("Schedule");
+
+                    }
+                    // Validation: student has passes 
+                    if (yogaUser.U_Tokens < 1)
+                    {
+                        TempData["Message"] = "<h5 style=\"color:red;\">Error: Out of passes</h5>";
+                        return RedirectToAction("Schedule");
+                    }
+                    // Validation: classrom has places 
+                    var room = db.getRoom(sched.Room_Id);
+                    if (db.getSignedUp(sched.Schedule_Id) >= room.Room_Capacity)
+                    {
+                        TempData["Message"] = "<h5 style=\"color:red;\">Error: Sorry this class is full</h5>";
+                        return RedirectToAction("Schedule");
+                    }
+
+                    db.ScheduleSignUp(scheduleId);
+                    // Creating Class log 
+
+                    db.CreateClass_Log(scheduleId, userId);
+
+                    db.RemoveToken(userId);
+
+
+
+                    //Message
+                    TempData["Message"] = "<h5>Sucessfully Enrolled</h5>";
+
                     return RedirectToAction("Schedule");
+                }
+                else
+                {
+                    TempData["class"] = scheduleId;
+                    List<Yoga_User> yu = db.getScheduleSignUpList(scheduleId);
+                    TempData["yu"] = yu;
+                    return RedirectToAction("StudentSignIn");
 
                 }
-                // Validation: student has passes 
-                if (yogaUser.U_Tokens < 1)
-                {
-                    TempData["Message"] = "<h5 style=\"color:red;\">Error: Out of passes</h5>";
-                    return RedirectToAction("Schedule");
-                }
-                // Validation: classrom has places 
-                var room = db.getRoom(sched.Room_Id);
-                if (db.getSignedUp(sched.Schedule_Id) >= room.Room_Capacity)
-                {
-                    TempData["Message"] = "<h5 style=\"color:red;\">Error: Sorry this class is full</h5>";
-                    return RedirectToAction("Schedule");
-                }
-
-                db.ScheduleSignUp(scheduleId);
-                // Creating Class log 
-
-                db.CreateClass_Log(scheduleId, userId);
-
-                db.RemoveToken(userId);
-
-
-
-                //Message
-                TempData["Message"] = "<h5>Sucessfully Enrolled</h5>";
-
-                return RedirectToAction("Schedule");
             }
             else
             {
-                TempData["class"] = scheduleId;
-                List<Yoga_User> yu = db.getScheduleSignUpList(scheduleId);
-                TempData["yu"] = yu;
-                return RedirectToAction("StudentSignIn");
+                IEnumerable<Schedule> orderedList;
+                if (collection["next"] != null)
+                {
+                    IEnumerable<Schedule> list;
+                    if (ViewBag.date == null && TempData["date"] == null)
+                    {
+                        ViewBag.date = DateTime.Now.AddDays(7);
+                        list = db.getSchedulesNextWeek(DateTime.Now);
+                    }
+                    else
+                    {
+                        DateTime date = (DateTime)TempData["date"];
+                        list = db.getSchedulesNextWeek(date);
+                        ViewBag.date = date.AddDays(7);
+                    }
+                    orderedList = (from schedule in list
+                                   orderby schedule.Class_Date
+                                   orderby schedule.Start_Time
+                                   select schedule);
+                }
+                else
+                {
+                    IEnumerable<Schedule> list;
+                    if (ViewBag.date == null && TempData["date"] == null)
+                    {
+                        ViewBag.date = DateTime.Now.AddDays(-7);
+                         list = db.getSchedulesBackWeek(DateTime.Now);
+                    }
+                    else
+                    {
+                        DateTime date = (DateTime)TempData["date"];
+                        list = db.getSchedulesBackWeek(date);
+                        ViewBag.date = date.AddDays(-7);
+                    }
 
+                    orderedList = (from schedule in list
+                                   orderby schedule.Class_Date
+                                   orderby schedule.Start_Time
+                                   select schedule);
+                }
+                    return View(orderedList);
+                
             }
         }
 

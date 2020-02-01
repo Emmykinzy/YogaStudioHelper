@@ -17,19 +17,27 @@
                 <h3>Saṃsāra Yoga</h3>
                 <ul class="vCenter" style="padding-left:10px;">
                     <li>@Html.ActionLink("Home", "Homepage", "Home")</li>
-                    @if (Session["Auth"] == null)
+                    @if (Session["Auth"] != null)
                     {
-                        <li>@Html.ActionLink("Schedule", "Schedule", "Schedule")</li>
-                        <li>@Html.ActionLink("Online Store", "OnlineStore", "Passes")</li>
-                    }
-                    else if ((int)Session["Auth"] == 1)
-                    {
+                        if ((int)Session["Auth"] == 1)
+                        {
 
+                        }
+                        else if ((int)Session["Auth"] == 3)
+                        {
+                            <li>@Html.ActionLink("Schedule", "Schedule", "Schedule")</li>
+                            <li>@Html.ActionLink("Store", "PurchaseFindUser", "Passes")</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Schedule", "Schedule", "Schedule")</li>
+                            <li>@Html.ActionLink("Store", "OnlineStore", "Passes")</li>
+                        }
                     }
                     else
                     {
                         <li>@Html.ActionLink("Schedule", "Schedule", "Schedule")</li>
-                        <li>@Html.ActionLink("Online Store", "OnlineStore", "Passes")</li>
+                        <li>@Html.ActionLink("Store", "OnlineStore", "Passes")</li>
                     }
 
                     @if (Session["Auth"] == null)
