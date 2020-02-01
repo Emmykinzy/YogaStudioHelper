@@ -13,98 +13,98 @@
         <div class="nav-container navbar-expand-md" id="navbar">
             <div class="center clearfix nav">
                 <div class="navWhite">
-                <img class="floatLeft" style="margin-right:10px; margin-left:25px;" src="~/Content/Images/Test_Logo4.png" width="75" height="90" alt="Yoga Logo">
-                <h3>Saṃsāra Yoga</h3>
-                <ul class="vCenter" style="padding-left:10px;">
-                    <li>@Html.ActionLink("Home", "Homepage", "Home")</li>
-                    @if (Session["Auth"] != null)
-                    {
-                        if ((int)Session["Auth"] == 1)
+                    <img class="floatLeft" style="margin-right:10px; margin-left:25px;" src="~/Content/Images/Test_Logo4.png" width="75" height="90" alt="Yoga Logo">
+                    <h3>Saṃsāra Yoga</h3>
+                    <ul class="vCenter" style="padding-left:10px;">
+                        <li>@Html.ActionLink("Home", "Homepage", "Home")</li>
+                        @if (Session["Auth"] != null)
                         {
+                            if ((int)Session["Auth"] == 1)
+                            {
 
-                        }
-                        else if ((int)Session["Auth"] == 3)
-                        {
-                            <li>@Html.ActionLink("Schedule", "Schedule", "Schedule")</li>
-                            <li>@Html.ActionLink("Store", "PurchaseFindUser", "Passes")</li>
+                            }
+                            else if ((int)Session["Auth"] == 3)
+                            {
+                                <li>@Html.ActionLink("Schedule", "Schedule", "Schedule")</li>
+                                <li>@Html.ActionLink("Store", "PurchaseFindUser", "Passes")</li>
+                            }
+                            else
+                            {
+                                <li>@Html.ActionLink("Schedule", "Schedule", "Schedule")</li>
+                                <li>@Html.ActionLink("Store", "OnlineStore", "Passes")</li>
+                            }
                         }
                         else
                         {
                             <li>@Html.ActionLink("Schedule", "Schedule", "Schedule")</li>
                             <li>@Html.ActionLink("Store", "OnlineStore", "Passes")</li>
                         }
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("Schedule", "Schedule", "Schedule")</li>
-                        <li>@Html.ActionLink("Store", "OnlineStore", "Passes")</li>
-                    }
 
-                    @if (Session["Auth"] == null)
-                    { }
-                    else if ((int)Session["Auth"] == 1)
-                    {
-                        <li>
-                            @Html.ActionLink("Manage Users", "UserList", "ManageUsers")
-                            <ul>
-                                <li>@Html.ActionLink("Find User", "FindUser", "ManageUsers")</li>
-                                <li>@Html.ActionLink("Create User", "CreateUser", "ManageUsers")</li>
-                            </ul>
-                        </li>
-                        <!--
-
-        test disable
-            Html.ActionLink("Manage Studio", "ManageStudio", "ManageStudio")
-            -->
-                        <li>
-                            <a>Manage Studio</a>
-                            <ul>
-                                <li>@Html.ActionLink("Schedule", "ScheduleList", "ManageStudio")</li>
-                                <li>@Html.ActionLink("Rooms", "RoomList", "ManageStudio")</li>
-                                <li>@Html.ActionLink("Classes", "ClassList", "ManageStudio")</li>
-                                <li>@Html.ActionLink("Class Passes", "ClassPassList2", "ManageStudio")</li>
-                                <li>@Html.ActionLink("Promotions", "PromotionList", "ManageStudio")</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <!--Html.ActionLink("Reports", "OnlineStore", "Report")-->
-                            <a>Reports</a>
-
-                            <ul>
-                                <li>@Html.ActionLink("Hours Worked", "HoursWorked", "Report")</li>
-                                <li>@Html.ActionLink("Sales", "Sales", "Report")</li>
-                                <li>@Html.ActionLink("Attendance", "Attendance", "Report")</li>
-                            </ul>
-                        </li>
-                    }
-
-                    @if (Session["Auth"] == null)
-                    {
-                        <li class="floatRight logMarg">@Html.ActionLink("Login", "LogInSignUp", "LoginSignUp")</li>
-                    }
-                    else
-                    {
-                <li class="floatRight logMarg">
-                    <!--Html.ActionLink("Profile", "Profile", "Profile")-->
-                    <a>Profile</a>
-                    <ul>
-                        @if ((int)Session["Auth"] == 4)
+                        @if (Session["Auth"] == null)
+                        { }
+                        else if ((int)Session["Auth"] == 1)
                         {
-                            <li>@Html.ActionLink("Classes", "ClassLogList", "Profile")</li>
-                            <li>@Html.ActionLink("Passes", "PassLogList", "Profile")</li>
+                            <li>
+                                @Html.ActionLink("Manage Users", "UserList", "ManageUsers")
+                                <ul>
+                                    <li>@Html.ActionLink("Find User", "FindUser", "ManageUsers")</li>
+                                    <li>@Html.ActionLink("Create User", "CreateUser", "ManageUsers")</li>
+                                </ul>
+                            </li>
+                            <!--
+
+                            test disable
+                                Html.ActionLink("Manage Studio", "ManageStudio", "ManageStudio")
+                                -->
+                            <li>
+                                <a>Manage Studio</a>
+                                <ul>
+                                    <li>@Html.ActionLink("Schedule", "ScheduleList", "ManageStudio")</li>
+                                    <li>@Html.ActionLink("Rooms", "RoomList", "ManageStudio")</li>
+                                    <li>@Html.ActionLink("Classes", "ClassList", "ManageStudio")</li>
+                                    <li>@Html.ActionLink("Class Passes", "ClassPassList2", "ManageStudio")</li>
+                                    <li>@Html.ActionLink("Promotions", "PromotionList", "ManageStudio")</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <!--Html.ActionLink("Reports", "OnlineStore", "Report")-->
+                                <a>Reports</a>
+
+                                <ul>
+                                    <li>@Html.ActionLink("Hours Worked", "HoursWorked", "Report")</li>
+                                    <li>@Html.ActionLink("Sales", "Sales", "Report")</li>
+                                    <li>@Html.ActionLink("Attendance", "Attendance", "Report")</li>
+                                </ul>
+                            </li>
                         }
-                        <li>@Html.ActionLink("Settings", "Settings", "Profile")</li>
-                        @if ((int)Session["Auth"] == 2)
+
+                        @if (Session["Auth"] == null)
                         {
-                            <li>@Html.ActionLink("Availabilities", "ViewAvailabilities", "Profile")</li>
+                            <li class="floatRight logMarg">@Html.ActionLink("Login", "LogInSignUp", "LoginSignUp")</li>
                         }
-                        <li>@Html.ActionLink("Log Out", "LogOut", "LoginSignUp")</li>
+                        else
+                        {
+                            <li class="floatRight logMarg">
+                                <!--Html.ActionLink("Profile", "Profile", "Profile")-->
+                                <a>Profile</a>
+                                <ul>
+                                    @if ((int)Session["Auth"] == 4)
+                                    {
+                                        <li>@Html.ActionLink("Classes", "ClassLogList", "Profile")</li>
+                                        <li>@Html.ActionLink("Passes", "PassLogList", "Profile")</li>
+                                    }
+                                    <li>@Html.ActionLink("Settings", "Settings", "Profile")</li>
+                                    @if ((int)Session["Auth"] == 2)
+                                    {
+                                        <li>@Html.ActionLink("Availabilities", "ViewAvailabilities", "Profile")</li>
+                                    }
+                                    <li>@Html.ActionLink("Log Out", "LogOut", "LoginSignUp")</li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
-                </li>
-                    }
-                </ul>
+                </div>
             </div>
-           </div>
         </div>
 
 

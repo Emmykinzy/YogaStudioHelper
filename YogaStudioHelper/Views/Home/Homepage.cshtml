@@ -1,6 +1,19 @@
-﻿
+﻿@using Database
 @{
     ViewBag.Title = "Homepage";
+
+    DBMaster db = new DBMaster();
+
+    List<Schedule> list;
+    if (ViewBag.UpcomingClasses != null)
+    {
+        list = ViewBag.UpcomingClasses;
+
+    }
+    else
+    {
+        list = new List<Schedule>();
+    }
 
 }
 
@@ -15,28 +28,41 @@
 </div>
 <h3 style="margin-left:50px; font:'Yu Gothic';">Upcoming Classes</h3>
 <div class="upComing scrollmenu">
+
+
+    @{
+        //test upcoming classes feature
+
+        foreach (var sched in list)
+        {
+            var classe = db.getClass(sched.Class_Id);
+
+            //doing this since only datetime as formating method tostring() (not timespan)
+            DateTime time = DateTime.Today.Add(sched.Start_Time); 
+
+            // <a href="/Schedule/ClassSignUp" class="btn btn-default">More Info</a>
+
+            // , new { @class = "btn btn-default"}
+            <div class="scrollElement">
+                <div class="title">@sched.Class_Date.ToString("MMMM dd")</div>
+                <div class="scrollCont">@classe.Class_Name<br />@time.ToString("h:mm tt")<br />
+                @Html.ActionLink("More Info","Schedule","Schedule")</div>
+                
+            </div>
+
+        }
+
+    }
+
+
+
     <div class="scrollElement">
-        <div class="title">Dec 5th</div>
-        <div class="scrollCont">Hot Yoga<br />12:00 PM<br /><a href="/Schedule/ClassSignUp" class="btn btn-default">More Info</a></div>
-    </div>
-    <div class="scrollElement">
-        <div class="title">Dec 5th</div>
-        <div class="scrollCont">Yoga L1<br />2:00 PM<br /><a href="/Schedule/ClassSignUp" class="btn btn-default">More Info</a></div>
-    </div>
-    <div class="scrollElement">
-        <div class="title">Dec 5th</div>
-        <div class="scrollCont">Baby Yoga<br />4:00 PM<br /><a href="/Schedule/ClassSignUp" class="btn btn-default">More Info</a></div>
-    </div>
-    <div class="scrollElement">
-        <div class="title">Dec 5th</div>
+        <div class="title">Dec 5th *PlaceHolder</div>
         <div class="scrollCont">Yoga L2<br />6:00 PM<br /><a href="/Schedule/ClassSignUp" class="btn btn-default">More Info</a></div>
     </div>
+
     <div class="scrollElement">
-        <div class="title">Dec 6th</div>
-        <div class="scrollCont">Hot Yoga<br />8:00 AM<br /><a href="/Schedule/ClassSignUp" class="btn btn-default">More Info</a></div>
-    </div>
-    <div class="scrollElement">
-        <div class="title">Dec 6th</div>
+        <div class="title">Dec 6th *PlaceHolder</div>
         <div class="scrollCont">Hot Yoga L2<br />10:00 AM<br /><a href="/Schedule/ClassSignUp" class="btn btn-default">More Info</a></div>
     </div>
 </div>
