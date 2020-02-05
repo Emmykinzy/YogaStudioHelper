@@ -18,6 +18,10 @@
     }
 
 
+.custom_nav{
+
+    
+}
 /* test ben */
 body {
     background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
@@ -42,7 +46,7 @@ textarea {
     max-width: 280px;
 }
 
-ul {
+ul:not(.custom_nav) {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -53,12 +57,12 @@ ul {
     overflow: auto;
 }
 
-li {
+li:not(.custom_nav) {
     float: left;
     /*background-color: white;*/
 }
 
-    li a {
+    li a:not(.custom_nav) {
         display: block;
         color: #5ab9ea;
         text-align: center;
@@ -80,10 +84,6 @@ li {
     margin-right: -45px;
 }
 
-.nav {
-    width: 90%;
-    padding-top: 10px;
-}
 
 .center {
     margin: auto;
@@ -98,22 +98,19 @@ li {
 }
 
 
-ul li {
+ul li:not(.custom_nav) {
     display: inline-block;
     width: 175px;
     font: 20px 'Yu Gothic';
 }
 
-    ul li:hover {
-        /*background: #edf9ff; 
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
-    }
 
-        ul li:hover ul {
+
+        ul li:hover ul:not(.custom_nav) {
             display: block;
         }
 
-    ul li ul {
+    ul li ul:not(.custom_nav) {
         position: absolute;
         width: 175px;
         display: none;
@@ -121,18 +118,18 @@ ul li {
         border-radius: 15px;
     }
 
-        ul li ul li {
+        ul li ul li:not(.custom_nav) {
             /*
   border-bottom: 1px solid #ddd;*/
             display: block;
             background: white;
         }
 
-            ul li ul li a {
+            ul li ul li a:not(.custom_nav) {
                 display: block !important;
             }
 
-            ul li ul li:hover {
+            ul li ul li:hover:not(.custom_nav) {
                 /*background: #edf9ff;*/
                 text-decoration: underline;
             }
