@@ -116,7 +116,34 @@ namespace YogaStudioHelper.Controllers
 
             //get list with this time constraint 
             IEnumerable<Database.Pass_Log> saleList = db.GetSaleReport(date, date2);
-            TempData["saleList"] = saleList;
+
+
+            List<SaleReportViewModel> list = new List<SaleReportViewModel>();
+
+            foreach (var sale in saleList)
+            {
+                SaleReportViewModel saleReport = new SaleReportViewModel();
+
+                var classPass = db.getClassPasse(sale.Pass_Id);
+                var user = db.getUserById(sale.U_Id);
+
+                saleReport.Pass_Log_Id = sale.Pass_Log_Id;
+                saleReport.Pass_Id = sale.Pass_Id;
+                saleReport.Pass_Name = classPass.Pass_Name;
+                saleReport.U_Id = sale.U_Id;
+                saleReport.U_First_Name = user.U_First_Name;
+                saleReport.U_Last_Name = user.U_Last_Name;
+                saleReport.Num_Classes = sale.Num_Classes.GetValueOrDefault();
+                saleReport.Purchase_Price = Convert.ToDouble(sale.Purchase_Price);
+                saleReport.Date_Purchased = sale.Date_Purchased;
+
+                list.Add(saleReport);
+            }
+
+
+
+
+            TempData["saleList"] = list;
 
             // redirect view with list of passlog 
             return RedirectToAction("SaleList");
@@ -142,7 +169,32 @@ namespace YogaStudioHelper.Controllers
 
             //get list with this time constraint 
             IEnumerable<Database.Pass_Log> saleList = db.GetSaleReport(startDate, endDate);
-            TempData["saleList"] = saleList;
+
+            List<SaleReportViewModel> list = new List<SaleReportViewModel>(); 
+
+            foreach(var sale in saleList)
+            {
+                SaleReportViewModel saleReport = new SaleReportViewModel();
+
+                var classPass = db.getClassPasse(sale.Pass_Id);
+                var user = db.getUserById(sale.U_Id);
+
+                saleReport.Pass_Log_Id = sale.Pass_Log_Id;
+                saleReport.Pass_Id = sale.Pass_Id;
+                saleReport.Pass_Name = classPass.Pass_Name;
+                saleReport.U_Id = sale.U_Id;
+                saleReport.U_First_Name = user.U_First_Name;
+                saleReport.U_Last_Name = user.U_Last_Name;
+                saleReport.Num_Classes = sale.Num_Classes.GetValueOrDefault();
+                saleReport.Purchase_Price = Convert.ToDouble(sale.Purchase_Price);
+                saleReport.Date_Purchased = sale.Date_Purchased;
+
+
+                list.Add(saleReport);
+            }
+
+
+            TempData["saleList"] = list;
 
             // redirect view with list of passlog 
             return RedirectToAction("SaleList");
@@ -153,7 +205,10 @@ namespace YogaStudioHelper.Controllers
         [HttpGet]
         public ActionResult SaleList()
         {
-            IEnumerable<Database.Pass_Log> saleList = TempData["saleList"] as IEnumerable<Database.Pass_Log>; 
+            
+            List<SaleReportViewModel> saleList = TempData["saleList"] as List<SaleReportViewModel>;
+
+            //IEnumerable<Database.Pass_Log> saleList = TempData["saleList"] as IEnumerable<Database.Pass_Log>; 
             return View(saleList);
         }
 

@@ -136,7 +136,10 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jspdf.min.js" />
+    <Content Include="Scripts\jspdf.plugin.autotable.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\tableHTMLExport.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +172,7 @@
     <Compile Include="ViewModels\DropdownListPassViewModel.cs" />
     <Compile Include="ViewModels\HoursWorkedViewModel.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
+    <Compile Include="ViewModels\SaleReportViewModel.cs" />
     <Compile Include="ViewModels\ScheduleViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -238,7 +242,7 @@
     <Content Include="Views\Profile\ViewAvailabilities.cshtml" />
     <Content Include="Views\Profile\ClassLogList.cshtml" />
     <Content Include="Views\Profile\PassLogList.cshtml" />
-    <Content Include="Views\Report\SaleList.cshtml" />
+    <Content Include="Views\Report\SaleListOld.cshtml" />
     <Content Include="Views\LoginSignUp\ConfirmEmail.cshtml" />
     <Content Include="Views\Paypal\FailureView.cshtml" />
     <Content Include="Views\Paypal\SuccessView.cshtml" />
@@ -256,6 +260,7 @@
     <Content Include="Views\Report\AttendanceDatesList.cshtml" />
     <Content Include="Views\ManageStudio\ScheduleList.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Report\SaleList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -265,6 +270,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ReportTest\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
