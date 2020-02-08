@@ -28,7 +28,32 @@
 
         -->
 
+    <style>
 
+        .navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: 100%;
+  padding: 1px;
+  width: auto;
+}
+
+
+.example3 .navbar-brand {
+  height: 80px;
+}
+
+.example3 .nav >li >a {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.example3 .navbar-toggle {
+  padding: 10px;
+  margin: 25px 15px 25px 0;
+}
+
+    </style>
 
 
 </head>
@@ -48,17 +73,26 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Brand</a>
+
+                    <!--<img class="floatLeft" style="margin-right:10px; margin-left:25px;" src="~/Content/Images/Test_Logo4.png" width="75" height="90" alt="Yoga Logo">
+
+        width="30px"
+        -->
+                    <a class="navbar-brand" href="#">
+                        <img class="floatLeft" src="~/Content/Images/Test_Logo4.png" alt="Yoga Logo">
+                    </a>
+
+                    <!--<a class="navbar-brand" href="#">Brand</a>-->
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse custom_nav" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav custom_nav">
-                        <li class="custom_nav">@Html.ActionLink("Home", "Homepage", "Home", null, new { @class= "custom_nav"})</li>
+                        <li class="custom_nav">@Html.ActionLink("Home", "Homepage", "Home", null, new { @class = "custom_nav" })</li>
                         @if (Session["Auth"] == null)
                         {
-                            <li class="custom_nav">@Html.ActionLink("Schedule", "Schedule", "Schedule", null, new { @class= "custom_nav"})</li>
-                            <li class="custom_nav">@Html.ActionLink("Online Store", "OnlineStore", "Passes", null, new { @class= "custom_nav"})</li>
+                            <li class="custom_nav">@Html.ActionLink("Schedule", "Schedule", "Schedule", null, new { @class = "custom_nav" })</li>
+                            <li class="custom_nav">@Html.ActionLink("Online Store", "OnlineStore", "Passes", null, new { @class = "custom_nav" })</li>
                         }
                         else if ((int)Session["Auth"] == 1)
                         {
@@ -66,8 +100,8 @@
                         }
                         else
                         {
-                            <li class="custom_nav">@Html.ActionLink("Schedule", "Schedule", "Schedule", null, new { @class= "custom_nav"})</li>
-                            <li class="custom_nav">@Html.ActionLink("Online Store", "OnlineStore", "Passes", null, new { @class= "custom_nav"})</li>
+                            <li class="custom_nav">@Html.ActionLink("Schedule", "Schedule", "Schedule", null, new { @class = "custom_nav" })</li>
+                            <li class="custom_nav">@Html.ActionLink("Online Store", "OnlineStore", "Passes", null, new { @class = "custom_nav" })</li>
                         }
 
 
@@ -81,9 +115,9 @@
 
 
                                 <ul class="dropdown-menu custom_nav">
-                                    <li class="custom_nav">@Html.ActionLink("Manage Users", "UserList", "ManageUsers", null, new { @class= "custom_nav"})</li>
-                                    <li class="custom_nav">@Html.ActionLink("Find User", "FindUser", "ManageUsers", null, new { @class= "custom_nav"})</li>
-                                    <li class="custom_nav">@Html.ActionLink("Create User", "CreateUser", "ManageUsers", null, new { @class= "custom_nav"})</li>
+                                    <li class="custom_nav">@Html.ActionLink("Manage Users", "UserList", "ManageUsers", null, new { @class = "custom_nav" })</li>
+                                    <li class="custom_nav">@Html.ActionLink("Find User", "FindUser", "ManageUsers", null, new { @class = "custom_nav" })</li>
+                                    <li class="custom_nav">@Html.ActionLink("Create User", "CreateUser", "ManageUsers", null, new { @class = "custom_nav" })</li>
                                 </ul>
                             </li>
 
@@ -91,36 +125,68 @@
 
 
                             <li class="dropdown custom_nav">
-                                <a href="#" class="dropdown-toggle custom_nav" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage Studio<span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle custom_nav" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage Studio <span class="caret"></span></a>
 
 
 
                                 <ul class="dropdown-menu custom_nav">
-                                    <li class="custom_nav">@Html.ActionLink("Schedule", "ScheduleList", "ManageStudio", null, new { @class= "custom_nav"})</li>
-                                    <li class="custom_nav">@Html.ActionLink("Rooms", "RoomList", "ManageStudio", null, new { @class= "custom_nav"})</li>
-                                    <li class="custom_nav">@Html.ActionLink("Classes", "ClassList", "ManageStudio", null, new { @class= "custom_nav"})</li>
-                                    <li class="custom_nav">@Html.ActionLink("Class Passes", "ClassPassList2", "ManageStudio", null, new { @class= "custom_nav"})</li>
-                                    <li class="custom_nav">@Html.ActionLink("Promotions", "PromotionList", "ManageStudio", null, new { @class= "custom_nav"})</li>
+                                    <li class="custom_nav">@Html.ActionLink("Schedule", "ScheduleList", "ManageStudio", null, new { @class = "custom_nav" })</li>
+                                    <li class="custom_nav">@Html.ActionLink("Rooms", "RoomList", "ManageStudio", null, new { @class = "custom_nav" })</li>
+                                    <li class="custom_nav">@Html.ActionLink("Classes", "ClassList", "ManageStudio", null, new { @class = "custom_nav" })</li>
+                                    <li class="custom_nav">@Html.ActionLink("Class Passes", "ClassPassList2", "ManageStudio", null, new { @class = "custom_nav" })</li>
+                                    <li class="custom_nav">@Html.ActionLink("Promotions", "PromotionList", "ManageStudio", null, new { @class = "custom_nav" })</li>
                                 </ul>
                             </li>
 
 
                             <li class="dropdown custom_nav">
-                                <a href="#" class="dropdown-toggle custom_nav" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports<span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle custom_nav" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports <span class="caret"></span></a>
 
 
                                 <ul class="dropdown-menu custom_nav">
-                                    <li class="custom_nav">@Html.ActionLink("Hours Worked", "HoursWorked", "Report", null, new { @class= "custom_nav"})</li>
-                                    <li class="custom_nav">@Html.ActionLink("Sales", "Sales", "Report", null, new { @class= "custom_nav"})</li>
-                                    <li class="custom_nav">@Html.ActionLink("Attendance", "Attendance", "Report", null, new { @class= "custom_nav"})</li>
+                                    <li class="custom_nav">@Html.ActionLink("Hours Worked", "HoursWorked", "Report", null, new { @class = "custom_nav" })</li>
+                                    <li class="custom_nav">@Html.ActionLink("Sales", "Sales", "Report", null, new { @class = "custom_nav" })</li>
+                                    <li class="custom_nav">@Html.ActionLink("Attendance", "Attendance", "Report", null, new { @class = "custom_nav" })</li>
                                 </ul>
                             </li>
 
                         }
 
 
+                        @if (Session["Auth"] == null)
+                        {
+                            <li class="floatRight custom_nav">">@Html.ActionLink("Login", "LogInSignUp", "LoginSignUp", null, new { @class = "custom_nav" })</li>
+                        }
 
-                    </ul>
+
+                        else
+                        {
+                       
+
+                            <li class="dropdown floatRight custom_nav">
+                                <a href="#" class="dropdown-toggle custom_nav" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
+
+                                <ul class="dropdown-menu custom_nav">
+                                    @if ((int)Session["Auth"] == 4)
+                                    {
+                                        <li class="custom_nav">@Html.ActionLink("Classes", "ClassLogList", "Profile", null, new { @class = "custom_nav" })</li>
+                                        <li class="custom_nav">@Html.ActionLink("Passes", "PassLogList", "Profile", null, new { @class = "custom_nav" })</li>
+                                    }
+                                    <li class="custom_nav">@Html.ActionLink("Settings", "Settings", "Profile", null, new { @class = "custom_nav" })</li>
+                                    @if ((int)Session["Auth"] == 2)
+                                    {
+                                        <li class="custom_nav">@Html.ActionLink("Availabilities", "ViewAvailabilities", "Profile", null, new { @class = "custom_nav" })</li>
+                                    }
+                                    <li class="custom_nav">@Html.ActionLink("Log Out", "LogOut", "LoginSignUp", null, new { @class = "custom_nav" })</li>
+                                </ul>
+                            </li>
+
+                     
+                            }
+
+
+
+                        </ul>
                 </div>
 
             </div>
