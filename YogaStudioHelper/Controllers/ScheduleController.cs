@@ -14,7 +14,7 @@ namespace YogaStudioHelper.Controllers
         [HttpGet]
         public ActionResult Schedule()
         {
-            IEnumerable<Schedule> list = db.getSchedulesNext7Days();
+            IEnumerable<Schedule> list = db.getSchedulesNext7Days().Where(x => x.Schedule_Status == "ACTIVE");
 
             IEnumerable<Schedule> orderedList = (from schedule in list
                                                  orderby schedule.Class_Date
@@ -45,24 +45,31 @@ namespace YogaStudioHelper.Controllers
 
                     // Validate if student already sign in  
                     var checkIfSignin = db.CheckIfSignedUp(scheduleId, userId);
-
+                    if(sched.Class_Date < DateTime.Now.Date)
+                    {
+                        TempData["Message"] = "Error: Class is no longer available";
+                        return RedirectToAction("Schedule");
+                    }
                     if (checkIfSignin)
                     {
-                        TempData["Message"] = "<h5 style=\"color:red;\">Error: You are already signed up to this course</h5>";
+                        //TempData["Message"] = "<h5 style=\"color:red;\">Error: You are already signed up to this course</h5>";
+                        TempData["Message"] = "Error: You've already signed up to this course";
                         return RedirectToAction("Schedule");
 
                     }
                     // Validation: student has passes 
                     if (yogaUser.U_Tokens < 1)
                     {
-                        TempData["Message"] = "<h5 style=\"color:red;\">Error: Out of passes</h5>";
+                        //TempData["Message"] = "<h5 style=\"color:red;\">Error: Out of passes</h5>";
+                        TempData["Message"] = "Error: Out of passes";
                         return RedirectToAction("Schedule");
                     }
                     // Validation: classrom has places 
                     var room = db.getRoom(sched.Room_Id);
                     if (db.getSignedUp(sched.Schedule_Id) >= room.Room_Capacity)
                     {
-                        TempData["Message"] = "<h5 style=\"color:red;\">Error: Sorry this class is full</h5>";
+                        //TempData["Message"] = "<h5 style=\"color:red;\">Error: Sorry this class is full</h5>";
+                        TempData["Message"] = "Error: Sorry this class is full";
                         return RedirectToAction("Schedule");
                     }
 
@@ -76,7 +83,8 @@ namespace YogaStudioHelper.Controllers
 
 
                     //Message
-                    TempData["Message"] = "<h5>Sucessfully Enrolled</h5>";
+                    //TempData["Message"] = "<h5>Sucessfully Enrolled</h5>";
+                    TempData["Message"] = "Sucessfully Enrolled";
 
                     return RedirectToAction("Schedule");
                 }
@@ -91,48 +99,84 @@ namespace YogaStudioHelper.Controllers
             }
             else
             {
-                IEnumerable<Schedule> orderedList;
+
+                //if (collection["next"] != null)
+                //{
+                //    IEnumerable<Schedule> list;
+                //    if (ViewBag.date == null && TempData["date"] == null)
+                //    {
+                //        ViewBag.date = DateTime.Now.AddDays(7);
+                //        list = db.getSchedulesNextWeek(DateTime.Now);
+                //    }
+                //    else
+                //    {
+                //        DateTime date = (DateTime)TempData["date"];
+                //        list = db.getSchedulesNextWeek(date);
+                //        ViewBag.date = date.AddDays(7);
+                //    }
+                //    orderedList = (from schedule in list
+                //                   orderby schedule.Class_Date
+                //                   orderby schedule.Start_Time
+                //                   select schedule);
+                //}
+                //else
+                //{
+                //    IEnumerable<Schedule> list;
+                //    if (ViewBag.date == null && TempData["date"] == null)
+                //    {
+                //        ViewBag.date = DateTime.Now.AddDays(-7);
+                //         list = db.getSchedulesBackWeek(DateTime.Now);
+                //    }
+                //    else
+                //    {
+                //        DateTime date = (DateTime)TempData["date"];
+                //        list = db.getSchedulesBackWeek(date);
+                //        ViewBag.date = date.AddDays(-7);
+                //    }
+
+                //    orderedList = (from schedule in list
+                //                   orderby schedule.Class_Date
+                //                   orderby schedule.Start_Time
+                //                   select schedule);
+                //}
+                //    return View(orderedList);
+
+                IEnumerable<Schedule> list;
+ 
+
                 if (collection["next"] != null)
                 {
-                    IEnumerable<Schedule> list;
-                    if (ViewBag.date == null && TempData["date"] == null)
-                    {
-                        ViewBag.date = DateTime.Now.AddDays(7);
-                        list = db.getSchedulesNextWeek(DateTime.Now);
-                    }
-                    else
-                    {
-                        DateTime date = (DateTime)TempData["date"];
-                        list = db.getSchedulesNextWeek(date);
-                        ViewBag.date = date.AddDays(7);
-                    }
-                    orderedList = (from schedule in list
-                                   orderby schedule.Class_Date
-                                   orderby schedule.Start_Time
-                                   select schedule);
-                }
-                else
-                {
-                    IEnumerable<Schedule> list;
-                    if (ViewBag.date == null && TempData["date"] == null)
-                    {
-                        ViewBag.date = DateTime.Now.AddDays(-7);
-                         list = db.getSchedulesBackWeek(DateTime.Now);
-                    }
-                    else
-                    {
-                        DateTime date = (DateTime)TempData["date"];
-                        list = db.getSchedulesBackWeek(date);
-                        ViewBag.date = date.AddDays(-7);
-                    }
+                    int position = Int32.Parse(collection["position"]);
+                    list = db.getSchedulesNextWeek(DateTime.Now.AddDays(position));
+                    position += 7;
+                    TempData["position"] = position;
+                    TempData["date"] = DateTime.Now.AddDays(position);
 
-                    orderedList = (from schedule in list
-                                   orderby schedule.Class_Date
-                                   orderby schedule.Start_Time
-                                   select schedule);
+                    return View(list);
+
                 }
-                    return View(orderedList);
                 
+
+
+                if (collection["back"] != null)
+                {
+                    int position = Int32.Parse(collection["position"]);
+                    list = db.getSchedulesBackWeek(DateTime.Now.AddDays(position));
+                    position -= 7;
+                    TempData["position"] = position;
+                    TempData["date"] = DateTime.Now.AddDays(position);
+
+                    return View(list);
+
+                }
+
+                IEnumerable<Schedule> sche = db.getSchedulesNext7Days().Where(x => x.Schedule_Status == "ACTIVE");
+                IEnumerable<Schedule> orderedList = (from schedule in sche
+                                                     orderby schedule.Class_Date
+                                                     orderby schedule.Start_Time
+                                                     select schedule);
+                return View(orderedList);
+
             }
         }
 

@@ -26,24 +26,11 @@ namespace YogaStudioHelper.Controllers
         public ActionResult ClassLogList()
         {
 
-            IEnumerable<Class_Log> class_Log_List = db.GetClass_Logs();
-
-            /* 
-             
-            ? more efficienct way to do ? less search in view etc ?
-
-            using (var context = new BloggingContext())
-            {
-                var blogs = context.Blogs
-                    .Include(blog => blog.Posts)
-                        .ThenInclude(post => post.Author)
-                    .ToList();
-            }
-            */
-
+            IEnumerable<Class_Log> class_Log_List = db.GetClass_LogsByUId((int)Session["Uid"]);
 
             return View(class_Log_List);
         }
+
 
 
         // cancel upcoming class 
@@ -64,15 +51,62 @@ namespace YogaStudioHelper.Controllers
         }
 
 
+        [HttpGet]
         public ActionResult PassLogList()
         {
             // User id 
             int userId = Int32.Parse(Session["Uid"].ToString());
 
             IEnumerable<Pass_Log> pass_Log_List = db.getPass_LogsByUId(userId);
+            IEnumerable<Pass_Log> orderedList = (from cl in pass_Log_List
+                                                 orderby cl.Invoice_Number
+                                                 orderby cl.Date_Purchased                                                  
+                                                  select cl);
 
 
-            return View(pass_Log_List); 
+            return View(orderedList.Take(10)); 
+        }
+
+        [HttpPost]
+        public ActionResult PassLogList(FormCollection form)
+        {
+            // User id 
+            int userId = Int32.Parse(Session["Uid"].ToString());
+
+            IEnumerable<Pass_Log> pass_Log_List = db.getPass_LogsByUId(userId);
+            IEnumerable<Pass_Log> orderedList = (from cl in pass_Log_List
+                                                 orderby cl.Invoice_Number
+                                                 orderby cl.Date_Purchased
+                                                 select cl);
+
+
+            IEnumerable<Pass_Log> newList;
+            if (form["back"] == null)
+            {
+                if (form["position"] == null)
+                {
+                    newList = orderedList.Skip(1 * 10).Take(10);
+                    TempData["position"] = 2;
+                }
+                else
+                {
+                    int position = Int32.Parse(form["position"]);
+                    newList = orderedList.Skip(position * 10).Take(10);
+                    TempData["position"] = position + 1;
+                }
+
+            }
+            else
+            {
+
+                int position = Int32.Parse(form["position"]);
+                newList = orderedList.Skip(position - 1 * 10).Take(10);
+                TempData["position"] = position - 1;
+
+            }
+
+
+            return View(newList);
         }
 
 

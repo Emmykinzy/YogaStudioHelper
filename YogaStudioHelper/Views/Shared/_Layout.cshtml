@@ -21,7 +21,7 @@
                     {
                         if ((int)Session["Auth"] == 1)
                         {
-
+                            <li>@Html.ActionLink("Schedule", "Schedule", "Schedule")</li>
                         }
                         else if ((int)Session["Auth"] == 3)
                         {
@@ -84,23 +84,23 @@
                     }
                     else
                     {
-                <li class="floatRight logMarg">
-                    <!--Html.ActionLink("Profile", "Profile", "Profile")-->
-                    <a>Profile</a>
-                    <ul>
-                        @if ((int)Session["Auth"] == 4)
-                        {
-                            <li>@Html.ActionLink("Classes", "ClassLogList", "Profile")</li>
-                            <li>@Html.ActionLink("Passes", "PassLogList", "Profile")</li>
-                        }
-                        <li>@Html.ActionLink("Settings", "Settings", "Profile")</li>
-                        @if ((int)Session["Auth"] == 2)
-                        {
-                            <li>@Html.ActionLink("Availabilities", "ViewAvailabilities", "Profile")</li>
-                        }
-                        <li>@Html.ActionLink("Log Out", "LogOut", "LoginSignUp")</li>
-                    </ul>
-                </li>
+                        <li class="floatRight logMarg">
+                            <!--Html.ActionLink("Profile", "Profile", "Profile")-->
+                            <a>Profile</a>
+                            <ul>
+                                @if ((int)Session["Auth"] == 4)
+                                {
+                                    <li>@Html.ActionLink("Classes", "ClassLogList", "Profile")</li>
+                                    <li>@Html.ActionLink("Passes", "PassLogList", "Profile")</li>
+                                }
+                                <li>@Html.ActionLink("Settings", "Settings", "Profile")</li>
+                                @if ((int)Session["Auth"] == 2)
+                                {
+                                    <li>@Html.ActionLink("Availabilities", "ViewAvailabilities", "Profile")</li>
+                                }
+                                <li>@Html.ActionLink("Log Out", "LogOut", "LoginSignUp")</li>
+                            </ul>
+                        </li>
                     }
                 </ul>
             </div>

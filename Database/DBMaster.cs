@@ -891,14 +891,14 @@ namespace Database
         { 
             DateTime weekStart = currday.AddDays(7).Date;
             DateTime weekEnd = weekStart.AddDays(6).Date;
-            return myDb.Schedules.Where(x => x.Class_Date >= weekStart && x.Class_Date <= weekEnd);
+            return myDb.Schedules.Where(x => x.Class_Date >= weekStart && x.Class_Date <= weekEnd && x.Schedule_Status == "ACTIVE").OrderBy(x => x.Start_Time).OrderBy(x => x.Class_Date);
         }
 
-        public IEnumerable<Schedule> getSchedulesBackWeek(DateTime weekEnd)
+        public IEnumerable<Schedule> getSchedulesBackWeek(DateTime currday)
         {
-            DateTime weekStart = weekEnd.AddDays(-7).Date;
-            weekEnd = weekEnd.AddDays(-1).Date;
-            return myDb.Schedules.Where(x => x.Class_Date >= weekStart && x.Class_Date <= weekEnd);
+            DateTime weekStart = currday.AddDays(-7).Date;
+            DateTime weekEnd = currday.AddDays(-1).Date;
+            return myDb.Schedules.Where(x => x.Class_Date >= weekStart && x.Class_Date <= weekEnd && x.Schedule_Status == "ACTIVE").OrderBy(x => x.Start_Time).OrderBy(x => x.Class_Date);
         }
 
 

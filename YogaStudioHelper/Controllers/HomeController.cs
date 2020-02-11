@@ -24,12 +24,12 @@ namespace YogaStudioHelper.Controllers
             //Session["Auth"] = 3;
 
             //Admin
-            Session["Auth"] = 4;
+            Session["Auth"] = 1;
 
 
             // student  
             //Session["Auth"] = 4;
-            //Session["Uid"] = 4;
+            Session["Uid"] = 1;
 
             //yoga user id 4 is a student id
             //Session["Uid"] = 5;

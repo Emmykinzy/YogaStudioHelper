@@ -187,12 +187,54 @@ namespace YogaStudioHelper.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult UserList()
         {
             IEnumerable<Yoga_User> list = db.getUsers();
-            return View(list);
+            IEnumerable<Yoga_User> orderedList = (from user in list
+                                                  orderby user.U_Last_Name
+                                                  orderby user.Roles_Id
+                                                  select user);
+            return View(orderedList.Take(10));
         }
-        
+
+        [HttpPost]
+        public ActionResult UserList(FormCollection form)
+        {
+            IEnumerable<Yoga_User> list = db.getUsers();
+            IEnumerable<Yoga_User> orderedList = (from user in list
+                                                  orderby user.U_Last_Name
+                                                  orderby user.Roles_Id
+                                                  select user);
+            IEnumerable<Yoga_User> newList;
+            if (form["back"] == null)
+            {
+                if (form["position"] == null)
+                {
+                    newList = orderedList.Skip(1 * 10).Take(10);
+                    TempData["position"] = 2;
+                }
+                else
+                {
+                    int position = Int32.Parse(form["position"]);
+                    newList = orderedList.Skip(position * 10).Take(10);
+                    TempData["position"] = position + 1;
+                }
+
+            }
+            else
+            {
+
+                int position = Int32.Parse(form["position"]);
+                newList = orderedList.Skip(position - 1 * 10).Take(10);
+                TempData["position"] = position - 1;
+
+            }
+
+
+            return View(newList);
+        }
+
         [HttpGet]
         public ActionResult EditUser(int id)
         {

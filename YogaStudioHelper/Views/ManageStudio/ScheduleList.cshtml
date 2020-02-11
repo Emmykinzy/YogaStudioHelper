@@ -2,6 +2,10 @@
 
 @{
     ViewBag.Title = "ScheduleList2";
+     if(TempData["position"] == null)
+    {
+        TempData["position"] = 1;
+    }
 }
 
 <h2>ScheduleList2</h2>
@@ -12,16 +16,35 @@
 
     @Html.ActionLink("Create New", "CreateSchedule")
 </p>
+<div style="height:50px;">
+
+    @using (Html.BeginForm())
+    {
+        if (TempData["position"] != null && (int)TempData["position"] > 1)
+        {
+            <input type="hidden" name="position" value="@TempData["position"]">
+        }
+        int pos = (int)TempData["position"];
+        if (Model.Count() == 10)
+        {
+            <button style="width:150px;float:right;" name="next" value="next" type="submit" class="btn btn-default">Next</button>
+        }
+    }
+    @using (Html.BeginForm())
+    {
+        if (TempData["position"] != null && (int)TempData["position"] > 1)
+        {
+            <input type="hidden" name="position" value="@TempData["position"]"><button style="width:150px;float:right" name="back" value="back" type="submit" class="btn btn-default">Back</button>
+        }
+    }
+</div>
 <table class="table">
     <tr>
         <th>
             Schedule Id
         </th>
         <th>
-            Teacher First Name
-        </th>
-        <th>
-            Teacher Last Name
+            Teacher
         </th>
         <th>
             Class Name
@@ -53,10 +76,7 @@
             @Html.DisplayFor(modelItem => item.Schedule_Id)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.U_First_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.U_Last_Name)
+           @item.U_First_Name @item.U_Last_Name
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Class_Name)
@@ -91,11 +111,11 @@
                 }
                 else if (item.Schedule_Status == "CANCELLED" && item.Class_Date < DateTime.Now.Date)
                 {
-
+                    @Html.ActionLink("Restore", "RestoreSchedule", new { id = item.Schedule_Id })
                 }
                 else
                 {
-                    @Html.ActionLink("Restore", "RestoreSchedule", new { id = item.Schedule_Id })
+
                 }
             }
         </td>

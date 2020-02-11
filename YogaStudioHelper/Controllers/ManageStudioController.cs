@@ -25,11 +25,53 @@ namespace YogaStudioHelper.Controllers
         {
             return View();
         }
+
+        [HttpGet]
         public ActionResult RoomList()
         {
             IEnumerable<Room> roomList = db.getRooms();
+            IEnumerable<Room> orderedList = (from room in roomList
+                                                  orderby room.Room_Name
+                                                  select room);
             return View(roomList);
         }
+
+        [HttpPost]
+        public ActionResult RoomList(FormCollection form)
+        {
+            IEnumerable<Room> roomList = db.getRooms();
+            IEnumerable<Room> orderedList = (from room in roomList
+                                             orderby room.Room_Name
+                                             select room);
+            IEnumerable<Room> newList;
+            if (form["back"] == null)
+            {
+                if (form["position"] == null)
+                {
+                    newList = orderedList.Skip(1 * 10).Take(10);
+                    TempData["position"] = 2;
+                }
+                else
+                {
+                    int position = Int32.Parse(form["position"]);
+                    newList = orderedList.Skip(position * 10).Take(10);
+                    TempData["position"] = position + 1;
+                }
+
+            }
+            else
+            {
+
+                int position = Int32.Parse(form["position"]);
+                newList = orderedList.Skip(position - 1 * 10).Take(10);
+                TempData["position"] = position - 1;
+
+            }
+
+
+            return View(newList);
+        }
+
         [HttpGet]
         public ActionResult CreateRoom()
         {
@@ -146,10 +188,55 @@ namespace YogaStudioHelper.Controllers
             }
             
         }
+
+        [HttpGet]
         public ActionResult ClassList()
         {
-           IEnumerable<Class> classList = db.getClasses();
-            return View(classList);
+            IEnumerable<Class> classList = db.getClasses();
+            IEnumerable<Class> orderedList = (from classes in classList
+                                              orderby classes.Class_Name
+                                              orderby classes.Class_Length
+                                              select classes);    
+
+            return View(orderedList.Take(10));
+        }
+
+        [HttpPost]
+        public ActionResult ClassList(FormCollection form)
+        {
+            IEnumerable<Class> classList = db.getClasses();
+            IEnumerable<Class> orderedList = (from classes in classList
+                                              orderby classes.Class_Name
+                                              orderby classes.Class_Length
+                                              select classes);
+
+            IEnumerable<Class> newList;
+            if (form["back"] == null)
+            {
+                if (form["position"] == null)
+                {
+                    newList = orderedList.Skip(1 * 10).Take(10);
+                    TempData["position"] = 2;
+                }
+                else
+                {
+                    int position = Int32.Parse(form["position"]);
+                    newList = orderedList.Skip(position * 10).Take(10);
+                    TempData["position"] = position + 1;
+                }
+
+            }
+            else
+            {
+
+                int position = Int32.Parse(form["position"]);
+                newList = orderedList.Skip(position - 1 * 10).Take(10);
+                TempData["position"] = position - 1;
+
+            }
+
+
+            return View(newList);
         }
 
         [HttpGet]
@@ -415,11 +502,54 @@ namespace YogaStudioHelper.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult PromotionList()
         {
             IEnumerable<Promotion> promoList = db.getPromotions();
+            IEnumerable<Promotion> orderedList = (from promo in promoList
+                                                  orderby promo.Promo_End
+                                                  orderby promo.Promo_Desc
+                                                  select promo);
             return View(promoList);
         
+        }
+
+        [HttpPost]
+        public ActionResult PromotionList(FormCollection form)
+        {
+            IEnumerable<Promotion> promoList = db.getPromotions();
+            IEnumerable<Promotion> orderedList = (from promo in promoList
+                                                  orderby promo.Promo_End
+                                                  orderby promo.Promo_Desc
+                                                  select promo);
+            IEnumerable<Promotion> newList;
+            if (form["back"] == null)
+            {
+                if (form["position"] == null)
+                {
+                    newList = orderedList.Skip(1 * 10).Take(10);
+                    TempData["position"] = 2;
+                }
+                else
+                {
+                    int position = Int32.Parse(form["position"]);
+                    newList = orderedList.Skip(position * 10).Take(10);
+                    TempData["position"] = position + 1;
+                }
+
+            }
+            else
+            {
+
+                int position = Int32.Parse(form["position"]);
+                newList = orderedList.Skip(position - 1 * 10).Take(10);
+                TempData["position"] = position - 1;
+
+            }
+
+
+            return View(newList);
+
         }
 
         // todo dropdown
@@ -585,17 +715,55 @@ namespace YogaStudioHelper.Controllers
 
         }
 
-
+        [HttpGet]
         public ActionResult ScheduleList()
         {
+            List<ScheduleListViewModel> scheduleList = db.getScheduleViewModelList();
+            IEnumerable<ScheduleListViewModel> orderedList = (from classes in scheduleList
+                                              orderby classes.Start_Time
+                                              orderby classes.Class_Date
+                                              select classes);
 
-            // 
-            List<Database.ModelsDB.ScheduleListViewModel> scheduleList = db.getScheduleViewModelList();
-            
-            //IEnumerable<Schedule> scheduleLis = db.getSchedules();
-            return View(scheduleList);
+            return View(scheduleList.OrderByDescending(x => x.Class_Date).Take(10));
+        }
+
+        [HttpPost]
+        public ActionResult ScheduleList(FormCollection form)
+        {
+            List<ScheduleListViewModel> scheduleList = db.getScheduleViewModelList();
+
+            IEnumerable<ScheduleListViewModel> orderedList = (from classes in scheduleList
+                                                              orderby classes.Start_Time
+                                                              orderby classes.Class_Date
+                                                              select classes);
+
+            IEnumerable<ScheduleListViewModel> newList;
+            if (form["back"] == null)
+            {
+                if (form["position"] == null)
+                {
+                    newList = orderedList.Skip(1 * 10).Take(10);
+                    TempData["position"] = 2;
+                }
+                else
+                {
+                    int position = Int32.Parse(form["position"]);
+                    newList = orderedList.Skip(position * 10).Take(10);
+                    TempData["position"] = position + 1;
+                }
+
+            }
+            else
+            {
+
+                int position = Int32.Parse(form["position"]);
+                newList = orderedList.Skip(position - 1 * 10).Take(10);
+                TempData["position"] = position - 1;
+
+            }
 
 
+            return View(newList.OrderByDescending(x=>x.Class_Date));
         }
 
         [HttpGet]
@@ -930,8 +1098,10 @@ namespace YogaStudioHelper.Controllers
             db.CancelSchedule(id);
             db.CancelledScheduleRefund(id);
             List<Yoga_User> list = db.getScheduleSignUpList(schedule.Schedule_Id);
-            EmailSender.ClassCancelledEmail(list, schedule);
-
+            if (list.Count >= 1)
+            {
+                EmailSender.ClassCancelledEmail(list, schedule);
+            }
 
             return RedirectToAction("ScheduleList");
 
@@ -943,7 +1113,10 @@ namespace YogaStudioHelper.Controllers
             List<Yoga_User> list = db.getScheduleSignUpList(schedule.Schedule_Id);
             db.RestoreSchedule(id);
             db.RestoreScheduleRemoveUsers(id);
-            EmailSender.ClassRestoreEmail(list, schedule);
+            if (list.Count >= 1)
+            {
+                EmailSender.ClassRestoreEmail(list, schedule);
+            }
 
             return RedirectToAction("ScheduleList");
         }

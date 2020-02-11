@@ -25,7 +25,7 @@
             Start Time
         </th>
         <th>
-            Lenght
+            Length
         </th>
         <th>
             Teacher
@@ -102,21 +102,13 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <!--
-        Html.DisplayNameFor(model => model.Schedule_Id)
-        Html.DisplayNameFor(model => model.Class_Log_Id)
-                 Html.DisplayNameFor(model => model.U_Id)
-                             Html.DisplayNameFor(model => model.Log_Status)
-    -->
+<table class="classes">
     <tr>
         <th>
             Date
-
         </th>
         <th>
             Class Name
-
         </th>
         <th>
             Start Time
@@ -126,6 +118,9 @@
         </th>
         <th>
             Teacher
+        </th>
+        <th>
+            Status
         </th>
 
     </tr>
@@ -148,12 +143,6 @@
         if (result == -1 || result == 0)
         {
 
-            <!--
-                Html.DisplayFor(modelItem => item.Class_Log_Id)
-                Html.DisplayFor(modelItem => item.Schedule_Id)
-                Html.DisplayFor(modelItem => item.U_Id)
-                Html.DisplayFor(modelItem => item.Log_Status) 
-            -->
 <tr>
     <td>
         @sched.Class_Date.ToString("MMMM dd, yyyy")
@@ -166,18 +155,16 @@
         @sched.Start_Time
     </td>
     <td>
-        Lenght
+        @sched.Class.Class_Length
     </td>
     <td>
-        @user.U_First_Name @user.U_Last_Name
+        @sched.Yoga_User.U_First_Name @sched.Yoga_User.U_Last_Name
 
     </td>
-
     <td>
-        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        @item.Log_Status
     </td>
+
 </tr>
 }
 }

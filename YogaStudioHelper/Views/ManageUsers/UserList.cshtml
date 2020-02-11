@@ -3,6 +3,11 @@
 @{
     DBMaster db = new DBMaster();
     ViewBag.Title = "User List";
+
+    if(TempData["position"] == null)
+    {
+        TempData["position"] = 1;
+    }
 }
 
 <h2>Users</h2>
@@ -10,6 +15,28 @@
 <p>
     @Html.ActionLink("Create New", "CreateUser")
 </p>
+<div style="height:50px;">
+
+    @using (Html.BeginForm())
+    {
+        if (TempData["position"] != null && (int)TempData["position"] > 1)
+        {
+            <input type="hidden" name="position" value="@TempData["position"]">
+        }
+        int pos = (int)TempData["position"];
+        if (Model.Count() == 10)
+        {
+            <button style="width:150px;float:right;" name="next" value="next" type="submit" class="btn btn-default">Next</button>
+        }
+    }
+    @using (Html.BeginForm())
+    {
+        if (TempData["position"] != null && (int)TempData["position"] > 1)
+        {
+            <input type="hidden" name="position" value="@TempData["position"]"><button style="width:150px;float:right" name="back" value="back" type="submit" class="btn btn-default">Back</button>
+        }
+    }
+</div>
 <table class="table">
     <tr>
         <th>
@@ -35,7 +62,6 @@
         <tr>
             <td>
                 @db.getRoleName(item.Roles_Id)
-                @item.U_Id
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.U_First_Name)

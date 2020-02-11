@@ -176,7 +176,7 @@ namespace YogaStudioHelper.Controllers
 
             string email = collection["Email"];
 
-            Util.EmailSender.sendSignUpConfirmation(email, token);
+            
 
             String password1 = collection["password1"].ToString();
 
@@ -238,6 +238,7 @@ namespace YogaStudioHelper.Controllers
             {
                 //myDB.SaveChanges();
                 db.CreateUser(newUser);
+                Util.EmailSender.sendSignUpConfirmation(email, token);
             }
             catch (DbEntityValidationException ex)
             {
