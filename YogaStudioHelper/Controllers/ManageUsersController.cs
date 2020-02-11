@@ -10,6 +10,7 @@ using Scrypt;
 
 namespace YogaStudioHelper.Controllers
 {
+    [Filters.AuthorizeAdmin]
     public class ManageUsersController : Controller
     {
         DBMaster db = new DBMaster();

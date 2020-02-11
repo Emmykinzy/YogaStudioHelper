@@ -1,80 +1,142 @@
-﻿@model IEnumerable<Database.Pass_Log>
+﻿@model IEnumerable<YogaStudioHelper.ViewModels.SaleReportViewModel>
 
 @{
     ViewBag.Title = "SaleList";
 }
 
-<h2>SaleList</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Pass_Log_Id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Pass_Id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.U_Id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Num_Classes)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Purchase_Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date_Purchased)
-        </th>
-        <th></th>
-    </tr>
+<style>
 
-    @{ 
-        double totalSales = 0; 
+    .totalRow{
+        font-weight: bold;
     }
-
-@foreach (var item in Model) {
-
-    totalSales += Convert.ToDouble(item.Purchase_Price); 
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pass_Log_Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pass_Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.U_Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Num_Classes)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Purchase_Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date_Purchased)
-        </td>
-        <td>
-            <!--
-    html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-    Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-    Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        -->
-        </td>
-    </tr>
-}
-
-    <tr>
-
-    </tr>
-    <tr>
-        <th>Total Sales:</th>
-        <td>@totalSales</td>
-    </tr>
+</style>
+<h2>Sale Report:</h2>
 
 
-</table>
+<div class="table-responsive">
+    <table class="table table-striped" id="saleReportTable">
+
+        <thead class="thead-dark">
+            <tr>
+                <!--
+            <th>
+                Html.DisplayNameFor(model => model.Pass_Log_Id)
+            </th>
+            <th>
+                Html.DisplayNameFor(model => model.Pass_Id)
+            </th>
+            -->
+                <th>
+                    Pass Name
+                </th>
+                <!--
+            <th>
+                Html.DisplayNameFor(model => model.U_Id)
+            </th>
+            -->
+                <th>
+                    First Name
+                </th>
+                <th>
+                    Last Name
+                </th>
+                <th>
+                    Number of classes
+                </th>
+                <th>
+                    Purchase Price
+                </th>
+                <th>
+                    Date Purchase
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        @{
+            double totalSales = 0;
+        }
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+
+                totalSales += item.Purchase_Price;
+
+                <tr>
+                    <!--
+                <td>
+                    Html.DisplayFor(modelItem => item.Pass_Log_Id)
+                </td>
+                <td>
+                    Html.DisplayFor(modelItem => item.Pass_Id)
+                </td>
+                -->
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pass_Name)
+                    </td>
+                    <!--
+                <td>
+                    Html.DisplayFor(modelItem => item.U_Id)
+                </td>
+                -->
+                    <td>
+                        @Html.DisplayFor(modelItem => item.U_First_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.U_Last_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Num_Classes)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Purchase_Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date_Purchased)
+                    </td>
+
+                </tr>
+            }
+
+
+
+
+        </tbody>
+
+        <tr>
+            <td class="totalRow">Total Sales:</td>
+            <td>@totalSales</td>
+        </tr>
+    </table>
+
+</div>
+<div>
+    <br />
+    <button id="pdf" class="btn btn-success">Make PDF</button>
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>-->
+    <script src="~/Scripts/jspdf.min.js"></script>
+    <script src="~/Scripts/jspdf.plugin.autotable.min.js"></script>
+    <script src="~/Scripts/tableHTMLExport.js"></script>
+
+    <script>
+
+        $("#pdf").on("click", function () {
+            $("#saleReportTable").tableHTMLExport({
+                type: 'pdf',
+                filename: 'SaleReport.pdf'
+            });
+        });
+
+        /*
+        function pdf() {
+            var doc = new jsPDF();
+            doc.text("Hello world", 10, 10);
+            doc.save("output.pdf");
+        }
+        */
+    </script>
+</div>

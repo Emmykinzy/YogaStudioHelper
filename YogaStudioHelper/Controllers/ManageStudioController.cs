@@ -13,6 +13,8 @@ using Database.ModelsDB;
 
 namespace YogaStudioHelper.Controllers
 {
+
+    [Filters.AuthorizeAdmin]
     public class ManageStudioController : Controller
     {
         DBMaster db = new DBMaster();

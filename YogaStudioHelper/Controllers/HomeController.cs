@@ -16,25 +16,40 @@ namespace YogaStudioHelper.Controllers
 
             
             // For testing purposes teachers
-            //Session["Auth"] = 2;
-            //Session["Uid"] = 2;
+            Session["Auth"] = 2;
+            Session["Uid"] = 2;
             
 
             //Receptionist
             //Session["Auth"] = 3;
 
             //Admin
-            Session["Auth"] = 1;
+            
+            //Session["Auth"] = 1;
 
 
             // student  
             //Session["Auth"] = 4;
-            Session["Uid"] = 1;
+            //Session["Uid"] = 4;
 
             //yoga user id 4 is a student id
             //Session["Uid"] = 5;
 
-            return View(); 
+
+
+            // for upcoming classes feature 
+
+            IEnumerable<Schedule> list = db.getSchedulesNext7Days();
+
+            IEnumerable<Schedule> orderedList = (from schedule in list
+                                                 orderby schedule.Class_Date
+                                                 orderby schedule.Start_Time
+                                                 select schedule);
+            List<Schedule> weekList = orderedList.Where(x => x.Class_Date.Date >= DateTime.Now && x.Class_Date.Date <= DateTime.Now.AddDays(6)).ToList();
+
+            ViewBag.UpcomingClasses = weekList; 
+
+            return View(weekList); 
         }
 
         public ActionResult MessageView()

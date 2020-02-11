@@ -63,7 +63,7 @@ namespace YogaStudioHelper.Controllers
             return RedirectToAction("Store");
         }
 
-
+        [Filters.AuthorizeStudent]
         public ActionResult Purchase(int passId, string Cancel = null)
         {
             var pass = db.getClassPasse(passId);

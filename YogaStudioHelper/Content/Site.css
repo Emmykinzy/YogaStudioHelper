@@ -18,7 +18,11 @@
     }
 
 
-    /* test ben */
+.custom_nav{
+
+    
+}
+/* test ben */
 body {
     background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
 }
@@ -32,7 +36,7 @@ body {
 }
 
 .vCenter {
-    padding-top:10px;
+    padding-top: 10px;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -42,7 +46,7 @@ textarea {
     max-width: 280px;
 }
 
-ul {
+ul:not(.custom_nav) {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -53,86 +57,84 @@ ul {
     overflow: auto;
 }
 
-li {
+li:not(.custom_nav) {
     float: left;
     /*background-color: white;*/
 }
 
-li a {
-    display: block;
-    color: #5ab9ea;
-    text-align: center;
-    padding-left:14px;
-    padding-right: 14px;
-    padding-top:14px;
-    text-decoration: none;
-    /*border-right: 1px solid #ddd;
+    li a:not(.custom_nav) {
+        display: block;
+        color: #5ab9ea;
+        text-align: center;
+        padding-left: 14px;
+        padding-right: 14px;
+        padding-top: 14px;
+        text-decoration: none;
+        /*border-right: 1px solid #ddd;
     border-left: 1px solid #ddd;
     border-top: 1px solid #ddd;*/
-}
+    }
 
-li a:hover {
-    /*background-color: #edf9ff;*/
-    text-decoration: none;
-}
+        li a:hover {
+            /*background-color: #edf9ff;*/
+            text-decoration: none;
+        }
 
-.logMarg{
+.logMarg {
     margin-right: -45px;
 }
 
-.nav {
-    width: 90%;
-    padding-top: 10px;
-
-}
 
 .center {
-    margin: auto; 
+    margin: auto;
 }
-.floatRight{
-    float:right;
+
+.floatRight {
+    float: right;
 }
-.floatLeft{
-    float:left;
+
+.floatLeft {
+    float: left;
 }
 
 
-ul li {
+ul li:not(.custom_nav) {
     display: inline-block;
-    width: 175px; font: 20px 'Yu Gothic';
+    width: 175px;
+    font: 20px 'Yu Gothic';
+}
 
-}
-ul li:hover {
-    /*background: #edf9ff; 
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);*/
 
-}
-ul li:hover ul {
-    display: block;
-}
-ul li ul {
-  position: absolute;
-  width: 175px;
-  display: none;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  border-radius:15px;
-}
-ul li ul li { 
-  /*
-  border-bottom: 1px solid #ddd;*/
-  display: block; 
-  background: white; 
-}
-ul li ul li a {
-    display:block !important;
 
-}
-    ul li ul li:hover {
-        /*background: #edf9ff;*/
-        text-decoration: underline;
+        ul li:hover ul:not(.custom_nav) {
+            display: block;
+        }
+
+    ul li ul:not(.custom_nav) {
+        position: absolute;
+        width: 175px;
+        display: none;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 15px;
     }
 
-.schedule th{
+        ul li ul li:not(.custom_nav) {
+            /*
+  border-bottom: 1px solid #ddd;*/
+            display: block;
+            background: white;
+        }
+
+            ul li ul li a:not(.custom_nav) {
+                display: block !important;
+            }
+
+            ul li ul li:hover:not(.custom_nav) {
+                /*background: #edf9ff;*/
+                text-decoration: underline;
+            }
+
+.schedule th {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: start;
@@ -148,16 +150,16 @@ ul li ul li a {
 }
 
 .modal {
-    display: none; 
-    position: fixed; 
-    z-index: 1; 
+    display: none;
+    position: fixed;
+    z-index: 1;
     padding-top: 150px;
     left: 0;
     top: 0;
-    margin:auto;
-    width: 50%; 
-    height: 100%; 
-    overflow: auto; 
+    margin: auto;
+    width: 50%;
+    height: 100%;
+    overflow: auto;
 }
 
 /* Modal Content */
@@ -190,18 +192,18 @@ ul li ul li a {
     cursor: pointer;
 }
 
-.schedule tr td a:hover {
-    text-decoration:underline;
-    cursor: pointer;
-}
+    .schedule tr td a:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
 
-.schedule tr td a:nth-child(even) {
-    color: #654f8d;
-}
+    .schedule tr td a:nth-child(even) {
+        color: #654f8d;
+    }
 
-.schedule tr td a:nth-child(odd) {
-    color: #557ee6;
-}
+    .schedule tr td a:nth-child(odd) {
+        color: #557ee6;
+    }
 
 
 .nav-container {
@@ -218,14 +220,16 @@ ul li ul li a {
     width: 100%;
 }
 
-.sticky + .container {
-  padding-top: 125px;
+    .sticky + .container {
+        padding-top: 125px;
+    }
+
+.textRight {
+    text-align: right;
 }
-.textRight{
-    text-align:right;
-}
-.light-pad{
-    padding:10px;
+
+.light-pad {
+    padding: 10px;
 }
 
 .passStore {
@@ -240,22 +244,21 @@ ul li ul li a {
 
 
 .passContent {
-    padding-top:30px;
-    padding-left:25px;
+    padding-top: 30px;
+    padding-left: 25px;
 }
 
 .passTitle {
-   width:50%
-    
+    width: 50%
 }
 
 .passPurchase {
     width: 50%
 }
 
-.passDiscount{
-    color:red;
-    padding-right:15px;
+.passDiscount {
+    color: red;
+    padding-right: 15px;
 }
 
 select {
@@ -278,27 +281,27 @@ select {
 .classes {
     border: 1px solid #ddd;
 }
-.classes th {
-    border-bottom: 1px solid #ddd;
-    padding: 10px;
-    width: 200px;
-    text-align: center;
-}
 
-.classes td {
-    padding: 10px;
-    width: 200px;
-    text-align: center;
-   
-}
+    .classes th {
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+        width: 200px;
+        text-align: center;
+    }
 
-.classes tr:nth-child(even) {
-   background-color:#f2f2f2;
-}
+    .classes td {
+        padding: 10px;
+        width: 200px;
+        text-align: center;
+    }
+
+    .classes tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
 
 .inputs {
     width: 200px;
-    height:30px;
+    height: 30px;
     border-color: #ccc;
     background-color: #fff;
     border-radius: 5px;
@@ -327,18 +330,18 @@ select {
 
 .loginTable td {
     text-align: right;
-    padding:15px;
+    padding: 15px;
 }
 
 .inputTable td, .inputTable th {
     text-align: right;
     padding: 15px;
-    width:250px;
+    width: 250px;
 }
 
 .centerDiv {
-    margin:auto;
-    width:auto;
+    margin: auto;
+    width: auto;
 }
 
 a.disabledA {
@@ -359,38 +362,39 @@ a.disabledA {
     border-bottom: 1px solid #ddd;
 }
 
-.sidebar a {
-    display: block;
-    color: #5ab9ea;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    border-bottom: 1px solid #ddd;
-    font: 20px 'Yu Gothic';
-}
+    .sidebar a {
+        display: block;
+        color: #5ab9ea;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        border-bottom: 1px solid #ddd;
+        font: 20px 'Yu Gothic';
+    }
 
-.sidebar a:hover {
-   color: #111;
-   text-decoration: none;
-   background: #edf9ff;
-}
+        .sidebar a:hover {
+            color: #111;
+            text-decoration: none;
+            background: #edf9ff;
+        }
 
 .main {
     padding: 10px;
 }
+
 .cont {
     margin-left: 25px;
 }
 
-.actionButton{
+.actionButton {
     text-decoration: none;
     color: black;
 }
 
-.actionButton:hover {
-    text-decoration: none;
-    color: black;
-}
+    .actionButton:hover {
+        text-decoration: none;
+        color: black;
+    }
 
 .buddha {
     display: block;
@@ -399,14 +403,15 @@ a.disabledA {
     width: 95%;
     border-radius: 15px;
 }
-.buddhaDiv{
-    padding-top:45px;
-    margin:auto;
+
+.buddhaDiv {
+    padding-top: 45px;
+    margin: auto;
 }
 
 .homeText {
-    padding-left:30px;
-    padding-top:50px;
+    padding-left: 30px;
+    padding-top: 50px;
 }
 
 .upComing {
@@ -440,8 +445,9 @@ div.scrollmenu {
     border-bottom: 1px solid black;
     font-size: 25px;
 }
+
 .scrollCont {
-    padding-top:10px;
+    padding-top: 10px;
     font-size: 20px;
 }
 
@@ -459,7 +465,7 @@ div.scrollmenu div.scrollElement {
 }
 
 .socialDiv {
-    margin-left:50px;
+    margin-left: 50px;
     padding-top: 110px;
     height: 250px;
     width: 100%;
@@ -468,5 +474,3 @@ div.scrollmenu div.scrollElement {
 .homeText {
     padding-bottom: 75px;
 }
-
-
