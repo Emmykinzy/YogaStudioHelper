@@ -7,7 +7,7 @@
     <title>@ViewBag.Title</title>
 
 
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
 
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
@@ -172,7 +172,8 @@
                                 <ul class="dropdown-menu custom_nav">
                                     @if ((int)Session["Auth"] == 4)
                                     {
-                                        <li class="custom_nav">@Html.ActionLink("Classes", "ClassLogList", "Profile", null, new { @class = "custom_nav" })</li>
+                                        <li class="custom_nav">@Html.ActionLink("Upcoming Classes", "ClassLogList", "Profile", null, new { @class = "custom_nav" })</li>
+                                        <li class="custom_nav">@Html.ActionLink("Class History", "ClassLogListPast", "Profile", null, new { @class = "custom_nav" })</li>
                                         <li class="custom_nav">@Html.ActionLink("Passes", "PassLogList", "Profile", null, new { @class = "custom_nav" })</li>
                                     }
                                     <li class="custom_nav">@Html.ActionLink("Settings", "Settings", "Profile", null, new { @class = "custom_nav" })</li>

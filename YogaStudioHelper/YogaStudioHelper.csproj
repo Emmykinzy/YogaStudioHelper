@@ -355,7 +355,7 @@
     <Content Include="Views\ManageStudio\ScheduleList.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Report\SaleList.cshtml" />
-    <Content Include="Views\Profile\ClassLogList Past.cshtml" />
+    <Content Include="Views\Profile\ClassLogListPast.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Web.Debug.config">

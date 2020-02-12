@@ -25,32 +25,114 @@ namespace YogaStudioHelper.Controllers
         [Filters.AuthorizeStudent]
         public ActionResult ClassLogList()
         {
-            IEnumerable<Class_Log> list = db.GetClass_LogsByUId((int)Session["Uid"]);
-            IEnumerable<Class_Log> orderedList = (from log in list
-                                                  orderby log.Schedule.Class_Date
-                                                  orderby log.Schedule.Start_Time
-                                                  select log);
-            return View(orderedList/*.OrderByDescending(x => x.Class_Date).Take(10)*/);
+            IEnumerable<Class_Log> list = db.GetClass_LogsByUId((int)Session["Uid"]).Where(x => x.Schedule.Class_Date >= DateTime.Now.Date);
+
+            List<Class_Log> newList = new List<Class_Log>();
+            foreach(Class_Log log in list)
+            {
+                if(log.Schedule.Class_Date == DateTime.Now.Date)
+                {
+                    if(log.Schedule.Start_Time.Hours > DateTime.Now.Hour)
+                    {
+                        newList.Add(log);
+                    }
+                    else if(log.Schedule.Start_Time.Hours == DateTime.Now.Hour)
+                    {
+                        if(log.Schedule.Start_Time.Minutes > DateTime.Now.Minute)
+                        {
+                            newList.Add(log);
+                        }
+                    }
+                }
+                else 
+                {
+                    newList.Add(log);
+                }
+            }
+    
+            return View(newList.OrderByDescending(x => x.Schedule.Class_Date).OrderByDescending(x => x.Schedule.Start_Time).Take(10));
 
 
+        }
+
+        [HttpPost]
+        public ActionResult ClassLogList(FormCollection form)
+        {
+            IEnumerable<Class_Log> logList = db.GetClass_LogsByUId((int)Session["Uid"]);
+
+
+            IEnumerable<Class_Log> newList;
+            if (form["back"] == null)
+            {
+                if (form["position"] == null)
+                {
+                    newList = logList.Skip(1 * 10).Take(10);
+                    TempData["position"] = 2;
+                }
+                else
+                {
+                    int position = Int32.Parse(form["position"]);
+                    newList = logList.Skip(position * 10).Take(10);
+                    TempData["position"] = position + 1;
+                }
+
+            }
+            else
+            {
+
+                int position = Int32.Parse(form["position"]);
+                newList = logList.Skip(position - 1 * 10).Take(10);
+                TempData["position"] = position - 1;
+
+            }
+
+
+            return View(newList.OrderByDescending(x => x.Schedule.Class_Date).OrderBy(x => x.Schedule.Start_Time));
         }
 
         [HttpGet]
         public ActionResult ClassLogListPast()
         {
 
-            IEnumerable<Class_Log> class_Log_List = db.GetClass_LogsByUId((int)Session["Uid"]);
+            IEnumerable<Class_Log> logList = db.GetClass_LogsByUId((int)Session["Uid"]);
 
-            return View(class_Log_List);
+            return View(logList.OrderBy(x => x.Schedule.Start_Time).OrderByDescending(x => x.Schedule.Class_Date));
         }
 
         [HttpPost]
         public ActionResult ClassLogListPast(FormCollection form)
         {
 
-            IEnumerable<Class_Log> class_Log_List = db.GetClass_LogsByUId((int)Session["Uid"]);
+            IEnumerable<Class_Log> logList = db.GetClass_LogsByUId((int)Session["Uid"]);
 
-            return View(class_Log_List);
+
+            IEnumerable<Class_Log> newList;
+            if (form["back"] == null)
+            {
+                if (form["position"] == null)
+                {
+                    newList = logList.Skip(1 * 10).Take(10);
+                    TempData["position"] = 2;
+                }
+                else
+                {
+                    int position = Int32.Parse(form["position"]);
+                    newList = logList.Skip(position * 10).Take(10);
+                    TempData["position"] = position + 1;
+                }
+
+            }
+            else
+            {
+
+                int position = Int32.Parse(form["position"]);
+                newList = logList.Skip(position - 1 * 10).Take(10);
+                TempData["position"] = position - 1;
+
+            }
+
+
+            return View(newList.OrderByDescending(x => x.Schedule.Class_Date).OrderBy(x => x.Schedule.Start_Time));
         }
 
 

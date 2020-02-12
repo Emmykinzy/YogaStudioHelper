@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Database.Class_Log>
+@using Database;
+
+@{
+    ViewBag.Title = "Class History";
+
+
+            if(TempData["position"] == null)
+    {
+        TempData["position"] = 1;
+    }
+
+}
+
+<h2>Class History</h2>
+<div style="height:50px;">
+
+    @using (Html.BeginForm())
+    {
+        if (TempData["position"] != null && (int)TempData["position"] > 1)
+        {
+            <input type="hidden" name="position" value="@TempData["position"]">
+        }
+        int pos = (int)TempData["position"];
+        if (Model.Count() == 10)
+        {
+            <button style="width:150px;float:right;" name="next" value="next" type="submit" class="btn btn-default">Next</button>
+        }
+    }
+    @using (Html.BeginForm())
+    {
+        if (TempData["position"] != null && (int)TempData["position"] > 1)
+        {
+            <input type="hidden" name="position" value="@TempData["position"]"><button style="width:150px;float:right" name="back" value="back" type="submit" class="btn btn-default">Back</button>
+        }
+    }
+</div>
+<table class="classes">
+    <tr>
+        <th>
+            Date
+        </th>
+        <th>
+            Class Name
+        </th>
+        <th>
+            Start Time
+        </th>
+        <th>
+            Length
+        </th>
+        <th>
+            Teacher
+        </th>
+        <th>
+            Status
+        </th>
+
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+
+<tr>
+    <td>
+        @item.Schedule.Class_Date.ToString("MMMM dd, yyyy")
+    </td>
+
+    <td>
+        @item.Schedule.Class.Class_Name
+    </td>
+    <td>
+        @item.Schedule.Start_Time
+    </td>
+    <td>
+        @item.Schedule.Class.Class_Length
+    </td>
+    <td>
+        @item.Yoga_User.U_First_Name @item.Yoga_User.U_Last_Name
+
+    </td>
+    <td>
+        @item.Log_Status
+    </td>
+
+</tr>
+}
+
+
+</table>

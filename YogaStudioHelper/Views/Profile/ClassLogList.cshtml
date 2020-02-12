@@ -2,171 +2,95 @@
 @using Database;
 
 @{
-    ViewBag.Title = "ClassLogList";
+    ViewBag.Title = "Upcoming Classes";
 
-    DBMaster db = new DBMaster();
+    if (TempData["position"] == null)
+    {
+        TempData["position"] = 1;
+    }
 
 }
 
-<h2>Upcoming Classes</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            Date
-        </th>
-        <th>
-            Class Name
-        </th>
-        <th>
-            Start Time
-        </th>
-        <th>
-            Length
-        </th>
-        <th>
-            Teacher
-        </th>
-    </tr>
 
 
-    @foreach (var item in Model)
-    {
+@if (Model.Count() == 0)
+{
+    <h2>No Upcoming Classes</h2>
+    <a href="~/Schedule/Schedule"><h4>View Schedule</h4></a>
+}
+else
+{
+    <h2>Upcoming Classes</h2>
+    <div style="height:50px;">
 
-        <!-- We do  if statement to compare schedule date to sysdate -->
-
-        var sched = db.getScheduleById(item.Schedule_Id);
-        var user = db.getUserById(item.U_Id);
-
-        var todaysDate = DateTime.Today;
-
-
-        var className = db.getClass(sched.Class_Id);
-
-        int result = DateTime.Compare(sched.Class_Date, todaysDate);
-
-        // date greater than todays date
-
-        if (result == 1)
+        @using (Html.BeginForm())
         {
+            if (TempData["position"] != null && (int)TempData["position"] > 1)
+            {
+                <input type="hidden" name="position" value="@TempData["position"]">
+            }
+            int pos = (int)TempData["position"];
+            if (Model.Count() == 10)
+            {
+                <button style="width:150px;float:right;" name="next" value="next" type="submit" class="btn btn-default">Next</button>
+            }
+        }
+        @using (Html.BeginForm())
+        {
+            if (TempData["position"] != null && (int)TempData["position"] > 1)
+            {
+                <input type="hidden" name="position" value="@TempData["position"]"><button style="width:150px;float:right" name="back" value="back" type="submit" class="btn btn-default">Back</button>
+            }
+        }
+    </div>
+    <table class="table">
+        <tr>
+            <th>
+                Date
+            </th>
+            <th>
+                Class Name
+            </th>
+            <th>
+                Start Time
+            </th>
+            <th>
+                Length
+            </th>
+            <th>
+                Teacher
+            </th>
+        </tr>
 
 
+        @foreach (var item in Model)
+        {
 
             <tr>
                 <td>
-                    @sched.Class_Date.ToString("MMMM dd, yyyy")
+                    @item.Schedule.Class_Date.ToString("MMMM dd, yyyy")
                 </td>
                 <td>
-                    @className.Class_Name
+                    @item.Schedule.Class.Class_Name
                 </td>
                 <td>
-                    @sched.Start_Time
+                    @item.Schedule.Start_Time
                 </td>
                 <td>
                     Length
                 </td>
                 <td>
-                    @user.U_First_Name @user.U_Last_Name
+                    @item.Yoga_User.U_First_Name @item.Yoga_User.U_Last_Name
                 </td>
                 <td>
-                    @Html.ActionLink("Cancel", "Cancel", new {  id=item.Class_Log_Id  }, new { @class = "btn btn-default" }) 
+                    @Html.ActionLink("Cancel", "Cancel", new { id = item.Class_Log_Id }, new { @class = "btn btn-default" })
 
                 </td>
             </tr>
 
 
-            <!--
-            Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            -->
-
         }
-    }
 
-</table>
-
-
-
-
-
-
-
-<!-- do second foreach table but we compare date lower than today -->
-
-<h2>Past Classes</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="classes">
-    <tr>
-        <th>
-            Date
-        </th>
-        <th>
-            Class Name
-        </th>
-        <th>
-            Start Time
-        </th>
-        <th>
-            Length
-        </th>
-        <th>
-            Teacher
-        </th>
-        <th>
-            Status
-        </th>
-
-    </tr>
-
-
-    @foreach (var item in Model)
-    {
-
-        <!-- We do  if statement to compare schedule date to sysdate -->
-
-        var sched = db.getScheduleById(item.Schedule_Id);
-        var user = db.getUserById(item.U_Id);
-        var todaysDate = DateTime.Today;
-
-        var className = db.getClass(sched.Class_Id);
-
-        int result = DateTime.Compare(sched.Class_Date, todaysDate);
-
-        //if date is lower or equal since we cannot cancel a class 24 hours before it's start
-        if (result == -1 || result == 0)
-        {
-
-<tr>
-    <td>
-        @sched.Class_Date.ToString("MMMM dd, yyyy")
-    </td>
-
-    <td>
-        @className.Class_Name
-    </td>
-    <td>
-        @sched.Start_Time
-    </td>
-    <td>
-        @sched.Class.Class_Length
-    </td>
-    <td>
-        @sched.Yoga_User.U_First_Name @sched.Yoga_User.U_Last_Name
-
-    </td>
-    <td>
-        @item.Log_Status
-    </td>
-
-</tr>
-}
+    </table>
 }
 
-</table>
