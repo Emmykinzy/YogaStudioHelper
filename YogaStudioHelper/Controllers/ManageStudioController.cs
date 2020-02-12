@@ -106,9 +106,20 @@ namespace YogaStudioHelper.Controllers
 
             ViewBag.EditRoom = roomEdit;
 
-            return View();
+            return View(roomEdit);
         }
-       // todo 
+
+
+        [HttpPost]
+        public ActionResult EditRoom(Room roomEdit)
+        {
+
+            db.UpdateRoom(roomEdit);
+            return RedirectToAction("RoomList");
+        }
+        // todo 
+
+        /*
         [HttpPost]
         public ActionResult EditRoom(FormCollection collection)
         {
@@ -129,6 +140,7 @@ namespace YogaStudioHelper.Controllers
             return RedirectToAction("RoomList");
 
         }
+        */
 
         public ActionResult DeleteRoom(int id)
         {
@@ -141,7 +153,7 @@ namespace YogaStudioHelper.Controllers
         //todo 
         public ActionResult ArchiveRoom(int id)
         {
-            db.DeleteRoom(id);
+            db.ArchiveRoom(id);
 
 
             return RedirectToAction("RoomList");
@@ -303,9 +315,19 @@ namespace YogaStudioHelper.Controllers
             ViewBag.EditClass = classEdit; 
 
 
-            return View();
+            return View(classEdit);
         }
 
+        [HttpPost]
+        public ActionResult EditClass(Class classEdit)
+        {
+
+            db.EditClass(classEdit);
+
+            return RedirectToAction("ClassList");
+        }
+
+        /*
         [HttpPost]
         public ActionResult EditClass(FormCollection collection)
         {
@@ -369,13 +391,15 @@ namespace YogaStudioHelper.Controllers
 
           
         }
+        */
 
 
         public ActionResult ArchiveClass(int id)
         {
-            
+
             //SHould implement archive instead
-            db.DeleteClass(id);
+            //db.DeleteClass(id);
+            db.ArchiveClass(id);
 
             return RedirectToAction("ClassList");
         }
@@ -448,41 +472,24 @@ namespace YogaStudioHelper.Controllers
             ViewBag.EditClassPass = classPassEdit;
 
 
-            return View();
+            return View(classPassEdit);
         }
 
         [HttpPost]
-        public ActionResult EditClassPass(FormCollection collection)
+        public ActionResult EditClassPass(Class_Passes classPassEdit)
         {
-            int id = (int)TempData["EditClassPassId"];
 
-            var passEdit = db.getClassPasse(id);
+            db.UpdateClassPass(classPassEdit);
 
-
-
-            string passname = collection["ClassPassName"];
-
-            int passqty = Int32.Parse(collection["ClassPassQty"]);
-
-            double passprice = Double.Parse(collection["ClassPassPrice"]);
-
-            passEdit.Pass_Name = passname;
-            passEdit.Pass_Size = passqty;
-            // decimal? 
-            passEdit.Pass_Price = Convert.ToDecimal(passprice); 
-
-
-            db.UpdateClassPass(passEdit);
             return RedirectToAction("ClassPassList2");
 
-       
         }
 
         public ActionResult ArchiveClassPass(int id)
         {
             //SHould implement archive instead
-            db.DeleteClassPass(id);
-
+            //db.DeleteClassPass(id);
+            db.ArchiveClassPass(id);
             return RedirectToAction("ClassPassList2");
         }
 
@@ -773,9 +780,9 @@ namespace YogaStudioHelper.Controllers
             //ScheduleViewModel
 
             //https://localhost:44332/ManageStudio/CreateSchedule 
-            var classes = db.getClassList();
+            var classes = db.getClassActiveList();
             var teachers = db.getTeacherList();
-            var rooms = db.getRoomList();
+            var rooms = db.getRoomActiveList();
 
             /*
 
@@ -817,7 +824,7 @@ namespace YogaStudioHelper.Controllers
         public ActionResult CreateSchedule(FormCollection collection)
         {
             // how to get dropdown value 
-            var classes = db.getClassList();
+            var classes = db.getClassActiveList();
             var teachers = db.getTeacherList();
             var rooms = db.getRoomList();
 
@@ -941,7 +948,7 @@ namespace YogaStudioHelper.Controllers
             // set dropdown model
             var classes = db.getClassList();
             var teachers = db.getTeacherList();
-            var rooms = db.getRoomList();
+            var rooms = db.getRoomActiveList();
 
             var scheduleViewModel = new ScheduleViewModel
             {

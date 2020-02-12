@@ -58,8 +58,11 @@
             @Html.DisplayFor(modelItem => item.Room_Capacity)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Active)
+        </td>
+        <td>
             @Html.ActionLink("Edit", "EditRoom", new {id=item.Room_Id }) |
-            @Html.ActionLink("Archive", "DeleteRoom", new {  id=item.Room_Id })
+            @Html.ActionLink("Archive", "ArchiveRoom", new {  id=item.Room_Id })
         </td>
     </tr>
 }

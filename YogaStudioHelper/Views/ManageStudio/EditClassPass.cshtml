@@ -1,76 +1,72 @@
-﻿@using Database
+﻿@model Database.Class_Passes
 
 @{
     ViewBag.Title = "EditClassPass";
-
-
-    Class_Passes editClassPasses;
-
-    if (ViewBag.EditClassPass != null)
-    {
-        editClassPasses = ViewBag.EditClassPass;
-
-        int id = editClassPasses.Pass_Id;
-
-        TempData["EditClassPassId"] = id;
-
-    }
-    else
-    {
-        editClassPasses = new Class_Passes();
-        //editClass.U_Email = "";
-        //editClass.U_First_Name = "";
-    }
-
 }
 
-<div class="centerDiv">
-
-    @using (Html.BeginForm())
-    {
-        <table class="inputTable">
-            <tr>
-                <td></td>
-                <td style="text-align:center;"><h2>Edit Pass</h2></td>
-            </tr>
-            <tr>
-                <th>Class Pass Name:</th>
-                <td>
-
-                    <input id="ClassPassName" name="ClassPassName" class="inputs" required value=" @editClassPasses.Pass_Name"/>
-
-                </td>
-            </tr>
-            <tr>
-                <!-- put size instead? -->
-                <th>Quantity:</th>
-                <td>
-                    <input type="number" id="ClassPassQty" name="ClassPassQty" class="inputs" required value=" @editClassPasses.Pass_Size" />
-
-                </td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>
-
-                    <input type="number" id="ClassPassPrice" name="ClassPassPrice" class="inputs" value=" @editClassPasses.Pass_Price" step='0.01'/>
+<h2>Edit Class Pass</h2>
 
 
-                </td>
-            </tr>
-            <tr>
-                <th>Active:</th>
-                <td style="text-align:center">@Html.CheckBox("isActive", true)</td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td></td>
-                <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Edit</button></td>
-            </tr>
-            <tr><td></td></tr>
-            <tr>
-                <td><button onclick="goBack()">Go Back</button></td>
-            </tr>
-        </table>
-    }
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Class_Passes</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pass_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pass_Id, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Pass_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pass_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pass_Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Pass_Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pass_Size, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pass_Size, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Pass_Size, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pass_Price, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pass_Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Pass_Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Active, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

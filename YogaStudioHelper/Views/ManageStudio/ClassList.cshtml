@@ -50,7 +50,9 @@
         <th>
             Length
         </th>
-        <th></th>
+        <th>
+            Active
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -66,9 +68,10 @@
                 @Html.DisplayFor(modelItem => item.Class_Length)
             </td>
             <td>
-                @Html.ActionLink("Edit", "EditClass", new { id = item.Class_Id })
+                @Html.DisplayFor(modelItem => item.Active)
             </td>
             <td>
+                @Html.ActionLink("Edit", "EditClass", new { id = item.Class_Id }) | 
                 @Html.ActionLink("Archive", "ArchiveClass", new { id = item.Class_Id })
             </td>
         </tr>

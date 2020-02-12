@@ -394,6 +394,10 @@ namespace Database
         {
             return myDb.Rooms.ToList();
         }
+        public List<Room> getRoomActiveList()
+        {
+            return myDb.Rooms.Where(x =>x.Active == true).ToList();
+        }
         public IEnumerable<Room> getRooms()
         {
             return myDb.Rooms.ToList();
@@ -417,14 +421,17 @@ namespace Database
 
             or.Room_Name = newRoom.Room_Name;
             or.Room_Capacity = newRoom.Room_Capacity;
+            or.Active = newRoom.Active;
 
             myDb.SaveChanges();
         }
 
         // Add active in DB to be able to achive 
-        public void ArchiveRoom()
+        public void ArchiveRoom(int id)
         {
-
+            var or = myDb.Rooms.Where(x => x.Room_Id == id).Single();
+            or.Active = false;
+            myDb.SaveChanges();
         }
         public void DeleteRoom(int id)
         {
@@ -450,6 +457,10 @@ namespace Database
             return myDb.Classes.Where(x => x.Active == true).ToList();
         }
 
+        public List<Class> getClassActiveList()
+        {
+            return myDb.Classes.Where(x => x.Active == true).ToList();
+        }
 
         public Class getClass(int id)
         {
@@ -513,9 +524,12 @@ namespace Database
             myDb.SaveChanges();
 
         }
-        public void ArchiveClass()
+        public void ArchiveClass(int id)
         {
+            var or = myDb.Classes.Where(x => x.Class_Id == id).Single();
 
+            or.Active = false;
+            myDb.SaveChanges();
         }
 
 
@@ -671,9 +685,11 @@ namespace Database
             myDb.SaveChanges();
 
         }
-        public void ArchiveClassPass()
+        public void ArchiveClassPass(int id)
         {
+            var or = myDb.Class_Passes.Where(x => x.Pass_Id == id).Single();
 
+            myDb.SaveChanges();
         }
 
 
