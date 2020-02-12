@@ -508,11 +508,8 @@ namespace YogaStudioHelper.Controllers
         public ActionResult PromotionList()
         {
             IEnumerable<Promotion> promoList = db.getPromotions();
-            IEnumerable<Promotion> orderedList = (from promo in promoList
-                                                  orderby promo.Promo_End
-                                                  orderby promo.Promo_Desc
-                                                  select promo);
-            return View(promoList);
+
+            return View(promoList.OrderByDescending(x => x.Promo_End));
         
         }
 

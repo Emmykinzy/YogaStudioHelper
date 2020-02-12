@@ -1,0 +1,101 @@
+﻿@model IEnumerable<YogaStudioHelper.ViewModels.SaleReportMonthly>
+
+@{
+    ViewBag.Title = "SaleList";
+    string month = ViewData["month"] as string;
+}
+
+
+<style>
+
+    .totalRow{
+        font-weight: bold;
+    }
+</style>
+<h2>Sale Report:</h2>
+
+
+<div class="table-responsive">
+    <table class="classes" id="saleReportTable">
+
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    Pass Name
+                </th>
+                <th>
+                    Total Purchases
+                </th>
+                <th>
+                    Total Classes Sold
+                </th>
+                <th>
+                    Profit
+                </th>
+            </tr>
+        </thead>
+        @{
+            decimal totalProfit = 0;
+            int totalSales = 0;
+        }
+
+        
+
+            @foreach (var item in Model)
+            {
+
+                totalProfit += (decimal)item.Total_Purchase_Price;
+                decimal profit = (decimal)item.Total_Purchase_Price;
+                totalSales += item.count;
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pass_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.count)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Total_Num_Classes)
+                    </td>
+                    <td>
+                        @profit.ToString("F")$
+                    </td>
+
+                </tr>
+            }
+
+
+
+
+      
+        <tr>
+            <td class="totalRow">Total Profit:</td>
+            <td>@totalProfit.ToString("F")$</td>
+            <td></td>
+            <td></td>
+        </tr>
+
+    </table>
+
+</div>
+<div>
+    <br />
+    <button id="pdf" class="btn btn-success">Make PDF</button>
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>-->
+    <script src="~/Scripts/jspdf.min.js"></script>
+    <script src="~/Scripts/jspdf.plugin.autotable.min.js"></script>
+    <script src="~/Scripts/tableHTMLExport.js"></script>
+
+    <script>
+
+        $("#pdf").on("click", function () {
+            $("#saleReportTable").tableHTMLExport({
+                type: 'pdf',
+                filename: @Html.Raw("'SamsaraSalesReport"+month+".pdf'")
+            });
+        });
+    </script>
+</div>

@@ -176,6 +176,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\EmailSender.cs" />
     <Compile Include="Util\Paypal.cs" />
+    <Compile Include="ViewModels\SaleReportMonthly.cs" />
     <Compile Include="ViewModels\AttendanceViewModel.cs" />
     <Compile Include="ViewModels\DropdownListPassViewModel.cs" />
     <Compile Include="ViewModels\HoursWorkedViewModel.cs" />
@@ -195,7 +196,6 @@
     <Content Include="Views\Profile\Classes.cshtml" />
     <Content Include="Views\Profile\Passes.cshtml" />
     <Content Include="Views\Profile\Settings.cshtml" />
-    <Content Include="Views\Schedule\ClassSignUp.cshtml" />
     <Content Include="Views\LoginSignUp\LogInSignUp.cshtml" />
     <Content Include="Views\Profile\CreateAvailabilities.cshtml" />
     <Content Include="Views\ManageUsers\FindUser.cshtml" />
@@ -261,6 +261,10 @@
     <Content Include="Views\Report\SaleList.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Views\Profile\ClassLogListPast.cshtml" />
+    <Content Include="Views\Report\SalesMonthly.cshtml" />
+    <Content Include="Views\Report\SaleListMonth.cshtml" />
+    <Content Include="Views\Schedule\StudentSignIn.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

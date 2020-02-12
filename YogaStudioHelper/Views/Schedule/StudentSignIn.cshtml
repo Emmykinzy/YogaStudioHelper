@@ -7,25 +7,29 @@
     TempData["yu"] = Model;
 }
 
-<h2>Student Sign In</h2>
+<h2>Student Sign-In</h2>
 
-@s.Class.Class_Name
-@s.Start_Time
-@s.Class_Date
+<h3>@s.Class.Class_Name</h3>
+<h4>@s.Start_Time.ToString("h':'mm") - @s.Class_Date.ToString("MMMM dd, yyyy")</h4>
+
+<br />
 @using (Html.BeginForm())
 {
-    <table class="table">
+    <table class="classes">
         <tr>
-            <th>
-                First Name
-            </th>
             <th>
                 Last Name
             </th>
             <th>
+                First Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
                 Status
             </th>
-            <th></th>
+
         </tr>
 
         @foreach (var item in Model)
@@ -35,28 +39,28 @@
             string status = log.Log_Status;
 
 
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.U_Last_Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.U_First_Name)
-                </td>
-                <td>
-
-                    <select name="@item.U_Id">
-                        <option value="MISSED" @if (status == "MISSED") { @Html.Raw("selected") ; }>Not Signed In</option>
-                        <option value="ATTENDED" @if (status == "ATTENDED") { @Html.Raw("selected") ; }>Attended</option>
-                    </select>
-                </td>
-            </tr>
-        }
-
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.U_Last_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.U_First_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.U_Email)
+            </td>
+            <td>
+
+                <select name="@item.U_Id">
+                    <option value="MISSED" @if (status =="MISSED" ) { @Html.Raw("selected") ; }>Not Signed In</option>
+                    <option value="ATTENDED" @if (status =="ATTENDED" ) { @Html.Raw("selected") ; }>Attended</option>
+                </select>
             </td>
         </tr>
+        }
+
     </table>
+    <br />
     <button class="btn btn-default" type="submit">Submit</button>
 
 }

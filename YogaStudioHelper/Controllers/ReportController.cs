@@ -149,13 +149,57 @@ namespace YogaStudioHelper.Controllers
             return RedirectToAction("SaleList");
         }
 
+        [HttpGet]
+        public ActionResult SalesMonthly()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SalesMonthly(FormCollection collection)
+        {
+            string month = collection["month"];
+
+            DateTime startDate = DateTime.Parse(collection["month"]);
+
+            DateTime endDate = startDate.AddMonths(1);
+
+
+            //get list with this time constraint 
+            IEnumerable<Database.Pass_Log> saleList = db.GetSaleReport(startDate, endDate);
+
+            IEnumerable<SaleReportMonthly> monthList = (from log in saleList
+                                                        group log by log.Class_Passes.Pass_Name
+                                                        into grp
+                                                        select new SaleReportMonthly
+                                                        {
+                                                            Pass_Name = grp.Key,
+                                                            count = grp.Count(),
+                                                            Total_Num_Classes = grp.Sum(x => x.Num_Classes),
+                                                            Total_Purchase_Price = grp.Sum(x => x.Purchase_Price)
+                                                        }
+                                                        ).ToList();
+            TempData["month"] = startDate.ToString("MMMMyyyy");
+            TempData["saleListMonth"] = monthList;
+
+            return RedirectToAction("SaleListMonth");
+        }
+
+        [HttpGet]
+        public ActionResult SaleListMonth()
+        {
+
+            List<SaleReportMonthly> saleList = TempData["saleListMonth"] as List<SaleReportMonthly>;
+            string month = TempData["month"] as string;
+            ViewData["month"] = month;
+            return View(saleList.OrderByDescending(x => x.Total_Purchase_Price));
+        }
 
         [HttpGet]
         public ActionResult SalesDates()
         {
             return View();
         }
-
 
         [HttpPost]
         public ActionResult SalesDates(FormCollection collection)
@@ -195,6 +239,7 @@ namespace YogaStudioHelper.Controllers
 
 
             TempData["saleList"] = list;
+            
 
             // redirect view with list of passlog 
             return RedirectToAction("SaleList");
@@ -207,7 +252,7 @@ namespace YogaStudioHelper.Controllers
         {
             
             List<SaleReportViewModel> saleList = TempData["saleList"] as List<SaleReportViewModel>;
-
+            
             //IEnumerable<Database.Pass_Log> saleList = TempData["saleList"] as IEnumerable<Database.Pass_Log>; 
             return View(saleList);
         }

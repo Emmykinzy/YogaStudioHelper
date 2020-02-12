@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Sales";
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+<link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
+
+
+
+
+@using (Html.BeginForm())
+{
+    <table class="inputTable">
+        <tr>
+            <td></td>
+            <td style="text-align:center"><h2>Monthly Sales Report</h2></td>
+        </tr>
+
+
+
+        <tr>
+
+            <th>Select Date For Month Report:</th>
+            <td class="select">
+                <input type="month" name="month" class="form-control" required />
+
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Search</button></td>
+        </tr>
+    </table>
+
+}

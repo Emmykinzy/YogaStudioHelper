@@ -27,6 +27,8 @@
 </p>
 <br />
 <p>@message</p>
+@if (Model.Count() == 10)
+{
 <div style="height:50px;">
 
     @using (Html.BeginForm())
@@ -48,14 +50,13 @@
             <input type="hidden" name="position" value="@TempData["position"]"><button style="width:150px;float:right" name="back" value="back" type="submit" class="btn btn-default">Back</button>
         }
     }
+
 </div>
+}
 <table class="table">
     <tr>
         <th>
-            Promotion Id
-        </th>
-        <th>
-            Pass Id
+            Pass Name
         </th>
         <th>
             Description
@@ -76,10 +77,7 @@
 {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Promotion_Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pass_Id)
+            @item.Class_Passes.Pass_Name
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Promo_Desc)
@@ -95,17 +93,14 @@
               // check if end date expire
               DateTime test = DateTime.Today;
               DateTime test2 = item.Promo_End;
-              //                result = DateTime.CompareTo(item.Promo_End, DateTime.Today);
-
-              //result = item.Promo_End.CompareTo(DateTime.Today);
 
               result = test2.CompareTo(test);
 
 
-              if (result > 0)
+              if (result != 1)
               {
 
-                    <font color="red">@item.Promo_End</font>
+                    <font color="red">@item.Promo_End.ToString("MMMM dd, yyyy")</font>
 
                                  // result = 0;
 
@@ -113,8 +108,6 @@
               else
               {
                     @Html.DisplayFor(modelItem => item.Promo_End)
-
-                  
 
               }
             }
