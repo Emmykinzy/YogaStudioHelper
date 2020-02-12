@@ -7,7 +7,7 @@
     var p = ViewBag.PromoList;
     var Message = "";
     bool hasPromo = false;
-    bool isValid = true;
+    bool isValid = false;
     if (TempData["Message"] != null)
     {
         Message = TempData["Message"].ToString();
@@ -72,11 +72,9 @@
                                         <span style="color:red">
                                             &nbsp;@disPrice.ToString("F")$
                                         </span>
+                                        isValid = true;
                                     }
-                                    else
-                                    {
-                                        isValid = false;
-                                    }
+  
 
                                 }
                             }
@@ -91,9 +89,10 @@
                                 <span>
                                     @item.Pass_Price.ToString("F")$
                                 </span>
-                                hasPromo = false;
-                                isValid = true;
+                                
                             }
+                            @{hasPromo = false;
+                            isValid = false;}
                         </div>
 
                             @Html.ActionLink("Add Pass To Account", "StorePurchase", new { passId = item.Pass_Id, userId = ViewBag.uId }, new { @class = "btn btn-default" })

@@ -96,7 +96,12 @@
                         }
                         else if ((int)Session["Auth"] == 1)
                         {
-
+                            <li class="custom_nav">@Html.ActionLink("Schedule", "Schedule", "Schedule", null, new { @class = "custom_nav" })</li>
+                        }
+                        else if ((int)Session["Auth"] == 3)
+                        {
+                            <li class="custom_nav">@Html.ActionLink("Schedule", "Schedule", "Schedule", null, new { @class = "custom_nav" })</li>
+                            <li class="custom_nav">@Html.ActionLink("Online Store", "PurchaseFindUser", "Passes", null, new { @class = "custom_nav" })</li>
                         }
                         else
                         {
@@ -161,7 +166,7 @@
 
                         else
                         {
-                       
+
 
                             <li class="dropdown floatRight custom_nav">
                                 <a href="#" class="dropdown-toggle custom_nav" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
@@ -181,12 +186,12 @@
                                 </ul>
                             </li>
 
-                     
-                            }
+
+                        }
 
 
 
-                        </ul>
+                    </ul>
                 </div>
 
             </div>

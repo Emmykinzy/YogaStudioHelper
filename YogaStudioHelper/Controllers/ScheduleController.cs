@@ -24,7 +24,7 @@ namespace YogaStudioHelper.Controllers
             return View(orderedList);
         }
 
-        [Filters.AuthorizeStudent]
+       // [Filters.AuthorizeStudent]
         [HttpPost]
         public ActionResult Schedule(FormCollection collection)
         {

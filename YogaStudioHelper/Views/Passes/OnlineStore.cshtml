@@ -90,7 +90,7 @@
                             @if (hasPromo == false)
                             {
                                 <span>
-                                @item.Pass_Price.ToString("F")$
+                                    @item.Pass_Price.ToString("F")$
                                 </span>
                             }
                             else if (isValid == false)
@@ -103,9 +103,14 @@
                             }
                         </div>
 
-
-                        @Html.ActionLink("Purchase", "Purchase", new { passId = item.Pass_Id }, new { @class = "btn btn-default" })
-
+                        @if ((int)Session["Auth"] == 3)
+                        {
+                            @Html.ActionLink("Purchase", "PurchaseFindUser", new { }, new { @class = "btn btn-default" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Purchase", "Purchase", new { passId = item.Pass_Id }, new { @class = "btn btn-default" })
+                        }
 
                     </div>
                 </div>
