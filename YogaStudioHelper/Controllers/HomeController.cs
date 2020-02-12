@@ -16,8 +16,8 @@ namespace YogaStudioHelper.Controllers
 
             
             // For testing purposes teachers
-            Session["Auth"] = 3;
-            Session["Uid"] = 3;
+            //Session["Auth"] = 3;
+            //Session["Uid"] = 3;
             
 
             //Receptionist
@@ -25,7 +25,7 @@ namespace YogaStudioHelper.Controllers
 
             //Admin
             
-            //Session["Auth"] = 1;
+            Session["Auth"] = 1;
 
 
             // student  
