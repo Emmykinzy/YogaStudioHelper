@@ -25,12 +25,33 @@ namespace YogaStudioHelper.Controllers
         [Filters.AuthorizeStudent]
         public ActionResult ClassLogList()
         {
+            IEnumerable<Class_Log> list = db.GetClass_LogsByUId((int)Session["Uid"]);
+            IEnumerable<Class_Log> orderedList = (from log in list
+                                                  orderby log.Schedule.Class_Date
+                                                  orderby log.Schedule.Start_Time
+                                                  select log);
+            return View(orderedList/*.OrderByDescending(x => x.Class_Date).Take(10)*/);
+
+
+        }
+
+        [HttpGet]
+        public ActionResult ClassLogListPast()
+        {
 
             IEnumerable<Class_Log> class_Log_List = db.GetClass_LogsByUId((int)Session["Uid"]);
 
             return View(class_Log_List);
         }
 
+        [HttpPost]
+        public ActionResult ClassLogListPast(FormCollection form)
+        {
+
+            IEnumerable<Class_Log> class_Log_List = db.GetClass_LogsByUId((int)Session["Uid"]);
+
+            return View(class_Log_List);
+        }
 
 
         // cancel upcoming class 

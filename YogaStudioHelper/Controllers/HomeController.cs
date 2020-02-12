@@ -16,8 +16,8 @@ namespace YogaStudioHelper.Controllers
 
             
             // For testing purposes teachers
-            Session["Auth"] = 3;
-            Session["Uid"] = 3;
+            Session["Auth"] = 1;
+            Session["Uid"] = 1;
             
 
             //Receptionist
