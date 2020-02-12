@@ -24,10 +24,14 @@
 
     @foreach (var item in Model)
     {
-        hasPromo = false;
-        // check if pass id present in promo list
 
-        // do if so, then display discount
+
+        if (item.Active == true)
+        {
+            hasPromo = false;
+            // check if pass id present in promo list
+
+            // do if so, then display discount
 
 
         <div class="passStore">
@@ -118,7 +122,7 @@
         </div>
 
 
-
+        }
     }
 
 </table>

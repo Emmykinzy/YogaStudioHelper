@@ -217,7 +217,7 @@
     <Content Include="Views\ManageStudio\PromotionListHardCoded.cshtml" />
     <Content Include="Views\ManageStudio\EditRoom.cshtml" />
     <Content Include="Views\ManageStudio\EditClass.cshtml" />
-    <Content Include="Views\ManageStudio\EditClassPass.cshtml" />
+    <Content Include="Views\ManageStudio\EditClassPass_Old.cshtml" />
     <Content Include="Views\ManageStudio\EditPromotion.cshtml" />
     <Content Include="Views\ManageUsers\EditUser_Old.cshtml" />
     <Content Include="Views\Report\HoursWorked.cshtml" />
@@ -261,6 +261,7 @@
     <Content Include="Views\Report\SaleList.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Views\ManageStudio\EditClassPass.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

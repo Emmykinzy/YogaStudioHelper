@@ -448,34 +448,17 @@ namespace YogaStudioHelper.Controllers
             ViewBag.EditClassPass = classPassEdit;
 
 
-            return View();
+            return View(classPassEdit);
         }
 
         [HttpPost]
-        public ActionResult EditClassPass(FormCollection collection)
+        public ActionResult EditClassPass(Class_Passes classPassEdit)
         {
-            int id = (int)TempData["EditClassPassId"];
 
-            var passEdit = db.getClassPasse(id);
+            db.UpdateClassPass(classPassEdit);
 
-
-
-            string passname = collection["ClassPassName"];
-
-            int passqty = Int32.Parse(collection["ClassPassQty"]);
-
-            double passprice = Double.Parse(collection["ClassPassPrice"]);
-
-            passEdit.Pass_Name = passname;
-            passEdit.Pass_Size = passqty;
-            // decimal? 
-            passEdit.Pass_Price = Convert.ToDecimal(passprice); 
-
-
-            db.UpdateClassPass(passEdit);
             return RedirectToAction("ClassPassList2");
 
-       
         }
 
         public ActionResult ArchiveClassPass(int id)
