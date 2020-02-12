@@ -1,128 +1,72 @@
-﻿@using Database
-
+﻿@model Database.Class
 
 @{
     ViewBag.Title = "EditClass";
-
-
-    Class editClass;
-    if (ViewBag.EditClass != null)
-    {
-        editClass = ViewBag.EditClass;
-
-        int id = editClass.Class_Id;
-
-        TempData["EditClassId"] = id;
-
-
-
-        // Convert time into integer
-
-        /*
-
-            int minutes = Int32.Parse(editClass.Class_Length.TotalMinutes);
-
-            TimeSpan length = new TimeSpan();
-
-            if (minutes < 60)
-            {
-                TimeSpan min = TimeSpan.FromMinutes(minutes);
-                length += min;
-            }
-            else
-            {
-                int remainder = minutes % 60;
-                if(remainder == 0)
-                {
-                    int hour = minutes / 60;
-                    TimeSpan hr = TimeSpan.FromHours(hour);
-                    length += hr;
-                }
-                else
-                {
-                    TimeSpan min = TimeSpan.FromMinutes(remainder);
-                    TimeSpan hr = TimeSpan.FromHours((minutes-remainder)/60);
-
-                    length = hr + min;
-
-                }
-            }
-            */
-
-    }
-    else
-    {
-        editClass = new Class();
-        //editClass.U_Email = "";
-        //editClass.U_First_Name = "";
-    }
-
 }
 
-<div class="centerDiv">
-    @using (Html.BeginForm())
-    {
-        <table class="inputTable">
-            <tr>
-                <td></td>
-                <td style="text-align:center;"><h2>Edit Class</h2></td>
-            </tr>
-            <tr>
-
-                <th>Class Name:</th>
-                <td>
+<h2>EditClass</h2>
 
 
-                    <input id="ClassName" name="ClassName" class="inputs" value=" @editClass.Class_Name " />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Class</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Class_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Class_Id, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Class_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-                    <!-- Html.TextBox("ClassName", "Hot Yoga", new { class = "inputs" }) -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.Class_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Class_Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Class_Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-                </td>
-            </tr>
-            <tr>
-                <th style="vertical-align:top;">Class Description:</th>
-                <td>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Class_Desc, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Class_Desc, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Class_Desc, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-                    <input id="ClassDesc" name="ClassDesc" class="inputsArea" value=" @editClass.Class_Desc " />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Class_Length, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Class_Length, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Class_Length, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Active, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
 
-                    <!-- Html.TextArea("ClassDesc", "Our hot flow is a Vinyasa-style class created to heal, " +
-                                          "detoxify and exhilarate the body and mind by linking the" +
-                                          " breath with movement.", new { class = "inputsArea" }) -->
-
-                </td>
-            </tr>
-            <tr>
-                <th>Class Length (Minutes):</th>
-                <td>
-
-                    <input type="number" id="ClassLength" name="ClassLength" class="inputs" value=" @editClass.Class_Length.TotalMinutes" />
-
-
-                    <!-- Html.TextBox("LastName", 75, new { class = "inputs", input = "number" }) -->
-                </td>
-            </tr>
-            <tr>
-                <th>Active:</th>
-                <td style="text-align:center">
-
-                    <input type="checkbox" id="isActive" name="isActive" checked />
-
-
-                    <!-- Html.CheckBox("isActive", true) -->
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td></td>
-                <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Edit</button></td>
-            </tr>
-            <tr><td></td></tr>
-            <tr>
-                <td><button onclick="goBack()">Go Back</button></td>
-            </tr>
-        </table>
-    }
+<div>
+    @Html.ActionLink("Back to List", "Index")
 </div>
 
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

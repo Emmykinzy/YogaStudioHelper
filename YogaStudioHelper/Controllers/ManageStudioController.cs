@@ -315,9 +315,19 @@ namespace YogaStudioHelper.Controllers
             ViewBag.EditClass = classEdit; 
 
 
-            return View();
+            return View(classEdit);
         }
 
+        [HttpPost]
+        public ActionResult EditClass(Class classEdit)
+        {
+
+            db.EditClass(classEdit);
+
+            return RedirectToAction("ClassList");
+        }
+
+        /*
         [HttpPost]
         public ActionResult EditClass(FormCollection collection)
         {
@@ -381,13 +391,15 @@ namespace YogaStudioHelper.Controllers
 
           
         }
+        */
 
 
         public ActionResult ArchiveClass(int id)
         {
-            
+
             //SHould implement archive instead
-            db.DeleteClass(id);
+            //db.DeleteClass(id);
+            db.ArchiveClass(id);
 
             return RedirectToAction("ClassList");
         }
@@ -771,7 +783,7 @@ namespace YogaStudioHelper.Controllers
             //ScheduleViewModel
 
             //https://localhost:44332/ManageStudio/CreateSchedule 
-            var classes = db.getClassList();
+            var classes = db.getClassActiveList();
             var teachers = db.getTeacherList();
             var rooms = db.getRoomActiveList();
 
@@ -815,7 +827,7 @@ namespace YogaStudioHelper.Controllers
         public ActionResult CreateSchedule(FormCollection collection)
         {
             // how to get dropdown value 
-            var classes = db.getClassList();
+            var classes = db.getClassActiveList();
             var teachers = db.getTeacherList();
             var rooms = db.getRoomList();
 

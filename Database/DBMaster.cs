@@ -457,6 +457,10 @@ namespace Database
             return myDb.Classes.Where(x => x.Active == true).ToList();
         }
 
+        public List<Class> getClassActiveList()
+        {
+            return myDb.Classes.Where(x => x.Active == true).ToList();
+        }
 
         public Class getClass(int id)
         {
@@ -520,9 +524,12 @@ namespace Database
             myDb.SaveChanges();
 
         }
-        public void ArchiveClass()
+        public void ArchiveClass(int id)
         {
+            var or = myDb.Classes.Where(x => x.Class_Id == id).Single();
 
+            or.Active = false;
+            myDb.SaveChanges();
         }
 
 
