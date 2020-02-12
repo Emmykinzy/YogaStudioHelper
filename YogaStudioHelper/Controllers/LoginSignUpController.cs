@@ -161,7 +161,7 @@ namespace YogaStudioHelper.Controllers
             Session["Auth"] = null;
             Session["Uid"] = null;
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Homepage", "Home");
         }
 
         public ActionResult SignUp()

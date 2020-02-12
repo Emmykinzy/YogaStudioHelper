@@ -1,4 +1,5 @@
 ﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -24,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.6</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,8 +56,8 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PayPal, Version=1.9.1.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
       <HintPath>..\packages\PayPal.1.9.1\lib\net451\PayPal.dll</HintPath>
@@ -117,177 +119,39 @@
     <Content Include="Content\Images\GooglePlus.PNG" />
     <Content Include="Content\Images\Instagram.PNG" />
     <Content Include="Content\Images\Twitter.PNG" />
+    <Content Include="Content\Images\Test_Logo4.png" />
     <Content Include="Content\jquery.datetimepicker.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="Content\Images\Test_Logo4.png" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="obj\Debug\TempPE\Model1.Context.cs.dll" />
-    <Content Include="obj\Debug\TempPE\Model1.cs.dll" />
-    <Content Include="obj\Debug\TempPE\Model1.Designer.cs.dll" />
-    <Content Include="obj\Debug\YogaStudioHelper.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\YogaStudioHelper.dll" />
-    <Content Include="obj\Debug\YogaStudioHelper.pdb" />
-    <Content Include="obj\Release\CSAutoParameterize.parameters.xml" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\Microsoft.Web.Infrastructure.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\csc.exe" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\csi.exe" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\Microsoft.CodeAnalysis.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.AppContext.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Collections.Immutable.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Console.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Diagnostics.FileVersionInfo.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Diagnostics.StackTrace.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.IO.Compression.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.IO.FileSystem.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.IO.FileSystem.Primitives.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.IO.Pipes.AccessControl.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.IO.Pipes.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Reflection.Metadata.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Security.AccessControl.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Security.Claims.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Security.Cryptography.Algorithms.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Security.Cryptography.Encoding.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Security.Cryptography.Primitives.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Security.Cryptography.X509Certificates.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Security.Principal.Windows.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Text.Encoding.CodePages.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.ValueTuple.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Xml.ReaderWriter.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Xml.XmlDocument.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Xml.XPath.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\System.Xml.XPath.XDocument.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\vbc.exe" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\VBCSCompiler.exe" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Helpers.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Mvc.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Razor.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Webpages.Deployment.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Webpages.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\System.Web.Webpages.Razor.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\YogaStudioHelper.dll" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\YogaStudioHelper.pdb" />
-    <Content Include="obj\Release\Package\PackageTmp\Content\bootstrap-theme.css" />
-    <Content Include="obj\Release\Package\PackageTmp\Content\bootstrap-theme.min.css" />
-    <Content Include="obj\Release\Package\PackageTmp\Content\bootstrap.css" />
-    <Content Include="obj\Release\Package\PackageTmp\Content\bootstrap.min.css" />
-    <Content Include="obj\Release\Package\PackageTmp\Content\Images\Buddha.jpg" />
-    <Content Include="obj\Release\Package\PackageTmp\Content\Images\Buddha2.jpg" />
-    <Content Include="obj\Release\Package\PackageTmp\Content\Images\Buddha3.jpg" />
-    <Content Include="obj\Release\Package\PackageTmp\Content\Images\Facebook.PNG" />
-    <Content Include="obj\Release\Package\PackageTmp\Content\Images\GooglePlus.PNG" />
-    <Content Include="obj\Release\Package\PackageTmp\Content\Images\Instagram.PNG" />
-    <Content Include="obj\Release\Package\PackageTmp\Content\Images\Test_Logo4.png" />
-    <Content Include="obj\Release\Package\PackageTmp\Content\Images\Twitter.PNG" />
-    <Content Include="obj\Release\Package\PackageTmp\Content\Site.css" />
-    <Content Include="obj\Release\Package\PackageTmp\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="obj\Release\Package\PackageTmp\Global.asax" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\bootstrap.js" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\bootstrap.min.js" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-3.3.1.js" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-3.3.1.min.js" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-3.3.1.slim.min.js" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\modernizr-2.8.3.js" />
-    <Content Include="obj\Release\Package\YogaStudioHelper.SourceManifest.xml" />
-    <Content Include="obj\Release\YogaStudioHelper.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Release\YogaStudioHelper.dll" />
-    <Content Include="obj\Release\YogaStudioHelper.pdb" />
-    <Content Include="obj\Release\_WPPLastBuildInfo.txt" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <None Include="Properties\PublishProfiles\SamsaraGearHost.pubxml" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <Content Include="obj\Debug\YogaStudioHelper.csproj.CopyComplete" />
-    <Content Include="obj\Debug\YogaStudioHelper.csprojAssemblyReference.cache" />
-    <Content Include="obj\Release\CSAutoParameterize\original\Views\web.config" />
-    <Content Include="obj\Release\CSAutoParameterize\original\Web.config" />
-    <Content Include="obj\Release\CSAutoParameterize\transformed\Views\web.config" />
-    <Content Include="obj\Release\CSAutoParameterize\transformed\Web.config" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\csc.exe.config" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\csc.rsp" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\csi.exe.config" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\csi.rsp" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\Microsoft.CSharp.Core.targets" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\Microsoft.Managed.Core.targets" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\Microsoft.VisualBasic.Core.targets" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\vbc.exe.config" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\vbc.rsp" />
-    <Content Include="obj\Release\Package\PackageTmp\bin\roslyn\VBCSCompiler.exe.config" />
-    <Content Include="obj\Release\Package\PackageTmp\Content\bootstrap-theme.css.map" />
-    <Content Include="obj\Release\Package\PackageTmp\Content\bootstrap-theme.min.css.map" />
-    <Content Include="obj\Release\Package\PackageTmp\Content\bootstrap.css.map" />
-    <Content Include="obj\Release\Package\PackageTmp\Content\bootstrap.min.css.map" />
-    <Content Include="obj\Release\Package\PackageTmp\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="obj\Release\Package\PackageTmp\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="obj\Release\Package\PackageTmp\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="obj\Release\Package\PackageTmp\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-3.3.1.min.map" />
-    <Content Include="obj\Release\Package\PackageTmp\Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\Home\Homepage.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\LoginSignUp\LogInSignUp.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\LoginSignUp\SignUp.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\Class.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\ClassList.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\ClassPass.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\ClassPassList.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\CreateClass.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\CreateClassPass.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\CreatePromotion.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\CreateRoom.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\EditClass.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\EditClassPass.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\EditPromotion.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\EditRoom.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\FindClass.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\FindClassPass.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\FindPromotion.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\ManageStudio.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\Promotion.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\PromotionList.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\Room.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageStudio\RoomList.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageUsers\CreateUser.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageUsers\EditUser.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageUsers\FindUser.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageUsers\FindUserAdvanced.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\ManageUsers\UserList.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\Passes\OnlineStore.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\Profile\Availabilities.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\Profile\Classes.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\Profile\Passes.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\Profile\Profile.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\Profile\Settings.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\Report\Attendence.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\Report\HoursWorked.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\Report\Sales.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\Schedule\ClassSignUp.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\Schedule\Schedule.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\web.config" />
-    <Content Include="obj\Release\Package\PackageTmp\Views\_ViewStart.cshtml" />
-    <Content Include="obj\Release\Package\PackageTmp\Web.config" />
-    <Content Include="obj\Release\TransformWebConfig\assist\Web.config" />
-    <Content Include="obj\Release\TransformWebConfig\original\Web.config" />
-    <Content Include="obj\Release\TransformWebConfig\transformed\Web.config" />
-    <Content Include="obj\Release\YogaStudioHelper.csproj.CopyComplete" />
-    <Content Include="obj\Release\YogaStudioHelper.csproj.CoreCompileInputs.cache" />
-    <Content Include="obj\Release\YogaStudioHelper.csprojAssemblyReference.cache" />
-    <None Include="Properties\PublishProfiles\SamsaraGearHost.pubxml" />
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js" />
+    <Content Include="Scripts\esm\popper-utils.min.js" />
+    <Content Include="Scripts\esm\popper.js" />
+    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\index.js.flow" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <Content Include="Scripts\jquery.datetimepicker.full.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -295,7 +159,78 @@
     <Content Include="Scripts\jspdf.min.js" />
     <Content Include="Scripts\jspdf.plugin.autotable.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\popper-utils.js" />
+    <Content Include="Scripts\popper-utils.min.js" />
+    <Content Include="Scripts\popper.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\src\index.js" />
+    <Content Include="Scripts\src\methods\defaults.js" />
+    <Content Include="Scripts\src\methods\destroy.js" />
+    <Content Include="Scripts\src\methods\disableEventListeners.js" />
+    <Content Include="Scripts\src\methods\enableEventListeners.js" />
+    <Content Include="Scripts\src\methods\placements.js" />
+    <Content Include="Scripts\src\methods\update.js" />
+    <Content Include="Scripts\src\modifiers\applyStyle.js" />
+    <Content Include="Scripts\src\modifiers\arrow.js" />
+    <Content Include="Scripts\src\modifiers\computeStyle.js" />
+    <Content Include="Scripts\src\modifiers\flip.js" />
+    <Content Include="Scripts\src\modifiers\hide.js" />
+    <Content Include="Scripts\src\modifiers\index.js" />
+    <Content Include="Scripts\src\modifiers\inner.js" />
+    <Content Include="Scripts\src\modifiers\keepTogether.js" />
+    <Content Include="Scripts\src\modifiers\offset.js" />
+    <Content Include="Scripts\src\modifiers\preventOverflow.js" />
+    <Content Include="Scripts\src\modifiers\shift.js" />
+    <Content Include="Scripts\src\utils\clockwise.js" />
+    <Content Include="Scripts\src\utils\computeAutoPlacement.js" />
+    <Content Include="Scripts\src\utils\debounce.js" />
+    <Content Include="Scripts\src\utils\find.js" />
+    <Content Include="Scripts\src\utils\findCommonOffsetParent.js" />
+    <Content Include="Scripts\src\utils\findIndex.js" />
+    <Content Include="Scripts\src\utils\getBordersSize.js" />
+    <Content Include="Scripts\src\utils\getBoundaries.js" />
+    <Content Include="Scripts\src\utils\getBoundingClientRect.js" />
+    <Content Include="Scripts\src\utils\getClientRect.js" />
+    <Content Include="Scripts\src\utils\getFixedPositionOffsetParent.js" />
+    <Content Include="Scripts\src\utils\getOffsetParent.js" />
+    <Content Include="Scripts\src\utils\getOffsetRect.js" />
+    <Content Include="Scripts\src\utils\getOffsetRectRelativeToArbitraryNode.js" />
+    <Content Include="Scripts\src\utils\getOppositePlacement.js" />
+    <Content Include="Scripts\src\utils\getOppositeVariation.js" />
+    <Content Include="Scripts\src\utils\getOuterSizes.js" />
+    <Content Include="Scripts\src\utils\getParentNode.js" />
+    <Content Include="Scripts\src\utils\getPopperOffsets.js" />
+    <Content Include="Scripts\src\utils\getReferenceNode.js" />
+    <Content Include="Scripts\src\utils\getReferenceOffsets.js" />
+    <Content Include="Scripts\src\utils\getRoot.js" />
+    <Content Include="Scripts\src\utils\getRoundedOffsets.js" />
+    <Content Include="Scripts\src\utils\getScroll.js" />
+    <Content Include="Scripts\src\utils\getScrollParent.js" />
+    <Content Include="Scripts\src\utils\getStyleComputedProperty.js" />
+    <Content Include="Scripts\src\utils\getSupportedPropertyName.js" />
+    <Content Include="Scripts\src\utils\getViewportOffsetRectRelativeToArtbitraryNode.js" />
+    <Content Include="Scripts\src\utils\getWindow.js" />
+    <Content Include="Scripts\src\utils\getWindowSizes.js" />
+    <Content Include="Scripts\src\utils\includeScroll.js" />
+    <Content Include="Scripts\src\utils\index.js" />
+    <Content Include="Scripts\src\utils\isBrowser.js" />
+    <Content Include="Scripts\src\utils\isFixed.js" />
+    <Content Include="Scripts\src\utils\isFunction.js" />
+    <Content Include="Scripts\src\utils\isIE.js" />
+    <Content Include="Scripts\src\utils\isModifierEnabled.js" />
+    <Content Include="Scripts\src\utils\isModifierRequired.js" />
+    <Content Include="Scripts\src\utils\isNumeric.js" />
+    <Content Include="Scripts\src\utils\isOffsetContainer.js" />
+    <Content Include="Scripts\src\utils\removeEventListeners.js" />
+    <Content Include="Scripts\src\utils\runModifiers.js" />
+    <Content Include="Scripts\src\utils\setAttributes.js" />
+    <Content Include="Scripts\src\utils\setStyles.js" />
+    <Content Include="Scripts\src\utils\setupEventListeners.js" />
     <Content Include="Scripts\tableHTMLExport.js" />
+    <Content Include="Scripts\umd\popper-utils.js" />
+    <Content Include="Scripts\umd\popper-utils.min.js" />
+    <Content Include="Scripts\umd\popper.js" />
+    <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -336,19 +271,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Homepage.cshtml" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Views\Schedule\Schedule.cshtml" />
     <Content Include="Views\Profile\Profile.cshtml" />
     <Content Include="Views\Passes\OnlineStore_HardCoded.cshtml" />
@@ -420,10 +345,18 @@
     <Content Include="Views\ManageStudio\ScheduleList.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Report\SaleList.cshtml" />
-    <Content Include="Views\Passes\PurchaseFindUser.cshtml" />
-    <Content Include="Views\Passes\Store.cshtml" />
-    <Content Include="Views\Passes\UserList.cshtml" />
-    <Content Include="Views\Schedule\StudentSignIn.cshtml" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Scripts\umd\popper.js.map" />
+    <Content Include="Scripts\umd\popper.js.flow" />
+    <Content Include="Scripts\umd\popper-utils.min.js.map" />
+    <Content Include="Scripts\umd\popper-utils.js.map" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -433,14 +366,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="obj\Debug\edmxResourcesToEmbed\" />
-    <Folder Include="obj\Debug\__testMsDeployConnection__\" />
-    <Folder Include="obj\Release\ProfileTransformWebConfig\transformed\Views\" />
-    <Folder Include="obj\Release\TempPE\" />
-    <Folder Include="obj\Release\TransformWebConfig\transformed\Views\" />
     <Folder Include="ReportTest\" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
@@ -449,11 +378,15 @@
       <Name>Database</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>

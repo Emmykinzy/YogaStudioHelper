@@ -12,7 +12,7 @@ namespace YogaStudioHelper.Controllers
     {
         DBMaster db = new DBMaster();
 
-       
+        [Filters.AuthorizeStudent]
         public ActionResult Classes()
         {
           //  var  c = db.getScheduleById(2);
@@ -22,7 +22,7 @@ namespace YogaStudioHelper.Controllers
 
 
         // test class log 
-
+        [Filters.AuthorizeStudent]
         public ActionResult ClassLogList()
         {
 
@@ -34,6 +34,8 @@ namespace YogaStudioHelper.Controllers
 
 
         // cancel upcoming class 
+        [Filters.AuthorizeStudent]
+
         public ActionResult Cancel(int id)
         {
 
@@ -52,6 +54,7 @@ namespace YogaStudioHelper.Controllers
 
 
         [HttpGet]
+        [Filters.AuthorizeStudent]
         public ActionResult PassLogList()
         {
             // User id 
@@ -67,6 +70,7 @@ namespace YogaStudioHelper.Controllers
             return View(orderedList.Take(10)); 
         }
 
+        [Filters.AuthorizeStudent]
         [HttpPost]
         public ActionResult PassLogList(FormCollection form)
         {
@@ -111,6 +115,7 @@ namespace YogaStudioHelper.Controllers
 
 
 
+        [Filters.AuthorizeStudent]
 
         public ActionResult Passes()
         {
@@ -122,6 +127,7 @@ namespace YogaStudioHelper.Controllers
             return View();
         }
 
+        [Filters.AuthorizeTeacher]
         public ActionResult ViewAvailabilities()
         {
             int id = Int32.Parse(Session["Uid"].ToString());
@@ -130,6 +136,7 @@ namespace YogaStudioHelper.Controllers
         }
 
         [HttpGet]
+        [Filters.AuthorizeTeacher]
         public ActionResult CreateAvailabilities()
         {
             int id = Int32.Parse(Session["Uid"].ToString());
