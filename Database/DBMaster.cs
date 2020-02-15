@@ -12,6 +12,8 @@ using System.Diagnostics;
 using YogaStudioHelper.Models;
 using Database.ModelsDB;
 using System.Collections;
+using System.Data.SqlClient;
+using System.Data.Entity.Infrastructure;
 //using YogaStudioHelper.Models;
 
 namespace Database
@@ -528,7 +530,41 @@ namespace Database
         {
             var or = myDb.Classes.Where(x => x.Class_Id == id).Single();
 
+            /*
+            bool 
+
+            var schedList = getSchedules(); 
+            foreach(var sched in schedList)
+            {
+                if(sched.Class_Id = or.Class_Id)
+                {
+
+                }
+            }
+            */
+            /*
+            //var v2 = myDb.Classes.Where(x => x.Class_Id == id).Single();
+
+            //try to delete if not uses
+            try
+            {
+                myDb.Classes.Remove(or);
+                myDb.SaveChanges();
+            }
+            //archive instead if already use
+            //DbEntityValidationException
+            catch (Exception ex)
+            {
+                
+                //myDb.Classes.Add(or);
+                var v2 = myDb.Classes.Where(x => x.Class_Id == id).Single();
+                v2.Active = false;
+                myDb.SaveChanges();
+            }
+            */
+
             or.Active = false;
+            
             myDb.SaveChanges();
         }
 

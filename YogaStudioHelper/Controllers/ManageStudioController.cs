@@ -399,6 +399,14 @@ namespace YogaStudioHelper.Controllers
 
             //SHould implement archive instead
             //db.DeleteClass(id);
+            /*try
+            {
+                db.DeleteClass(id);
+            }catch(Exception e)
+            {
+                db.ArchiveClass(id);
+            }*/
+
             db.ArchiveClass(id);
 
             return RedirectToAction("ClassList");

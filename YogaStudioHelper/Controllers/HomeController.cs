@@ -20,15 +20,15 @@ namespace YogaStudioHelper.Controllers
             //Session["Uid"] = 1;
 
             //Teacher
-            Session["Auth"] = 2;
-            Session["Uid"] = 2;
+            //Session["Auth"] = 2;
+            //Session["Uid"] = 2;
 
             //Receptionist
             //Session["Auth"] = 3;
 
             //Admin
 
-            //Session["Auth"] = 1;
+            Session["Auth"] = 1;
 
 
             // student  
