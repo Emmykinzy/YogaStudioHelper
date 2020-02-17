@@ -23,8 +23,7 @@
 <div class="homeText">
     Saṃsāra yoga brings a new level of yoga experience to Downtown Montreal.<br /><br />
     We are devoted to creating a sanctuary of strength and mindfulness for the spirit, the soul, and the body in the heart of the city. Saṃsāra yoga is an ideal environment for
-    <br />those new to yoga and advanced yogis alike.
-    Established in just 2018, Saṃsāra 's  studio is dedicated to teachings of alignment-based Hatha Yoga, movement-based Vinyasa Yoga the therapeutic approach to teaching Restorative Yoga and Wall Yoga.
+    those new to yoga and advanced yogis alike. Established in just 2018, Saṃsāra 's  studio is dedicated to teachings of alignment-based Hatha Yoga, movement-based Vinyasa Yoga the therapeutic approach to teaching Restorative Yoga and Wall Yoga.
 </div>
 <h3 style="margin-left:50px; font:'Yu Gothic';">Upcoming Classes</h3>
 <div class="upComing scrollmenu">
@@ -32,39 +31,39 @@
 
     @{
         //test upcoming classes feature
-
-        foreach (var sched in list)
+        if (list.Count == 0)
         {
-            var classe = db.getClass(sched.Class_Id);
-
-            //doing this since only datetime as formating method tostring() (not timespan)
-            DateTime time = DateTime.Today.Add(sched.Start_Time); 
-
-            // <a href="/Schedule/ClassSignUp" class="btn btn-default">More Info</a>
-
-            // , new { @class = "btn btn-default"}
             <div class="scrollElement">
-                <div class="title">@sched.Class_Date.ToString("MMMM dd")</div>
-                <div class="scrollCont">@classe.Class_Name<br />@time.ToString("h:mm tt")<br />
-                @Html.ActionLink("More Info","Schedule","Schedule")</div>
-                
+                <div class="title">Upcoming Class</div>
+                <div class="scrollCont">Are Shown Here<br />10:00 AM<br /><a href="/Schedule/ClassSignUp" class="btn btn-default">Schedule</a></div>
             </div>
+        }
+        else
+        {
+            foreach (var sched in list)
+            {
+                var classe = db.getClass(sched.Class_Id);
 
+                //doing this since only datetime as formating method tostring() (not timespan)
+                DateTime time = DateTime.Today.Add(sched.Start_Time);
+
+                // <a href="/Schedule/ClassSignUp" class="btn btn-default">More Info</a>
+
+                // , new { @class = "btn btn-default"}
+                <div class="scrollElement">
+                    <div class="title">@sched.Class_Date.ToString("MMMM dd")</div>
+                    <div class="scrollCont">
+                        @classe.Class_Name<br />@time.ToString("h:mm tt")<br />
+                        @Html.ActionLink("More Info", "Schedule", "Schedule")
+                    </div>
+
+                </div>
+
+            }
         }
 
     }
 
-
-
-    <div class="scrollElement">
-        <div class="title">Dec 5th *PlaceHolder</div>
-        <div class="scrollCont">Yoga L2<br />6:00 PM<br /><a href="/Schedule/ClassSignUp" class="btn btn-default">More Info</a></div>
-    </div>
-
-    <div class="scrollElement">
-        <div class="title">Dec 6th *PlaceHolder</div>
-        <div class="scrollCont">Hot Yoga L2<br />10:00 AM<br /><a href="/Schedule/ClassSignUp" class="btn btn-default">More Info</a></div>
-    </div>
 </div>
 <div class="socialDiv">
     <div class="bDiv">

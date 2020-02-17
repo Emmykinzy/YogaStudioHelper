@@ -180,6 +180,8 @@ namespace YogaStudioHelper.Controllers
                                                         }
                                                         ).ToList();
             TempData["month"] = startDate.ToString("MMMMyyyy");
+             string mt = startDate.ToString("MMMM yyyy");
+            TempData["monthtitle"] = mt;
             TempData["saleListMonth"] = monthList;
 
             return RedirectToAction("SaleListMonth");

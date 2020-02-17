@@ -41,15 +41,34 @@ namespace YogaStudioHelper.Controllers
 
             IEnumerable<Schedule> list = db.getSchedulesNext7Days();
 
-            IEnumerable<Schedule> orderedList = (from schedule in list
-                                                 orderby schedule.Class_Date
-                                                 orderby schedule.Start_Time
-                                                 select schedule);
-            List<Schedule> weekList = orderedList.Where(x => x.Class_Date.Date >= DateTime.Now && x.Class_Date.Date <= DateTime.Now.AddDays(6)).ToList();
+
+            List<Schedule> weekList = list.Where(x => x.Class_Date.Date >= DateTime.Now.Date && x.Class_Date.Date <= DateTime.Now.AddDays(6)).ToList();
+
+            //IEnumerable<Schedule> orderedList = list.OrderByDescending(x => x.Class_Date).OrderBy(x => x.Start_Time);
 
             ViewBag.UpcomingClasses = weekList; 
 
-            return View(weekList); 
+            foreach(Schedule sch in weekList)
+            {
+                if(sch.Class_Date == DateTime.Now.Date)
+                {
+                    if(sch.Start_Time.Hours < DateTime.Now.Hour)
+                    {
+
+                        if (sch.Start_Time.Minutes < DateTime.Now.Minute)
+                        {
+                            weekList.Remove(sch);
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                }
+            }
+
+            return View(weekList.Take(10)); 
         }
 
         public ActionResult MessageView()

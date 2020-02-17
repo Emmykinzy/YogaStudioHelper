@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "SaleList";
     string month = ViewData["month"] as string;
+    string monthTitle = ViewData["monthtitle"] as string;
 }
 
 
@@ -12,7 +13,8 @@
         font-weight: bold;
     }
 </style>
-<h2>Sale Report:</h2>
+<div id="content">
+<h2>@monthTitle Sales Report</h2>
 
 
 <div class="table-responsive">
@@ -39,36 +41,36 @@
             int totalSales = 0;
         }
 
-        
-
-            @foreach (var item in Model)
-            {
-
-                totalProfit += (decimal)item.Total_Purchase_Price;
-                decimal profit = (decimal)item.Total_Purchase_Price;
-                totalSales += item.count;
-
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Pass_Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.count)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Total_Num_Classes)
-                    </td>
-                    <td>
-                        @profit.ToString("F")$
-                    </td>
-
-                </tr>
-            }
 
 
+        @foreach (var item in Model)
+        {
+
+            totalProfit += (decimal)item.Total_Purchase_Price;
+            decimal profit = (decimal)item.Total_Purchase_Price;
+            totalSales += item.count;
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pass_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total_Num_Classes)
+                </td>
+                <td>
+                    @profit.ToString("F")$
+                </td>
+
+            </tr>
+        }
 
 
-      
+
+
+
         <tr>
             <td class="totalRow">Total Profit:</td>
             <td>@totalProfit.ToString("F")$</td>
@@ -77,7 +79,7 @@
         </tr>
 
     </table>
-
+    </div>
 </div>
 <div>
     <br />
@@ -94,8 +96,10 @@
         $("#pdf").on("click", function () {
             $("#saleReportTable").tableHTMLExport({
                 type: 'pdf',
-                filename: @Html.Raw("'SamsaraSalesReport"+month+".pdf'")
+                filename: @Html.Raw("'SamsaraSalesReport"+month+".pdf'"),
+                
             });
         });
+
     </script>
 </div>

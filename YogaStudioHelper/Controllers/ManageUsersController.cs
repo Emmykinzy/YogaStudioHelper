@@ -185,7 +185,7 @@ namespace YogaStudioHelper.Controllers
             }
 
             db.CreateUser(y);
-            return View();
+            return RedirectToAction("UserList");
         }
 
         [HttpGet]
