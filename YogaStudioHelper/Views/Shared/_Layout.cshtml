@@ -177,11 +177,15 @@
                                         <li class="custom_nav">@Html.ActionLink("Passes", "PassLogList", "Profile", null, new { @class = "custom_nav" })</li>
                                     }
                                     <li class="custom_nav">@Html.ActionLink("Settings", "Settings", "Profile", null, new { @class = "custom_nav" })</li>
+
+
                                     @if ((int)Session["Auth"] == 2)
                                     {
-                                        <li class="custom_nav">@Html.ActionLink("Availabilities", "ViewAvailabilities", "Profile", null, new { @class = "custom_nav" })</li>
-                                    }
-                                    <li class="custom_nav">@Html.ActionLink("Log Out", "LogOut", "LoginSignUp", null, new { @class = "custom_nav" })</li>
+                                         <li class="custom_nav">@Html.ActionLink("View Availabilities", "ViewAvailabilities", "Profile", null, new { @class = "custom_nav" })</li>
+                                         <li class="custom_nav">@Html.ActionLink("Create Availabilities", "CreateAvailabilities", "Profile", null, new { @class = "custom_nav" })</li>
+                                     }
+                                         
+                                         <li class="custom_nav">@Html.ActionLink("Log Out", "LogOut", "LoginSignUp", null, new { @class = "custom_nav" })</li>
                                 </ul>
                             </li>
 

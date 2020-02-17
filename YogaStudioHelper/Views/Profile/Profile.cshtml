@@ -4,15 +4,7 @@
 }
 
 
-<div class="sidebar">
-  @Html.ActionLink("Profile", "Profile", "Profile")
-  @Html.ActionLink("Settings", "Settings", "Profile")
-  @if ((int)Session["Auth"] == 2)
-  {
-     @Html.ActionLink("View Availabilities", "ViewAvailabilities", "Profile")
-     @Html.ActionLink("Create Availabilities", "CreateAvailabilities", "Profile")
-  }   
-</div>
+
 
 <div class="fixed">
     <div class="main">

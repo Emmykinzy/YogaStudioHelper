@@ -14,18 +14,21 @@ namespace YogaStudioHelper.Controllers
         public ActionResult Homepage()
         {
 
-            
+
             // For testing purposes teachers
-            Session["Auth"] = 1;
-            Session["Uid"] = 1;
-            
+            //Session["Auth"] = 1;
+            //Session["Uid"] = 1;
+
+            //Teacher
+            //Session["Auth"] = 2;
+            //Session["Uid"] = 2;
 
             //Receptionist
             //Session["Auth"] = 3;
 
             //Admin
-            
-            //Session["Auth"] = 1;
+
+            Session["Auth"] = 1;
 
 
             // student  
