@@ -431,8 +431,22 @@ namespace Database
         // Add active in DB to be able to achive 
         public void ArchiveRoom(int id)
         {
-            var or = myDb.Rooms.Where(x => x.Room_Id == id).Single();
-            or.Active = false;
+
+            var room = myDb.Rooms.Where(x => x.Room_Id == id).Single();
+
+            var sched = myDb.Schedules.FirstOrDefault
+                (e => e.Room_Id == id);
+
+            if(sched == null)
+            {
+                myDb.Rooms.Remove(room);
+            }
+            else
+            {
+                room.Active = false;
+            }
+
+            
             myDb.SaveChanges();
         }
         public void DeleteRoom(int id)
@@ -528,43 +542,19 @@ namespace Database
         }
         public void ArchiveClass(int id)
         {
-            var or = myDb.Classes.Where(x => x.Class_Id == id).Single();
+            var classe = myDb.Classes.Where(x => x.Class_Id == id).Single();
+            int idtest = id;
+            var sched = myDb.Schedules.Where(x => x.Class_Id == id).FirstOrDefault();
 
-            /*
-            bool 
-
-            var schedList = getSchedules(); 
-            foreach(var sched in schedList)
+            if(sched == null)
             {
-                if(sched.Class_Id = or.Class_Id)
-                {
-
-                }
+                myDb.Classes.Remove(classe);
             }
-            */
-            /*
-            //var v2 = myDb.Classes.Where(x => x.Class_Id == id).Single();
-
-            //try to delete if not uses
-            try
+            else
             {
-                myDb.Classes.Remove(or);
-                myDb.SaveChanges();
+                classe.Active = false;
             }
-            //archive instead if already use
-            //DbEntityValidationException
-            catch (Exception ex)
-            {
-                
-                //myDb.Classes.Add(or);
-                var v2 = myDb.Classes.Where(x => x.Class_Id == id).Single();
-                v2.Active = false;
-                myDb.SaveChanges();
-            }
-            */
-
-            or.Active = false;
-            
+  
             myDb.SaveChanges();
         }
 
@@ -723,7 +713,21 @@ namespace Database
         }
         public void ArchiveClassPass(int id)
         {
-            var or = myDb.Class_Passes.Where(x => x.Pass_Id == id).Single();
+            var classpass = myDb.Class_Passes.Where(x => x.Pass_Id == id).Single();
+
+            var classlog = myDb.Pass_Log.Where(x => x.Pass_Id == id).FirstOrDefault();
+
+            var promotion = myDb.Promotions.Where(x => x.Promotion_Id == id).FirstOrDefault();
+
+            // check if the classpass is begin reference to see if can delete instead of archiving 
+            if (classlog == null && promotion == null)
+            {
+                myDb.Class_Passes.Remove(classpass);
+            }
+            else
+            {
+                classpass.Active = false;
+            }
 
             myDb.SaveChanges();
         }

@@ -322,6 +322,8 @@ namespace YogaStudioHelper.Controllers
         public ActionResult EditClass(Class classEdit)
         {
 
+      
+            
             db.EditClass(classEdit);
 
             return RedirectToAction("ClassList");
