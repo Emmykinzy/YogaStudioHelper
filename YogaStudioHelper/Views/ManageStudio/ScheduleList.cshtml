@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<Database.ModelsDB.ScheduleListViewModel>
 
 @{
-    ViewBag.Title = "ScheduleList2";
+    ViewBag.Title = "Schedule List";
      if(TempData["position"] == null)
     {
         TempData["position"] = 1;
     }
 }
 
-<h2>ScheduleList2</h2>
+<h2>Schedule List</h2>
 
 <p>
     @Html.ActionLink("Find Schedule", "FindSchedule", "ManageStudio")
@@ -38,16 +38,13 @@
         }
     }
 </div>
-<table class="table">
+<table class="classes">
     <tr>
         <th>
-            Schedule Id
+            Class Name
         </th>
         <th>
             Teacher
-        </th>
-        <th>
-            Class Name
         </th>
         <th>
             Room Name
@@ -62,64 +59,69 @@
             Student Sign Up
         </th>
         <th>
-            Group Id
-        </th>
-        <th>
             Schedule Status
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Schedule_Id)
-        </td>
-        <td>
-           @item.U_First_Name @item.U_Last_Name
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Class_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Room_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Start_Time)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Class_Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Signed_Up)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Group_Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Schedule_Status)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "EditSchedule", new { id = item.Schedule_Id }) |
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Class_Name)
+    </td>
+    <td>
+        @item.U_First_Name @item.U_Last_Name
+    </td>
+    <td>
+       @item.Room_Name
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Start_Time)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Class_Date)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Signed_Up)
+    </td>
+    
+        @if (item.Schedule_Status == "CANCELLED")
+        {
+            <td style="color:red;">
+            @item.Schedule_Status
+            </td>
+        }
+        else
+        {
+             <td>
+            @item.Schedule_Status
+            </td>
+        }
+    
+<td>
+    @if (item.Class_Date >= DateTime.Now.Date)
+    {
+        @Html.ActionLink("Edit", "EditSchedule", new { id = item.Schedule_Id })
+    }
+    <!-- Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })-->
+    @{
+        DateTime dt = item.Class_Date.AddHours((item.Start_Time.Hours)-1);
+        if (item.Schedule_Status == "ACTIVE" && dt >= DateTime.Now.Date)
+        {
+            
+            @Html.Raw("| ")
+            @Html.ActionLink("Cancel", "CancelSchedule", new { id = item.Schedule_Id })
 
-            <!-- Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })-->
-            @{
-
-                if (item.Schedule_Status == "ACTIVE")
-                {
-                    @Html.ActionLink("Cancel", "CancelSchedule", new { id = item.Schedule_Id })
-                }
-                else if (item.Schedule_Status == "CANCELLED" && item.Class_Date < DateTime.Now.Date)
-                {
-                    @Html.ActionLink("Restore", "RestoreSchedule", new { id = item.Schedule_Id })
-                }
-                else
-                {
-
-                }
+        }
+        else if (item.Schedule_Status == "CANCELLED" && dt >= DateTime.Now.Date)
+        {
+            @Html.Raw("| ")
+            @Html.ActionLink("Restore", "RestoreSchedule", new { id = item.Schedule_Id })
             }
-        </td>
-    </tr>
+        }
+
+</td>
+</tr>
 }
 
 </table>

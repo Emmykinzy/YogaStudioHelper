@@ -895,6 +895,7 @@ namespace Database
                 schedVM.Class_Date = sched.Class_Date;
                 schedVM.Signed_Up = sched.Signed_Up;
                 schedVM.Group_Id = sched.Group_Id;
+                schedVM.Room_Name = sched.Room.Room_Name;
                 schedVM.Schedule_Status = sched.Schedule_Status;
 
                 list.Add(schedVM);
