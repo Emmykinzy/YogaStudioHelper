@@ -49,9 +49,9 @@ namespace YogaStudioHelper.Controllers
 
             //IEnumerable<Schedule> orderedList = list.OrderByDescending(x => x.Class_Date).OrderBy(x => x.Start_Time);
 
-            ViewBag.UpcomingClasses = weekList; 
+            ViewBag.UpcomingClasses = weekList.ToList(); 
 
-            foreach(Schedule sch in weekList)
+            foreach(Schedule sch in weekList.ToList())
             {
                 if(sch.Class_Date == DateTime.Now.Date)
                 {

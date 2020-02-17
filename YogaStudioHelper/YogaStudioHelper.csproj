@@ -183,6 +183,7 @@
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\SaleReportViewModel.cs" />
     <Compile Include="ViewModels\ScheduleViewModel.cs" />
+    <Compile Include="ViewModels\HoursWorkedMonthly.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -265,6 +266,8 @@
     <Content Include="Views\Report\SalesMonthly.cshtml" />
     <Content Include="Views\Report\SaleListMonth.cshtml" />
     <Content Include="Views\Schedule\StudentSignIn.cshtml" />
+    <Content Include="Views\Report\HoursWorkedMonthlyList.cshtml" />
+    <Content Include="Views\Report\HoursWorkedMonthly.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
