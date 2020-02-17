@@ -792,29 +792,6 @@ namespace YogaStudioHelper.Controllers
             var teachers = db.getTeacherList();
             var rooms = db.getRoomActiveList();
 
-            /*
-
-            List<Class> classListTest = new List<Class>();
-
-            classListTest.Add(new Class { Class_Id = 10, Class_Name = "Math" });
-            classListTest.Add(new Class { Class_Id = 11, Class_Name = "Francais" });
-            classListTest.Add(new Class { Class_Id = 12, Class_Name = "English" });
-            classListTest.Add(new Class { Class_Id = 13, Class_Name = "ASP.NET" });
-           
-            List<Yoga_User> teacherListTest = new List<Yoga_User>();
-
-            teacherListTest.Add(new Yoga_User { U_Id = 10, U_Last_Name = "Wood" });
-            teacherListTest.Add(new Yoga_User { U_Id = 11, U_Last_Name = "CL" });
-            teacherListTest.Add(new Yoga_User { U_Id = 12, U_Last_Name = "Johnson" });
-
-            List<Room> roomListTest = new List<Room>();
-
-            roomListTest.Add(new Room { Room_Id = 10, Room_Name = "A-204" });
-            roomListTest.Add(new Room { Room_Id = 11, Room_Name = "F-245" });
-            roomListTest.Add(new Room { Room_Id = 12, Room_Name = "B-06" });
-
-    */
-
 
             var scheduleViewModel = new ScheduleViewModel
             {
@@ -868,6 +845,13 @@ namespace YogaStudioHelper.Controllers
 
             Yoga_User u = db.getUserById(selectedTeacher);
 
+             if(DateTime.Now.Date > classDate)
+            {
+                ViewBag.message = "<p><span style=\"color:red\">Date Error: Can't Select Dates in the Past</span>";
+                return View(scheduleViewModel);
+            }
+
+
             try
             {
                  sTime = TimeSpan.Parse(xd.Root.Element(dayOftheWeek).Element("Start").Value);
@@ -881,7 +865,6 @@ namespace YogaStudioHelper.Controllers
             Class c = db.getClass(selectedCLass);
             TimeSpan classEnd = sTime.Add(c.Class_Length);
 
-            
 
             if (sTime > timePicker)
             {
@@ -1017,6 +1000,12 @@ namespace YogaStudioHelper.Controllers
             TimeSpan eTime;
 
             Yoga_User u = db.getUserById(selectedTeacher);
+
+            if (DateTime.Now.Date > classDate)
+            {
+                ViewBag.message = "<p><span style=\"color:red\">Date Error: Can't Select Dates in the Past</span>";
+                return View(scheduleViewModel);
+            }
 
             try
             {
