@@ -168,7 +168,7 @@ namespace YogaStudioHelper.Controllers
             //get list with this time constraint 
             IEnumerable<Database.Pass_Log> saleList = db.GetSaleReport(startDate, endDate);
 
-            IEnumerable<SaleReportMonthly> monthList = (from log in saleList
+            IEnumerable<SaleReportMonthly> monthList = (from log in saleList                                                        
                                                         group log by log.Class_Passes.Pass_Name
                                                         into grp
                                                         select new SaleReportMonthly

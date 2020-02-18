@@ -136,7 +136,7 @@ namespace YogaStudioHelper.Util
 
 
 
-        public static void sendPurchaseConfirmation(Yoga_User user, Pass_Log pl)
+        public static void sendPurchaseConfirmation(Yoga_User user, Pass_Log pl, string purchaseType)
         {
             DBMaster db = new DBMaster();
 
@@ -159,23 +159,15 @@ namespace YogaStudioHelper.Util
 
             msobj.To.Add(user.U_Email);
             msobj.From = new MailAddress("SamsaraYogaMontreal@gmail.com");
-            msobj.Subject = "Confirmation of Digital Purchase from Samsara Yoga";
+            msobj.Subject = "Confirmation of "+purchaseType+" Purchase from Samsara Yoga";
             msobj.IsBodyHtml = true;
 
-            if (p == null)
+            if (p == null || p.Promo_End < DateTime.Now.Date)
             {
                 decimal tax = ((pass.Pass_Price) * (decimal).15);
 
 
-                msobj.Body = "<h1 style='color:#557ee6;'>Saṃsāra Yoga</h1>" +
-                             "<p>Thank you for your recent purchase from Samsara Yoga. Details of this transaction are below:</p><br/>" +
-                             "Transaction ID: " + pl.Invoice_Number + "<br/>" +
-                             "Transaction Date: " + pl.Date_Purchased + "<br/><br/>" +
-                             "Purchased Item: " + pass.Pass_Name + " Packet<br/><br/>" +
-                             "‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑<br/><br/>" +
-                             "Unit Price: " + pass.Pass_Price.ToString("F") + "<br/>" +
-                             "Tax: " + tax.ToString("F") + "<br>" +
-                             "Total: " + (tax + pass.Pass_Price).ToString("F");
+                msobj.Body = "<h1 style='color:#557ee6;'>Saṃsāra Yoga</h1><p>Thank you for your recent "+purchaseType.ToLower()+" purchase from Samsara Yoga. Details of this transaction are below:</p><br/>Transaction ID: " + pl.Invoice_Number + "<br/>Transaction Date: " + pl.Date_Purchased + "<br/><br/>Purchased Item: " + pass.Pass_Name + "<br/><br/>‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑<br/><br/>Unit Price: " + pass.Pass_Price.ToString("F") + "<br/>Tax: " + tax.ToString("F") + "<br>Total: " + (tax + pass.Pass_Price).ToString("F") + "$";
 
 
 
@@ -189,17 +181,7 @@ namespace YogaStudioHelper.Util
                     decimal tax = ((pass.Pass_Price + discount) * (decimal).15);
 
                     msobj.Body = "<h1 style='color:#557ee6;'>Saṃsāra Yoga</h1>" +
-                            "<p>Thank you for your recent digital purchase from Samsara Yoga. Details of this transaction are below:</p><br/>" +
-                            "Transaction ID: " + pl.Invoice_Number + "<br/>" +
-                            "Transaction Date: " + pl.Date_Purchased + "<br/><br/>" +
-                            "Purchased Item: " + pass.Pass_Name + " Packet<br/>" +
-                            "Promotion: "+p.Promo_Desc+" "+(int)(p.Discount*100)+"% Off<br/><br>"+
-                            "‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑<br/><br/>" +
-                            "Unit Price: " + pass.Pass_Price.ToString("F") + "<br/>" +
-                            "Discount: " + discount.ToString("F") +"<br/><br/>"+
-                            "Subtotal: "+(discount+pass.Pass_Price).ToString("F")+"<br/>"+
-                            "Tax: " + tax.ToString("F") + "<br>" +
-                            "Total: " + (tax + pass.Pass_Price + discount).ToString("F");
+                            "<p>Thank you for your recent "+ purchaseType.ToLowerInvariant()+ " purchase from Samsara Yoga. Details of this transaction are below:</p><br/>Transaction ID: " + pl.Invoice_Number + "<br/>Transaction Date: " + pl.Date_Purchased + "<br/><br/>Purchased Item: " + pass.Pass_Name + "<br/>Promotion: "+p.Promo_Desc+" "+(int)(p.Discount*100)+"% Off<br/><br>‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑<br/><br/>Unit Price: " + pass.Pass_Price.ToString("F") + "<br/>Discount: " + discount.ToString("F") +"<br/><br/>Subtotal: "+(discount+pass.Pass_Price).ToString("F")+"<br/>Total: " + (tax + pass.Pass_Price + discount).ToString("F")+"$";
 
 
 
@@ -210,16 +192,7 @@ namespace YogaStudioHelper.Util
                     
                     decimal tax = ((pass.Pass_Price) * (decimal).15);
 
-                    msobj.Body = "<h1 style='color:#557ee6;'>Saṃsāra Yoga</h1>" +
-                            "<p>Thank you for your recent digital purchase from Samsara Yoga. Details of this transaction are below:</p><br/>" +
-                            "Transaction ID: " + pl.Invoice_Number + "<br/>" +
-                            "Transaction Date: " + pl.Date_Purchased + "<br/><br/>" +
-                            "Purchased Item: " + pass.Pass_Name + "<br/>" +
-                            "Promotion: "+p.Promo_Desc+" +"+p.Num_Classes+" Passes<br/><br/>"+
-                            "‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑<br/><br/>" +
-                            "Unit Price: " + pass.Pass_Price.ToString("F") + "<br/>" +
-                            "Tax: " + tax.ToString("F") + "<br>" +
-                            "Total: " + (tax + pass.Pass_Price).ToString("F");
+                    msobj.Body = "<h1 style='color:#557ee6;'>Saṃsāra Yoga</h1><p>Thank you for your recent "+ purchaseType.ToLowerInvariant()+" purchase from Samsara Yoga. Details of this transaction are below:</p><br/>Transaction ID: " + pl.Invoice_Number + "<br/>Transaction Date: " + pl.Date_Purchased + "<br/><br/>Purchased Item: " + pass.Pass_Name + "<br/>Promotion: "+p.Promo_Desc+" +"+p.Num_Classes+" Passes<br/><br/>‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑‑<br/><br/>Unit Price: " + pass.Pass_Price.ToString("F") + "<br/>Tax: " + tax.ToString("F") + "<br>Total: " + (tax + pass.Pass_Price).ToString("F") + "$";
 
 
 

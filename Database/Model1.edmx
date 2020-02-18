@@ -45,6 +45,7 @@
           <Property Name="Num_Classes" Type="int" />
           <Property Name="Purchase_Price" Type="smallmoney" />
           <Property Name="Date_Purchased" Type="datetime" />
+          <Property Name="Purchase_Method" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Promotion">
           <Key>
@@ -311,6 +312,7 @@
           <NavigationProperty Name="Class_Passes" Relationship="Self.FK_Pass_Log_Pass_Id" FromRole="Pass_Log" ToRole="Class_Passes" />
           <NavigationProperty Name="Yoga_User" Relationship="Self.FK_Pass_Log_U_Id" FromRole="Pass_Log" ToRole="Yoga_User" />
           <Property Name="Invoice_Number" Type="Int32" />
+          <Property Name="Purchase_Method" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Promotion">
           <Key>
@@ -578,6 +580,7 @@
           <EntitySetMapping Name="Pass_Log">
             <EntityTypeMapping TypeName="yogadbModel.Pass_Log">
               <MappingFragment StoreEntitySet="Pass_Log">
+                <ScalarProperty Name="Purchase_Method" ColumnName="Purchase_Method" />
                 <ScalarProperty Name="Invoice_Number" ColumnName="Invoice_Number" />
                 <ScalarProperty Name="Pass_Log_Id" ColumnName="Pass_Log_Id" />
                 <ScalarProperty Name="Pass_Id" ColumnName="Pass_Id" />
