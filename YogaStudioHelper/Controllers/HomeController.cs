@@ -78,6 +78,37 @@ namespace YogaStudioHelper.Controllers
         {
             return View();
         }
+        
+        public ActionResult Contact()
+        {
 
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Contact(FormCollection collection)
+        {
+
+            string name= collection["txt_name"];
+            string email= collection["txt_email"];
+            string phone= collection["txt_phone"];
+            string subject= collection["txt_subject"];
+            string message= collection["txt_message"];
+
+
+
+            string mail_message = "From: " + name + "<br/>";
+            mail_message += "Email: " + email + "<br/>";
+            mail_message += "Subject: " + subject + "<br/>";
+            mail_message += "Phone: " + phone + "<br/>";
+            mail_message += "Message: " + message + "<br/>";
+
+            // call util methods 
+            Util.EmailSender.sendContactForm(email, subject, mail_message);
+
+
+            return View();
+        }
     }
 }

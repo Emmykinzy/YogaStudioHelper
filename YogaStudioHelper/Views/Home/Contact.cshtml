@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Contact";
+}
+
+
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+
+<link href='@Url.Content("~/Content/Contact.css")' rel="stylesheet" type="text/css" />
+
+<h2>Contact</h2>
+
+
+<div class="container">
+    <div class="contact-parent">
+        <div class="contact-child child1">
+            <p>
+                <i class="fas fa-map-marker-alt"></i>Address
+                <br /><span>
+                    110  Ash Lane,
+                    <br /> YARROW FEUS, TD7 0XL
+                </span>
+            </p>
+            <p>
+                <i class="fas fa-phone-alt"></i>Let's talk
+                <br />
+                <span>070 8826 9269</span>
+            </p>
+            <p>
+                <i class="far fa-envelope"></i>General Support
+                <br />
+                <span>andreea@andreeabunget.co.uk</span>
+            </p>
+        </div>
+
+
+        <div class="contact-child child2">
+            <div class="inside-contact">
+
+
+                @using (Html.BeginForm())
+                {
+
+                    <h2>Contact Us</h2>
+                    <h3>
+                        <asp:Label ID="confirm" runat="server" Text=""></asp:Label>
+                    </h3>
+
+                    <p> Name *</p>
+
+
+                    <input type="text" id="txt_name" name="txt_name" runat="server" Required="required" />
+
+                    <p>Email *</p>
+                    <input type="text" id="txt_email" name="txt_email" runat="server" Required="required" />
+
+                    <p>Phone *</p>
+                    <input type="text" id="txt_phone" name="txt_phone" runat="server" Required="required" />
+
+                    <p>Subject *</p>
+                    <input type="text" id="txt_subject" name="txt_subject" runat="server" Required="required" />
+
+                    <p>Message *</p>
+                    <textarea id="txt_message" name="txt_message" runat="server" Required="required" TextMode="MultiLine" Rows="4"></textarea>
+
+                    <!--                <textarea ID="txt_message" runat="server" Required="required" TextMode="MultiLine" Rows="4"></textarea>
+            <button type="submit" ID="btn_send" runat="server" Value="Send" OnClick="btn_send_Click" />
+            -->
+
+
+
+                    <button style="width:150px" type="submit" class="btn btn-defa1ult">Send</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
