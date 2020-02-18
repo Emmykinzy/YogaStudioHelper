@@ -277,6 +277,46 @@ namespace YogaStudioHelper.Util
             client.Send(msobj);
 
         }
+
+
+
+
+        public static void sendContactForm(string email, string subject, string message)
+        {
+            string test = Guid.NewGuid().ToString();
+
+            SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+            //client.EnableSsl = false;
+
+            client.EnableSsl = true;
+
+            client.DeliveryMethod =
+                SmtpDeliveryMethod.Network;
+
+            client.UseDefaultCredentials = false;
+            //client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
+
+            client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
+
+
+
+            MailMessage msobj = new MailMessage();
+
+            msobj.To.Add("SamsaraYogaMontreal@gmail.com");
+
+            msobj.From = new MailAddress("SamsaraYogaMontreal@gmail.com");
+            msobj.Subject = subject;
+            msobj.IsBodyHtml = true;
+            msobj.Body = message;
+
+
+
+            client.Send(msobj);
+        }
+
+
+
+
     }
 
     

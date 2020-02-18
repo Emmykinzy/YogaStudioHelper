@@ -22,7 +22,7 @@ namespace Database
 
     public class DBMaster
     {
-        yogadbEntities myDb = new yogadbEntities();
+        public yogadbEntities myDb = new yogadbEntities();
         ScryptEncoder encoder = new ScryptEncoder();
 
 

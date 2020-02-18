@@ -327,5 +327,86 @@ namespace YogaStudioHelper.Controllers
             return View(list);
         }
 
+
+
+        // <h2>HoursWorkedMonthly</h2>
+
+        [HttpGet]
+        public ActionResult HoursWorkedMonthly()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult HoursWorkedMonthly(FormCollection collection)
+        {
+            string month = collection["month"];
+
+            DateTime startDate = DateTime.Parse(collection["month"]);
+
+            DateTime endDate = startDate.AddMonths(1);
+
+            // call method to get list of data 
+            List<HoursWorkedMonthly> list= GetHoursWorkedMonthlyReport(startDate, endDate);
+
+            TempData["HoursWorkedMonthly"] = list;
+
+            return RedirectToAction("HoursWorkedMonthlyList");
+        }
+
+
+
+        [HttpGet]
+        public ActionResult HoursWorkedMonthlyList()
+        {
+            List<HoursWorkedMonthly> list = TempData["HoursWorkedMonthly"] as List<HoursWorkedMonthly>;
+            return View(list);
+        }
+
+
+
+
+        /// <summary>
+        /// 
+        /// Method for Report List 
+        /// </summary>
+        /// <param name="d1"></param>
+        /// <param name="d2"></param>
+        /// <returns></returns>
+        public List<HoursWorkedMonthly> GetHoursWorkedMonthlyReport(DateTime d1, DateTime d2)
+        {
+            List<HoursWorkedMonthly> list = new List<HoursWorkedMonthly>();
+
+            var teacherList = db.getTeacherList();
+
+            foreach(var teacher in teacherList)
+            {
+                HoursWorkedMonthly record = new HoursWorkedMonthly();
+
+                record.U_First_Name = teacher.U_First_Name;
+                record.U_Last_Name = teacher.U_Last_Name;
+
+                // set myDb public to access it here, might not be secure to check back 
+
+                var schedList = db.myDb.Schedules.Where(x => x.Class_Date >= d1 && x.Class_Date <= d2 && x.Teacher_Id == teacher.U_Id);
+
+                foreach(var sched in schedList)
+                {
+                    // needed for length 
+                    var classe = db.getClass(sched.Class_Id);
+
+                    record.totalHours += classe.Class_Length;
+                    record.totalClasses++; 
+
+
+                }
+
+                list.Add(record);
+
+            }
+
+            return list;
+        }
     }
 }

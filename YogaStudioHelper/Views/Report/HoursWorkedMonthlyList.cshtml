@@ -1,0 +1,100 @@
+﻿@model IEnumerable<YogaStudioHelper.ViewModels.HoursWorkedMonthly>
+
+@{
+    ViewBag.Title = "HoursWorkedMonthly";
+
+    TimeSpan totalHours = TimeSpan.Zero;
+
+    int totalClasses = 0; 
+}
+
+<h2>Hours Worked Monthly</h2>
+
+
+<div class="table-responsive">
+    <table class="table table-striped" id="hoursWorkedReportTable">
+
+        <thead class="thead-dark">
+
+            <tr>
+                <th>
+                    First Name
+                </th>
+                <th>
+                    Last Name
+                </th>
+                <th>
+                    Total Hours
+                </th>
+                <th>
+                    Total Classes
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                totalHours = totalHours.Add(item.totalHours);
+
+                totalClasses += item.totalClasses;
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.U_First_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.U_Last_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.totalHours)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.totalClasses)
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+        <tr>
+            <td class="totalRow">Total Hours Worked:</td>
+            <td>@totalHours</td>
+
+            <td class="totalRow">Total Classes:</td>
+            <td>@totalClasses</td>
+        </tr>
+
+    </table>
+    </div>
+
+<div>
+    <br />
+    <button id="pdf" class="btn btn-success">Make PDF</button>
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>-->
+    <script src="~/Scripts/jspdf.min.js"></script>
+    <script src="~/Scripts/jspdf.plugin.autotable.min.js"></script>
+    <script src="~/Scripts/tableHTMLExport.js"></script>
+
+    <script>
+
+        $("#pdf").on("click", function () {
+            $("#hoursWorkedReportTable").tableHTMLExport({
+                type: 'pdf',
+                filename: 'HoursWorkedReport.pdf'
+            });
+        });
+
+        /*
+        function pdf() {
+            var doc = new jsPDF();
+            doc.text("Hello world", 10, 10);
+            doc.save("output.pdf");
+        }
+        */
+    </script>
+</div>
