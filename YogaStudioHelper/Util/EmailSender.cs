@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
+using System.Text;
 using System.Web;
 
 namespace YogaStudioHelper.Util
@@ -341,6 +342,50 @@ namespace YogaStudioHelper.Util
             client.Send(msobj);
         }
 
+
+        public static void sendConfirmation(string email, string subject, string name)
+        {
+            string test = Guid.NewGuid().ToString();
+
+            SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+            //client.EnableSsl = false;
+
+            client.EnableSsl = true;
+
+            client.DeliveryMethod =
+                SmtpDeliveryMethod.Network;
+
+            client.UseDefaultCredentials = false;
+            //client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
+
+            client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
+
+
+
+
+            StringBuilder sbEmailBody = new StringBuilder();
+            sbEmailBody.Append("Dear " + name + ",<br/><br/>");
+            sbEmailBody.Append("Thank you for your email<br/>");
+            sbEmailBody.Append("We received you message regarding: " + subject + "<br/>");
+            sbEmailBody.Append("We will be back to you as soon as possible");
+            sbEmailBody.Append("<br/><br/><br/>");
+            sbEmailBody.Append("Sincerely, <br/>");
+            sbEmailBody.Append("<b>Samsara Yoga</b>");
+
+
+            MailMessage msobj = new MailMessage();
+
+            msobj.To.Add(email);
+
+            msobj.From = new MailAddress("SamsaraYogaMontreal@gmail.com");
+            msobj.Subject = "Re: Thank you for your email";
+            msobj.IsBodyHtml = true;
+            msobj.Body = sbEmailBody.ToString();
+
+
+
+            client.Send(msobj);
+        }
 
 
 

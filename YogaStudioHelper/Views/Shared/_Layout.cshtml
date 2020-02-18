@@ -148,7 +148,7 @@
 
                                 <ul class="dropdown-menu custom_nav">
                                     <li class="custom_nav">@Html.ActionLink("Hours Worked", "HoursWorked", "Report", null, new { @class = "custom_nav" })</li>
-                                    <li class="custom_nav">@Html.ActionLink("Hours Worked Monthly", "HoursWorkedMonthly", "Report", null, new { @class = "custom_nav" })</li>                                 
+                                    <li class="custom_nav">@Html.ActionLink("Hours Worked Monthly", "HoursWorkedMonthly", "Report", null, new { @class = "custom_nav" })</li>
                                     <li class="custom_nav">@Html.ActionLink("Sales Dates", "SalesDates", "Report", null, new { @class = "custom_nav" })</li>
                                     <li class="custom_nav">@Html.ActionLink("Sales Month", "SalesMonth", "Report", null, new { @class = "custom_nav" })</li>
                                     <li class="custom_nav">@Html.ActionLink("Sales Monthly", "SalesMonthly", "Report", null, new { @class = "custom_nav" })</li>
@@ -160,6 +160,7 @@
 
                         }
 
+                        <li class="custom_nav">@Html.ActionLink("Contact Us", "Contact", "Home", null, new { @class = "custom_nav" })</li>
 
                         @if (Session["Auth"] == null)
                         {
@@ -186,11 +187,11 @@
 
                                     @if ((int)Session["Auth"] == 2)
                                     {
-                                         <li class="custom_nav">@Html.ActionLink("View Availabilities", "ViewAvailabilities", "Profile", null, new { @class = "custom_nav" })</li>
-                                         <li class="custom_nav">@Html.ActionLink("Create Availabilities", "CreateAvailabilities", "Profile", null, new { @class = "custom_nav" })</li>
-                                     }
-                                         
-                                         <li class="custom_nav">@Html.ActionLink("Log Out", "LogOut", "LoginSignUp", null, new { @class = "custom_nav" })</li>
+                                        <li class="custom_nav">@Html.ActionLink("View Availabilities", "ViewAvailabilities", "Profile", null, new { @class = "custom_nav" })</li>
+                                        <li class="custom_nav">@Html.ActionLink("Create Availabilities", "CreateAvailabilities", "Profile", null, new { @class = "custom_nav" })</li>
+                                    }
+
+                                    <li class="custom_nav">@Html.ActionLink("Log Out", "LogOut", "LoginSignUp", null, new { @class = "custom_nav" })</li>
                                 </ul>
                             </li>
 
