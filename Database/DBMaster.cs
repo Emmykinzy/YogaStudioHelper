@@ -50,7 +50,7 @@ namespace Database
             return pass;
         }
 
-        public Pass_Log processPurchase(Class_Passes pass, int userId)
+        public Pass_Log processPurchase(Class_Passes pass, int userId, string purchaseType)
         {
             Pass_Log pass_Log = new Pass_Log();
 
@@ -61,6 +61,8 @@ namespace Database
             
             pass_Log.Pass_Id = pass.Pass_Id;
             pass_Log.U_Id = userId;
+            pass_Log.Purchase_Method = purchaseType;
+            
             // num classes 
             int token;
             if (p != null)

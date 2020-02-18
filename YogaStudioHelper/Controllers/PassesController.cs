@@ -54,13 +54,13 @@ namespace YogaStudioHelper.Controllers
 
         public ActionResult StorePurchase(int passId, int userId)
         {
-            Pass_Log pl = db.processPurchase(db.getClassPasse(passId), userId);
+            Pass_Log pl = db.processPurchase(db.getClassPasse(passId), userId, "IN-STORE");
 
             Yoga_User u = db.getUserById(userId);
 
-            EmailSender.sendPurchaseConfirmation(u, pl);
+            EmailSender.sendPurchaseConfirmation(u, pl, "In-Store");
 
-            return RedirectToAction("Store");
+            return RedirectToAction("SuccessView");
         }
 
         [Filters.AuthorizeStudent]
@@ -150,11 +150,11 @@ namespace YogaStudioHelper.Controllers
             //todo update all field correctly later on 
 
             // create purchase log 
-            Pass_Log pl = db.processPurchase(pass, userId);
+            Pass_Log pl = db.processPurchase(pass, userId, "ONLINE");
 
             Yoga_User u = db.getUserById(userId);
 
-            EmailSender.sendPurchaseConfirmation(u, pl);
+            EmailSender.sendPurchaseConfirmation(u, pl, "Online");
             // todo success message with receipt etc. 
 
             return View("SuccessView");

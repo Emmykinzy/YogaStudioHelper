@@ -11,8 +11,7 @@ namespace Database
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Pass_Log
     {
         public int Pass_Log_Id { get; set; }
@@ -20,9 +19,9 @@ namespace Database
         public int U_Id { get; set; }
         public Nullable<int> Num_Classes { get; set; }
         public Nullable<decimal> Purchase_Price { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MMMM dd, yyyy}")]
         public DateTime Date_Purchased { get; set; }
         public Nullable<int> Invoice_Number { get; set; }
+        public string Purchase_Method { get; set; }
     
         public virtual Class_Passes Class_Passes { get; set; }
         public virtual Yoga_User Yoga_User { get; set; }

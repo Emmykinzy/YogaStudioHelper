@@ -51,7 +51,7 @@ namespace YogaStudioHelper.Controllers
 
             ViewBag.UpcomingClasses = weekList; 
 
-            foreach(Schedule sch in weekList)
+            foreach(Schedule sch in weekList.ToList())
             {
                 if(sch.Class_Date == DateTime.Now.Date)
                 {

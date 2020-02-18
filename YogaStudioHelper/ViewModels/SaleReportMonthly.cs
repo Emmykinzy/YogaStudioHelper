@@ -13,6 +13,8 @@ namespace YogaStudioHelper.ViewModels
         public int Pass_Id { get; set; }
         public string Pass_Name { get; set; }
 
+        public string purchaseType { get; set; }
+
         public int count { get; set; }
         public int? Total_Num_Classes { get; set; }
         public decimal? Total_Purchase_Price { get; set; }
