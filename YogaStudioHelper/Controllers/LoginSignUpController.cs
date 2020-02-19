@@ -66,31 +66,6 @@ namespace YogaStudioHelper.Controllers
                     Session["Auth"] = null;
                 }
 
-
-
-                /*
-                if (roleName.Equals("ADMINISTRATOR"))
-                {
-                    Session["Auth"] = 1;
-                }
-                else if (roleName.Equals("TEACHER"))
-                {
-                    Session["Auth"] = 2;
-                }
-                else if (roleName.Equals("RECEPTIONIST"))
-                {
-                    Session["Auth"] = 3;
-                }
-                else if (roleName.Equals("STUDENT"))
-                {
-                    Session["Auth"] = 4;
-                }
-                */
-
-
-
-
-
                 ViewBag.message = "Valid, Login";
                 
                 Session["Uid"] = u.U_Id;
@@ -99,8 +74,13 @@ namespace YogaStudioHelper.Controllers
             }
             else
             {
-                Yoga_User u = db.getUserByEmail(email).Single();
-                if (u.Active == true)
+                Yoga_User u = db.getUserByEmail(email).SingleOrDefault();
+                if(u == null)
+                {
+                    ViewBag.message = "Invalid Login Credentials";
+                    ViewBag.StickyEmail = email;
+                }
+                else if (u.Active == true)
                 {
                     ViewBag.message = "Invalid Login Credentials";
                     ViewBag.StickyEmail = email;

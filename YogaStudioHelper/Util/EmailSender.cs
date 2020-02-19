@@ -14,9 +14,8 @@ namespace YogaStudioHelper.Util
 
         
 
-        public static string sendEmail()
+        public static void sendEmail(string error)
         {
-            String message;
             try
             {
                 SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
@@ -39,26 +38,18 @@ namespace YogaStudioHelper.Util
                 msobj.To.Add("ekjohnson99@gmail.com");
 
                 msobj.From = new MailAddress("SamsaraYogaMontreal@gmail.com");
-                msobj.Subject = "This is a Test";                
+                msobj.Subject = error;
                 msobj.Body = "You bought a pass!";
 
 
 
                 client.Send(msobj);
 
-                message = "Email sent successfully";
-                //Response.Write(message);
-                Console.WriteLine(message);
             }
             catch (Exception e)
             {
-                message = "Error sending the email";
-
-                //Response.Write(message + "  " + e);
-                Console.WriteLine(message);
 
             }
-            return message;
 
         }
 

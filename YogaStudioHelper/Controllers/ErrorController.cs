@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using YogaStudioHelper.Util;
 
 namespace YogaStudioHelper.Controllers
 {
@@ -15,6 +16,11 @@ namespace YogaStudioHelper.Controllers
         }
 
         public ActionResult NotFound()
+        {
+            return View();
+        }
+
+        public ActionResult Error()
         {
             return View();
         }

@@ -1,19 +1,20 @@
-﻿@using Database
+﻿@model List<Database.Schedule>
+@*@using Database*@
 @{
     ViewBag.Title = "Homepage";
 
-    DBMaster db = new DBMaster();
+    //DBMaster db = new DBMaster();
 
-    List<Schedule> list;
-    if (ViewBag.UpcomingClasses != null)
-    {
-        list = ViewBag.UpcomingClasses;
+    //List<Schedule> list;
+    //if (ViewBag.UpcomingClasses != null)
+    //{
+    //    list = ViewBag.UpcomingClasses;
 
-    }
-    else
-    {
-        list = new List<Schedule>();
-    }
+    //}
+    //else
+    //{
+    //    list = new List<Schedule>();
+    //}
 
 }
 
@@ -31,7 +32,7 @@
 
     @{
         //test upcoming classes feature
-        if (list.Count == 0)
+        if (Model.Count == 0)
         {
             <div class="scrollElement">
                 <div class="title">Upcoming Class</div>
@@ -40,10 +41,8 @@
         }
         else
         {
-            foreach (var sched in list)
+            foreach (var sched in Model)
             {
-                var classe = db.getClass(sched.Class_Id);
-
                 //doing this since only datetime as formating method tostring() (not timespan)
                 DateTime time = DateTime.Today.Add(sched.Start_Time);
 
@@ -53,7 +52,7 @@
                 <div class="scrollElement">
                     <div class="title">@sched.Class_Date.ToString("MMMM dd")</div>
                     <div class="scrollCont">
-                        @classe.Class_Name<br />@time.ToString("h:mm tt")<br />
+                        @sched.Class.Class_Name<br />@time.ToString("h:mm tt")<br />
                         @Html.ActionLink("More Info", "Schedule", "Schedule")
                     </div>
 
@@ -80,7 +79,7 @@
     <div class="bDiv">
         <h3>Countact Us</h3>
         Phone: (514)-248-1941<br />
-        Email: contactus@samsarayoga.com
+        Email: samsarayogamontreal@gmail.com
     </div>
 </div>
 

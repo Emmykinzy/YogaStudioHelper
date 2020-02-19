@@ -47,11 +47,9 @@ namespace YogaStudioHelper.Controllers
 
             List<Schedule> weekList = list.Where(x => x.Class_Date.Date >= DateTime.Now.Date && x.Class_Date.Date <= DateTime.Now.AddDays(6)).ToList();
 
-            //IEnumerable<Schedule> orderedList = list.OrderByDescending(x => x.Class_Date).OrderBy(x => x.Start_Time);
+            List<Schedule> orderedList = weekList.OrderBy(x => x.Start_Time).OrderBy(x => x.Class_Date).ToList();
 
-            ViewBag.UpcomingClasses = weekList.ToList(); 
-
-            foreach(Schedule sch in weekList.ToList())
+            foreach(Schedule sch in orderedList.ToList())
             {
                 if(sch.Class_Date == DateTime.Now.Date)
                 {
@@ -60,7 +58,7 @@ namespace YogaStudioHelper.Controllers
 
                         if (sch.Start_Time.Minutes < DateTime.Now.Minute)
                         {
-                            weekList.Remove(sch);
+                            orderedList.Remove(sch);
                         }
                     }
                     else
@@ -71,7 +69,8 @@ namespace YogaStudioHelper.Controllers
                 }
             }
 
-            return View(weekList.Take(10)); 
+            List<Schedule> listUpcomin = orderedList.Take(10).ToList();
+            return View(listUpcomin); 
         }
 
         public ActionResult MessageView()
