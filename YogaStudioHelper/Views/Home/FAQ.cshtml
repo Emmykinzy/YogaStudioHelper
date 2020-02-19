@@ -4,114 +4,126 @@
 }
 
 <style>
-body:not(.custom_nav) {
-    /*
-  margin-top: 30px;
-  background-color: #eee;
-        */
-}
+      body:not(.custom_nav) {
+          /*
+    margin-top: 30px;
+    background-color: #eee;
+          */
+      }
 
-.list-group.help-group {
-  margin-bottom: 20px;
-  padding-left: 0;
-  margin: 0;
-}
-.list-group.help-group .faq-list {
-  display: block;
-  top: auto;
-  margin: 0 0 32px;
-  border-radius: 2px;
-  border: 1px solid #ddd;
-  box-shadow: 0 1px 5px rgba(85, 85, 85, 0.15);
-}
-.list-group.help-group .faq-list .list-group-item {
-  position: relative;
-  display: block;
-  margin: 0;
-  padding: 13px 16px;
-  background-color: #fff;
-  border: 0;
-  border-bottom: 1px solid #ddd;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  color: #616161;
-  transition: background-color .2s;
-}
-.list-group.help-group .faq-list .list-group-item i.mdi {
-  margin-right: 5px;
-  font-size: 18px;
-  position: relative;
-  top: 2px;
-}
-.list-group.help-group .faq-list .list-group-item:hover {
-  background-color: #f6f6f6;
-}
-.list-group.help-group .faq-list .list-group-item.active {
-  background-color: #f6f6f6;
-  font-weight: 700;
-  color: rgba(0, 0, 0, 0.87);
-}
-.list-group.help-group .faq-list .list-group-item:last-of-type {
-  border-bottom-left-radius: 2px;
-  border-bottom-right-radius: 2px;
-  border-bottom: 0;
-}
+      .list-group.help-group {
+          margin-bottom: 20px;
+          padding-left: 0;
+          margin: 0;
+      }
 
-.tab-content.panels-faq {
-  padding: 0;
-  border: 0;
-}
+          .list-group.help-group .faq-list {
+              display: block;
+              top: auto;
+              margin: 0 0 32px;
+              border-radius: 2px;
+              border: 1px solid #ddd;
+              box-shadow: 0 1px 5px rgba(85, 85, 85, 0.15);
+          }
 
-.panel.panel-help {
-  box-shadow: 0 1px 5px rgba(85, 85, 85, 0.15);
-  padding-bottom: 0;
-  border-radius: 2px;
-  overflow: hidden;
-  background-color: #fff;
-  margin: 0 0 16px;
-}
-.panel.panel-help a[href^="#"],
-.panel.panel-help a[href^="#"]:hover,
-.panel.panel-help a[href^="#"]:focus {
-  outline: none;
-  cursor: pointer;
-  text-decoration: none;
-}
-.panel.panel-help .panel-heading {
-  background-color: #f6f6f6;
-  padding: 0 16px;
-  line-height: 48px;
-  border-top-right-radius: 2px;
-  border-top-left-radius: 2px;
-  color: rgba(0, 0, 0, 0.87);
-}
-.panel.panel-help .panel-heading h2 {
-  margin: 0;
-  padding: 14px 0 14px;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 20px;
-  letter-spacing: 0;
-  text-transform: none;
-}
-.panel.panel-help .panel-body {
-  background-color: #fff;
-  border-top: 1px solid #ddd;
-  border-radius: 2px;
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
-  margin-top: 0;
-}
-.panel.panel-help .panel-body p {
-  margin: 0 0 16px;
-}
-.panel.panel-help .panel-body p:last-of-type {
-  margin: 0;
-}
-.maincenter{
-    /*text-align:center;*/
-}
+              .list-group.help-group .faq-list .list-group-item {
+                  position: relative;
+                  display: block;
+                  margin: 0;
+                  padding: 13px 16px;
+                  background-color: #fff;
+                  border: 0;
+                  border-bottom: 1px solid #ddd;
+                  border-top-left-radius: 2px;
+                  border-top-right-radius: 2px;
+                  color: #616161;
+                  transition: background-color .2s;
+              }
 
+                  .list-group.help-group .faq-list .list-group-item i.mdi {
+                      margin-right: 5px;
+                      font-size: 18px;
+                      position: relative;
+                      top: 2px;
+                  }
+
+                  .list-group.help-group .faq-list .list-group-item:hover {
+                      background-color: #f6f6f6;
+                  }
+
+                  .list-group.help-group .faq-list .list-group-item.active {
+                      background-color: #f6f6f6;
+                      font-weight: 700;
+                      color: rgba(0, 0, 0, 0.87);
+                  }
+
+                  .list-group.help-group .faq-list .list-group-item:last-of-type {
+                      border-bottom-left-radius: 2px;
+                      border-bottom-right-radius: 2px;
+                      border-bottom: 0;
+                  }
+
+      .tab-content.panels-faq {
+          padding: 0;
+          border: 0;
+      }
+
+      .panel.panel-help {
+          box-shadow: 0 1px 5px rgba(85, 85, 85, 0.15);
+          padding-bottom: 0;
+          border-radius: 2px;
+          overflow: hidden;
+          background-color: #fff;
+          margin: 0 0 16px;
+      }
+
+          .panel.panel-help a[href^="#"],
+          .panel.panel-help a[href^="#"]:hover,
+          .panel.panel-help a[href^="#"]:focus {
+              outline: none;
+              cursor: pointer;
+              text-decoration: none;
+          }
+
+          .panel.panel-help .panel-heading {
+              background-color: #f6f6f6;
+              padding: 0 16px;
+              line-height: 48px;
+              border-top-right-radius: 2px;
+              border-top-left-radius: 2px;
+              color: rgba(0, 0, 0, 0.87);
+          }
+
+              .panel.panel-help .panel-heading h2 {
+                  margin: 0;
+                  padding: 14px 0 14px;
+                  font-size: 18px;
+                  font-weight: 400;
+                  line-height: 20px;
+                  letter-spacing: 0;
+                  text-transform: none;
+              }
+
+          .panel.panel-help .panel-body {
+              background-color: #fff;
+              border-top: 1px solid #ddd;
+              border-radius: 2px;
+              border-top-right-radius: 0;
+              border-top-left-radius: 0;
+              margin-top: 0;
+          }
+
+              .panel.panel-help .panel-body p {
+                  margin: 0 0 16px;
+              }
+
+                  .panel.panel-help .panel-body p:last-of-type {
+                      margin: 0;
+                  }
+
+      .maincenter {
+          /*text-align:center;*/
+      }
 </style>
 
 
@@ -123,68 +135,66 @@ body:not(.custom_nav) {
     <div class="tab-content panels-faq maincenter">
         <div class="tab-pane active" id="tab1">
             <div class="panel-group" id="help-accordion-1">
-                <div class="panel panel-default panel-help">
-                    <a href="#opret-produkt" data-toggle="collapse" data-parent="#help-accordion-1">
-                        <div class="panel-heading">
-                            <h2>How do I edit my profile?</h2>
-                        </div>
-                    </a>
-                    <div id="opret-produkt" class="collapse in">
-                        <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus nesciunt ut officiis accusantium quisquam minima praesentium, beatae fugit illo nobis fugiat adipisci quia distinctio repellat culpa saepe, optio aperiam est!</p>
-                            <p><strong>Example: </strong>Facere, id excepturi iusto aliquid beatae delectus nemo enim, ad saepe nam et.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default panel-help">
-                    <a href="#rediger-produkt" data-toggle="collapse" data-parent="#help-accordion-1">
-                        <div class="panel-heading">
-                            <h2>How do I upload a new profile picture?</h2>
-                        </div>
-                    </a>
-                    <div id="rediger-produkt" class="collapse">
-                        <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus nesciunt ut officiis accusantium quisquam minima praesentium, beatae fugit illo nobis fugiat adipisci quia distinctio repellat culpa saepe, optio aperiam est!</p>
-                            <p><strong>Example: </strong>Facere, id excepturi iusto aliquid beatae delectus nemo enim, ad saepe nam et.</p>
-                        </div>
-                    </div>
-                </div>
+
+
+
+
+
+
                 <div class="panel panel-default panel-help">
                     <a href="#ret-pris" data-toggle="collapse" data-parent="#help-accordion-1">
                         <div class="panel-heading">
-                            <h2>Can I change my phone number?</h2>
+                            <h2>How do I purchase Passes?</h2>
                         </div>
                     </a>
                     <div id="ret-pris" class="collapse">
                         <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus nesciunt ut officiis accusantium quisquam minima praesentium, beatae fugit illo nobis fugiat adipisci quia distinctio repellat culpa saepe, optio aperiam est!</p>
-                            <p><strong>Example: </strong>Facere, id excepturi iusto aliquid beatae delectus nemo enim, ad saepe nam et.</p>
+                            <p>Just head over to our online store and click purchase on the pass you want to buy. You'll then be sent over to PayPal to finish the transaction.</p>
                         </div>
                     </div>
                 </div>
+
+
+
+
                 <div class="panel panel-default panel-help">
                     <a href="#slet-produkt" data-toggle="collapse" data-parent="#help-accordion-1">
                         <div class="panel-heading">
-                            <h2>Where do I change my privacy settings?</h2>
+                            <h2>How do I sign up for a class?</h2>
                         </div>
                     </a>
                     <div id="slet-produkt" class="collapse">
                         <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus nesciunt ut officiis accusantium quisquam minima praesentium, beatae fugit illo nobis fugiat adipisci quia distinctio repellat culpa saepe, optio aperiam est!</p>
-                            <p><strong>Example: </strong>Facere, id excepturi iusto aliquid beatae delectus nemo enim, ad saepe nam et.</p>
+                            <p>Our schedule page shows the next 7 days of our classes. Just click on there link to view more information. If you like to sign up it's as easy as clicking the sign up button. </p>
+                            <p><strong>Each class cost one Pass</strong></p>
                         </div>
                     </div>
                 </div>
+
+                <div class="panel panel-default panel-help">
+                    <a href="#rediger-produkt" data-toggle="collapse" data-parent="#help-accordion-1">
+                        <div class="panel-heading">
+                            <h2>Can I cancel a class?</h2>
+                        </div>
+                    </a>
+                    <div id="rediger-produkt" class="collapse">
+                        <div class="panel-body">
+                            <p><strong>Yes you can!</strong></p>
+                            <p>Under Classes in your profile, you can see your upcoming classes. You can click cancel for classes up to 24 hours before the course. We will give you back the class pass use.</p>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="panel panel-default panel-help">
                     <a href="#opret-kampagne" data-toggle="collapse" data-parent="#help-accordion-1">
                         <div class="panel-heading">
-                            <h2>What is this?</h2>
+                            <h2>What if I have a problem?</h2>
                         </div>
                     </a>
                     <div id="opret-kampagne" class="collapse">
                         <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus nesciunt ut officiis accusantium quisquam minima praesentium, beatae fugit illo nobis fugiat adipisci quia distinctio repellat culpa saepe, optio aperiam est!</p>
-                            <p><strong>Example: </strong>Facere, id excepturi iusto aliquid beatae delectus nemo enim, ad saepe nam et.</p>
+                            <p>Just head over to our contact page and send us an email. We'll be happy to help in any way we can. Expect a reply in around 24 hours.</p>
                         </div>
                     </div>
                 </div>
@@ -212,4 +222,24 @@ body:not(.custom_nav) {
 </div>
 
 
+<!--
 
+
+                <div class="panel panel-default panel-help">
+                    <a href="#opret-produkt" data-toggle="collapse" data-parent="#help-accordion-1">
+
+
+
+                        <div class="panel-heading">
+                            <h2>How do I edit my profile?</h2>
+                        </div>
+                    </a>
+                    <div id="opret-produkt" class="collapse in">
+                        <div class="panel-body">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus nesciunt ut officiis accusantium quisquam minima praesentium, beatae fugit illo nobis fugiat adipisci quia distinctio repellat culpa saepe, optio aperiam est!</p>
+                            <p><strong>Example: </strong>Facere, id excepturi iusto aliquid beatae delectus nemo enim, ad saepe nam et.</p>
+                        </div>
+                    </div>
+                </div>
+
+-->
