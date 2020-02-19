@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<Database.Class_Passes>
 @{
-    ViewBag.Title = "OnlineStorePasses";
+    ViewBag.Title = "Online Store";
 
 
-    // view bag promo list 
+    // view bag promo list
     var p = ViewBag.PromoList;
     var Message = "";
     bool hasPromo = false;
@@ -16,8 +16,6 @@
 }
 
 <h2>Pass Packages</h2>
-
-<h4>Message: @Message</h4>
 <br />
 <table class="table">
 
@@ -34,92 +32,92 @@
             // do if so, then display discount
 
 
-        <div class="passStore">
-            <div class="passContent">
-                <div class="floatLeft passTitle" style="padding-top:8px;">
-                    <p>
-                        @Html.DisplayFor(modelItem => item.Pass_Name) &nbsp;
-                        @foreach (var promo in p)
-                        {
-                            if (item.Pass_Id == promo.Pass_Id && promo.Promo_End > DateTime.Now)
-                            {
-                                <span style="font-size:15px;color:red;">
-                                    @promo.Promo_Desc
-                                    @if (promo.Discount == 0)
-                                    {
-                                        <span>+ @promo.Num_Classes classes</span>
-                                    }
-                                    else
-                                    {
-                                        double per = (double)promo.Discount * 100;
-                                        <span>@per% Off </span>
-                                    }
-                                </span>
-                            }
-                        }
-                    </p>
-                </div>
-                <div class="passPurchase floatRight">
-                    <div class="floatRight" style="padding-right:25px;">
-                        <div class="floatLeft" style="padding-top:8px; padding-right:20px;">
+            <div class="passStore">
+                <div class="passContent">
+                    <div class="floatLeft passTitle" style="padding-top:8px;">
+                        <p>
+                            @Html.DisplayFor(modelItem => item.Pass_Name) &nbsp;
                             @foreach (var promo in p)
                             {
-                                if (item.Pass_Id == promo.Pass_Id)
+                                if (item.Pass_Id == promo.Pass_Id && promo.Promo_End > DateTime.Now)
                                 {
-                                    hasPromo = true;
-
-                                    if (promo.Num_Classes == 0 && promo.Promo_End > DateTime.Now)
-                                    {
-                                        <span style="text-decoration: line-through;">
-                                            @item.Pass_Price.ToString("F")$
-                                        </span>
-                                        decimal disPrice = item.Pass_Price - (item.Pass_Price * promo.Discount);
-                                        <span style="color:red">
-                                            &nbsp;@disPrice.ToString("F")$
-                                        </span>
-                                    }
-                                    else
-                                    {
-                                        isValid = false;
-                                    }
-
-
-
-
-
-
-
+                                    <span style="font-size:15px;color:red;">
+                                        @promo.Promo_Desc
+                                        @if (promo.Discount == 0)
+                                        {
+                                            <span>+ @promo.Num_Classes classes</span>
+                                        }
+                                        else
+                                        {
+                                            double per = (double)promo.Discount * 100;
+                                            <span>@per% Off </span>
+                                        }
+                                    </span>
                                 }
                             }
-                            @if (hasPromo == false)
+                        </p>
+                    </div>
+                    <div class="passPurchase floatRight">
+                        <div class="floatRight" style="padding-right:25px;">
+                            <div class="floatLeft" style="padding-top:8px; padding-right:20px;">
+                                @foreach (var promo in p)
+                                {
+                                    if (item.Pass_Id == promo.Pass_Id)
+                                    {
+                                        hasPromo = true;
+
+                                        if (promo.Num_Classes == 0 && promo.Promo_End > DateTime.Now)
+                                        {
+                                            <span style="text-decoration: line-through;">
+                                                @item.Pass_Price.ToString("F")$
+                                            </span>
+                                            decimal disPrice = item.Pass_Price - (item.Pass_Price * promo.Discount);
+                                            <span style="color:red">
+                                                &nbsp;@disPrice.ToString("F")$
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            isValid = false;
+                                        }
+
+
+
+
+
+
+
+                                    }
+                                }
+                                @if (hasPromo == false)
+                                {
+                                    <span>
+                                        @item.Pass_Price.ToString("F")$
+                                    </span>
+                                }
+                                else if (isValid == false)
+                                {
+                                    <span>
+                                        @item.Pass_Price.ToString("F")$
+                                    </span>
+                                    hasPromo = false;
+                                    isValid = true;
+                                }
+                            </div>
+
+                            @if (Session["Auth"] != null && (int)Session["Auth"] == 3)
                             {
-                                <span>
-                                    @item.Pass_Price.ToString("F")$
-                                </span>
+                                @Html.ActionLink("Purchase", "PurchaseFindUser", new { }, new { @class = "btn btn-default" })
                             }
-                            else if (isValid == false)
+                            else
                             {
-                                <span>
-                                    @item.Pass_Price.ToString("F")$
-                                </span>
-                                hasPromo = false;
-                                isValid = true;
+                                @Html.ActionLink("Purchase", "Purchase", new { passId = item.Pass_Id }, new { @class = "btn btn-default" })
                             }
+
                         </div>
-
-                        @if ((int)Session["Auth"] == 3)
-                        {
-                            @Html.ActionLink("Purchase", "PurchaseFindUser", new { }, new { @class = "btn btn-default" })
-                        }
-                        else
-                        {
-                            @Html.ActionLink("Purchase", "Purchase", new { passId = item.Pass_Id }, new { @class = "btn btn-default" })
-                        }
-
                     </div>
                 </div>
             </div>
-        </div>
 
 
         }

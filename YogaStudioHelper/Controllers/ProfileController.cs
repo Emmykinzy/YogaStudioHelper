@@ -164,13 +164,8 @@ namespace YogaStudioHelper.Controllers
             int userId = Int32.Parse(Session["Uid"].ToString());
 
             IEnumerable<Pass_Log> pass_Log_List = db.getPass_LogsByUId(userId);
-            IEnumerable<Pass_Log> orderedList = (from cl in pass_Log_List
-                                                 orderby cl.Invoice_Number
-                                                 orderby cl.Date_Purchased                                                  
-                                                  select cl);
 
-
-            return View(orderedList.Take(10)); 
+            return View(pass_Log_List.OrderByDescending(x => x.Date_Purchased).Take(10)); 
         }
 
         [Filters.AuthorizeStudent]
@@ -181,10 +176,7 @@ namespace YogaStudioHelper.Controllers
             int userId = Int32.Parse(Session["Uid"].ToString());
 
             IEnumerable<Pass_Log> pass_Log_List = db.getPass_LogsByUId(userId);
-            IEnumerable<Pass_Log> orderedList = (from cl in pass_Log_List
-                                                 orderby cl.Invoice_Number
-                                                 orderby cl.Date_Purchased
-                                                 select cl);
+            IEnumerable<Pass_Log> orderedList = pass_Log_List.OrderByDescending(x => x.Date_Purchased);
 
 
             IEnumerable<Pass_Log> newList;

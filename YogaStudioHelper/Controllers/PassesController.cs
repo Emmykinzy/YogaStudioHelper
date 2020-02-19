@@ -160,7 +160,7 @@ namespace YogaStudioHelper.Controllers
             return View("SuccessView");
         }
 
-            public ActionResult FailureView()
+        public ActionResult FailureView()
         {
             return View();
         }
@@ -247,7 +247,7 @@ namespace YogaStudioHelper.Controllers
                     amount.total = ((price + dis) + t).ToString("F");
                     amount.details = details;
                 }
-                else
+                else if(p.Promo_End.Date > DateTime.Today)
                 {
                     
                     t = ((price) * (decimal).15);
@@ -257,6 +257,29 @@ namespace YogaStudioHelper.Controllers
                     itemList.items.Add(new Item()
                     {
                         name = cp.Pass_Name+" + "+p.Num_Classes+" Classes",
+                        currency = "CAD",
+                        price = price.ToString("F"),
+                        quantity = "1"
+                    });
+
+                    details.tax = t.ToString("F");
+                    details.subtotal = (price).ToString("F");
+
+
+                    //Final amount with details  
+                    amount.currency = "CAD";
+                    amount.total = ((price) + t).ToString("F");
+                    amount.details = details;
+                }
+                else
+                {
+                    t = ((price) * (decimal).15);
+                    //create itemlist and add item objects to it  
+
+                    //Adding Item Details like name, currency, price etc  
+                    itemList.items.Add(new Item()
+                    {
+                        name = cp.Pass_Name,
                         currency = "CAD",
                         price = price.ToString("F"),
                         quantity = "1"

@@ -451,6 +451,27 @@ namespace Database
             
             myDb.SaveChanges();
         }
+
+        public void ReactivateRoom(int id)
+        {
+
+            var room = myDb.Rooms.Where(x => x.Room_Id == id).Single();
+
+            var sched = myDb.Schedules.FirstOrDefault
+                (e => e.Room_Id == id);
+
+            if (sched == null)
+            {
+                myDb.Rooms.Remove(room);
+            }
+            else
+            {
+                room.Active = true;
+            }
+
+
+            myDb.SaveChanges();
+        }
         public void DeleteRoom(int id)
         {
             var or = myDb.Rooms.Where(x => x.Room_Id == id).Single();
@@ -643,6 +664,16 @@ namespace Database
 
             //bool s = Convert.ToBoolean(myDb.Class_Log.Where(x => x.Schedule_Id == schedId && x.U_Id == userId));
             bool s = myDb.Promotions.Any(x => x.Pass_Id == passId);
+            
+            // .Any();
+            return s;
+        }
+
+        public bool CheckIfActivePromoExist(int passId)
+        {
+
+            //bool s = Convert.ToBoolean(myDb.Class_Log.Where(x => x.Schedule_Id == schedId && x.U_Id == userId));
+            bool s = myDb.Promotions.Any(x => x.Pass_Id == passId && x.Promo_End < DateTime.Now.Date);
 
             // .Any();
             return s;

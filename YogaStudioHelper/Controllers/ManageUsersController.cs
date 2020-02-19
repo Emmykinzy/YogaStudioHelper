@@ -128,6 +128,7 @@ namespace YogaStudioHelper.Controllers
             string email = collection["Email"];
             string fname = collection["FirstName"];
             string lname = collection["LastName"];
+            string pass = collection["Password"];
             
             
             Yoga_User y = new Yoga_User();
@@ -144,10 +145,10 @@ namespace YogaStudioHelper.Controllers
             //  Generate temporary password and send confirmation email 
 
             String tempPassword = Membership.GeneratePassword(8, 2);
-            y.U_Password = encoder.Encode(tempPassword);
-
-            string token = Guid.NewGuid().ToString();
-            Util.EmailSender.sendSignUpConfirmationTempPassword(email, token, tempPassword);
+            y.U_Password = encoder.Encode(pass);
+            
+            //string token = Guid.NewGuid().ToString();
+            //Util.EmailSender.sendSignUpConfirmationTempPassword(email, token, tempPassword);
 
 
 

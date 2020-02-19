@@ -2,73 +2,78 @@
 
 @{
     ViewBag.Title = "Room List";
-        if(TempData["position"] == null)
+    if (TempData["position"] == null)
     {
         TempData["position"] = 1;
     }
 }
-<br />
-<h2>Rooms</h2>
-<br />
+
+<h2>Rooms</h2><br />
 <p>
-    @Html.ActionLink("Find Room", "FindRoom", "ManageStudio")
-    <br />
-    @Html.ActionLink("Create New", "CreateRoom")
+@Html.ActionLink("Create New", "CreateRoom")
 </p>
 
-<div style="height:50px;">
+@if (Model.Count() == 10)
+{
+    <div style="height:50px;">
 
-    @using (Html.BeginForm())
-    {
-        if (TempData["position"] != null && (int)TempData["position"] > 1)
+        @using (Html.BeginForm())
         {
-            <input type="hidden" name="position" value="@TempData["position"]">
+            if (TempData["position"] != null && (int)TempData["position"] > 1)
+            {
+                <input type="hidden" name="position" value="@TempData["position"]">
+            }
+            int pos = (int)TempData["position"];
+            if (Model.Count() == 10)
+            {
+                <button style="width:150px;float:right;" name="next" value="next" type="submit" class="btn btn-default">Next</button>
+            }
         }
-        int pos = (int)TempData["position"];
-        if (Model.Count() == 10)
+        @using (Html.BeginForm())
         {
-            <button style="width:150px;float:right;" name="next" value="next" type="submit" class="btn btn-default">Next</button>
+            if (TempData["position"] != null && (int)TempData["position"] > 1)
+            {
+                <input type="hidden" name="position" value="@TempData["position"]"><button style="width:150px;float:right" name="back" value="back" type="submit" class="btn btn-default">Back</button>
+            }
         }
-    }
-    @using (Html.BeginForm())
-    {
-        if (TempData["position"] != null && (int)TempData["position"] > 1)
-        {
-            <input type="hidden" name="position" value="@TempData["position"]"><button style="width:150px;float:right" name="back" value="back" type="submit" class="btn btn-default">Back</button>
-        }
-    }
-</div>
-<table class="classes">
-    <tr>
-        <th>
-            Room Name
-        </th>
-        <th>
-            Capacity
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Room_Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Room_Capacity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Active)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "EditRoom", new {id=item.Room_Id }) |
-            @Html.ActionLink("Archive", "ArchiveRoom", new {  id=item.Room_Id })
-        </td>
-    </tr>
+    </div>
 }
+    <table class="classes">
+        <tr>
+            <th>
+                Room Name
+            </th>
+            <th>
+                Capacity
+            </th>
+            <th>Active</th>
+            <th></th>
+        </tr>
 
-</table>
-<br />
-<br />
-<br />
- @Html.ActionLink("Back", "Room")
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room_Capacity)
+                </td>
+                <td @if (@item.Active == false) { @Html.Raw("style=\"color:red;\"") }>
+                    @item.Active
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditRoom", new { id = item.Room_Id }) |
+                    @if (item.Active == true)
+                    {
+                        @Html.ActionLink("Archive", "ArchiveRoom", new { id = item.Room_Id })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("ReActivate", "ReactivateRoom", new { id = item.Room_Id })
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>

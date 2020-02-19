@@ -23,6 +23,8 @@
 
     @foreach (var item in Model)
     {
+    if (item.Active == true)
+        {
         hasPromo = false;
         // check if pass id present in promo list
 
@@ -103,7 +105,7 @@
             </div>
         </div>
 
-
+    }
 
     }
 

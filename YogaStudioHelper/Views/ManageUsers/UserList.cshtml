@@ -37,7 +37,7 @@
         }
     }
 </div>
-<table class="table">
+<table class="classes">
     <tr>
         <th>
             Role
@@ -59,29 +59,29 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @db.getRoleName(item.Roles_Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.U_First_Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.U_Last_Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.U_Email)
-            </td>
-            <td>
-                @item.Active
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditUser", new {  id=item.U_Id  }) |
-                <!-- Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |-->
-                @Html.ActionLink("Archive", "ArchiveUser", new {  id=item.U_Id  })
-           
-            </td>
-        </tr>
+<tr>
+    <td>
+        @db.getRoleName(item.Roles_Id)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.U_First_Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.U_Last_Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.U_Email)
+    </td>
+    <td @if (@item.Active == false) { @Html.Raw("style=\"color:red;\"") }>
+        @item.Active
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "EditUser", new { id = item.U_Id }) |
+        <!-- Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |-->
+        @Html.ActionLink("Archive", "ArchiveUser", new { id = item.U_Id })
+
+    </td>
+</tr>
     }
 
 </table>

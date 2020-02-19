@@ -90,7 +90,7 @@ namespace YogaStudioHelper.Util
             msobj.IsBodyHtml = true;
             msobj.Body = "<h1 style='color:#557ee6;'>Saṃsāra Yoga</h1>" +
                          "<p>Before you can start purchasing passes and signing up to classes you need to confirm your email address</p><br/>" +
-                         "<a href='https://localhost:44332/LoginSignUp/ConfirmEmail?email="+email+"&token="+token+"'>Confirm Email Address</a>";
+                         "<a href='http://samsarayogamontreal.gearhostpreview.com/LoginSignUp/ConfirmEmail?email=" + email+"&token="+token+"'>Confirm Email Address</a>";
 
 
 
@@ -126,7 +126,7 @@ namespace YogaStudioHelper.Util
             msobj.IsBodyHtml = true;
             msobj.Body = "<h1 style='color:#557ee6;'>Saṃsāra Yoga</h1>" +
                          "<p>Before you can start purchasing passes and signing up to classes you need to confirm your email address and set a new password</p><br/>" +
-                         "<a href='https://localhost:44332/LoginSignUp/LoginSignUp'>Login here</a>"+
+                         "<a href='http://samsarayogamontreal.gearhostpreview.com/LoginSignUp/LoginSignUp'>Login here</a>" +
                          "<br/><p>Your temporary password is "+tempPass;
 
 
@@ -156,7 +156,7 @@ namespace YogaStudioHelper.Util
 
 
             MailMessage msobj = new MailMessage();
-
+            
             msobj.To.Add(user.U_Email);
             msobj.From = new MailAddress("SamsaraYogaMontreal@gmail.com");
             msobj.Subject = "Confirmation of "+purchaseType+" Purchase from Samsara Yoga";
@@ -269,8 +269,8 @@ namespace YogaStudioHelper.Util
             msobj.Subject = "Class Reinstated";
             msobj.IsBodyHtml = true;
             msobj.Body = "<h1 style='color:#557ee6;'>Saṃsāra Yoga</h1>" +
-                         "<p>We're witting to inform you that the " + schedule.Class.Class_Name + " class scheduled for " + schedule.Start_Time.ToString("hh':'mm") + " " + schedule.Class_Date.ToShortDateString() + " is no longer cancelled.<br/>" +
-                         "If you'd wish to sign up once again please feel free to visit the <a href = 'https://localhost:44332/' > Saṃsāra site</a></p><br/>" +
+                         "<p>We're writting to inform you that the " + schedule.Class.Class_Name + " class scheduled for " + schedule.Start_Time.ToString("hh':'mm") + " " + schedule.Class_Date.ToShortDateString() + " is no longer cancelled.<br/>" +
+                         "If you'd wish to sign up once again please feel free to visit the <a href = 'http://samsarayogamontreal.gearhostpreview.com/' > Saṃsāra site</a></p><br/>" +
                          "<p>Have a wonderful day,<br/>The Saṃsāra Team</p>";
 
 

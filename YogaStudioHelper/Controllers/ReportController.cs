@@ -171,7 +171,7 @@ namespace YogaStudioHelper.Controllers
             IEnumerable<SaleReportMonthly> monthList = (from log in saleList                                                        
                                                         group log by log.Class_Passes.Pass_Name
                                                         into grp
-                                                        select new SaleReportMonthly
+                                                        select new SaleReportMonthly()
                                                         {
                                                             Pass_Name = grp.Key,
                                                             count = grp.Count(),
@@ -279,6 +279,7 @@ namespace YogaStudioHelper.Controllers
             List<AttendanceDaily> list = db.GetAttendanceDailyReport(startDate);
 
             TempData["AttendanceDaily"] = list;
+            TempData["startDate"] = startDate.ToString("dd/MM/yyyy");
             //get list with this time constraint 
             //IEnumerable<Pass_Log> saleList = db.GetSaleReport(startDate, endDate);
             //TempData["saleList"] = saleList;
@@ -291,6 +292,7 @@ namespace YogaStudioHelper.Controllers
         public ActionResult AttendanceDailyList()
         {
             List<AttendanceDaily> list = TempData["AttendanceDaily"] as List<AttendanceDaily>;
+            ViewBag.startDate = TempData["startDate"] as string;
             return View(list);
         }
 

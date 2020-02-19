@@ -1,11 +1,12 @@
 ﻿@model IEnumerable<YogaStudioHelper.Models.AttendanceDaily>
 
 @{
-    ViewBag.Title = "AttendanceDailyList";
+    ViewBag.Title = "Daily Attendance";
 
     int totalAttended = 0;
 
     int totalMissed = 0;
+    string date = ViewBag.startDate;
 }
 
 <style>
@@ -15,7 +16,7 @@
 </style>
 
 
-<h2>Attendance Daily Report</h2>
+<h2>Daily Attendance Report @date</h2>
 
 <p>
     @{

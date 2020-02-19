@@ -56,29 +56,13 @@
                 </td>
             </tr>
         }
+        <tr></tr>
+        <tr>
+        <td></td>
+        <td>New User? @Html.ActionLink("Create Account", "SignUp", "LoginSignUp", null, new { @class = "custom_nav" })</td>
+        </tr>
     </table>
+
 </div>
 
-@*@using (Html.BeginForm())
-{
 
-    @Html.RadioButton("Access", "Admin")
-    <span>Admin</span>
-    <br />
-    @Html.RadioButton("Access", "Receptionist")
-    <span>Receptionist</span>
-    <br />
-    @Html.RadioButton("Access", "Teacher")
-    <span>Teacher</span>
-    <br />
-
-    @Html.RadioButton("Access", "Student")
-    <span>Student</span>
-    <br />
-    @Html.RadioButton("Access", "None")
-    <span>None</span>
-    <br />
-    <br />
-
-    <input type="submit" value="Submit" class="btn btn-default">
-}*@

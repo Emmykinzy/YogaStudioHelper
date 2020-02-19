@@ -149,12 +149,11 @@
                                 <ul class="dropdown-menu custom_nav">
                                     <li class="custom_nav">@Html.ActionLink("Hours Worked", "HoursWorked", "Report", null, new { @class = "custom_nav" })</li>
                                     <li class="custom_nav">@Html.ActionLink("Hours Worked Monthly", "HoursWorkedMonthly", "Report", null, new { @class = "custom_nav" })</li>
-                                    <li class="custom_nav">@Html.ActionLink("Sales Dates", "SalesDates", "Report", null, new { @class = "custom_nav" })</li>
-                                    <li class="custom_nav">@Html.ActionLink("Sales Month", "SalesMonth", "Report", null, new { @class = "custom_nav" })</li>
-                                    <li class="custom_nav">@Html.ActionLink("Sales Monthly", "SalesMonthly", "Report", null, new { @class = "custom_nav" })</li>
-                                    <li class="custom_nav">@Html.ActionLink("Attendance Daily", "AttendanceDaily", "Report", null, new { @class = "custom_nav" })</li>
-                                    <li class="custom_nav">@Html.ActionLink("Attendance By Dates", "AttendanceDates", "Report", null, new { @class = "custom_nav" })</li>
-
+                                    <li class="custom_nav">@Html.ActionLink("Sales", "SalesDates", "Report", null, new { @class = "custom_nav" })</li>
+                                    <li class="custom_nav">@Html.ActionLink("Monthly Sales", "SalesMonthly", "Report", null, new { @class = "custom_nav" })</li>
+                                    <li class="custom_nav">@Html.ActionLink("Attendance", "AttendanceDates", "Report", null, new { @class = "custom_nav" })</li>
+                                    <li class="custom_nav">@Html.ActionLink("Daily Attendance", "AttendanceDaily", "Report", null, new { @class = "custom_nav" })</li>
+                                    
                                 </ul>
                             </li>
 
@@ -182,7 +181,7 @@
                                         <li class="custom_nav">@Html.ActionLink("Class History", "ClassLogListPast", "Profile", null, new { @class = "custom_nav" })</li>
                                         <li class="custom_nav">@Html.ActionLink("Passes", "PassLogList", "Profile", null, new { @class = "custom_nav" })</li>
                                     }
-                                    <li class="custom_nav">@Html.ActionLink("Settings", "Settings", "Profile", null, new { @class = "custom_nav" })</li>
+                                  
 
 
                                     @if ((int)Session["Auth"] == 2)
@@ -197,8 +196,6 @@
 
 
                         }
-
-
 
                     </ul>
                 </div>

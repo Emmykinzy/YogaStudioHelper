@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Database.Class_Passes>
 
 @{
-    ViewBag.Title = "ClassPassList2";
+    ViewBag.Title = "Class Pass List";
 }
 
 <h2>Class Passes</h2>
-
+<br />
 <p>
     @Html.ActionLink("Find Class Pass", "FindClassPass", "ManageStudio")
     <br />
@@ -15,6 +15,7 @@
 <table class="classes">
     <tr>
    
+
         <th>
             Pass Name
         </th>
@@ -28,6 +29,7 @@
         <th>
             Active
         </th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -42,13 +44,19 @@
     <td>
         @Html.DisplayFor(modelItem => item.Pass_Price)
     </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Active)
+    <td @if (@item.Active == false) { @Html.Raw("style=\"color:red;\"") }>
+        @item.Active
     </td>
     <td>
-        @Html.ActionLink("Edit", "EditClassPass", new { id = item.Pass_Id }) |
-        <!--Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) | -->
-        @Html.ActionLink("Archive", "ArchiveClassPass", new { id = item.Pass_Id })
+        @Html.ActionLink("Edit", "EditClassPass", new { id = item.Pass_Id }) |                 
+        @if (item.Active == true)
+        {
+            @Html.ActionLink("Archive", "ArchiveRoom", new { id = item.Pass_Id })
+        }
+        else
+        {
+            @Html.ActionLink("ReActivate", "ReactivateRoom", new { id = item.Pass_Id })
+        }
     </td>
 </tr>
 }

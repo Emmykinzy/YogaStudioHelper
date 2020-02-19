@@ -9,7 +9,6 @@
     }
 }
 
-<br />
 <h2>Classes</h2>
 <br />
 <p>
@@ -53,6 +52,7 @@
         <th>
             Active
         </th>
+        <th></th>
     </tr>
 
     @foreach (var item in Model)
@@ -67,18 +67,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Class_Length)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Active)
+             <td @if (@item.Active == false) { @Html.Raw("style=\"color:red;\"")}>
+                 @item.Active
             </td>
-            <td>
-                @Html.ActionLink("Edit", "EditClass", new { id = item.Class_Id }) | 
-                @Html.ActionLink("Archive", "ArchiveClass", new { id = item.Class_Id })
-            </td>
+             <td>
+                 @Html.ActionLink("Edit", "EditClass", new { id = item.Class_Id }) |                     
+                 @if (item.Active == true)
+                 {
+                     @Html.ActionLink("Archive", "ArchiveRoom", new { id = item.Class_Id })
+                 }
+                 else
+                 {
+                     @Html.ActionLink("ReActivate", "ReactivateRoom", new { id = item.Class_Id })
+                 }
+             </td>
         </tr>
     }
 
 </table>
-<br />
-<br />
-<br />
-@Html.ActionLink("Back", "Class")
+
