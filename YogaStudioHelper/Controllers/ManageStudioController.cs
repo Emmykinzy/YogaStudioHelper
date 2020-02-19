@@ -159,6 +159,14 @@ namespace YogaStudioHelper.Controllers
             return RedirectToAction("RoomList");
         }
 
+        public ActionResult ReactivateRoom(int id)
+        {
+            db.ReactivateRoom(id);
+
+
+            return RedirectToAction("RoomList");
+        }
+
 
         public ActionResult Class()
         {
@@ -586,19 +594,84 @@ namespace YogaStudioHelper.Controllers
         {
             int promotedPass = Convert.ToInt32(collection["Passes"]);
 
-
+            string promoDesc;
+            double discount;
+            int extraPasses;
+            DateTime promoEnd;
+            Promotion promo;
             // Check first if pass already has one 
             if (db.CheckIfPromoExist(promotedPass))
             {
-                TempData["Message"] = "This class pass already has a promotion assigned";
-                return RedirectToAction("CreatePromotion");
+                
+                if (db.CheckIfActivePromoExist(promotedPass))
+                {
+                    TempData["Message"] = "This class pass already has a promotion assigned.";
+                    return RedirectToAction("CreatePromotion");
+                }
+                else
+                {
+
+                    
+                    promoDesc = collection["PromotionDescription"];
+
+                    
+                    try
+                    {
+                        discount = Convert.ToDouble(collection["discount"]) / 100;
+                    }
+                    catch
+                    {
+                        discount = 0;
+                    }
+
+                    try
+                    {
+                        extraPasses = Int32.Parse(collection["extra_passes"]);
+                    }
+                    catch
+                    {
+                        extraPasses = 0;
+                    }
+
+
+                    promoEnd = Convert.ToDateTime(collection["promoEnd"]);
+
+                    promo = new Promotion();
+
+
+                    promo.Promo_Desc = promoDesc;
+                    promo.Discount = Convert.ToDecimal(discount);
+                    promo.Num_Classes = extraPasses;
+                    promo.Promo_End = promoEnd;
+                    promo.Pass_Id = promotedPass;
+
+
+                    // validation (one or the other type of promo but not both 
+                    if (discount > 0 && extraPasses > 0)
+                    {
+                        TempData["Message"] = "The promotion can have either a discount or extra classes but not both.";
+
+                        //ViewBag.StickyEmail = email;
+                        return RedirectToAction("CreatePromotion");
+                    }
+                    // validation (one or the other type of promo but not both 
+                    if (discount == 0 && extraPasses == 0)
+                    {
+                        TempData["Message"] = "The promotion needs to have either a discount or extra classes but not both.";
+
+                        return RedirectToAction("CreatePromotion");
+                    }
+
+
+                    db.CreatePromotion(promo);
+                    return RedirectToAction("PromotionList");
+                }
             }
 
+            
 
-            string promoDesc = collection["PromotionDescription"];
+             promoDesc = collection["PromotionDescription"];
 
-            double discount;
-            int extraPasses;
             try
             {
                  discount = Convert.ToDouble(collection["discount"])/100;
@@ -618,9 +691,9 @@ namespace YogaStudioHelper.Controllers
             }
 
              
-            DateTime promoEnd = Convert.ToDateTime(collection["promoEnd"]); 
+             promoEnd = Convert.ToDateTime(collection["promoEnd"]); 
 
-            Promotion promo = new Promotion();
+             promo = new Promotion();
 
 
             promo.Promo_Desc = promoDesc;
@@ -630,15 +703,10 @@ namespace YogaStudioHelper.Controllers
             promo.Pass_Id = promotedPass;
 
 
-            //Fix todo add class pass dropdown option
-            promo.Pass_Id = 1;
-            String KeyTest = collection["passList"]; 
-
-
             // validation (one or the other type of promo but not both 
             if(discount>0 && extraPasses > 0)
             {
-                TempData["Message"] = "The Promotion can have either a discount or extra classes but not both type of promo";
+                TempData["Message"] = "The promotion can have either a discount or extra classes but not both.";
 
                 //ViewBag.StickyEmail = email;
                 return RedirectToAction("CreatePromotion");
@@ -646,7 +714,7 @@ namespace YogaStudioHelper.Controllers
             // validation (one or the other type of promo but not both 
             if (discount == 0 && extraPasses == 0)
             {
-                TempData["Message"] = "The Promotion need to have either a discount or extra classes but not both type of promo";
+                TempData["Message"] = "The promotion needs to have either a discount or extra classes but not both.";
 
                 return RedirectToAction("CreatePromotion");
             }

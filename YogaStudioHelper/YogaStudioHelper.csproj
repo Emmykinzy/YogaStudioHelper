@@ -270,6 +270,9 @@
     <Content Include="Views\Report\HoursWorkedMonthlyList.cshtml" />
     <Content Include="Views\Report\HoursWorkedMonthly.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Passes\PurchaseFindUser.cshtml" />
+    <Content Include="Views\Passes\Store.cshtml" />
+    <Content Include="Views\Passes\UserList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

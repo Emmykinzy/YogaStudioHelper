@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Database.Promotion>
 
 @{
-    ViewBag.Title = "PromotionList";
+    ViewBag.Title = "Promotion List";
 
         if(TempData["position"] == null)
     {
@@ -17,14 +17,14 @@
 }
 
 <h2>Promotions</h2>
+<br>
 
-<p>
 
     @Html.ActionLink("Find Promotion", "FindPromotion", "ManageStudio")
     <br />
 
     @Html.ActionLink("Create New", "CreatePromotion")
-</p>
+
 <br />
 <p>@message</p>
 @if (Model.Count() == 10)
@@ -53,7 +53,7 @@
 
 </div>
 }
-<table class="table">
+<table class="classes">
     <tr>
         <th>
             Pass Name
@@ -68,7 +68,7 @@
             Number of classes
         </th>
         <th>
-            Date that the promotion end
+            Promotion End Date
         </th>
         <th></th>
     </tr>
@@ -89,34 +89,34 @@
             @Html.DisplayFor(modelItem => item.Num_Classes)
         </td>
         <td>
-          @{
-              // check if end date expire
-              DateTime test = DateTime.Today;
-              DateTime test2 = item.Promo_End;
+            @{
+                // check if end date expire
+                DateTime test = DateTime.Today;
+                DateTime test2 = item.Promo_End;
 
-              result = test2.CompareTo(test);
+                result = test2.CompareTo(test);
 
 
-              if (result != 1)
-              {
+                if (result != 1)
+                {
 
                     <font color="red">@item.Promo_End.ToString("MMMM dd, yyyy")</font>
 
-                                 // result = 0;
+                    // result = 0;
 
-              }
-              else
-              {
-                    @Html.DisplayFor(modelItem => item.Promo_End)
+                }
+                else
+                {
+                    @item.Promo_End.ToString("MMMM dd, yyyy")
 
-              }
+                }
             }
 
         </td>
         <td>
             @Html.ActionLink("Edit", "EditPromotion", new {  id=item.Promotion_Id  }) |
            
-            @Html.ActionLink("Archive", "ArchivePromotion", new {  id=item.Promotion_Id  })
+            @Html.ActionLink("Delete", "ArchivePromotion", new {  id=item.Promotion_Id  })
         </td>
     </tr>
 }

@@ -46,7 +46,7 @@ namespace YogaStudioHelper.Controllers
                 //#+Nta{-- 
 
 
-                if (id == 1 && u.Active == false || id == 2 && u.Active == false || id == 3 && u.Active == false)
+                if (id == 1 && u.Active == false || id == 2 && u.Active == false || id == 3 && u.Active == false || id == 4 && u.Active == false && u.Email_Confirmation == null)
                 {
                     Session["Uid"] = u.U_Id;
                     //redirect view to set new password. (replace temporary password)
@@ -148,7 +148,7 @@ namespace YogaStudioHelper.Controllers
             user.Active = true;
 
             db.UpdateUser(user);
-            TempData["Message"] = "Your password was successfully updated";
+            TempData["Message"] = "Your password was updated successfully.";
 
 
             //return View();

@@ -134,12 +134,14 @@ ul li:not(.custom_nav) {
                 text-decoration: underline;
             }
 
-.schedule th {
-    border: 1px solid #ddd;
+.schedule th:not(.a) {
+    border: 1px solid #000;
     padding: 10px;
     text-align: start;
     empty-cells: show;
     width: 125px;
+    background-color: #edf2fa;
+
 }
 
 .schedule td {
@@ -147,6 +149,7 @@ ul li:not(.custom_nav) {
     padding: 10px;
     text-align: center;
     width: 150px;
+    background-color: #f7faff;
 }
 
 .modal {
@@ -318,15 +321,42 @@ select {
 }
 
 
-.avail th {
-    padding-right: 10px;
+.avail th:not(.a) {
+    border: 1px solid #000;
+    padding: 10px;
+    empty-cells: show;
+    width: 125px;
+    background-color: #edf2fa;
     text-align: center;
 }
 
-.avail td {
+.avail td{
+    border: 1px solid #ddd;
     padding: 10px;
     text-align: center;
+    width: 150px;
+    background-color: #f7faff;
 }
+
+
+.availc th:not(.a) {
+    border: 1px solid #000;
+    padding: 10px;
+    empty-cells: show;
+    width: 125px;
+    background-color: #edf2fa;
+    text-align: center;
+}
+
+.availc td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    width: 150px;
+    background-color: white;
+}
+
+
 
 .loginTable td {
     text-align: right;

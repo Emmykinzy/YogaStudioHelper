@@ -1,7 +1,14 @@
 ﻿
 @{
-    ViewBag.Title = "SuccessView";
+    ViewBag.Title = "Purchase Successful";
 }
 
-<h2>SuccessView</h2>
+    <h2>Purchase Successful!</h2>
 
+<div class="main">
+    <div class="cont">
+        @if ((int)Session["Auth"] == 4)
+        {<h4>View your @Html.ActionLink("Pass List", "PassLogList", "Profile", null, new { @class = "custom_nav" })</h4>}
+        <h4>Continue to the @Html.ActionLink("Schedule", "Schedule", "Schedule", null, new { @class = "custom_nav" })</h4>
+    </div>
+</div>
