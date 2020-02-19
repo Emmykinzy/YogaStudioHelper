@@ -111,5 +111,12 @@ namespace YogaStudioHelper.Controllers
 
             return View();
         }
+
+        public ActionResult FAQ()
+        {
+
+
+            return View();
+        }
     }
 }
