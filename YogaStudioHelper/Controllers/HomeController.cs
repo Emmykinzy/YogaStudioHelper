@@ -28,7 +28,7 @@ namespace YogaStudioHelper.Controllers
 
             //Admin
 
-           Session["Auth"] = 1;
+           //Session["Auth"] = 1;
 
 
             // student  

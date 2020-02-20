@@ -129,8 +129,13 @@ namespace YogaStudioHelper.Controllers
             string fname = collection["FirstName"];
             string lname = collection["LastName"];
             string pass = collection["Password"];
-            
-            
+
+            //
+            string phone = collection["Phone"];
+            DateTime birthday = Convert.ToDateTime(collection["Birthday"]);
+
+
+
             Yoga_User y = new Yoga_User();
             //y.Roles_Id = db.getRoleId(role);
             y.Roles_Id = role;
@@ -138,6 +143,10 @@ namespace YogaStudioHelper.Controllers
             y.U_Email = email;
             y.U_First_Name = fname;
             y.U_Last_Name = lname;
+
+            y.U_Phone = phone;
+            y.U_Birthday = birthday;
+
 
             // will do false so that the user need to update the temporary password
             y.Active = false;
