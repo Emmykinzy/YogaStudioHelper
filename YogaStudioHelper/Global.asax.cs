@@ -16,10 +16,13 @@ namespace YogaStudioHelper
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
+
+        /*
         protected void Application_Error()
         {
             var ex = Server.GetLastError();
             Logger.Log(ex.ToString());
         }
+        */
     }
 }

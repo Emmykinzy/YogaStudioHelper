@@ -28,7 +28,7 @@ namespace YogaStudioHelper.Controllers
 
             //Admin
 
-           //Session["Auth"] = 1;
+           Session["Auth"] = 1;
 
 
             // student  
@@ -114,8 +114,8 @@ namespace YogaStudioHelper.Controllers
         public ActionResult FAQ()
         {
 
-
-            return View();
+            throw new NotImplementedException();
+            //return View();
         }
     }
 }

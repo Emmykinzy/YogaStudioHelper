@@ -256,16 +256,32 @@ namespace YogaStudioHelper.Controllers
             var y = db.getUserById(id);
 
 
-            string role = collection["role"];
+            int role = Convert.ToInt32(collection["role"]);
             string email = collection["Email"];
             string fname = collection["FirstName"];
             string lname = collection["LastName"];
+            string phone = collection["Phone"];
+            //string birthday = collection["Birthday"];
+            DateTime birthday = Convert.ToDateTime(collection["Birthday"]);
+
             //Yoga_User y = new Yoga_User();
-            y.Roles_Id = db.getRoleId(role);
+            y.Roles_Id = role;
             y.U_Email = email;
             y.U_First_Name = fname;
             y.U_Last_Name = lname;
-            y.Active = false;
+            y.U_Phone = phone;
+            y.U_Birthday = birthday;
+
+            if(collection["active"] == null)
+            {
+                y.Active = false;
+            }
+            else
+            {
+                y.Active = true;
+            }
+            
+            // see for password
 
 
             //update db method
