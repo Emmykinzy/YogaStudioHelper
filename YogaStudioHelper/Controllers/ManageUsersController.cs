@@ -310,5 +310,51 @@ namespace YogaStudioHelper.Controllers
             return RedirectToAction("UserList");
         }
 
+
+        //
+
+
+
+        [HttpGet]
+        public ActionResult EditPassword(int id)
+        {
+            ViewBag.UserId = id;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EditPassword(FormCollection collection)
+        {
+            // SHould pass the user id in a safer way so that no one can modify the session id to change the password of someoneelse 
+            // hiddenfield instead of session Uid? 
+
+            int userId = (int)TempData["EditUserId"];
+
+            var user = db.getUserById(userId);
+
+            String password1 = collection["password1"].ToString();
+            String password2 = collection["password2"].ToString();
+
+            //Validate password enter equal 
+            if (!string.Equals(password1, password2))
+            {
+
+                TempData["Message"] = "<h5 style=\"color:red;\">Please make sure the two passwords are the same</h5>";
+                return View();
+            }
+
+            user.U_Password = encoder.Encode(password2);
+            //user.Active = true;
+
+            db.UpdateUser(user);
+            TempData["Message"] = "Your password was updated successfully.";
+
+
+            //return View();
+            return RedirectToAction("MessageView", "Home");
+
+        }
+
     }
 }

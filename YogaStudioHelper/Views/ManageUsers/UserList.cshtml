@@ -77,7 +77,7 @@
     </td>
     <td>
         @Html.ActionLink("Edit", "EditUser", new { id = item.U_Id }) |
-        <!-- Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |-->
+        @Html.ActionLink("Password", "EditPassword", new {  id=item.U_Id  }) |
         @Html.ActionLink("Archive", "ArchiveUser", new { id = item.U_Id })
 
     </td>
