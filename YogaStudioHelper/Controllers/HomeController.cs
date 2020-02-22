@@ -104,7 +104,15 @@ namespace YogaStudioHelper.Controllers
             mail_message += "Message: " + message + "<br/>";
 
             // call util methods 
-            Util.EmailSender.sendContactForm(email, subject, mail_message);
+
+            try
+            {
+                Util.EmailSender.sendContactForm(email, subject, mail_message);
+            }catch(Exception e)
+            {
+                TempData["Message"] = e.ToString();
+                return RedirectToAction("MessageView");
+            }
 
             Util.EmailSender.sendConfirmation(email, subject, name);
 
