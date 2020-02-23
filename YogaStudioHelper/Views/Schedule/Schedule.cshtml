@@ -60,6 +60,8 @@
 
 <h3>Class Schedule</h3>
 @*@Html.Raw(Message)*@
+
+
 <div>
     <div class="floatRight"></div>
     <div id="myModal" class="modal">
@@ -134,7 +136,7 @@
     {
 
         <input type="hidden" name="position" value="@TempData["position"]">
-    <button style="width:150px;float:left" name="back" value="back" type="submit" class="btn btn-default">Back</button>
+        <button style="width:150px;float:left" name="back" value="back" type="submit" class="btn btn-default">Back</button>
 
     }
     @using (Html.BeginForm())
@@ -148,154 +150,55 @@
 
 
     <br />
-
-    <table class="schedule" >
-        <tr >
-            <th class="a"></th>
-            <th>@localDate.ToString("dddd") <br />@localDate.ToString("dd MMM yyy")</th>
-            <th>@localPlus1.ToString("dddd") <br />@localPlus1.ToString("dd MMM yyy")</th>
-            <th>@localPlus2.ToString("dddd") <br />@localPlus2.ToString("dd MMM yyy")</th>
-            <th>@localPlus3.ToString("dddd") <br />@localPlus3.ToString("dd MMM yyy")</th>
-            <th>@localPlus4.ToString("dddd") <br />@localPlus4.ToString("dd MMM yyy")</th>
-            <th>@localPlus5.ToString("dddd") <br />@localPlus5.ToString("dd MMM yyy")</th>
-            <th>@localPlus6.ToString("dddd") <br />@localPlus6.ToString("dd MMM yyy")</th>
-        </tr>
-
-
-        @for (int hour = 7; hour < 20; hour++)
-        {
-            DateTime date = localDate;
-            bool empty = true;
-            List<Schedule> s = list.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Date >= localDate.Date && x.Class_Date.Date <= localPlus6.Date).ToList();
-            int size = s.Count();
-            int count = 0;
-            bool mult = false;
-            int multiple;
+    <div class="table-responsive">
+        <table class="schedule">
             <tr>
-                <th style="text-align:center;">@hour:00 @*- @hr2:00*@</th>
+                <th class="a"></th>
+                <th>@localDate.ToString("dddd") <br />@localDate.ToString("dd MMM yyy")</th>
+                <th>@localPlus1.ToString("dddd") <br />@localPlus1.ToString("dd MMM yyy")</th>
+                <th>@localPlus2.ToString("dddd") <br />@localPlus2.ToString("dd MMM yyy")</th>
+                <th>@localPlus3.ToString("dddd") <br />@localPlus3.ToString("dd MMM yyy")</th>
+                <th>@localPlus4.ToString("dddd") <br />@localPlus4.ToString("dd MMM yyy")</th>
+                <th>@localPlus5.ToString("dddd") <br />@localPlus5.ToString("dd MMM yyy")</th>
+                <th>@localPlus6.ToString("dddd") <br />@localPlus6.ToString("dd MMM yyy")</th>
+            </tr>
 
 
-                @foreach (var item in s)
-                {
-                    if (date.Day > item.Class_Date.Day)
+            @for (int hour = 7; hour < 20; hour++)
+            {
+                DateTime date = localDate;
+                bool empty = true;
+                List<Schedule> s = list.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Date >= localDate.Date && x.Class_Date.Date <= localPlus6.Date).ToList();
+                int size = s.Count();
+                int count = 0;
+                bool mult = false;
+                int multiple;
+                <tr>
+                    <th style="text-align:center;">@hour:00 @*- @hr2:00*@</th>
+
+
+                    @foreach (var item in s)
                     {
-                    }
-                    else
-                    {
-                        count++;
-                        empty = false;
-
-                        if (item.Class_Date.Day == date.Day)
+                        if (date.Day > item.Class_Date.Day)
                         {
-                            multiple = Model.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date.Day).Count();
-                            if (multiple > 1 && mult == false)
-                            {
-                                empty = false;
-                                if (mult == false)
-                                {
-                                    mult = true;
-                                    <td style="background-color:#d2e1fa">
-                                        @foreach (var it in list.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date.Day))
-                                        {
-                                            List<string> sList = db.getSchedulesInfo(it.Schedule_Id).ToList();
-                                            string id = sList.ElementAt(0);
-                                            string description = sList.ElementAt(1);
-                                            string name = sList.ElementAt(2);
-                                            string startDate = sList.ElementAt(3);
-                                            string room = sList.ElementAt(4);
-                                            string teacher = sList.ElementAt(5);
-                                            string startTime = sList.ElementAt(6);
-                                            string signedUp = sList.ElementAt(7);
-                                            string duration = sList.ElementAt(8);
-                                            string roomSize = sList.ElementAt(9);
-
-                                            <a style="color:black;" onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize + "')")">@it.Start_Time.ToString(@"hh\:mm")    @it.Class.Class_Name</a>
-
-                                            <br />
-
-
-                                        }
-                                    </td>
-                                    date = date.AddDays(1);
-                                }
-
-                            }
-                            else
-                            {
-                                List<string> sList = db.getSchedulesInfo(item.Schedule_Id).ToList();
-                                string id = sList.ElementAt(0);
-                                string description = sList.ElementAt(1);
-                                string name = sList.ElementAt(2);
-                                string startDate = sList.ElementAt(3);
-                                string room = sList.ElementAt(4);
-                                string teacher = sList.ElementAt(5);
-                                string startTime = sList.ElementAt(6);
-                                string signedUp = sList.ElementAt(7);
-                                string duration = sList.ElementAt(8);
-                                string roomSize = sList.ElementAt(9);
-                                <td style="background-color:#d2e1fa">
-                                    <a style="color:black;"onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize+ "')")">@item.Start_Time.ToString(@"hh\:mm")    @item.Class.Class_Name</a>
-                                </td>
-
-                                date = date.AddDays(1);
-                            }
                         }
                         else
                         {
+                            count++;
+                            empty = false;
 
-                            multiple = list.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date.Day).Count();
-                            if (multiple > 1 && mult == false)
+                            if (item.Class_Date.Day == date.Day)
                             {
-                                empty = false;
-
-                                if (mult == false)
-                                {
-                                    mult = true;
-                                    <td style="background-color:#d2e1fa">
-                                        @foreach (var it in list.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date.Day))
-                                        {
-                                            List<string> sList = db.getSchedulesInfo(it.Schedule_Id).ToList();
-                                            string id = sList.ElementAt(0);
-                                            string description = sList.ElementAt(1);
-                                            string name = sList.ElementAt(2);
-                                            string startDate = sList.ElementAt(3);
-                                            string room = sList.ElementAt(4);
-                                            string teacher = sList.ElementAt(5);
-                                            string startTime = sList.ElementAt(6);
-                                            string signedUp = sList.ElementAt(7);
-                                            string duration = sList.ElementAt(8);
-                                            string roomSize = sList.ElementAt(9);
-
-
-                                            <a style="color:black;" onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize + "')")">@it.Start_Time.ToString(@"hh\:mm")    @it.Class.Class_Name</a>
-
-
-                                        }
-                                    </td>
-                                    date = date.AddDays(1);
-                                }
-
-                            }
-                            else
-                            {
-                                while (item.Class_Date.Day != date.Day)
-                                {
-                                    <td></td>
-                                    date = date.AddDays(1);
-                                }
-
-                                multiple = list.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date.Day).Count();
+                                multiple = Model.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date.Day).Count();
                                 if (multiple > 1 && mult == false)
                                 {
                                     empty = false;
-
                                     if (mult == false)
                                     {
                                         mult = true;
                                         <td style="background-color:#d2e1fa">
                                             @foreach (var it in list.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date.Day))
                                             {
-
                                                 List<string> sList = db.getSchedulesInfo(it.Schedule_Id).ToList();
                                                 string id = sList.ElementAt(0);
                                                 string description = sList.ElementAt(1);
@@ -307,18 +210,17 @@
                                                 string signedUp = sList.ElementAt(7);
                                                 string duration = sList.ElementAt(8);
                                                 string roomSize = sList.ElementAt(9);
+
                                                 <a style="color:black;" onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize + "')")">@it.Start_Time.ToString(@"hh\:mm")    @it.Class.Class_Name</a>
 
+                                                <br />
 
 
                                             }
                                         </td>
                                         date = date.AddDays(1);
                                     }
-                                    else
-                                    {
-                                        <td></td>
-                                    }
+
                                 }
                                 else
                                 {
@@ -333,44 +235,145 @@
                                     string signedUp = sList.ElementAt(7);
                                     string duration = sList.ElementAt(8);
                                     string roomSize = sList.ElementAt(9);
-                                    <td style="background-color:#d2e1fa"><a style="color:black;" onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize + "')")">@item.Start_Time.ToString(@"hh\:mm")    @item.Class.Class_Name</a></td>
+                                    <td style="background-color:#d2e1fa">
+                                        <a style="color:black;" onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize+ "')")">@item.Start_Time.ToString(@"hh\:mm")    @item.Class.Class_Name</a>
+                                    </td>
+
                                     date = date.AddDays(1);
                                 }
                             }
-
-                        }
-
-                        if (count == size || multiple == size)
-                        {
-                            while (date <= localPlus6)
+                            else
                             {
-                                <td></td>
-                                date = date.AddDays(1);
+
+                                multiple = list.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date.Day).Count();
+                                if (multiple > 1 && mult == false)
+                                {
+                                    empty = false;
+
+                                    if (mult == false)
+                                    {
+                                        mult = true;
+                                        <td style="background-color:#d2e1fa">
+                                            @foreach (var it in list.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date.Day))
+                                            {
+                                                List<string> sList = db.getSchedulesInfo(it.Schedule_Id).ToList();
+                                                string id = sList.ElementAt(0);
+                                                string description = sList.ElementAt(1);
+                                                string name = sList.ElementAt(2);
+                                                string startDate = sList.ElementAt(3);
+                                                string room = sList.ElementAt(4);
+                                                string teacher = sList.ElementAt(5);
+                                                string startTime = sList.ElementAt(6);
+                                                string signedUp = sList.ElementAt(7);
+                                                string duration = sList.ElementAt(8);
+                                                string roomSize = sList.ElementAt(9);
+
+
+                                                <a style="color:black;" onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize + "')")">@it.Start_Time.ToString(@"hh\:mm")    @it.Class.Class_Name</a>
+
+
+                                            }
+                                        </td>
+                                        date = date.AddDays(1);
+                                    }
+
+                                }
+                                else
+                                {
+                                    while (item.Class_Date.Day != date.Day)
+                                    {
+                                        <td></td>
+                                        date = date.AddDays(1);
+                                    }
+
+                                    multiple = list.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date.Day).Count();
+                                    if (multiple > 1 && mult == false)
+                                    {
+                                        empty = false;
+
+                                        if (mult == false)
+                                        {
+                                            mult = true;
+                                            <td style="background-color:#d2e1fa">
+                                                @foreach (var it in list.Where(x => x.Start_Time.Hours == hour && x.Class_Date.Day == date.Day))
+                                                {
+
+                                                    List<string> sList = db.getSchedulesInfo(it.Schedule_Id).ToList();
+                                                    string id = sList.ElementAt(0);
+                                                    string description = sList.ElementAt(1);
+                                                    string name = sList.ElementAt(2);
+                                                    string startDate = sList.ElementAt(3);
+                                                    string room = sList.ElementAt(4);
+                                                    string teacher = sList.ElementAt(5);
+                                                    string startTime = sList.ElementAt(6);
+                                                    string signedUp = sList.ElementAt(7);
+                                                    string duration = sList.ElementAt(8);
+                                                    string roomSize = sList.ElementAt(9);
+                                                    <a style="color:black;" onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize + "')")">@it.Start_Time.ToString(@"hh\:mm")    @it.Class.Class_Name</a>
+
+
+
+                                                }
+                                            </td>
+                                            date = date.AddDays(1);
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        List<string> sList = db.getSchedulesInfo(item.Schedule_Id).ToList();
+                                        string id = sList.ElementAt(0);
+                                        string description = sList.ElementAt(1);
+                                        string name = sList.ElementAt(2);
+                                        string startDate = sList.ElementAt(3);
+                                        string room = sList.ElementAt(4);
+                                        string teacher = sList.ElementAt(5);
+                                        string startTime = sList.ElementAt(6);
+                                        string signedUp = sList.ElementAt(7);
+                                        string duration = sList.ElementAt(8);
+                                        string roomSize = sList.ElementAt(9);
+                                        <td style="background-color:#d2e1fa"><a style="color:black;" onclick="@("classInfo('" + id + "','" + description + "','" + name + "','" + startDate + "','" + room + "','" + teacher + "','" + startTime + "','" + signedUp + "','" + duration + "','" + roomSize + "')")">@item.Start_Time.ToString(@"hh\:mm")    @item.Class.Class_Name</a></td>
+                                        date = date.AddDays(1);
+                                    }
+                                }
+
+                            }
+
+                            if (count == size || multiple == size)
+                            {
+                                while (date <= localPlus6)
+                                {
+                                    <td></td>
+                                    date = date.AddDays(1);
+                                }
                             }
                         }
                     }
-                }
 
 
 
 
-                @if (empty == true)
-                {
-                    while (date <= localPlus6)
+                    @if (empty == true)
                     {
-                        <td></td>
-                        date = date.AddDays(1);
+                        while (date <= localPlus6)
+                        {
+                            <td></td>
+                            date = date.AddDays(1);
+                        }
                     }
-                }
-            </tr>
+                </tr>
 
-            hr2++;
+                hr2++;
 
-        }
-    </table>
-
+            }
+        </table>
 
 
+
+    </div>
 </div>
 
 @if (Message != "")

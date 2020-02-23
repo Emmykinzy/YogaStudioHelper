@@ -122,8 +122,8 @@ namespace YogaStudioHelper.Controllers
         public ActionResult FAQ()
         {
 
-            throw new NotImplementedException();
-            //return View();
+            
+            return View();
         }
     }
 }
