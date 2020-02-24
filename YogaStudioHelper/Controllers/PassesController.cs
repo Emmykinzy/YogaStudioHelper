@@ -357,7 +357,7 @@ namespace YogaStudioHelper.Controllers
         {
 
             string email = collection["Email"];
-            IEnumerable<Yoga_User> userList = db.getUserByEmail(email);
+            IEnumerable<Yoga_User> userList = db.getUserByPartialEmail(email);
 
             if (userList.Count() == 0)
             {

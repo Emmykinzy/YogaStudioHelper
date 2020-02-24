@@ -64,6 +64,9 @@ namespace YogaStudioHelper.Controllers
                 else
                 {
                     Session["Auth"] = null;
+                    ViewBag.message = "Account is not Activated";
+                    ViewBag.StickyEmail = email;
+                    return View();
                 }
 
                 ViewBag.message = "Valid, Login";

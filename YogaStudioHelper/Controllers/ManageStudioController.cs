@@ -931,7 +931,7 @@ namespace YogaStudioHelper.Controllers
                 return View(scheduleViewModel);
             }
             Class c = db.getClass(selectedCLass);
-            TimeSpan classEnd = sTime.Add(c.Class_Length);
+            TimeSpan classEnd = timePicker.Add(c.Class_Length);
 
 
             if (sTime > timePicker)
@@ -942,7 +942,15 @@ namespace YogaStudioHelper.Controllers
                 
             }
 
-            if(classEnd > eTime)
+            if (timePicker > eTime)
+            {
+
+                ViewBag.message = "<p><span style=\"color:red\">Availability Error: </span>" + u.U_First_Name + " " + u.U_Last_Name + " ends " + dayOftheWeek + " at " + eTime.Hours + ":" + eTime.Minutes.ToString("00");
+                return View(scheduleViewModel);
+
+            }
+
+            if (classEnd > eTime)
             {
                 ViewBag.message = "<p><span style=\"color:red\">Availability Error: </span>" + u.U_First_Name + " " + u.U_Last_Name + " ends " + dayOftheWeek + " at " + eTime.Hours + ":" + eTime.Minutes.ToString("00")+"<br/>"+
                                   "Class End: "+classEnd.Hours+":"+ classEnd.Minutes.ToString("00")+"</p><br/>";

@@ -115,12 +115,12 @@ namespace Database
 
             string purchaseDateTime = date.ToString("dd/MM/yyyy HH:mm:ss");
             string purchaseDate = date.ToString("ddMMyy");
-            string invoice = purchaseDate + userId;
+           // string invoice = purchaseDate + userId;
 
 
             Pass_Log pl = getPassLog(date, userId);
 
-            string invoiceNumber = invoice + pl.Pass_Log_Id;
+            string invoiceNumber = userId.ToString() + pl.Pass_Log_Id;
 
             pl.Invoice_Number = Int32.Parse(invoiceNumber);
 
@@ -210,9 +210,14 @@ namespace Database
             return isConfirmed;
         }
 
-        public IEnumerable<Yoga_User> getUserByEmail(string email)
+        public IEnumerable<Yoga_User> getUserByPartialEmail(string email)
         {
             return myDb.Yoga_User.Where(x => x.U_Email.Contains(email));
+        }
+
+        public IEnumerable<Yoga_User> getUserByEmail(string email)
+        {
+            return myDb.Yoga_User.Where(x => x.U_Email.Equals(email));
         }
 
         public IEnumerable<Yoga_User> getUserByLastName(string lName)
@@ -297,7 +302,7 @@ namespace Database
             }
             else if (role == "Select Role" && email != "" && lname != "")
             {
-                IEnumerable<Yoga_User> list = getUserByEmail(email);
+                IEnumerable<Yoga_User> list = getUserByPartialEmail(email);
                 var l = list.Where(x => x.U_Last_Name.Contains(lname));
                 userList = userList.Concat(l);
             }
@@ -308,7 +313,7 @@ namespace Database
             }
             else if (role == "Select Role" && email != "" && lname == "")
             {
-                IEnumerable<Yoga_User> list = getUserByEmail(email);
+                IEnumerable<Yoga_User> list = getUserByPartialEmail(email);
                 userList = userList.Concat(list);
             }
             else if (role == "Select Role" && email == "" && lname != "")
