@@ -13,7 +13,6 @@
     string message = ViewBag.message;
 }
 
-<h2>CreateSchedule</h2>
 
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
@@ -36,7 +35,7 @@
         <table class="inputTable">
             <tr>
                 <td></td>
-                <td style="text-align:center;"><h2>Schedule</h2></td>
+                <td style="text-align:center;"><h2>Create Schedule</h2></td>
             </tr>
             <tr>
                 <th>Teacher:</th>
@@ -119,7 +118,7 @@
                 </td>
             </tr>
             <tr>
-                <td><button onclick="goBack()">Go Back</button></td>
+                <td>@Html.ActionLink("Back", "ScheduleList", "ManageStudio", new { @class = "btn btn-default" })</td>
             </tr>
         </table>
 

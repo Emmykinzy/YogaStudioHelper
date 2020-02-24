@@ -116,18 +116,18 @@ namespace YogaStudioHelper.Controllers
         public ActionResult ClassLogListPast()
         {
 
-            IEnumerable<Class_Log> logList = db.GetClass_LogsByUId((int)Session["Uid"]);
-            logList = logList.Where(x => x.Schedule.Class_Date < DateTime.Now.Date && x.Schedule.Start_Time.Hours < DateTime.Now.Hour);
+            IEnumerable<Class_Log> logList = db.GetClass_LogsByUId((int)Session["Uid"]).ToList();
+            logList = logList.Where(x => x.Schedule.Class_Date < DateTime.Now.Date && x.Schedule.Start_Time.Hours < DateTime.Now.Hour).ToList();
 
-            return View(logList.OrderBy(x => x.Schedule.Start_Time).OrderByDescending(x => x.Schedule.Class_Date));
+            return View(logList.OrderBy(x => x.Schedule.Start_Time).ToList().OrderByDescending(x => x.Schedule.Class_Date).ToList());
         }
 
         [HttpPost]
         public ActionResult ClassLogListPast(FormCollection form)
         {
 
-            IEnumerable<Class_Log> logList = db.GetClass_LogsByUId((int)Session["Uid"]);
-            logList = logList.Where(x => x.Schedule.Class_Date < DateTime.Now.Date && x.Schedule.Start_Time.Hours < DateTime.Now.Hour);
+            IEnumerable<Class_Log> logList = db.GetClass_LogsByUId((int)Session["Uid"]).ToList();
+            logList = logList.Where(x => x.Schedule.Class_Date < DateTime.Now.Date && x.Schedule.Start_Time.Hours < DateTime.Now.Hour).ToList();
 
             IEnumerable<Class_Log> newList;
             if (form["back"] == null)
@@ -156,7 +156,7 @@ namespace YogaStudioHelper.Controllers
 
 
 
-            return View(newList.OrderByDescending(x => x.Schedule.Class_Date).OrderBy(x => x.Schedule.Start_Time));
+            return View(newList.OrderByDescending(x => x.Schedule.Class_Date).ToList().OrderBy(x => x.Schedule.Start_Time).ToList());
         }
 
 

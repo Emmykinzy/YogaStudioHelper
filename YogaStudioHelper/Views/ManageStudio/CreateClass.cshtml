@@ -30,7 +30,7 @@
                 </tr>
                 <tr><td></td></tr>
                 <tr>
-                    <td><button onclick="goBack()">Go Back</button></td>
+                    <td> @Html.ActionLink("Back", "ClassList", "ManageStudio", new { @class = "btn btn-default" })</td>
                 </tr>
             </table>
         }
@@ -38,7 +38,7 @@
         <br />
         <br />
         <br />
-        @Html.ActionLink("Back", "ClassList")
+       
     </div>
 
 

@@ -1135,14 +1135,14 @@ namespace Database
 
         public List<Yoga_User> getScheduleSignUpList(int scheduleId)
         {
-            IEnumerable<Class_Log> cl = myDb.Class_Log.Where(x => x.Schedule_Id == scheduleId);
+            IEnumerable<Class_Log> cl = myDb.Class_Log.Where(x => x.Schedule_Id == scheduleId).ToList();
             List<Yoga_User> yu = new List<Yoga_User>();
             foreach(Class_Log log in cl)
             {
                 yu.Add(log.Yoga_User);
             }
 
-            return yu;
+            return yu.ToList();
         }
 
         public void ArchiveSchedule()

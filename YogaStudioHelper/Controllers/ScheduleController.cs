@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Database;
+using YogaStudioHelper.Util;
 
 namespace YogaStudioHelper.Controllers
 {
@@ -91,11 +93,10 @@ namespace YogaStudioHelper.Controllers
                 }
                 else
                 {
-                    TempData["class"] = scheduleId;
-                    List<Yoga_User> yu = db.getScheduleSignUpList(scheduleId);
-                    TempData["yu"] = yu;
-                    return RedirectToAction("StudentSignIn");
-
+                   
+                        TempData["class"] = scheduleId;
+                        return RedirectToAction("StudentSignIn");
+                    
                 }
             }
             else
@@ -184,32 +185,54 @@ namespace YogaStudioHelper.Controllers
         [HttpGet]
         public ActionResult StudentSignIn()
         {
-            int scheduleId = (int)TempData["class"];
-            List<Yoga_User> yu = (List<Yoga_User>)TempData["yu"];
+            try
+            {
+                int scheduleId = (int)TempData["class"];
 
-            TempData["class"] = db.getScheduleById(scheduleId);
+                IEnumerable<Yoga_User> yu = db.getScheduleSignUpList(scheduleId).ToList();
 
-            yu = yu.OrderBy(x => x.U_Last_Name).ThenBy(x => x.U_First_Name).ToList();
-            
-            return View(yu);
+                TempData["class"] = db.getScheduleById(scheduleId);
+
+                return View(yu.OrderBy(x => x.U_Last_Name).ToList().OrderBy(x => x.U_First_Name).ToList());
+            }
+            catch (Exception ex)
+            {
+
+                string error = ex.ToString();
+                EmailSender.sendEmail(error);
+                TempData["Message"] = "2 " + error;
+
+                return RedirectToAction("MessageView", "Home");
+            }
         }
 
         [HttpPost]
         public ActionResult StudentSignIn(FormCollection form)
         {
+            try { 
             int scheduleId = (int)TempData["class"];
             TempData["class"] = db.getScheduleById(scheduleId);
-            List<Yoga_User> yu = db.getScheduleSignUpList(scheduleId);
+            List<Yoga_User> yu = db.getScheduleSignUpList(scheduleId).ToList();
 
-            foreach(Yoga_User user in yu)
+            foreach (Yoga_User user in yu)
             {
-                 
+
                 String attendance = form[user.U_Id.ToString()];
                 db.changeClass_LogStatus(user.U_Id, scheduleId, attendance);
-   
+
             }
-            yu = yu.OrderBy(x => x.U_Last_Name).ThenBy(x => x.U_First_Name).ToList();
-            return View(yu);
+            return View(yu.OrderBy(x => x.U_Last_Name).ToList().OrderBy(x => x.U_First_Name).ToList());
+            }
+            catch (Exception ex)
+            {
+
+                string error = ex.ToString();
+                Response.Write(error);
+                EmailSender.sendEmail(error);
+                Console.WriteLine(error);
+
+                return View();
+            }
 
         }
     }
