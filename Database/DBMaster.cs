@@ -358,6 +358,15 @@ namespace Database
             myDb.SaveChanges();
         }
 
+        public void ReActivateUser(int id)
+        {
+            var y = myDb.Yoga_User.Where(x => x.U_Id == id).Single();
+
+            y.Active = true;
+
+            myDb.SaveChanges();
+        }
+
         public void DeleteUser(int id)
         {
             var y = myDb.Yoga_User.Where(x => x.U_Id == id).Single();

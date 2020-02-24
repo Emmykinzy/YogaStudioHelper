@@ -78,7 +78,15 @@
     <td>
         @Html.ActionLink("Edit", "EditUser", new { id = item.U_Id }) |
         <!-- Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |-->
-        @Html.ActionLink("Archive", "ArchiveUser", new { id = item.U_Id })
+        @if (item.Active == true)
+        {
+            @Html.ActionLink("Archive", "ArchiveUser", new { id = item.U_Id })
+        }
+        else
+        {
+            @Html.ActionLink("ReActive", "ReActivateUser", new { id = item.U_Id })
+        }
+
 
     </td>
 </tr>

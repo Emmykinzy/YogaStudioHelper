@@ -54,7 +54,7 @@ namespace YogaStudioHelper.Controllers
                     if (checkIfSignin)
                     {
                         //TempData["Message"] = "<h5 style=\"color:red;\">Error: You are already signed up to this course</h5>";
-                        TempData["Message"] = "Error: You've already signed up to this course";
+                        TempData["Message"] = "Error: You have already signed up to this course";
                         return RedirectToAction("Schedule");
 
                     }

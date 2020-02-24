@@ -279,11 +279,19 @@ namespace YogaStudioHelper.Controllers
         public ActionResult ArchiveUser(int id)
         {
             //SHould implement archive instead
-            db.DeleteUser(id);
+            db.ArchiveUser(id);
             // should use delete method in futur instead 
 
             return RedirectToAction("UserList");
         }
 
+        public ActionResult ReActivateUser(int id)
+        {
+            //SHould implement archive instead
+            db.ReActivateUser(id);
+            // should use delete method in futur instead 
+
+            return RedirectToAction("UserList");
+        }
     }
 }

@@ -816,10 +816,7 @@ namespace YogaStudioHelper.Controllers
         {
             List<ScheduleListViewModel> scheduleList = db.getScheduleViewModelList();
 
-            IEnumerable<ScheduleListViewModel> orderedList = (from classes in scheduleList
-                                                              orderby classes.Start_Time
-                                                              orderby classes.Class_Date
-                                                              select classes);
+            IEnumerable<ScheduleListViewModel> orderedList = scheduleList.OrderByDescending(x => x.Class_Date);
 
             IEnumerable<ScheduleListViewModel> newList;
             if (form["back"] == null)
@@ -841,13 +838,14 @@ namespace YogaStudioHelper.Controllers
             {
 
                 int position = Int32.Parse(form["position"]);
-                newList = orderedList.Skip(position - 1 * 10).Take(10);
-                TempData["position"] = position - 1;
+                position -= 1;
+                newList = orderedList.Skip((position - 1) * 10).Take(10);
+                TempData["position"] = position;
 
             }
 
 
-            return View(newList.OrderByDescending(x=>x.Class_Date));
+            return View(newList);
         }
 
         [HttpGet]
