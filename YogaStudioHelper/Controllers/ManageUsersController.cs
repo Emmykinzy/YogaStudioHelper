@@ -129,8 +129,13 @@ namespace YogaStudioHelper.Controllers
             string fname = collection["FirstName"];
             string lname = collection["LastName"];
             string pass = collection["Password"];
-            
-            
+
+            //
+            string phone = collection["Phone"];
+            DateTime birthday = Convert.ToDateTime(collection["Birthday"]);
+
+
+
             Yoga_User y = new Yoga_User();
             //y.Roles_Id = db.getRoleId(role);
             y.Roles_Id = role;
@@ -138,6 +143,10 @@ namespace YogaStudioHelper.Controllers
             y.U_Email = email;
             y.U_First_Name = fname;
             y.U_Last_Name = lname;
+
+            y.U_Phone = phone;
+            y.U_Birthday = birthday;
+
 
             // will do false so that the user need to update the temporary password
             y.Active = false;
@@ -256,16 +265,32 @@ namespace YogaStudioHelper.Controllers
             var y = db.getUserById(id);
 
 
-            string role = collection["role"];
+            int role = Convert.ToInt32(collection["role"]);
             string email = collection["Email"];
             string fname = collection["FirstName"];
             string lname = collection["LastName"];
+            string phone = collection["Phone"];
+            //string birthday = collection["Birthday"];
+            DateTime birthday = Convert.ToDateTime(collection["Birthday"]);
+
             //Yoga_User y = new Yoga_User();
-            y.Roles_Id = db.getRoleId(role);
+            y.Roles_Id = role;
             y.U_Email = email;
             y.U_First_Name = fname;
             y.U_Last_Name = lname;
-            y.Active = false;
+            y.U_Phone = phone;
+            y.U_Birthday = birthday;
+
+            if(collection["active"] == null)
+            {
+                y.Active = false;
+            }
+            else
+            {
+                y.Active = true;
+            }
+            
+            // see for password
 
 
             //update db method
@@ -279,19 +304,57 @@ namespace YogaStudioHelper.Controllers
         public ActionResult ArchiveUser(int id)
         {
             //SHould implement archive instead
-            db.ArchiveUser(id);
+            db.DeleteUser(id);
             // should use delete method in futur instead 
 
             return RedirectToAction("UserList");
         }
 
-        public ActionResult ReActivateUser(int id)
+
+        //
+
+
+
+        [HttpGet]
+        public ActionResult EditPassword(int id)
         {
-            //SHould implement archive instead
-            db.ReActivateUser(id);
-            // should use delete method in futur instead 
+            ViewBag.UserId = id;
 
-            return RedirectToAction("UserList");
+            return View();
         }
+
+        [HttpPost]
+        public ActionResult EditPassword(FormCollection collection)
+        {
+            // SHould pass the user id in a safer way so that no one can modify the session id to change the password of someoneelse 
+            // hiddenfield instead of session Uid? 
+
+            int userId = (int)TempData["EditUserId"];
+
+            var user = db.getUserById(userId);
+
+            String password1 = collection["password1"].ToString();
+            String password2 = collection["password2"].ToString();
+
+            //Validate password enter equal 
+            if (!string.Equals(password1, password2))
+            {
+
+                TempData["Message"] = "<h5 style=\"color:red;\">Please make sure the two passwords are the same</h5>";
+                return View();
+            }
+
+            user.U_Password = encoder.Encode(password2);
+            //user.Active = true;
+
+            db.UpdateUser(user);
+            TempData["Message"] = "Your password was updated successfully.";
+
+
+            //return View();
+            return RedirectToAction("MessageView", "Home");
+
+        }
+
     }
 }

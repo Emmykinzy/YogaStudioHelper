@@ -10,6 +10,13 @@ using YogaStudioHelper.ViewModels;
 
 namespace YogaStudioHelper.Controllers
 {
+    /// <summary>
+    /// Fix monthly on publish
+    /// 
+    /// https://stackoverflow.com/questions/6062192/there-is-already-an-open-datareader-associated-with-this-command-which-must-be-c 
+    /// 
+    /// ToList()
+    /// </summary>
     public class ReportController : Controller
     {
         DBMaster db = new DBMaster();
@@ -109,41 +116,50 @@ namespace YogaStudioHelper.Controllers
         public ActionResult SalesMonth(FormCollection collection)
         {
             // get the date in form collection 
-
-            DateTime date = DateTime.Parse(collection["datepicker"]);
-
-            DateTime date2 = date.AddMonths(1);
-
-            //get list with this time constraint 
-            IEnumerable<Database.Pass_Log> saleList = db.GetSaleReport(date, date2);
-
-
-            List<SaleReportViewModel> list = new List<SaleReportViewModel>();
-
-            foreach (var sale in saleList)
+            try
             {
-                SaleReportViewModel saleReport = new SaleReportViewModel();
 
-                var classPass = db.getClassPasse(sale.Pass_Id);
-                var user = db.getUserById(sale.U_Id);
+                DateTime date = DateTime.Parse(collection["datepicker"]);
 
-                saleReport.Pass_Log_Id = sale.Pass_Log_Id;
-                saleReport.Pass_Id = sale.Pass_Id;
-                saleReport.Pass_Name = classPass.Pass_Name;
-                saleReport.U_Id = sale.U_Id;
-                saleReport.U_First_Name = user.U_First_Name;
-                saleReport.U_Last_Name = user.U_Last_Name;
-                saleReport.Num_Classes = sale.Num_Classes.GetValueOrDefault();
-                saleReport.Purchase_Price = Convert.ToDouble(sale.Purchase_Price);
-                saleReport.Date_Purchased = sale.Date_Purchased;
+                DateTime date2 = date.AddMonths(1);
 
-                list.Add(saleReport);
+            
+                //get list with this time constraint 
+                IEnumerable<Database.Pass_Log> saleList = db.GetSaleReport(date, date2);
+
+
+                List<SaleReportViewModel> list = new List<SaleReportViewModel>();
+
+                foreach (var sale in saleList)
+                {
+                    SaleReportViewModel saleReport = new SaleReportViewModel();
+
+                    var classPass = db.getClassPasse(sale.Pass_Id);
+                    var user = db.getUserById(sale.U_Id);
+
+                    saleReport.Pass_Log_Id = sale.Pass_Log_Id;
+                    saleReport.Pass_Id = sale.Pass_Id;
+                    saleReport.Pass_Name = classPass.Pass_Name;
+                    saleReport.U_Id = sale.U_Id;
+                    saleReport.U_First_Name = user.U_First_Name;
+                    saleReport.U_Last_Name = user.U_Last_Name;
+                    saleReport.Num_Classes = sale.Num_Classes.GetValueOrDefault();
+                    saleReport.Purchase_Price = Convert.ToDouble(sale.Purchase_Price);
+                    saleReport.Date_Purchased = sale.Date_Purchased;
+
+                    list.Add(saleReport);
+
+                    TempData["saleList"] = list;
+                }
+
+            }catch(Exception e)
+            {
+                TempData["Message"] = e.ToString();
+                return RedirectToAction("MessageView");
             }
 
 
-
-
-            TempData["saleList"] = list;
+            
 
             // redirect view with list of passlog 
             return RedirectToAction("SaleList");
@@ -166,7 +182,7 @@ namespace YogaStudioHelper.Controllers
 
 
             //get list with this time constraint 
-            IEnumerable<Database.Pass_Log> saleList = db.GetSaleReport(startDate, endDate);
+            IEnumerable<Database.Pass_Log> saleList = db.GetSaleReport(startDate, endDate).ToList();
 
             IEnumerable<SaleReportMonthly> monthList = (from log in saleList                                                        
                                                         group log by log.Class_Passes.Pass_Name
@@ -182,7 +198,7 @@ namespace YogaStudioHelper.Controllers
             TempData["month"] = startDate.ToString("MMMMyyyy");
              string mt = startDate.ToString("MMMM yyyy");
             TempData["monthtitle"] = mt;
-            TempData["saleListMonth"] = monthList;
+            TempData["saleListMonth"] = monthList.ToList();
 
             return RedirectToAction("SaleListMonth");
         }
@@ -194,7 +210,7 @@ namespace YogaStudioHelper.Controllers
             List<SaleReportMonthly> saleList = TempData["saleListMonth"] as List<SaleReportMonthly>;
             string month = TempData["month"] as string;
             ViewData["month"] = month;
-            return View(saleList.OrderByDescending(x => x.Total_Purchase_Price));
+            return View(saleList.OrderByDescending(x => x.Total_Purchase_Price).ToList());
         }
 
         [HttpGet]
@@ -214,7 +230,7 @@ namespace YogaStudioHelper.Controllers
 
 
             //get list with this time constraint 
-            IEnumerable<Database.Pass_Log> saleList = db.GetSaleReport(startDate, endDate);
+            IEnumerable<Database.Pass_Log> saleList = db.GetSaleReport(startDate, endDate).ToList();
 
             List<SaleReportViewModel> list = new List<SaleReportViewModel>(); 
 
@@ -240,7 +256,7 @@ namespace YogaStudioHelper.Controllers
             }
 
 
-            TempData["saleList"] = list;
+            TempData["saleList"] = list.ToList();
             
 
             // redirect view with list of passlog 
@@ -315,8 +331,8 @@ namespace YogaStudioHelper.Controllers
 
 
             //get list with this time constraint 
-            List<AttendanceDates> list = db.GetAttendanceDatesReport(startDate, endDate);
-            TempData["AttendanceDates"] = list;
+            List<AttendanceDates> list = db.GetAttendanceDatesReport(startDate, endDate).ToList();
+            TempData["AttendanceDates"] = list.ToList();
 
             // redirect view with list of passlog 
             return RedirectToAction("AttendanceDatesList");
@@ -343,18 +359,27 @@ namespace YogaStudioHelper.Controllers
         [HttpPost]
         public ActionResult HoursWorkedMonthly(FormCollection collection)
         {
-            string month = collection["month"];
 
-            DateTime startDate = DateTime.Parse(collection["month"]);
+            try
+            {
+                string month = collection["month"];
 
-            DateTime endDate = startDate.AddMonths(1);
+                DateTime startDate = DateTime.Parse(collection["month"]);
 
-            // call method to get list of data 
-            List<HoursWorkedMonthly> list= GetHoursWorkedMonthlyReport(startDate, endDate);
+                DateTime endDate = startDate.AddMonths(1);
 
-            TempData["HoursWorkedMonthly"] = list;
+                // call method to get list of data 
+                List<HoursWorkedMonthly> list= GetHoursWorkedMonthlyReport(startDate, endDate).ToList();
 
-            return RedirectToAction("HoursWorkedMonthlyList");
+
+                TempData["HoursWorkedMonthly"] = list.ToList();
+
+                return RedirectToAction("HoursWorkedMonthlyList");
+            }catch(Exception e)
+            {
+                TempData["Message"] = e.ToString();
+                return RedirectToAction("MessageView", "Home");
+            }
         }
 
 
@@ -380,7 +405,7 @@ namespace YogaStudioHelper.Controllers
         {
             List<HoursWorkedMonthly> list = new List<HoursWorkedMonthly>();
 
-            var teacherList = db.getTeacherList();
+            var teacherList = db.getTeacherList().ToList();
 
             foreach(var teacher in teacherList)
             {
@@ -391,7 +416,7 @@ namespace YogaStudioHelper.Controllers
 
                 // set myDb public to access it here, might not be secure to check back 
 
-                var schedList = db.myDb.Schedules.Where(x => x.Class_Date >= d1 && x.Class_Date <= d2 && x.Teacher_Id == teacher.U_Id);
+                var schedList = db.myDb.Schedules.Where(x => x.Class_Date >= d1 && x.Class_Date <= d2 && x.Teacher_Id == teacher.U_Id).ToList(); 
 
                 foreach(var sched in schedList)
                 {
@@ -408,7 +433,7 @@ namespace YogaStudioHelper.Controllers
 
             }
 
-            return list;
+            return list.ToList();
         }
     }
 }

@@ -7,6 +7,7 @@
 
     string message = ViewBag.messageSignUp;
 
+    string date = "";
 
     Yoga_User newUser;
     if (ViewBag.StickyUser != null)
@@ -17,6 +18,9 @@
 
         TempData["EditUserId"] = id;
         //Yoga_User = ViewBag.StickyUser;
+
+        // date nullable
+        date = newUser.U_Birthday.HasValue ? newUser.U_Birthday.Value.ToString("yyyy-MM-dd") : string.Empty;
     }
     else
     {
@@ -24,6 +28,9 @@
         newUser.U_Email = "";
         newUser.U_First_Name = "";
     }
+
+    //string date = myVariable.HasValue ? myVariable.Value.ToString() : string.Empty;
+
     // newUser.U_Email
 }
 
@@ -35,25 +42,25 @@
             <tr>
                 <td></td>
                 <td style="text-align:center;">
-                    <h2>EditUser</h2>
+                    <h2>Edit User</h2>
                 </td>
             </tr>
 
             <tr>
-                <th>Role:</th>
+                <th>*Role:</th>
                 <td class="select">
                     <select name="role">
-                        <option>Student</option>
-                        <option>Teacher</option>
-                        <option>Receptionist</option>
-                        <option>Administrator</option>
+                        <option value="4" @if (@newUser.Roles_Id == 4) { @Html.Raw("selected") }>Student</option>
+                        <option value="3" @if (@newUser.Roles_Id == 3) { @Html.Raw("selected") }>Receptionist</option>
+                        <option value="2" @if (@newUser.Roles_Id == 2) { @Html.Raw("selected") }>Teacher</option>
+                        <option value="1" @if (@newUser.Roles_Id == 1) { @Html.Raw("selected") }>Administrator</option>
 
                     </select>
                 </td>
             </tr>
 
             <tr>
-                <th>Email:</th>
+                <th>*Email:</th>
                 <td>
 
                     <!-- //Html.TextBox("Email", null, new {  class = "inputs", required = "required", value = "email" })}-->
@@ -61,6 +68,7 @@
                     <input id="Email" name="Email" class="inputs" required="required" value=" @newUser.U_Email " />
                 </td>
             </tr>
+            <!--
             <tr>
                 <th>Password:</th>
                 <td> <input type="password" name="password1" class="inputs" required="required"></td>
@@ -69,8 +77,9 @@
                 <th>Confirm Password:</th>
                 <td> <input type="password" name="password2" class="inputs" required="required"></td>
             </tr>
+                -->
             <tr>
-                <th>First Name:</th>
+                <th>*First Name:</th>
                 <td>
 
                     <input type="text" id="FirstName" name="FirstName" class="inputs" required="required" value=" @newUser.U_First_Name ">
@@ -78,7 +87,7 @@
                 </td>
             </tr>
             <tr>
-                <th>Last Name</th>
+                <th>*Last Name:</th>
                 <td>
 
                     <!-- at Html.TextBox("LastName", null, new {  at class = "inputs", required = "required" })        -->
@@ -87,6 +96,40 @@
             </tr>
 
             <!-- Add active cancel etc and date of birth -->
+
+            <tr>
+                <th>Phone:</th>
+                <td>
+                    <input type="text" id="Phone" name="Phone" class="inputs" value=" @newUser.U_Phone">
+                </td>
+            </tr>
+            <tr>
+                <th>*Date Of Birth:</th>
+                <td>
+                    <input type="date" id="Birthday" name="Birthday" class="inputs" value="@date">
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <th>*Active</th>
+                <td>
+
+                    <!-- at Html.TextBox("LastName", null, new {  at class = "inputs", required = "required" })        -->
+                    @{ if (@newUser.Active == true)
+                        {
+                            <input type="checkbox" id="active" name="active" value="true" checked>
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="active" name="active" value="true">
+                        }
+                    }
+
+                </td>
+            </tr>
+
 
             <tr>
                 <td></td>
@@ -100,11 +143,11 @@
 
             <tr>
                 <td></td>
-                <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Create</button></td>
+                <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Save</button></td>
             </tr>
             <tr><td></td></tr>
             <tr>
-                <td><button onclick="goBack()">Go Back</button></td>
+                <td><!--<button onclick="goBack()">Go Back</button>--></td>
             </tr>
         </table>
     }

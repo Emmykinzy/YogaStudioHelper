@@ -128,6 +128,8 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\SamsaraGearHost.pubxml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -275,6 +277,7 @@
     <Content Include="Views\Passes\PurchaseFindUser.cshtml" />
     <Content Include="Views\Passes\Store.cshtml" />
     <Content Include="Views\Passes\UserList.cshtml" />
+    <Content Include="Views\ManageUsers\EditPassword.cshtml" />
     <Content Include="Views\Error\Error.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
