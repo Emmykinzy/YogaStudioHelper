@@ -25,9 +25,12 @@ namespace YogaStudioHelper.Controllers
         [Filters.AuthorizeStudent]
         public ActionResult ClassLogList()
         {
-            IEnumerable<Class_Log> list = db.GetClass_LogsByUId((int)Session["Uid"]).Where(x => x.Schedule.Class_Date >= DateTime.Now.Date);
 
-            List<Class_Log> newList = new List<Class_Log>();
+            try
+            {
+                IEnumerable<Class_Log> list = db.GetClass_LogsByUId((int)Session["Uid"]).ToList().Where(x => x.Schedule.Class_Date >= DateTime.Now.Date).ToList();
+
+            List<Class_Log> newList = new List<Class_Log>().ToList();
             foreach(Class_Log log in list)
             {
                 if(log.Schedule.Class_Date == DateTime.Now.Date)
@@ -49,8 +52,15 @@ namespace YogaStudioHelper.Controllers
                     newList.Add(log);
                 }
             }
-    
-            return View(newList.OrderByDescending(x => x.Schedule.Class_Date).OrderByDescending(x => x.Schedule.Start_Time).Take(10));
+
+
+                return View(newList.OrderByDescending(x => x.Schedule.Class_Date).ToList().OrderByDescending(x => x.Schedule.Start_Time).ToList().Take(10).ToList());
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = e.ToString();
+                return RedirectToAction("MessageView", "Home");
+            }
 
 
         }
@@ -58,7 +68,10 @@ namespace YogaStudioHelper.Controllers
         [HttpPost]
         public ActionResult ClassLogList(FormCollection form)
         {
-            IEnumerable<Class_Log> logList = db.GetClass_LogsByUId((int)Session["Uid"]);
+            try
+            {
+
+                IEnumerable<Class_Log> logList = db.GetClass_LogsByUId((int)Session["Uid"]).ToList();
 
 
             IEnumerable<Class_Log> newList;
@@ -87,7 +100,16 @@ namespace YogaStudioHelper.Controllers
             }
 
 
-            return View(newList.OrderByDescending(x => x.Schedule.Class_Date).OrderBy(x => x.Schedule.Start_Time));
+            
+
+         
+                return View(newList.OrderByDescending(x => x.Schedule.Class_Date).ToList().OrderBy(x => x.Schedule.Start_Time).ToList());
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = e.ToString();
+                return RedirectToAction("MessageView", "Home");
+            }
         }
 
         [HttpGet]
@@ -131,6 +153,7 @@ namespace YogaStudioHelper.Controllers
                 TempData["position"] = position - 1;
 
             }
+
 
 
             return View(newList.OrderByDescending(x => x.Schedule.Class_Date).OrderBy(x => x.Schedule.Start_Time));
