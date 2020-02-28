@@ -28,10 +28,7 @@
 <div class="centerDiv">
     @using (Html.BeginForm())
     {
-        if (message != null)
-        {
-            @Html.Raw(message)
-        }
+
         <table class="inputTable">
             <tr>
                 <td></td>
@@ -106,7 +103,16 @@
                 <td><input type="date" class="inputs" name="classDate" id="classDate" required @if (ViewBag.date != null) {@Html.Raw("value=\""+ViewBag.date+"\"") } value="" /></td>
 
 </tr>
+            <tr>
+                <td></td>
+                <td style="text-align:center">
+                    @if (message != null)
+                    {
+                        @Html.Raw(message)
+                    }
+                </td>
 
+            </tr>
 <tr>
 
 <td></td>

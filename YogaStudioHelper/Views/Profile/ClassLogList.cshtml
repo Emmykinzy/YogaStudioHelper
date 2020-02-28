@@ -43,7 +43,7 @@ else
             }
         }
     </div>
-    <table class="table">
+    <table class="classes">
         <tr>
             <th>
                 Date
@@ -60,6 +60,7 @@ else
             <th>
                 Teacher
             </th>
+            <th></th>
         </tr>
 
 
@@ -83,7 +84,15 @@ else
                     @item.Schedule.Yoga_User.U_First_Name @item.Schedule.Yoga_User.U_Last_Name
                 </td>
                 <td>
-                    @Html.ActionLink("Cancel", "Cancel", new { id = item.Class_Log_Id }, new { @class = "btn btn-default" })
+                    @if (item.Schedule.Schedule_Status == "CANCELLED")
+                    {
+                        <span style="color:red">Class No Longer Available</span>
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Cancel", "Cancel", new { id = item.Class_Log_Id }, new { @class = "btn btn-default" })
+                    }
+
 
                 </td>
             </tr>

@@ -915,7 +915,7 @@ namespace YogaStudioHelper.Controllers
 
              if(DateTime.Now.Date > classDate)
             {
-                ViewBag.message = "<p><span style=\"color:red\">Date Error: Can't Select Dates in the Past</span>";
+                ViewBag.message = "<p><span style=\"color:red\">Date Error:</span> Can't Select Dates in the Past</p>";
                 return View(scheduleViewModel);
             }
 
@@ -953,7 +953,7 @@ namespace YogaStudioHelper.Controllers
             if (classEnd > eTime)
             {
                 ViewBag.message = "<p><span style=\"color:red\">Availability Error: </span>" + u.U_First_Name + " " + u.U_Last_Name + " ends " + dayOftheWeek + " at " + eTime.Hours + ":" + eTime.Minutes.ToString("00")+"<br/>"+
-                                  "Class End: "+classEnd.Hours+":"+ classEnd.Minutes.ToString("00")+"</p><br/>";
+                                  "Class End: "+classEnd.Hours+":"+ classEnd.Minutes.ToString("00")+"</p>";
                 return View(scheduleViewModel);
             }
 

@@ -133,7 +133,6 @@
         if (item.Schedule_Status == "CANCELLED" && dt2.Date > DateTime.Now.Date)
         {
 
-            @Html.Raw("| ")
             @Html.ActionLink("Restore", "RestoreSchedule", new { id = item.Schedule_Id })
 
         }

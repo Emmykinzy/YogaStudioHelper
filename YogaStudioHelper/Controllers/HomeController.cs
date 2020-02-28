@@ -121,8 +121,7 @@ namespace YogaStudioHelper.Controllers
 
         public ActionResult FAQ()
         {
-            Session["Auth"] = 1;
-
+            
             return View();
         }
     }

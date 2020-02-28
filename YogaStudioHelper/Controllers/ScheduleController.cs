@@ -61,7 +61,7 @@ namespace YogaStudioHelper.Controllers
 
                     }
                     // Validation: student has passes 
-                    if (yogaUser.U_Tokens < 1)
+                    if (yogaUser.U_Tokens < 1 || yogaUser.U_Tokens == null)
                     {
                         //TempData["Message"] = "<h5 style=\"color:red;\">Error: Out of passes</h5>";
                         TempData["Message"] = "Error: Out of passes";

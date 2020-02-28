@@ -30,11 +30,12 @@ namespace YogaStudioHelper.Controllers
         {
             string email = collection["Email"];
             string active = collection["Active"];
+
             IEnumerable<Yoga_User> userList = db.getUserByPartialEmail(email);
             
             if (userList.Count() == 0)
             {
-                ViewBag.FindClassMessage = "No users with an email containing " + email + " was found";
+                ViewBag.FindClassMessage = "No users with an email containing \"" + email + "\" was found";
                 return View();
             }
             else
@@ -84,6 +85,11 @@ namespace YogaStudioHelper.Controllers
             string email = collection["Email"];
             string lname = collection["LastName"];
            
+            if(role == "Select Role" && email == "" && lname == "")
+            {
+                ViewBag.FindClassMessage = "Please add search criteria";
+                return View();
+            }
 
             IEnumerable<Yoga_User> list = db.getUserAdvancedSearch(role, lname, email);
 
