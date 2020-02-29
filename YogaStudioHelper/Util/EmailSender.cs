@@ -19,7 +19,6 @@ namespace YogaStudioHelper.Util
             try
             {
                 SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
-                //client.EnableSsl = false;
 
                 client.EnableSsl = true;
 
@@ -27,7 +26,6 @@ namespace YogaStudioHelper.Util
                     SmtpDeliveryMethod.Network;
 
                 client.UseDefaultCredentials = false;
-                //client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
 
                 client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "xkcd1701");
 
@@ -58,7 +56,6 @@ namespace YogaStudioHelper.Util
             string test = Guid.NewGuid().ToString();
 
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
-            //client.EnableSsl = false;
 
             client.EnableSsl = true;
 
@@ -66,8 +63,7 @@ namespace YogaStudioHelper.Util
                 SmtpDeliveryMethod.Network;
 
             client.UseDefaultCredentials = false;
-            //client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
-
+           
             client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "xkcd1701");
 
 
@@ -94,7 +90,6 @@ namespace YogaStudioHelper.Util
             string test = Guid.NewGuid().ToString();
 
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
-            //client.EnableSsl = false;
 
             client.EnableSsl = true;
 
@@ -102,7 +97,6 @@ namespace YogaStudioHelper.Util
                 SmtpDeliveryMethod.Network;
 
             client.UseDefaultCredentials = false;
-            //client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
 
             client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "xkcd1701");
 
@@ -197,7 +191,7 @@ namespace YogaStudioHelper.Util
             string test = Guid.NewGuid().ToString();
 
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
-            //client.EnableSsl = false;
+          
 
             client.EnableSsl = true;
 
@@ -205,8 +199,7 @@ namespace YogaStudioHelper.Util
                 SmtpDeliveryMethod.Network;
 
             client.UseDefaultCredentials = false;
-            //client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
-
+            
             client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "xkcd1701");
 
 
@@ -236,7 +229,6 @@ namespace YogaStudioHelper.Util
             string test = Guid.NewGuid().ToString();
 
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
-            //client.EnableSsl = false;
 
             client.EnableSsl = true;
 
@@ -244,7 +236,6 @@ namespace YogaStudioHelper.Util
                 SmtpDeliveryMethod.Network;
 
             client.UseDefaultCredentials = false;
-            //client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
 
             client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "xkcd1701");
 
@@ -286,10 +277,8 @@ namespace YogaStudioHelper.Util
                 SmtpDeliveryMethod.Network;
 
             client.UseDefaultCredentials = false;
-            //client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
-
+  
             client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "xkcd1701");
-            // client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
 
 
 
@@ -321,7 +310,6 @@ namespace YogaStudioHelper.Util
                 SmtpDeliveryMethod.Network;
 
             client.UseDefaultCredentials = false;
-            //client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "SamsaraAdminPass");
 
             client.Credentials = new System.Net.NetworkCredential("SamsaraYogaMontreal@gmail.com", "xkcd1701");
 

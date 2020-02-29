@@ -35,7 +35,7 @@
             <tr>
                 <td></td>
                 <td style="text-align:center;">
-                    <h2>CreateUser</h2>
+                    <h2>Create User</h2>
                 </td>
             </tr>
 
@@ -149,8 +149,10 @@
             </tr>
             <tr><td></td></tr>
             <tr>
-                <td><button onclick="goBack()">Go Back</button></td>
-            </tr>
+                <td>
+                    @Html.ActionLink("Go Back", "UserList", "ManageUsers", new { @class = "btn btn-default" })
+                </td>
+                </tr>
         </table>
         }
 

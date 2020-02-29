@@ -22,6 +22,8 @@ namespace YogaStudioHelper.Controllers
 
         public ActionResult Error()
         {
+           Exception ex = Server.GetLastError();
+            ViewBag.error = ex;
             return View();
         }
     }

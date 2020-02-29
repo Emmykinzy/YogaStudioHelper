@@ -816,10 +816,7 @@ namespace YogaStudioHelper.Controllers
         {
             List<ScheduleListViewModel> scheduleList = db.getScheduleViewModelList();
 
-            IEnumerable<ScheduleListViewModel> orderedList = (from classes in scheduleList
-                                                              orderby classes.Start_Time
-                                                              orderby classes.Class_Date
-                                                              select classes);
+            IEnumerable<ScheduleListViewModel> orderedList = scheduleList.OrderByDescending(x => x.Class_Date);
 
             IEnumerable<ScheduleListViewModel> newList;
             if (form["back"] == null)
@@ -841,13 +838,14 @@ namespace YogaStudioHelper.Controllers
             {
 
                 int position = Int32.Parse(form["position"]);
-                newList = orderedList.Skip(position - 1 * 10).Take(10);
-                TempData["position"] = position - 1;
+                position -= 1;
+                newList = orderedList.Skip((position - 1) * 10).Take(10);
+                TempData["position"] = position;
 
             }
 
 
-            return View(newList.OrderByDescending(x=>x.Class_Date));
+            return View(newList);
         }
 
         [HttpGet]
@@ -917,7 +915,7 @@ namespace YogaStudioHelper.Controllers
 
              if(DateTime.Now.Date > classDate)
             {
-                ViewBag.message = "<p><span style=\"color:red\">Date Error: Can't Select Dates in the Past</span>";
+                ViewBag.message = "<p><span style=\"color:red\">Date Error:</span> Can't Select Dates in the Past</p>";
                 return View(scheduleViewModel);
             }
 
@@ -933,7 +931,7 @@ namespace YogaStudioHelper.Controllers
                 return View(scheduleViewModel);
             }
             Class c = db.getClass(selectedCLass);
-            TimeSpan classEnd = sTime.Add(c.Class_Length);
+            TimeSpan classEnd = timePicker.Add(c.Class_Length);
 
 
             if (sTime > timePicker)
@@ -944,10 +942,18 @@ namespace YogaStudioHelper.Controllers
                 
             }
 
-            if(classEnd > eTime)
+            if (timePicker > eTime)
+            {
+
+                ViewBag.message = "<p><span style=\"color:red\">Availability Error: </span>" + u.U_First_Name + " " + u.U_Last_Name + " ends " + dayOftheWeek + " at " + eTime.Hours + ":" + eTime.Minutes.ToString("00");
+                return View(scheduleViewModel);
+
+            }
+
+            if (classEnd > eTime)
             {
                 ViewBag.message = "<p><span style=\"color:red\">Availability Error: </span>" + u.U_First_Name + " " + u.U_Last_Name + " ends " + dayOftheWeek + " at " + eTime.Hours + ":" + eTime.Minutes.ToString("00")+"<br/>"+
-                                  "Class End: "+classEnd.Hours+":"+ classEnd.Minutes.ToString("00")+"</p><br/>";
+                                  "Class End: "+classEnd.Hours+":"+ classEnd.Minutes.ToString("00")+"</p>";
                 return View(scheduleViewModel);
             }
 

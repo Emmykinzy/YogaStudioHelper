@@ -376,17 +376,19 @@
     </div>
 </div>
 
-@if (Message != "")
-{
-   <img src="" onerror="@("classMessage('" + Message + "')")" /> 
-   //@:classMessage(@Message)
-}
+
 
 <script>
 
-    function classMessage(mess) {
-
-        alert(mess);
+    @if (Message != "")
+    {
+        <text>
+        window.onload = function ()
+        {
+            alert('@(Message)');
+        }
+        </text>
+    
     }
 
 

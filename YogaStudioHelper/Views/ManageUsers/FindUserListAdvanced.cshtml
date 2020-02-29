@@ -6,11 +6,9 @@
     TempData["List"] = Model;
 }
 
-<h2>FindUserList</h2>
+<h2>User List</h2>
 
-<p>
-    @Html.ActionLink("Create New", "CreateUser")
-</p>
+<br />
 <table class="table">
     <tr>
         <th>
@@ -60,5 +58,5 @@
 </table>
 <br />
 <br />
-@Html.ActionLink("Back", "FindUserAdvanced")
+@Html.ActionLink("Back", "FindUserAdvanced","ManageUsers", new { @class = "btn btn-default" })
 

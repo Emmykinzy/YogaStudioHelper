@@ -116,17 +116,18 @@ namespace YogaStudioHelper.Controllers
         public ActionResult ClassLogListPast()
         {
 
-            IEnumerable<Class_Log> logList = db.GetClass_LogsByUId((int)Session["Uid"]);
+            IEnumerable<Class_Log> logList = db.GetClass_LogsByUId((int)Session["Uid"]).ToList();
+            logList = logList.Where(x => x.Schedule.Class_Date < DateTime.Now.Date && x.Schedule.Start_Time.Hours < DateTime.Now.Hour).ToList();
 
-            return View(logList.OrderBy(x => x.Schedule.Start_Time).OrderByDescending(x => x.Schedule.Class_Date));
+            return View(logList.OrderBy(x => x.Schedule.Start_Time).ToList().OrderByDescending(x => x.Schedule.Class_Date).ToList());
         }
 
         [HttpPost]
         public ActionResult ClassLogListPast(FormCollection form)
         {
 
-            IEnumerable<Class_Log> logList = db.GetClass_LogsByUId((int)Session["Uid"]);
-
+            IEnumerable<Class_Log> logList = db.GetClass_LogsByUId((int)Session["Uid"]).ToList();
+            logList = logList.Where(x => x.Schedule.Class_Date < DateTime.Now.Date && x.Schedule.Start_Time.Hours < DateTime.Now.Hour).ToList();
 
             IEnumerable<Class_Log> newList;
             if (form["back"] == null)
@@ -155,7 +156,7 @@ namespace YogaStudioHelper.Controllers
 
 
 
-            return View(newList.OrderByDescending(x => x.Schedule.Class_Date).OrderBy(x => x.Schedule.Start_Time));
+            return View(newList.OrderByDescending(x => x.Schedule.Class_Date).ToList().OrderBy(x => x.Schedule.Start_Time).ToList());
         }
 
 
@@ -266,7 +267,6 @@ namespace YogaStudioHelper.Controllers
         public ActionResult CreateAvailabilities(FormCollection collection)
         {
             // "N/A"
-            string ss = collection["sundayStart"];
             XDocument availabilities = new XDocument
            (
            new XElement("Root",
@@ -292,40 +292,216 @@ namespace YogaStudioHelper.Controllers
                    new XElement("Start", collection["saturdayStart"]),
                    new XElement("End", collection["saturdayEnd"]))
            ));
-            DateTime s1 = Convert.ToDateTime(collection["sundayStart"]);
-            DateTime e1 = Convert.ToDateTime(collection["sundayEnd"]);
 
-            DateTime s2 = Convert.ToDateTime(collection["mondayStart"]);
-            DateTime e2 = Convert.ToDateTime(collection["mondayEnd"]);
+            DateTime s1;
+            DateTime e1;
 
-            DateTime s3 = Convert.ToDateTime(collection["tuesdayStart"]);
-            DateTime e3 = Convert.ToDateTime(collection["tuesdayEnd"]);
+            DateTime s2;
+            DateTime e2;
 
-            DateTime s4 = Convert.ToDateTime(collection["wednesdayStart"]);
-            DateTime e4 = Convert.ToDateTime(collection["wednesdayEnd"]);
+            DateTime s3;
+            DateTime e3;
 
-            DateTime s5 = Convert.ToDateTime(collection["thursdayStart"]);
-            DateTime e5 = Convert.ToDateTime(collection["thursdayEnd"]);
+            DateTime s4;
+            DateTime e4;
 
-            DateTime s6 = Convert.ToDateTime(collection["fridayStart"]);
-            DateTime e6 = Convert.ToDateTime(collection["fridayEnd"]);
+            DateTime s5;
+            DateTime e5;
 
-            DateTime s7 = Convert.ToDateTime(collection["saturdayStart"]);
-            DateTime e7 = Convert.ToDateTime(collection["saturdayEnd"]);
+            DateTime s6;
+            DateTime e6;
 
+            DateTime s7;
+            DateTime e7;
 
-            if (s1 > e1|| s2 > e2 || s3 > e3 || s4 > e4 || s5 > e5 || s6 > e6 || s7 > e7)
+            if (collection["sundayStart"] == "N/A" && collection["sundayEnd"] == "N/A")
             {
-                ViewBag.message = "End time set before start time!";
-                
-                return View(availabilities);
+
             }
             else
             {
-                int id = Int32.Parse(Session["Uid"].ToString());
+                try 
+                {
+                    s1 = Convert.ToDateTime(collection["sundayStart"]);
+                    e1 = Convert.ToDateTime(collection["sundayEnd"]);
+                    if (s1 >= e1)
+                    {
+                        ViewBag.message = "End time set before start time!";
+
+                        return View(availabilities);
+                    }
+                }
+                catch
+                {
+                    ViewBag.message = "Invalid Time Slot: "+ collection["sundayStart"]+" - "+collection["sundayEnd"];
+
+                    return View(availabilities);
+                }
+
+            }
+
+
+
+            if (collection["mondayStart"] == "N/A" && collection["mondayEnd"] == "N/A")
+            {
+
+            }
+            else
+            {
+                try
+                {
+                    s2 = Convert.ToDateTime(collection["mondayStart"]);
+                    e2 = Convert.ToDateTime(collection["mondayEnd"]);
+                    if (s2 >= e2)
+                    {
+                        ViewBag.message = "End time set before start time!";
+
+                        return View(availabilities);
+                    }
+                }
+                catch
+                {
+                    ViewBag.message = "Invalid Time Slot: " + collection["mondayStart"] + " - " + collection["mondayEnd"];
+
+                    return View(availabilities);
+                }
+
+            }
+
+            if (collection["tuesdayStart"] == "N/A" && collection["tuesdayEnd"] == "N/A")
+            {
+
+            }
+            else
+            {
+                try
+                {
+                    s3 = Convert.ToDateTime(collection["tuesdayStart"]);
+                    e3 = Convert.ToDateTime(collection["tuesdayEnd"]);
+                    if (s3 >= e3)
+                    {
+                        ViewBag.message = "End time set before start time!";
+
+                        return View(availabilities);
+                    }
+                }
+                catch
+                {
+                    ViewBag.message = "Invalid Time Slot: " + collection["tuesdayStart"] + " - " + collection["tuesdayEnd"];
+
+                    return View(availabilities);
+                }
+
+            }
+
+            if (collection["wednesdayStart"] == "N/A" && collection["wednesdayEnd"] == "N/A")
+            {
+
+            }
+            else
+            {
+                try
+                {
+                    s4 = Convert.ToDateTime(collection["wednesdayStart"]);
+                    e4 = Convert.ToDateTime(collection["wednesdayEnd"]);
+                    if (s4 >= e4)
+                    {
+                        ViewBag.message = "End time set before start time!";
+
+                        return View(availabilities);
+                    }
+                }
+                catch
+                {
+                    ViewBag.message = "Invalid Time Slot: " + collection["wednesdayStart"] + " - " + collection["wednesdayEnd"];
+
+                    return View(availabilities);
+                }
+
+            }
+
+            if (collection["thursdayStart"] == "N/A" && collection["thursdayEnd"] == "N/A")
+            {
+
+            }
+            else
+            {
+                try
+                {
+                    s5 = Convert.ToDateTime(collection["thursdayStart"]);
+                    e5 = Convert.ToDateTime(collection["thursdayEnd"]);
+                    if (s5 >= e5)
+                    {
+                        ViewBag.message = "End time set before start time!";
+
+                        return View(availabilities);
+                    }
+                }
+                catch
+                {
+                    ViewBag.message = "Invalid Time Slot: " + collection["thursdayStart"] + " - " + collection["thursdayEnd"];
+
+                    return View(availabilities);
+                }
+
+            }
+
+            if (collection["fridayStart"] == "N/A" && collection["fridayEnd"] == "N/A")
+            {
+
+            }
+            else
+            {
+                try
+                {
+                    s6 = Convert.ToDateTime(collection["fridayStart"]);
+                    e6 = Convert.ToDateTime(collection["fridayEnd"]);
+                    if (s6 >= e6)
+                    {
+                        ViewBag.message = "End time set before start time!";
+
+                        return View(availabilities);
+                    }
+                }
+                catch
+                {
+                    ViewBag.message = "Invalid Time Slot: " + collection["fridayStart"] + " - " + collection["fridayEnd"];
+
+                    return View(availabilities);
+                }
+
+            }
+
+            if (collection["saturdayStart"] == "N/A" && collection["saturdayEnd"] == "N/A")
+            {
+
+            }
+            else
+            {
+                try
+                {
+                    s7 = Convert.ToDateTime(collection["saturdayStart"]);
+                    e7 = Convert.ToDateTime(collection["saturdayEnd"]);
+                    if (s7 >= e7)
+                    {
+                        ViewBag.message = "End time set before start time!";
+
+                        return View(availabilities);
+                    }
+                }
+                catch
+                {
+                    ViewBag.message = "Invalid Time Slot: " + collection["saturdayStart"] + " - " + collection["saturdayEnd"];
+
+                    return View(availabilities);
+                }
+
+            }
+
+            int id = Int32.Parse(Session["Uid"].ToString());
                 db.AddAvailability(id, availabilities);
                 return RedirectToAction("ViewAvailabilities");
-            }
+            
         }
     }
 }

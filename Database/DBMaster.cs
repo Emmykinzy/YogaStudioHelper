@@ -26,9 +26,6 @@ namespace Database
         ScryptEncoder encoder = new ScryptEncoder();
 
 
-
-        // USER Methods 
-
         public IEnumerable<Yoga_User> getUsers()
         {
             return myDb.Yoga_User.ToList();
@@ -62,8 +59,7 @@ namespace Database
             pass_Log.Pass_Id = pass.Pass_Id;
             pass_Log.U_Id = userId;
             pass_Log.Purchase_Method = purchaseType;
-            
-            // num classes 
+
             int token;
             if (p != null)
             {
@@ -80,10 +76,7 @@ namespace Database
 
                 }
 
-                //Update User Token 
-                
 
-                // price 
                 if (p.Discount == 0)
                 {
                     pass_Log.Purchase_Price = decimal.Round(pass.Pass_Price * (decimal)1.15, 2);
@@ -105,22 +98,18 @@ namespace Database
             }
 
             AddTokens(userId, token);
-            // date 
             DateTime date = DateTime.Now;
             pass_Log.Date_Purchased = date;
             
-
 
             CreatePass_Log(pass_Log);
 
             string purchaseDateTime = date.ToString("dd/MM/yyyy HH:mm:ss");
             string purchaseDate = date.ToString("ddMMyy");
-            string invoice = purchaseDate + userId;
-
 
             Pass_Log pl = getPassLog(date, userId);
 
-            string invoiceNumber = invoice + pl.Pass_Log_Id;
+            string invoiceNumber = userId.ToString() + pl.Pass_Log_Id;
 
             pl.Invoice_Number = Int32.Parse(invoiceNumber);
 
@@ -137,8 +126,6 @@ namespace Database
 
                 var u = myDb.Yoga_User.Where(x => x.U_Email == email).Single();
 
-                //  var u = myDb.Yoga_User.Where(x => x.U_Email == email && x.U_Password == pass
-                //bool isValidCustomer = encoder.Compare(pass, u.U_Password);
                 bool isValidCustomer = encoder.Compare(pass, u.U_Password);
 
                 return isValidCustomer;
@@ -158,7 +145,6 @@ namespace Database
                 bool isValidCustomer;
                 var u = myDb.Yoga_User.Where(x => x.U_Email == email).Single();
 
-                // && u.Active == true
                 if (encoder.Compare(pass, u.U_Password))
                 {
                    isValidCustomer = true;
@@ -210,9 +196,14 @@ namespace Database
             return isConfirmed;
         }
 
-        public IEnumerable<Yoga_User> getUserByEmail(string email)
+        public IEnumerable<Yoga_User> getUserByPartialEmail(string email)
         {
             return myDb.Yoga_User.Where(x => x.U_Email.Contains(email));
+        }
+
+        public IEnumerable<Yoga_User> getUserByEmail(string email)
+        {
+            return myDb.Yoga_User.Where(x => x.U_Email.Equals(email));
         }
 
         public IEnumerable<Yoga_User> getUserByLastName(string lName)
@@ -247,10 +238,8 @@ namespace Database
             return myDb.Yoga_User.Where(x => x.Roles_Id == r);
         }
 
-        //Ben added for schedule
         public List<Yoga_User> getTeacherList()
         {
-            //int r = getRoleId(role);
             return myDb.Yoga_User.Where(x => x.Roles_Id == 2 && x.Active == true).ToList();
         }
 
@@ -297,7 +286,7 @@ namespace Database
             }
             else if (role == "Select Role" && email != "" && lname != "")
             {
-                IEnumerable<Yoga_User> list = getUserByEmail(email);
+                IEnumerable<Yoga_User> list = getUserByPartialEmail(email);
                 var l = list.Where(x => x.U_Last_Name.Contains(lname));
                 userList = userList.Concat(l);
             }
@@ -308,7 +297,7 @@ namespace Database
             }
             else if (role == "Select Role" && email != "" && lname == "")
             {
-                IEnumerable<Yoga_User> list = getUserByEmail(email);
+                IEnumerable<Yoga_User> list = getUserByPartialEmail(email);
                 userList = userList.Concat(list);
             }
             else if (role == "Select Role" && email == "" && lname != "")
@@ -321,7 +310,6 @@ namespace Database
             return userList;
         }
 
-        // User Create/Update Methods 
         public void CreateUser(Yoga_User y)
         {
             myDb.Yoga_User.Add(y);
@@ -333,8 +321,6 @@ namespace Database
         public void UpdateUser(Yoga_User o)
         {
             var n = myDb.Yoga_User.Where(x => x.U_Id == o.U_Id).Single();
-
-            //Yoga_User n = new Yoga_User();
 
             n.Roles_Id = o.Roles_Id;
             n.U_First_Name = o.U_First_Name;
@@ -358,6 +344,15 @@ namespace Database
             myDb.SaveChanges();
         }
 
+        public void ReActivateUser(int id)
+        {
+            var y = myDb.Yoga_User.Where(x => x.U_Id == id).Single();
+
+            y.Active = true;
+
+            myDb.SaveChanges();
+        }
+
         public void DeleteUser(int id)
         {
             var y = myDb.Yoga_User.Where(x => x.U_Id == id).Single();
@@ -369,10 +364,6 @@ namespace Database
             myDb.SaveChanges();
         }
 
-
-
-
-        //  ROLES Methods
         public string getRoleName(int id)
         {
             var r = myDb.Roles.Where(x => x.Roles_Id == id).Single();
@@ -384,10 +375,6 @@ namespace Database
             var r = myDb.Roles.Where(x => x.Roles_Name == name).FirstOrDefault();
             return r.Roles_Id;
         }
-
-
-
-        // Room Methods
 
         public Room getRoom(int id)
         {
@@ -430,7 +417,6 @@ namespace Database
             myDb.SaveChanges();
         }
 
-        // Add active in DB to be able to achive 
         public void ArchiveRoom(int id)
         {
 
@@ -477,15 +463,11 @@ namespace Database
             var or = myDb.Rooms.Where(x => x.Room_Id == id).Single();
 
             myDb.Rooms.Remove(or);
-            //or.R = false;
 
             myDb.SaveChanges();
         }
 
 
-
-
-        // Class Get Methods 
         public IEnumerable<Class> getClasses()
         {
             return myDb.Classes.ToList();
@@ -516,15 +498,12 @@ namespace Database
 
         }
 
-
         public void CreateClass(Class c)
         {
             myDb.Classes.Add(c);
             myDb.SaveChanges();
         }
 
-
-        //not sure about this one 
         public void UpdateClass(int id)
         {
             var oc = myDb.Classes.Where(x => x.Class_Id == id).Single();
@@ -543,8 +522,6 @@ namespace Database
         {
             var oc = myDb.Classes.Where(x => x.Class_Id == newClass.Class_Id).Single();
 
-            //Class nc = new Class();
-
             oc.Class_Name = newClass.Class_Name;
             oc.Class_Desc = newClass.Class_Desc;
             oc.Class_Length = newClass.Class_Length;
@@ -558,7 +535,6 @@ namespace Database
             var or = myDb.Classes.Where(x => x.Class_Id == id).Single();
 
             myDb.Classes.Remove(or);
-            //or.R = false;
 
             myDb.SaveChanges();
 
@@ -581,14 +557,6 @@ namespace Database
             myDb.SaveChanges();
         }
 
-
-        /// <summary>
-        ///  // Promotion Get Methods
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-
-
         public Promotion getPromotion(int id)
         {
 
@@ -606,8 +574,6 @@ namespace Database
             return myDb.Promotions.OrderBy(x => x.Promo_End).ToList();
         }
 
-        
-
         public IEnumerable<Promotion> getPromotionByDiscount(int dis)
         {
             return myDb.Promotions.Where(x => x.Discount == dis);
@@ -618,8 +584,6 @@ namespace Database
             return myDb.Promotions.Where(x => x.Num_Classes == extra);
         }
 
-        //Promotion Create/Update Methods
-
         public void CreatePromotion(Promotion p)
         {
             myDb.Promotions.Add(p);
@@ -629,8 +593,6 @@ namespace Database
         public void UpdatePromotion(Promotion np)
         {
             var op = myDb.Promotions.Where(x => x.Promotion_Id == np.Promotion_Id).Single();
-
-            //Promotion np = new Promotion();
 
             op.Promo_Desc = np.Promo_Desc;
             op.Pass_Id = np.Pass_Id;
@@ -653,29 +615,17 @@ namespace Database
             myDb.SaveChanges();
         }
 
-        public void ArchivePromotion()
-        {
-
-        }
-
-
         public bool CheckIfPromoExist(int passId)
         {
-
-            //bool s = Convert.ToBoolean(myDb.Class_Log.Where(x => x.Schedule_Id == schedId && x.U_Id == userId));
             bool s = myDb.Promotions.Any(x => x.Pass_Id == passId);
             
-            // .Any();
             return s;
         }
 
         public bool CheckIfActivePromoExist(int passId)
         {
-
-            //bool s = Convert.ToBoolean(myDb.Class_Log.Where(x => x.Schedule_Id == schedId && x.U_Id == userId));
             bool s = myDb.Promotions.Any(x => x.Pass_Id == passId && x.Promo_End < DateTime.Now.Date);
 
-            // .Any();
             return s;
         }
 
@@ -688,7 +638,6 @@ namespace Database
 
         public Class_Passes getClassPasse(int id)
         {
-            //return myDb.Class_Passes.ToList();
             var class_passe = myDb.Class_Passes.Where(x => x.Pass_Id == id).Single();
             return class_passe;
         }
@@ -739,7 +688,6 @@ namespace Database
             var or = myDb.Class_Passes.Where(x => x.Pass_Id == id).Single();
 
             myDb.Class_Passes.Remove(or);
-            //or.R = false;
 
             myDb.SaveChanges();
 
@@ -765,14 +713,6 @@ namespace Database
             myDb.SaveChanges();
         }
 
-
-        /// <summary>
-        ///     Class Log
-        /// </summary>
-        /// <returns></returns>
-
-
-        //Class Log Get Methods
         public IEnumerable<Class_Log> GetClass_Logs()
         {
             return myDb.Class_Log.ToList();
@@ -798,8 +738,6 @@ namespace Database
         {
             return myDb.Class_Log.Where(x => x.U_Id == id);
         }
-
-        //Class Log Create Method
 
         public void CreateClass_Log(int sId, int userId)
         {
@@ -838,20 +776,10 @@ namespace Database
 
         public bool CheckIfSignedUp(int schedId, int userId)
         {
-
-            //bool s = Convert.ToBoolean(myDb.Class_Log.Where(x => x.Schedule_Id == schedId && x.U_Id == userId));
             bool s = myDb.Class_Log.Any(x => x.Schedule_Id == schedId && x.U_Id == userId);
 
-            // .Any();
             return s;
         }
-
-
-        /// <summary>
-        ///         //Pass Log Get Methods
-        /// </summary>
-        /// <returns></returns>
-
 
         public IEnumerable<Pass_Log> getPass_Logs()
         {
@@ -873,7 +801,6 @@ namespace Database
             return myDb.Pass_Log.Where(x => x.Date_Purchased >= start && x.Date_Purchased <= end);
         }
 
-        //Pass Log Create Method
 
         public void CreatePass_Log(Pass_Log pl)
         {
@@ -892,16 +819,6 @@ namespace Database
 
         }
 
-
-
-
-        /// <summary>
-        ///             Schedule 
-        /// </summary>
-        /// <returns></returns>
-
-
-        //Schedule Get Methods
         public IEnumerable<Schedule> getSchedules()
         {
             return myDb.Schedules.ToList();
@@ -1005,7 +922,7 @@ namespace Database
             string startTime = s.Start_Time.ToString(@"hh\:mm");
             string signedUp = getSignedUp(s.Schedule_Id).ToString();
 
-            //
+            
             string size = s.Room.Room_Capacity.ToString();
 
             TimeSpan l = s.Class.Class_Length;
@@ -1044,18 +961,13 @@ namespace Database
         {
             var sched = myDb.Schedules.Where(x => x.Schedule_Id == np.Schedule_Id).Single();
 
-            //Schedule sched = new Schedule();
-
             sched.Teacher_Id = np.Teacher_Id;
             sched.Class_Id = np.Class_Id;
             sched.Room_Id = np.Room_Id;
             sched.Start_Time = np.Start_Time;
             sched.Class_Date = np.Class_Date;
-            //sched.Signed_Up = np.Signed_Up;
-            // sched.Group_Id = np.Group_Id;
             sched.Schedule_Status = np.Schedule_Status;
             sched.Room = np.Room;
-            // yoga user?  class log ? class ? 
 
             myDb.SaveChanges();
         }
@@ -1065,7 +977,6 @@ namespace Database
             var or = myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
 
             myDb.Schedules.Remove(or);
-            //or.R = false;
 
             myDb.SaveChanges();
 
@@ -1076,7 +987,6 @@ namespace Database
             Schedule schedule = myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
 
             schedule.Schedule_Status = "ACTIVE";
-            //or.R = false;
 
             myDb.SaveChanges();
 
@@ -1087,7 +997,6 @@ namespace Database
             Schedule schedule = myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
 
             schedule.Schedule_Status = "CANCELLED";
-            //or.R = false;
 
             myDb.SaveChanges();
 
@@ -1121,33 +1030,19 @@ namespace Database
 
         public List<Yoga_User> getScheduleSignUpList(int scheduleId)
         {
-            IEnumerable<Class_Log> cl = myDb.Class_Log.Where(x => x.Schedule_Id == scheduleId);
+            IEnumerable<Class_Log> cl = myDb.Class_Log.Where(x => x.Schedule_Id == scheduleId).ToList();
             List<Yoga_User> yu = new List<Yoga_User>();
             foreach(Class_Log log in cl)
             {
                 yu.Add(log.Yoga_User);
             }
 
-            return yu;
+            return yu.ToList();
         }
 
-        public void ArchiveSchedule()
-        {
-
-        }
-
-
-
-        /// <summary>
-        /// Schedule Controller 
-        /// </summary>
 
         public void ScheduleSignUp(int id)
         {
-            // How to I know which user I am ? 
-            // check teacher session etc? similar? 
-
-            // after check etc and if else 
 
             var sched = myDb.Schedules.Where(x => x.Schedule_Id == id).Single();
 
@@ -1155,14 +1050,7 @@ namespace Database
             
             myDb.SaveChanges();
 
-
-
         }
-
-        /// <summary>
-        /// Passes Controller 
-        /// </summary>
-        /// 
 
         public void AddTokens(int id, int tokens)
         {
@@ -1195,11 +1083,6 @@ namespace Database
             myDb.SaveChanges();
 
         }
-        /// <summary>
-        /// Report Controller 
-        /// </summary>
-        /// 
-
 
         public IEnumerable<Pass_Log> GetSaleReport(DateTime d1, DateTime d2) 
         {
@@ -1251,7 +1134,7 @@ namespace Database
                 AttendanceDaily ad = new AttendanceDaily();
                 ad.scheduleId = sched.Schedule_Id;
                 ad.startTime = sched.Start_Time;
-                ad.SignUp = sched.Signed_Up;
+                ad.SignUp = attended + missed;
                 //
                 ad.attended = attended;
                 ad.missed = missed;
@@ -1328,164 +1211,7 @@ namespace Database
             return attendanceList;
 
         }
-
-
-            /*
-
-            for (int i = 0; i < classArray.Count; i++)
-            {
-                foreach (var sched in schedList)
-                {
-
-
-
-                }
-
-
-            }
-
-
-                ad = new AttendanceDates();
-                ad.SignUp = 0;
-                ad.attended = 0;
-                ad.missed = 0;
-
-                classt = classe;
-
-
-                foreach (var sched in schedList)
-                {
-                    classt.Class_Name = " ";
-                    // Check each classes in the sched list 
-
-                    if(sched.Class_Id == classt.Class_Id)
-                    {
-                        ad.missed = 0;
-
-                        ad.SignUp += sched.Signed_Up;
-
-
-
-                    }
-
-                    // loop classes 
-                    var attended = myDb.Class_Log.Count(x => x.Schedule_Id == sched.Schedule_Id && x.Log_Status == "ATTENDED");
-
-                    var missed = myDb.Class_Log.Count(x => x.Schedule_Id == sched.Schedule_Id && x.Log_Status == "MISSED");
-
-                    AttendanceDaily ad = new AttendanceDaily();
-                    ad.scheduleId = sched.Schedule_Id;
-                    ad.startTime = sched.Start_Time;
-                    ad.SignUp = sched.Signed_Up;
-                    //
-                    ad.attended = attended;
-                    ad.missed = missed;
-
-                    var classe2 = getClass(sched.Class_Id);
-                    ad.className = classe2.Class_Name;
-                    // class name 
-
-                    attendanceList.Add(ad);
-                }
-
-            }
-
-            
-
-
-            return attendanceList;
-        }
-
-            */
-
-
-
-        /*
-         * 
-         * 
-         * 
          
-    public List<AttendanceDaily> GetAttendanceDatesReport(DateTime d1, DateTime d2)
-        {
-            List<AttendanceDates> attendanceList = new List<AttendanceDates>(); 
-
-            //IEnumerable<Schedule> 
-            
-            List<Schedule> schedList = myDb.Schedules.Where(x => x.Class_Date >= d1 && x.Class_Date <= d2).ToList();
-
-            List<Class> classList = myDb.Classes.ToList();
-
-           
-
-            Class classt = new Class();
-            AttendanceDates ad = new AttendanceDates();
-
-            ad.SignUp = 0;
-            ad.attended = 0;
-            ad.missed = 0;
-
-            ArrayList classArray = new ArrayList(); 
-
-
-            foreach (var classe in classList)
-            {
-                //AttendanceDates ad = new AttendanceDates();
-
-                classArray.Add(classe.Class_Id); 
-
-
-                ad = new AttendanceDates();
-                ad.SignUp = 0;
-                ad.attended = 0;
-                ad.missed = 0;
-
-                classt = classe;
-
-
-                foreach (var sched in schedList)
-                {
-                    classt.Class_Name = " ";
-                    // Check each classes in the sched list 
-
-                    if(sched.Class_Id == classt.Class_Id)
-                    {
-                        ad.missed = 0;
-
-                        ad.SignUp += sched.Signed_Up;
-
-
-
-                    }
-
-                    // loop classes 
-                    var attended = myDb.Class_Log.Count(x => x.Schedule_Id == sched.Schedule_Id && x.Log_Status == "ATTENDED");
-
-                    var missed = myDb.Class_Log.Count(x => x.Schedule_Id == sched.Schedule_Id && x.Log_Status == "MISSED");
-
-                    AttendanceDaily ad = new AttendanceDaily();
-                    ad.scheduleId = sched.Schedule_Id;
-                    ad.startTime = sched.Start_Time;
-                    ad.SignUp = sched.Signed_Up;
-                    //
-                    ad.attended = attended;
-                    ad.missed = missed;
-
-                    var classe2 = getClass(sched.Class_Id);
-                    ad.className = classe2.Class_Name;
-                    // class name 
-
-                    attendanceList.Add(ad);
-                }
-
-            }
-
-            
-
-
-            return attendanceList;
-        }
-        */
-
 
     }
 }

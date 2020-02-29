@@ -30,11 +30,12 @@ namespace YogaStudioHelper.Controllers
         {
             string email = collection["Email"];
             string active = collection["Active"];
-            IEnumerable<Yoga_User> userList = db.getUserByEmail(email);
+
+            IEnumerable<Yoga_User> userList = db.getUserByPartialEmail(email);
             
             if (userList.Count() == 0)
             {
-                ViewBag.FindClassMessage = "No users with an email containing " + email + " was found";
+                ViewBag.FindClassMessage = "No users with an email containing \"" + email + "\" was found";
                 return View();
             }
             else
@@ -84,6 +85,11 @@ namespace YogaStudioHelper.Controllers
             string email = collection["Email"];
             string lname = collection["LastName"];
            
+            if(role == "Select Role" && email == "" && lname == "")
+            {
+                ViewBag.FindClassMessage = "Please add search criteria";
+                return View();
+            }
 
             IEnumerable<Yoga_User> list = db.getUserAdvancedSearch(role, lname, email);
 
@@ -155,7 +161,7 @@ namespace YogaStudioHelper.Controllers
 
             String tempPassword = Membership.GeneratePassword(8, 2);
             y.U_Password = encoder.Encode(pass);
-            
+
             //string token = Guid.NewGuid().ToString();
             //Util.EmailSender.sendSignUpConfirmationTempPassword(email, token, tempPassword);
 
@@ -193,7 +199,10 @@ namespace YogaStudioHelper.Controllers
 
                 y.Availability = availabilities.ToString();
             }
-
+            if (db.ValidateUserExist(email))
+            {
+                return View();
+            }
             db.CreateUser(y);
             return RedirectToAction("UserList");
         }
@@ -304,13 +313,20 @@ namespace YogaStudioHelper.Controllers
         public ActionResult ArchiveUser(int id)
         {
             //SHould implement archive instead
-            db.DeleteUser(id);
+            db.ArchiveUser(id);
             // should use delete method in futur instead 
 
             return RedirectToAction("UserList");
         }
 
+        public ActionResult ReActivateUser(int id)
+        {
+            //SHould implement archive instead
+            db.ReActivateUser(id);
+            // should use delete method in futur instead 
 
+            return RedirectToAction("UserList");
+        }
         //
 
 

@@ -2,15 +2,13 @@
 @using Database
 @{
     DBMaster db = new DBMaster();
-    ViewBag.Title = "FindUserList";
+    ViewBag.Title = "Find User List";
     TempData["List"] = Model;
 }
 
 <h2>Users</h2>
 
-<p>
-    @Html.ActionLink("Create New", "CreateUser")
-</p>
+<br />
 <table class="table">
     <tr>
         <th>
@@ -60,5 +58,5 @@
 </table>
 <br />
 <br />
-@Html.ActionLink("Back", "FindUser")
+@Html.ActionLink("Back", "FindUser","ManageUsers", new { @class = "btn btn-default" })
 

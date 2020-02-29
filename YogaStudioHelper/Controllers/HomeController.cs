@@ -33,7 +33,7 @@ namespace YogaStudioHelper.Controllers
 
             // student  
             //Session["Auth"] = 4;
-            //Session["Uid"] = 1;
+           // Session["Uid"] = 1;
 
             //yoga user id 4 is a student id
             //Session["Uid"] = 5;
@@ -121,8 +121,7 @@ namespace YogaStudioHelper.Controllers
 
         public ActionResult FAQ()
         {
-            //Session["Auth"] = 1;
-
+            
             return View();
         }
     }

@@ -13,7 +13,6 @@
     string message = ViewBag.message;
 }
 
-<h2>CreateSchedule</h2>
 
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
@@ -29,14 +28,11 @@
 <div class="centerDiv">
     @using (Html.BeginForm())
     {
-        if (message != null)
-        {
-            @Html.Raw(message)
-        }
+
         <table class="inputTable">
             <tr>
                 <td></td>
-                <td style="text-align:center;"><h2>Schedule</h2></td>
+                <td style="text-align:center;"><h2>Create Schedule</h2></td>
             </tr>
             <tr>
                 <th>Teacher:</th>
@@ -107,7 +103,16 @@
                 <td><input type="date" class="inputs" name="classDate" id="classDate" required @if (ViewBag.date != null) {@Html.Raw("value=\""+ViewBag.date+"\"") } value="" /></td>
 
 </tr>
+            <tr>
+                <td></td>
+                <td style="text-align:center">
+                    @if (message != null)
+                    {
+                        @Html.Raw(message)
+                    }
+                </td>
 
+            </tr>
 <tr>
 
 <td></td>
@@ -119,7 +124,7 @@
                 </td>
             </tr>
             <tr>
-                <td><button onclick="goBack()">Go Back</button></td>
+                <td>@Html.ActionLink("Back", "ScheduleList", "ManageStudio", new { @class = "btn btn-default" })</td>
             </tr>
         </table>
 

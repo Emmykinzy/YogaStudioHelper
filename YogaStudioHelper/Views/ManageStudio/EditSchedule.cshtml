@@ -30,8 +30,6 @@
 
 }
 
-<h2>Edit Schedule</h2>
-
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
 
 <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
@@ -52,7 +50,7 @@
         <table class="inputTable">
             <tr>
                 <td></td>
-                <td style="text-align:center;"><h2>EditSchedule</h2></td>
+                <td style="text-align:center;"><h2>Edit Schedule</h2></td>
             </tr>
 
             <tr>
@@ -71,7 +69,7 @@
             </tr>
 
             <tr>
-                <th>Class</th>
+                <th>Class:</th>
                 <td>
                     @Html.DropDownListFor(m => m.SelectedClassId, new SelectList(Model.Classes, "Class_Id", "Class_Name"), new { @id = "classList" })
 
@@ -117,7 +115,7 @@
 
             <tr>
                 <th>Schedule Status:</th>
-                <td style="text-align:center">
+                <td>
 
                     <select id="status" name="status">
                         <option value="ACTIVE" @if (db.isScheduleActive(schedule.Schedule_Id)) { @Html.Raw("selected") }>Active</option>
@@ -129,11 +127,13 @@
             </tr>
             <tr>
                 <td></td>
-                <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Create</button></td>
+                <td style="text-align:center"><button style="width:150px" type="submit" class="btn btn-default">Save</button></td>
             </tr>
             <tr><td></td></tr>
             <tr>
-                <td><button onclick="goBack()">Go Back</button></td>
+                <td>
+                    @Html.ActionLink("Back", "ScheduleList", "ManageUsers", new { @class = "btn btn-default" })
+                </td>
             </tr>
         </table>
     }
@@ -141,9 +141,8 @@
 
 
 
-<div>
-    @Html.ActionLink("Back to List", "ScheduleList")
-</div>
+
+    
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>

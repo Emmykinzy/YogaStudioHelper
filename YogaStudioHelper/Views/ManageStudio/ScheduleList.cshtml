@@ -15,8 +15,7 @@
 
     @Html.ActionLink("Create New", "CreateSchedule")
 </p>
-@if (Model.Count() == 10)
-{
+
 <div style="height:50px;">
 
     @using (Html.BeginForm())
@@ -39,7 +38,7 @@
         }
     }
 </div>
-}
+
 <table class="classes">
     <tr>
         <th>
@@ -103,35 +102,45 @@
 <td>
     @if (item.Class_Date >= DateTime.Now.Date)
     {
-        @Html.ActionLink("Edit", "EditSchedule", new { id = item.Schedule_Id })
+
+        DateTime dt1 = item.Class_Date.AddHours((item.Start_Time.Hours) - 1);
+        if (item.Schedule_Status == "ACTIVE" && dt1.Date > DateTime.Now.Date)
+        {
+
+            @Html.ActionLink("Edit", "EditSchedule", new { id = item.Schedule_Id })
+
+        }
+        else if (item.Start_Time.Hours > DateTime.Now.Hour && dt1 == DateTime.Now.Date)
+        {
+
+        }
     }
     <!-- Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })-->
     @{
-        DateTime dt = item.Class_Date.AddHours((item.Start_Time.Hours)-1);
-        if (item.Schedule_Status == "ACTIVE" && dt.Date > DateTime.Now.Date)
+        DateTime dt2 = item.Class_Date.AddHours((item.Start_Time.Hours) - 1);
+        if (item.Schedule_Status == "ACTIVE" && dt2.Date > DateTime.Now.Date)
         {
-            
+
             @Html.Raw("| ")
             @Html.ActionLink("Cancel", "CancelSchedule", new { id = item.Schedule_Id })
-            
+
         }
-        else if(item.Start_Time.Hours > DateTime.Now.Hour && dt == DateTime.Now.Date)
+        else if (item.Start_Time.Hours > DateTime.Now.Hour && dt2 == DateTime.Now.Date)
         {
 
         }
 
-        if (item.Schedule_Status == "CANCELLED" && dt.Date > DateTime.Now.Date)
+        if (item.Schedule_Status == "CANCELLED" && dt2.Date > DateTime.Now.Date)
         {
-           
-            @Html.Raw("| ")
+
             @Html.ActionLink("Restore", "RestoreSchedule", new { id = item.Schedule_Id })
-            
+
         }
-        else if(item.Start_Time.Hours > DateTime.Now.Hour && dt == DateTime.Now.Date)
+        else if (item.Start_Time.Hours > DateTime.Now.Hour && dt2 == DateTime.Now.Date)
         {
 
         }
-   }
+    }
 
 </td>
 </tr>
